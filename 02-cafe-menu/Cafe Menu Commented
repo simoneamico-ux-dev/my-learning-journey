@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<!-- <!DOCTYPE html>: Dichiara HTML5 (obbligatorio in prima riga).
+     Evita che il browser entri in "quirks mode" (modalità compatibilità vecchia). -->
+
+<html lang="en">
+<!-- <html></html>: Radice di tutto il documento.
+     lang="en": indica che il contenuto è in inglese → migliore SEO, accessibilità, traduzioni. -->
+
+  <head>
+    <!-- <head></head>: Metadati e risorse esterne. Non contiene elementi visibili. -->
+
+    <meta charset="utf-8">
+    <!-- Codifica UTF-8 → supporta caratteri internazionali, emoji, simboli. -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Rende la pagina responsive: la larghezza della viewport corrisponde alla larghezza del device. -->
+
+    <title>Cafe Menu</title>
+    <!-- Titolo mostrato nella tab del browser e nei risultati dei motori di ricerca. -->
+
+    <link rel="stylesheet" href="styles.css">
+    <!-- Collega il foglio di stile esterno. rel="stylesheet" è obbligatorio per i CSS. —>
+
+  </head>
+
+  <body>
+    <!-- <body></body>: Tutto ciò che l'utente vede o interagisce con esso. -->
+
+    <div class="menu">
+    <!-- Contenitore principale dell'app. class="menu" usata per layout e stile. -->
+
+      <main>
+      <!-- <main></main>: Area di contenuto principale (HTML5 semantico). -->
+
+        <h1>CAMPER CAFE</h1>
+        <!-- <h1></h1>: Titolo di livello 1. Unico per pagina. -->
+
+        <p class="established">Est. 2020</p>
+        <!-- Paragrafo con classe established → verrà visualizzato in corsivo via CSS. -->
+
+        <hr>
+        <!-- <hr>: Separatore tematico (linea orizzontale). -->
+
+        <!-- ░░░ SEZIONE COFFEE ░░░ -->
+        <section>
+        <!-- <section></section>: Blocco semantico dedicato ai caffè. -->
+
+          <h2>Coffee</h2>
+          <!-- Sottotitolo di sezione (h1 > h2). -->
+
+          <img src="https://cdn.freecodecamp.org/curriculum/css-cafe/coffee.jpg"
+               alt="coffee icon">
+          <!-- <img>: Icona decorativa. 
+               src: percorso immagine. 
+               alt: testo alternativo per screen reader e SEO. -->
+
+          <!-- === Lista di articoli caffè === -->
+          <article class="item">
+            <!-- <article></article>: Contenuto autonomo (una "riga" di menu). -->
+
+            <p class="flavor">French Vanilla</p><p class="price">3.00</p>
+            <!-- <p class="flavor">: descrizione gusto (75% larghezza).
+                 <p class="price">: prezzo (25% larghezza).
+                 Nessuna interruzione di riga tra i tag per evitare spazi inline-block. -->
+          </article>
+
+          <article class="item"><p class="flavor">Caramel Macchiato</p><p class="price">3.75</p></article>
+          <article class="item"><p class="flavor">Pumpkin Spice</p><p class="price">3.50</p></article>
+          <article class="item"><p class="flavor">Hazelnut</p><p class="price">4.00</p></article>
+          <article class="item"><p class="flavor">Mocha</p><p class="price">4.50</p></article>
+          <!-- Ogni articolo ripete la stessa struttura flavor + price. -->
+        </section>
+        <!-- </section> Coffee -->
+
+        <!-- ░░░ SEZIONE DESSERTS ░░░ -->
+        <section>
+          <h2>Desserts</h2>
+
+          <img src="https://cdn.freecodecamp.org/curriculum/css-cafe/pie.jpg"
+               alt="pie icon">
+          <!-- Icona dessert. -->
+
+          <article class="item"><p class="dessert">Donut</p><p class="price">1.50</p></article>
+          <article class="item"><p class="dessert">Cherry Pie</p><p class="price">2.75</p></article>
+          <article class="item"><p class="dessert">Cheesecake</p><p class="price">3.00</p></article>
+          <article class="item"><p class="dessert">Cinnamon Roll</p><p class="price">2.50</p></article>
+          <!-- <p class="dessert"> condivide gli stessi stili di .flavor. -->
+        </section>
+        <!-- chiusura sezione Desserts -->
+      </main>
+      <!-- </main> -->
+
+      <hr class="bottom-line">
+      <!-- linea separatrice prima del footer (spazio extra in CSS). -->
+
+      <footer>
+      <!-- <footer></footer>: Informazioni di chiusura (contatti, copyright, link). -->
+
+        <p>
+          <a href="https://www.freecodecamp.org" target="_blank">Visit our website</a>
+          <!-- <a>: Link esterno. target="_blank" → apre in nuova scheda. -->
+        </p>
+
+        <p class="address">123 Free Code Camp Drive</p>
+        <!-- Indirizzo, stile personalizzato tramite .address -->
+      </footer>
+      <!-- </footer> -->
+    </div>
+    <!-- </div> .menu -->
+
+  </body>
+  <!-- </body>: termina il contenuto visibile. -->
+
+</html>
+<!-- </html>: chiusura finale del documento. —>
+
+
+
+
+
+
+
+
+/* ===============================
+   BASE / GLOBAL STYLES
+   =============================== */
+
+body {
+  background-image: url(https://cdn.freecodecamp.org/curriculum/css-cafe/beans.jpg); 
+  /* Immagine chicchi di caffè come texture di sfondo */
+  font-family: sans-serif;       /* Font generico di sistema: leggibile ovunque */
+  padding: 20px;                 /* Spazio interno intorno a tutto il contenuto del body */
+}
+
+h1 {                             
+  font-size: 40px;               /* Dimensione carattere del titolo principale */
+  margin-top: 0;                 /* Rimuove spazio sopra: avvicina il titolo al bordo superiore del .menu */
+  margin-bottom: 15px;           /* Spazio sotto: respiro prima di "Est. 2020" */
+}
+
+h2 {
+  font-size: 30px;               /* Dimensione carattere per i sottotitoli di sezione */
+}
+
+.established {
+  font-style: italic;            /* Corsivo per "Est. 2020" */
+}
+
+/* Allinea centralmente TUTTI i titoli (h1, h2) e i <p> che non hanno override */
+h1, h2, p {
+  text-align: center;            /* Centro orizzontale */
+}
+
+/* ===============================
+   CONTENITORE PRINCIPALE (.menu)
+   =============================== */
+
+.menu {
+  width: 80%;                    /* Occupa l'80 % della larghezza disponibile */
+  max-width: 500px;              /* …ma non supera 500 px su monitor molto larghi */
+  background-color: burlywood;   /* Colore di sfondo "marroncino" che ricorda il legno */
+  margin-left: auto;             /* auto + auto = il blocco viene centrato orizzontalmente */
+  margin-right: auto;
+  padding: 20px;                 /* Spazio interno: separa contenuto dai bordi del box */
+}
+
+/* ===============================
+   IMMAGINI (icone delle sezioni)
+   =============================== */
+
+img {
+  display: block;                /* Rimuove lo spazio sotto l'immagine (default inline) */
+  margin-left: auto;             /* Centra l'immagine orizzontalmente */
+  margin-right: auto;
+  margin-top: -25px;             /* "Tira su" l'icona, sovrapponendola leggermente al titolo */
+}
+
+/* ===============================
+   SEPARATORI <hr>
+   =============================== */
+
+hr {
+  height: 2px;                   /* Spessore della linea */
+  background-color: brown;       /* Colore di riempimento */
+  border-color: brown;           /* Colore del bordo (per uniformità cross-browser) */
+}
+
+.bottom-line {
+  margin-top: 25px;              /* Extra spazio sopra la linea finale prima del footer */
+}
+
+/* ===============================
+   FONT PERSONALIZZATO PER TITOLI
+   =============================== */
+
+h1, h2 {
+  font-family: Impact, serif;    /* Impact (se presente); se il browser non ce l’ha: "serif" generico */
+}
+
+/* ===============================
+   LISTA VOCI MENU (Coffee & Dessert)
+   =============================== */
+
+.item p {
+  display: inline-block;         /* Permette di posizionare gusto e prezzo sulla stessa linea */
+  margin-top:   5px;             /* Spazio sopra ogni riga menu */
+  margin-bottom: 5px;            /* Spazio sotto */
+  font-size: 18px;               /* Dimensione testo delle voci */
+}
+
+/* Gusto del prodotto (colonna sinistra) */
+.flavor,
+.dessert {                        /* .dessert eredita gli stessi stili di .flavor */
+  text-align: left;              /* Allinea testo a sinistra dentro la colonna */
+  width: 75%;                    /* Occupa il 75 % della larghezza riga (.item) */
+}
+
+/* Prezzo (colonna destra) */
+.price {
+  text-align: right;             /* Allinea testo a destra */
+  width: 25%;                    /* Occupa il 25 % restante */
+}
+
+/* ===============================
+   FOOTER
+   =============================== */
+
+footer {
+  font-size: 14px;               /* Carattere un po' più piccolo rispetto al corpo testo */
+}
+
+.address {
+  margin-bottom: 5px;            /* Spazio sotto l'indirizzo per separarlo dal link (o viceversa) */
+}
+
+/* ---------- Link footer: stati ---------- */
+
+a {
+  color: black;                  /* Colore link di default / non visitato */
+}
+
+a:visited {
+  color: grey;                   /* Colore dopo che l'utente ha visitato il link */
+}
+
+a:hover, a:active {
+  color: brown;                  /* Colore su hover (passaggio mouse) e active (click) */
+}
+
+/* ========= END OF CSS ========= */
