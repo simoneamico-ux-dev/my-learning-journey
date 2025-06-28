@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<!-- DOCTYPE: Dice al browser che questo è HTML5 (ultima versione). 
+     SEMPRE prima riga. Senza questo, browser potrebbe usare 
+     modalità compatibilità vecchia (quirks mode) -->
+
+<html lang="en">
+<!-- <html></html>: Tag root che contiene tutto il documento HTML.
+     lang="en": Aiuta browser, screen reader e SEO, acronimo di Search Engine Optimization (Ottimizzazione per i Motori di Ricerca), 
+     è un insieme di tecniche e strategie volte a migliorare la visibilità e il posizionamento di un sito web nei risultati organici (non a pagamento) dei motori di ricerca come Google. 
+     In pratica, la SEO aiuta il tuo sito a comparire più in alto quando le persone cercano informazioni pertinenti ai tuoi contenuti. 
+     lang="en": Indica al browser qual è la lingua del sito 
+     Sapendo la lingua del sito il browser può offrire traduzioni-->
+
+  <head>
+    <meta charset="utf-8">
+    <!-- <meta charset=: Specifica la codifica dei caratteri. 
+         "utf-8"> è lo standard moderno e supporta anche simboli, lettere accentate, emoji ecc..., praticamente tutti i caratteri esistenti al mondo-->
+         
+    <title>CatPhotoApp</title>
+    <!-- title: Titolo della pagina mostrato nella tab del browser. Utile anche per SEO -->
+  </head>
+
+  <body>
+    <main>
+    <!-- <main></main>: Contenuto principale della pagina. Aiuta nella semantica, migliorando quindi la leggibilità del codice html. In questo caso c'è tutto il contenuto della pagina tranne il footer(copyright e "titoli di coda")-->
+
+      <h1>CatPhotoApp</h1>
+      <!-- <h1></h1>: Intestazione principale della pagina. Ogni pagina dovrebbe averne una sola -->
+
+      <section>
+        <!-- <section></section>: Blocchi tematici distinti. Questo riguarda le foto dei gatti, aiuta la SEO e allo stesso tempo la lettura del codice HTML -->
+
+        <h2>Cat Photos</h2>
+        <!-- <h2></h2>: Sottointestazione del contenuto -->
+
+<p>Everyone loves <a href="https://cdn.freecodecamp.org/curriculum/cat-photo-app/running-cats.jpg">cute cats</a> online!</p>
+<!-- <p></p>: Paragrafo HTML, usato per blocchi di testo.
+     <a></a>: Anchor tag, link ipertestuale.
+     Se non usi l'attributo target, il link si apre nella stessa scheda del browser (default behavior).
+     Questo significa che la nuova pagina sostituisce quella corrente.
+     Se invece usi target="_blank", il link si apre in una nuova scheda, lasciando la pagina attuale aperta. -->
+
+<p>See more <a target="_blank" href="https://freecatphotoapp.com">cat photos</a> in our gallery.</p>
+<!-- <p></p>: Paragrafo che contiene un link.
+     <a target="_blank"></a>: Il link si apre in una nuova scheda.
+     target="_blank" è utile per link esterni o quando non vuoi che l'utente lasci il tuo sito. -->
+
+<a href="https://freecatphotoapp.com">
+  <img src="https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg" alt="A cute orange cat lying on its back.">
+</a>
+<!-- <a></a>: Anche le immagini possono essere rese cliccabili, inserendole dentro un anchor.
+     <img>: Inserisce un’immagine nella pagina. È un "void element", quindi non ha un tag di chiusura.
+     src: URL dell'immagine da caricare.
+     alt: Descrizione testuale usata dai lettori vocali e mostrata se l’immagine non viene caricata.
+     Importantissimo per accessibilità e SEO. -->
+
+     <section>
+     <!-- <section></section>: Sezione tematica indipendente. Qui contiene elenchi e immagini legate al comportamento dei gatti.
+          Usata per organizzare logicamente il contenuto e migliorare leggibilità e SEO. -->
+
+  <h2>Cat Lists</h2>
+  <!-- <h2></h2>: Sottotitolo della sezione. Struttura gerarchica corretta: h1 > h2 > h3... -->
+
+  <h3>Things cats love:</h3>
+  <!-- <h3></h3>: Sottosezione interna alla sezione principale.
+       Introduce una lista specifica: "cose che i gatti amano". -->
+
+  <ul>
+    <!-- <ul></ul>: Lista non ordinata (unordered list), usata quando l’ordine degli elementi non è importante. -->
+    <li>catnip</li>
+    <li>laser pointers</li>
+    <li>lasagna</li>
+    <!-- <li></li>: List item. Ogni elemento rappresenta una voce della lista. -->
+  </ul>
+
+  <figure>
+  <!-- <figure></figure>: Tag semantico per associare immagini a una didascalia (caption).
+         Migliora l’accessibilità e l’organizzazione logica. -->
+
+    <img src="https://cdn.freecodecamp.org/curriculum/cat-photo-app/lasagna.jpg" alt="A slice of lasagna on a plate.">
+    <!-- <img>: Visualizza un’immagine. Void element (non ha chiusura).
+         alt: testo alternativo descritto per utenti con disabilità visiva o in caso di errore nel caricamento. -->
+
+    <figcaption>Cats <em>love</em> lasagna.</figcaption>
+    <!-- <figcaption></figcaption>: Didascalia che descrive l’immagine.
+         <em></em>: Enfasi testuale, in genere visualizzata in corsivo. Usata per sottolineare concetti. -->
+  </figure>
+
+  <h3>Top 3 things cats hate:</h3>
+  <!-- Nuova sottosezione, questa volta dedicata a ciò che i gatti odiano -->
+
+  <ol>
+    <!-- <ol></ol>: Lista ordinata (ordered list), usata quando l’ordine è importante o classificato -->
+    <li>flea treatment</li>
+    <li>thunder</li>
+    <li>other cats</li>
+    <!-- Come sopra, ogni <li></li> rappresenta una voce della lista. -->
+  </ol>
+
+  <figure>
+    <img src="https://cdn.freecodecamp.org/curriculum/cat-photo-app/cats.jpg" alt="Five cats looking around a field.">
+    <!-- Immagine rappresentativa dell’ultima voce della lista: "altri gatti" -->
+
+    <figcaption>Cats <strong>hate</strong> other cats.</figcaption>
+    <!-- <strong></strong>: Evidenzia importanza o forza. In genere visualizzato in grassetto.
+         Semantico, utile per lettori vocali e per strutturare l’importanza del testo. -->
+  </figure>
+</section>
+<!-- Chiusura della sezione "Cat Lists". Ottima struttura gerarchica: section > h2 > h3 > ul/ol + figure -->
+
+<section>
+<!-- <section></section>: Sezione dedicata al form per l’invio di informazioni.
+       Separare i form in una section aiuta a mantenere il layout pulito e semantico. -->
+
+  <h2>Cat Form</h2>
+  <!-- <h2></h2>: Titolo della sezione. Struttura gerarchica coerente con il resto della pagina -->
+
+  <form action="https://freecatphotoapp.com/submit-cat-photo">
+  <!-- <form></form>: Raccoglie e invia dati a un server.
+         action="...": Specifica l’URL di destinazione dove i dati verranno inviati quando si preme "Submit". -->
+
+    <fieldset>
+    <!-- <fieldset></fieldset>: Raggruppa logicamente input correlati.
+           Migliora l’accessibilità e organizza visivamente i form -->
+
+      <legend>Is your cat an indoor or outdoor cat?</legend>
+      <!-- <legend></legend>: Titolo del gruppo di input. Fornisce un contesto visivo e semantico al blocco. -->
+
+<label>
+  <input id="indoor" type="radio" name="indoor-outdoor" value="indoor" checked> Indoor
+</label>
+<!-- <input>: Crea un radio button, cioè un pulsante a scelta singola (a forma di cerchietto).
+     I radio button vengono usati quando si vuole che l'utente scelga una sola opzione tra più alternative (es: Sì/No, Maschio/Femmina, Indoor/Outdoor).
+
+     type="radio": Specifica che questo input è un radio button.
+     name="indoor-outdoor": Gruppo di appartenenza. Tutti i radio con lo stesso name sono collegati tra loro: l'utente può selezionarne solo uno per gruppo.
+     id="indoor": Identificatore univoco. Serve per collegarlo a una <label> con for="indoor", o per usarlo con CSS/JS.
+     value="indoor": Il valore che verrà inviato al server quando questo radio è selezionato. È ciò che il backend riceve.
+     checked: Imposta questo radio come selezionato di default quando la pagina viene caricata.
+
+     <label></label>: Rende cliccabile anche il testo ("Indoor"), non solo il cerchietto. Migliora accessibilità e usabilità.
+     In questo caso, il testo è annidato all’interno del label, quindi non è necessario l’attributo for. -->
+
+
+      <label>
+        <input id="outdoor" type="radio" name="indoor-outdoor" value="outdoor"> Outdoor
+      </label>
+      <!-- Stessa struttura del radio precedente, ma con value e id diversi. -->
+    </fieldset>
+
+    <fieldset>
+      <legend>What's your cat's personality?</legend>
+      <!-- Nuovo gruppo logico: checkbox multipli con personalità del gatto -->
+
+      <input id="loving" type="checkbox" name="personality" value="loving" checked>
+      <label for="loving">Loving</label>
+      <!-- <input>: Checkbox permette selezione multipla (selecion control in ux)
+           name="personality": Uguale per tutti → permette invio di più valori sotto la stessa chiave.
+           value="loving": Dato che verrà inviato.
+           checked: selezionato di default.
+           <label for="loving">: Collega la label al checkbox usando l'id -->
+
+      <input id="lazy" type="checkbox" name="personality" value="lazy">
+      <label for="lazy">Lazy</label>
+
+      <input id="energetic" type="checkbox" name="personality" value="energetic">
+      <label for="energetic">Energetic</label>
+      <!-- Tutti e tre i checkbox condividono il name, ma hanno id e value diversi.
+           Utile per raccogliere più caratteristiche nella stessa chiave. -->
+    </fieldset>
+
+    <input type="text" name="catphotourl" placeholder="cat photo URL" required>
+    <!-- <input>: Campo di testo per inserire un URL di immagine.
+         name="catphotourl": Identificativo del campo.
+         placeholder: Testo guida visibile finché l'utente non scrive.
+         required: Obbliga l'utente a compilare questo campo per inviare il form. -->
+
+    <button type="submit">Submit</button>
+    <!-- <button></button>: Pulsante che invia il form.
+         type="submit": È il tipo predefinito nei form, ma indicarlo esplicitamente è una buona pratica. -->
+  </form>
+</section>
+<!-- Chiusura della sezione "Cat Form". Ottima organizzazione con fieldset per input raggruppati logicamente. -->
+
+<footer>
+<!-- <footer></footer>: Sezione semantica usata per contenuti "di chiusura" di una pagina.
+       Solitamente include: info legali, copyright, contatti, link di riferimento.
+       Compare in fondo alla pagina. -->
+
+  <p>
+    No Copyright -
+    <a href="https://www.freecodecamp.org">freeCodeCamp.org</a>
+  </p>
+  <!-- <p></p>: Paragrafo che contiene testo e link.
+       <a></a>: Link al sito esterno freeCodeCamp. In questo caso non c’è target="_blank", quindi si apre nella stessa scheda.
+       Puoi considerare l’uso di target="_blank" se vuoi che il link non faccia lasciare l’utente dal tuo sito. -->
+
+</footer>
+</body>
+<!-- </body>: Tag di chiusura del corpo della pagina.
+     Tutti gli elementi visibili all’utente (testi, immagini, form, ecc.) stanno all’interno di <body>.
+     Deve sempre essere presente e chiudersi prima del tag </html>. -->
+
+</html>
+<!-- </html>: Tag finale del documento.
+     Chiude il tag <html> di apertura.
+     Tutto il contenuto HTML deve essere contenuto all'interno di <html></html>. -->
