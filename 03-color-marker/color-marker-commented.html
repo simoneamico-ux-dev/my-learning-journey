@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<!-- Dichiara il tipo di documento: HTML5.
+     Va SEMPRE come prima riga.
+     Serve per indicare al browser che deve usare lo standard moderno. -->
+<html lang="en">
+<!-- Radice del documento HTML.
+     lang="en": indica che il contenuto è in inglese (migliora accessibilità, SEO e traduzioni automatiche). -->
+  <head>
+    <!-- <head>: Contiene informazioni sul documento, non visibili direttamente (metadati). -->
+    <meta charset="utf-8">
+    <!-- Specifica la codifica dei caratteri (UTF-8 supporta tutti i simboli, emoji, caratteri speciali). -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Rende il layout adattivo su dispositivi mobili.
+         Imposta la larghezza della viewport = larghezza del device. -->
+    <title>Colored Markers</title>
+    <!-- Titolo mostrato nella scheda del browser e nei risultati dei motori di ricerca. -->
+    <style>
+      /* === STILE TITOLO === */
+      h1 {
+        text-align: center; /* Centra il testo orizzontalmente all'interno del contenitore */
+      }
+
+      /* === CONTENITORE DEI MARKER === */
+      .container {
+        background-color: rgb(255, 255, 255); 
+        /* rgb(255, 255, 255): colore bianco.
+           - 255 = massimo valore per rosso
+           - 255 = massimo valore per verde
+           - 255 = massimo valore per blu
+           → combinati danno il bianco puro. */
+        padding: 10px 0;
+        /* padding verticale = 10px (sopra e sotto)
+           padding orizzontale = 0px (destra e sinistra) */
+      }
+
+      /* === BLOCCO MARCATORE === */
+      .marker {
+        width: 200px;      /* Larghezza totale del marcatore (tappo + sleeve) */
+        height: 25px;      /* Altezza costante del marcatore */
+        margin: 10px auto;
+        /* margin-top e margin-bottom: 10px
+           margin-left e margin-right: auto → centrato orizzontalmente nel contenitore */
+      }
+
+      /* === TAPPINO === */
+      .cap {
+        width: 60px;       /* Lunghezza tappo (circa 30% del marker) */
+        height: 25px;      /* Stessa altezza del marker */
+      }
+
+      /* === GUAINA DEL MARCATORE === */
+      .sleeve {
+        width: 110px;      /* Larghezza guaina trasparente */
+        height: 25px;      /* Stessa altezza del tappo → linea continua */
+        background-color: rgba(255, 255, 255, 0.5);
+        /* rgba = red, green, blue, alpha
+           255, 255, 255 = bianco
+           0.5 = opacità del 50% → trasparente a metà */
+        border-left: 10px double rgba(0, 0, 0, 0.75);
+        /* Bordo sinistro:
+           - 10px = spessore
+           - double = stile a doppia linea
+           - rgba(0, 0, 0, 0.75) = nero (0,0,0) con opacità al 75% */
+      }
+
+      /* === TAPPINO + SLEEVE ORIZZONTALI === */
+      .cap, .sleeve {
+        display: inline-block;
+        /* inline-block = elementi sulla stessa riga ma con dimensioni personalizzabili (width/height).
+           Essenziale per far sì che cap e sleeve stiano affiancati. */
+      }
+
+      /* === MARCATORE ROSSO === */
+      .red {
+        background: linear-gradient(rgb(122, 74, 14), rgb(245, 62, 113), rgb(162, 27, 27));
+        /* Gradiente lineare verticale (di default):
+           - primo colore: rgb(122, 74, 14) = marrone scuro (tonalità base del tappo)
+           - secondo colore: rgb(245, 62, 113) = rosa acceso (parte centrale)
+           - terzo colore: rgb(162, 27, 27) = rosso sangue (base finale)
+           Ogni colore è una tappa nella transizione verticale.
+           I colori si sfumano uno nell'altro in sequenza verticale. */
+        box-shadow: 0 0 20px 0 rgba(83, 14, 14, 0.8);
+        /* box-shadow sintassi:
+           offset-x: 0px → niente spostamento orizzontale
+           offset-y: 0px → niente spostamento verticale
+           blur-radius: 20px → quanto si sfuma l'ombra
+           spread-radius: 0px → niente espansione extra
+           colore: rgba(83, 14, 14, 0.8) = rosso molto scuro, 80% opaco */
+      }
+
+      /* === MARCATORE VERDE === */
+      .green {
+        background: linear-gradient(#55680D, #71F53E, #116C31);
+        /* Gradiente con notazione esadecimale:
+           - #55680D = verde oliva scuro
+           - #71F53E = verde lime brillante
+           - #116C31 = verde foresta */
+        box-shadow: 0 0 20px 0 #3B7E20CC;
+        /* Ombra verde con trasparenza:
+           - #3B7E20 = verde medio
+           - CC = valore alfa in esadecimale → circa 80% opaco (CC = 204 / 255) */
+      }
+
+      /* === MARCATORE BLU === */
+      .blue {
+        background: linear-gradient(hsl(186, 76%, 16%), hsl(223, 90%, 60%), hsl(240, 56%, 42%));
+        /* Gradiente con notazione HSL (Hue, Saturation, Lightness):
+           - hsl(186, 76%, 16%) = verde acqua molto scuro
+           - hsl(223, 90%, 60%) = azzurro acceso
+           - hsl(240, 56%, 42%) = blu medio
+           Hue: da 0 a 360 → seleziona la tonalità (rosso = 0°, verde = 120°, blu = 240°)
+           Saturation: 76%, 90%, 56% → intensità del colore (0% = grigio, 100% = colore pieno)
+           Lightness: 16%, 60%, 42% → luminosità (0% = nero, 100% = bianco) */
+        box-shadow: 0 0 20px 0 blue;
+        /* Ombra blu classica, nessuna trasparenza */
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Tutto ciò che viene visualizzato sulla pagina è contenuto nel <body>. -->
+    <h1>CSS Color Markers</h1>
+    <!-- <h1>: Titolo principale della pagina. Unico per ogni documento. -->
+    <div class="container">
+    <!-- Contenitore principale dei marker.
+         class="container": usata per stilare questo blocco con padding e sfondo bianco. -->
+      <div class="marker red">
+        <!-- Marker rosso: struttura base condivisa, colore diverso tramite classe "red". -->
+        <div class="cap"></div>
+        <!-- Parte iniziale del marker, simula il tappo. -->
+        <div class="sleeve"></div>
+        <!-- Parte centrale del marker, simula la guaina trasparente. -->
+      </div>
+      <div class="marker green">
+        <!-- Marker verde -->
+        <div class="cap"></div>
+        <div class="sleeve"></div>
+      </div>
+      <div class="marker blue">
+        <!-- Marker blu -->
+        <div class="cap"></div>
+        <div class="sleeve"></div>
+      </div>
+    </div>
+  </body>
+</html>
