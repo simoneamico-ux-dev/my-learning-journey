@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<!-- Dichiara che il documento è in HTML5.
+     Deve sempre essere la prima riga. Evita comportamenti obsoleti del browser (quirks mode). -->
+
+<html lang="en">
+<!-- Tag radice dell'intero documento HTML.
+     lang="en" specifica che il contenuto è in inglese, utile per SEO, screen reader e traduttori. -->
+
+  <head>
+    <!-- <head>: Contiene metadati, titolo, collegamenti a CSS, font e script. Non visibile direttamente nella pagina. -->
+
+    <meta charset="UTF-8">
+    <!-- Specifica la codifica dei caratteri come UTF-8 (standard moderno e universale). Supporta lettere accentate, emoji, simboli. -->
+
+    <title>Registration Form</title>
+    <!-- Titolo che appare nella scheda del browser e nei motori di ricerca. -->
+
+    <style>
+      /* CSS incluso direttamente nella pagina per comodità (in alternativa può essere in un file esterno). */
+
+      body {
+        width: 100%;
+        height: 100vh;
+        margin: 0;
+        background-color: #1b1b32; /* Blu-viola scuro di sfondo */
+        color: #f5f6f7;             /* Testo chiaro */
+        font-family: Tahoma;        /* Font moderno e leggibile */
+        font-size: 16px;            /* Dimensione di base */
+      }
+
+      h1, p {
+        margin: 1em auto;
+        text-align: center;         /* Centra i titoli e il paragrafo introduttivo */
+      }
+
+      form {
+        width: 60vw;                /* Larghezza pari al 60% della viewport */
+        max-width: 500px;           /* Mai più largo di 500px */
+        min-width: 300px;           /* Mai più stretto di 300px */
+        margin: 0 auto;             /* Centro orizzontale */
+        padding-bottom: 2em;        /* Spazio sotto il form */
+      }
+
+      fieldset {
+        border: none;               /* Nessun bordo di default */
+        padding: 2rem 0;            /* Spazio interno verticale */
+        border-bottom: 3px solid #3b3b4f; /* Linea separatrice tra sezioni */
+      }
+
+      fieldset:last-of-type {
+        border-bottom: none;        /* Nessuna linea dopo l’ultimo fieldset */
+      }
+
+      label {
+        display: block;             /* Ogni etichetta su una riga a sé */
+        margin: 0.5rem 0;
+      }
+
+      input,
+      textarea,
+      select {
+        margin-top: 10px;
+        width: 100%;                /* Tutti questi elementi si estendono per l'intera larghezza del form */
+        min-height: 2em;
+      }
+
+      input, textarea {
+        background-color: #0a0a23;  /* Colore scuro di sfondo per input */
+        border: 1px solid #0a0a23;  /* Bordo dello stesso colore */
+        color: #ffffff;             /* Testo bianco per contrasto */
+      }
+
+      .inline {
+        width: unset;               /* Rimuove larghezza 100% di default */
+        margin-right: 0.5em;
+        vertical-align: middle;     /* Allinea orizzontalmente con il testo */
+      }
+
+      input[type="submit"] {
+        display: block;
+        width: 60%;
+        margin: 1em auto;
+        height: 2em;
+        font-size: 1.1rem;
+        background-color: #3b3b4f;  /* Stesso tono usato nei separatori */
+        border-color: white;
+        min-width: 300px;
+      }
+
+      input[type="file"] {
+        padding: 1px 2px;
+      }
+
+      a {
+        color: #dfdfe2;             /* Colore link coerente con la palette generale */
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Corpo del documento: tutto ciò che l’utente vede -->
+
+    <h1>Registration Form</h1>
+    <!-- Titolo principale della pagina -->
+
+    <p>Please fill out this form with the required information</p>
+    <!-- Paragrafo introduttivo -->
+
+    <form method="post" action="https://register-demo.freecodecamp.org">
+    <!-- <form>: elemento HTML per la raccolta dei dati utente.
+         method="post": i dati saranno inviati in modo invisibile (rispetto a "get").
+         action="...": dove i dati verranno inviati -->
+
+      <fieldset>
+        <!-- Raggruppa logicamente i campi del form. -->
+        <label for="first-name">
+          Enter Your First Name:
+          <input id="first-name" name="first-name" type="text" required />
+        </label>
+
+        <label for="last-name">
+          Enter Your Last Name:
+          <input id="last-name" name="last-name" type="text" required />
+        </label>
+
+        <label for="email">
+          Enter Your Email:
+          <input id="email" name="email" type="email" required />
+        </label>
+
+        <label for="new-password">
+          Create a New Password:
+          <input id="new-password" name="new-password" type="password" pattern="[a-z0-5]{8,}" required />
+          <!-- pattern="[a-z0-5]{8,}": password di almeno 8 caratteri, minuscoli o numeri (esercizio didattico) -->
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Account type (required)</legend>
+        <!-- Didascalia del gruppo -->
+
+        <label for="personal-account">
+          <input id="personal-account" type="radio" name="account-type" class="inline" checked />
+          Personal
+        </label>
+
+        <label for="business-account">
+          <input id="business-account" type="radio" name="account-type" class="inline" />
+          Business
+        </label>
+        <!-- I due radio condividono lo stesso name: solo uno può essere selezionato alla volta -->
+      </fieldset>
+
+      <fieldset>
+        <!-- Altri dati opzionali -->
+        <label for="profile-picture">
+          Upload a profile picture:
+          <input id="profile-picture" type="file" name="file" />
+        </label>
+
+        <label for="age">
+          Input your age (years):
+          <input id="age" type="number" name="age" min="13" max="120" />
+        </label>
+
+        <label for="referrer">
+          How did you hear about us?
+          <select id="referrer" name="referrer">
+            <option value="">(select one)</option>
+            <option value="1">freeCodeCamp News</option>
+            <option value="2">freeCodeCamp YouTube Channel</option>
+            <option value="3">freeCodeCamp Forum</option>
+            <option value="4">Other</option>
+          </select>
+        </label>
+
+        <label for="bio">
+          Provide a bio:
+          <textarea id="bio" name="bio" rows="3" cols="30" placeholder="I like coding on the beach..."></textarea>
+          <!-- <textarea>: campo multiriga per scrivere liberamente -->
+        </label>
+      </fieldset>
+
+      <label for="terms-and-conditions">
+        <input class="inline" id="terms-and-conditions" type="checkbox" required name="terms-and-conditions" />
+        I accept the
+        <a href="https://www.freecodecamp.org/news/terms-of-service/">terms and conditions</a>
+        <!-- Il checkbox è richiesto per l'invio del form.
+             Cliccando sull'intera etichetta si seleziona il checkbox, grazie all’associazione via for/id -->
+      </label>
+
+      <input type="submit" value="Submit" />
+      <!-- Pulsante per inviare il form -->
+    </form>
+  </body>
+</html>
