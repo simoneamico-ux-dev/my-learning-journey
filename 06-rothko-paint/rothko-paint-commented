@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!-- <!DOCTYPE html>: Indica al browser che si sta usando HTML5, fondamentale per compatibilità e standard. -->
+
+<html lang="en">
+<!-- <html lang="en">: Radice dell’intero documento HTML. lang="en" segnala che la lingua del contenuto è l’inglese (per screen reader, SEO, ecc.) -->
+
+  <head>
+    <!-- <head></head>: Contiene metadati, titoli e riferimenti a fogli di stile. Non visibile direttamente nella pagina. -->
+
+    <meta charset="UTF-8">
+    <!-- <meta charset="UTF-8">: Definisce la codifica dei caratteri → UTF-8 è lo standard moderno per supportare lettere accentate, simboli, emoji ecc. -->
+
+    <title>Rothko Painting</title>
+    <!-- <title></title>: Il titolo della pagina, visibile nella tab del browser. Anche importante per SEO. -->
+
+    <style>
+      /* ===== STILE CSS INTEGRATO NEL DOCUMENTO ===== */
+
+      .canvas {
+        width: 500px;                /* Larghezza dell'area pittorica */
+        height: 600px;               /* Altezza dell'area pittorica */
+        background-color: #4d0f00;   /* Colore scuro dello sfondo, simile a un rosso molto scuro */
+        overflow: hidden;           /* Nasconde qualsiasi elemento che esca dal contenitore */
+        filter: blur(2px);          /* Applica un leggero sfocato a tutto il canvas */
+      }
+
+      .frame {
+        border: 50px solid black;   /* Cornice nera spessa 50px */
+        width: 500px;               /* Larghezza interna (non include il padding né il bordo) */
+        padding: 50px;              /* Spazio interno tra la cornice e il canvas */
+        margin: 20px auto;          /* 20px sopra e sotto, centrato orizzontalmente con auto */
+      }
+
+      .one {
+        width: 425px;               /* Larghezza del primo rettangolo */
+        height: 150px;              /* Altezza del primo rettangolo */
+        background-color: #efb762;  /* Colore arancio/miele */
+        margin: 20px auto;          /* Spazio sopra/sotto e centrato orizzontalmente */
+        box-shadow: 0 0 3px 3px #efb762; /* Effetto bagliore con lo stesso colore di sfondo */
+        border-radius: 9px;         /* Angoli arrotondati uniformi */
+        transform: rotate(-0.6deg); /* Leggera rotazione per dare un aspetto "dipinto a mano" */
+      }
+
+      .two {
+        width: 475px;
+        height: 200px;
+        background-color: #8f0401;  /* Rosso scuro intenso */
+        margin: 0 auto 20px;        /* Nessun margine sopra, centrato, 20px sotto */
+        box-shadow: 0 0 3px 3px #8f0401; /* Bagliore simile al colore interno */
+        border-radius: 8px 10px;    /* Raggi diversi per angoli (verticale vs orizzontale) */
+        transform: rotate(0.4deg);  /* Altra rotazione sottile */
+      }
+
+      .one, .two {
+        filter: blur(1px);          /* Sfocatura leggera su entrambi i rettangoli */
+      }
+
+      .three {
+        width: 91%;                 /* Percentuale relativa al canvas → 91% della larghezza */
+        height: 28%;                /* Idem per l’altezza (28% del canvas) */
+        background-color: #b20403;  /* Rosso intenso */
+        margin: auto;               /* Centra automaticamente */
+        filter: blur(2px);          /* Sfocatura più accentuata */
+        box-shadow: 0 0 5px 5px #b20403; /* Bagliore più esteso rispetto a .one e .two */
+        border-radius: 30px 25px 60px 12px;
+        /* Angoli arrotondati diversi → crea un effetto organico/non simmetrico */
+        transform: rotate(-0.2deg); /* Piccola inclinazione */
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <!-- <body></body>: Tutto il contenuto visibile dell’utente va qui -->
+
+    <div class="frame">
+      <!-- .frame: Simula una cornice attorno alla “tela” -->
+
+      <div class="canvas">
+        <!-- .canvas: Lo sfondo e contenitore dei tre “rettangoli” dipinti -->
+
+        <div class="one"></div>
+        <!-- Rettangolo superiore: colore miele chiaro, leggermente sfocato -->
+
+        <div class="two"></div>
+        <!-- Rettangolo centrale: rosso intenso, forma simile ma diversa da .one -->
+
+        <div class="three"></div>
+        <!-- Rettangolo inferiore: rosso vivo, con angoli molto arrotondati e sfocatura maggiore -->
+      </div>
+      <!-- Fine canvas -->
+    </div>
+    <!-- Fine frame -->
+  </body>
+</html>
