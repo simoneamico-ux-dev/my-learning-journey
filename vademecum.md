@@ -1099,5 +1099,272 @@
 
 ---
 
+## 5. Layout & Display
+
+### `display`
+
+* **Cosa fa**: definisce il **modo** in cui una scatola si posiziona e occupa spazio.
+* **Sintassi**
+
+  ```css
+  .element { display: valore; }
+  ```
+* **Valori principali**
+  **`block`** — nuova riga, larghezza 100 %. Valore di default per `<div>`, `<p>`, `<h1>`, `<section>`. *Usa per* sezioni che si impilano. *Analogia*: uno **scatolone** che occupa tutto lo scaffale.
+
+  **`inline`** — fluisce nella riga, ignora `width/height`. Default per `<span>`, `<a>`, `<strong>`. *Usa per* parole, link. *Analogia*: una **bustina** infilata tra le altre.
+
+  **`inline-block`** — in linea **ma** dimensionabile. Spesso su `<img>`, `<button>`, badge. *Usa per* bottoni, etichette. *Analogia*: **bustina rigida** con misura fissa.
+
+  **`flex`** — rende il contenitore un **flex‑container**. Lo imposti tu (nessun tag di default). *Usa per* nav‑bar, gallerie. *Analogia*: **mensola modulare** con ripiani scorrevoli.
+
+  **`none`** — rimuove l’elemento dal flusso e dall’accessibilità (a11y). *Usa per* modali nascosti. *Analogia*: **sedia tolta** dalla stanza.
+
+---
+
+### `vertical-align`
+
+* **Cosa fa**: allinea elementi **inline** o **inline‑block** verticalmente.
+* **Valori**: `baseline` (default), `middle`, `top`, `bottom`.
+* **Snippet**
+
+  ```css
+  img.icon { vertical-align: middle; }
+  ```
+* **Analogia**: **ascensore** che ferma al piano terra (baseline) o a metà (middle).
+* **Quando usarlo**: icone inline accanto a testo.
+
+---
+
+* **Cosa fa**: allinea elementi **inline** o **inline‑block** verticalmente sulla stessa linea di testo.
+* **Valori comuni**: `baseline` (default), `middle`, `top`, `bottom`.
+* **Snippet**
+
+  ```css
+  img.icon { vertical-align: middle; }
+  ```
+* **Analogia**: pensalo come un **ascensore** che può fermarsi al piano terra (baseline), metà piano (middle), attico (top) o seminterrato (bottom).
+* **Quando usarlo**: icone o immagini inline che devono stare in linea con testo.
+
+  ```css
+  ```
+
+### Flexbox (base)
+
+```css
+.gallery {
+  display: flex;           /* attiva flex */
+  flex-direction: row;     /* orientamento */
+  flex-wrap: wrap;         /* consenti a capo */
+  justify-content: center; /* allineamento main‑axis */
+  align-items: center;     /* allineamento cross‑axis */
+}
+```
+
+* **`flex-direction`** — imposta l’asse principale.
+  `row` (default), `row-reverse`, `column`, `column-reverse`.
+* **`flex-wrap`** — controlla il capo.
+  `nowrap` (default) = una riga, item che si stringono; `wrap` = nuove righe; `wrap-reverse` = nuove righe dall’altro lato.
+* **`justify-content`** — distribuisce item sull’asse principale.
+  `flex-start` (default) / `center` / `flex-end` / `space-between` / `space-around` / `space-evenly`.
+* **`align-items`** — allinea item sull’asse trasversale.
+  `stretch` (default) / `center` / `flex-start` / `flex-end` / `baseline`.
+* **Centratura 2D rapida**
+
+  ```css
+  .hero {
+    display: flex;
+    justify-content: center; /* orizzontale */
+    align-items: center;     /* verticale  */
+  }
+  ```
+* **Analogia**: Flexbox è come una **mensola modulare**: scegli orientamento (row/column), decidi se aggiungere ripiani (`wrap`), sposti i libri per avere spazi uguali (`justify-content`) o li allinei all’altezza giusta (`align-items`).
+
+---
+
+### Centratura tradizionale con `margin: 0 auto`
+
+```css
+.card {
+  width: 300px;
+  margin: 0 auto; /* margini orizzontali auto → centra */
+}
+```
+
+* **Perché funziona**: con larghezza fissa, il browser calcola margini **sinistro** e **destro** uguali (`auto`).
+* **Quando usarlo**: elementi a larghezza fissa (form, card) da centrare.
+
+\--- con `margin: 0 auto`
+
+```css
+.card {
+  width: 300px;
+  margin: 0 auto; /* margini horizontali auto = centrazione */
+}
+```
+
+* **Quando usarlo**: elementi a larghezza fissa da centrare nel contenitore (form, card singola, modale).
+
+### Nascondere elementi senza rompere il layout
+
+* **`display: none`**
+
+  * L’elemento scompare: **niente spazio occupato**, nessun annuncio agli screen reader.
+  * *Quando usarlo*:
+
+    * **Menu chiuso**: il menu hamburger resta nel DOM ma le voci sono rimosse finché l’utente non apre il menu.
+    * **Modale non attiva**: la finestra popup sparisce del tutto finché non viene invocata.
+    * **Step wizard nascosto**: nei form a più step mostri solo la sezione corrente, rimuovendo le altre dal flusso.
+
+* **`visibility: hidden`**
+
+  * L’elemento diventa invisibile **ma** mantiene il proprio spazio.
+  * Non annunciato di default ai reader; può ricevere focus se gestito via script.
+  * *Quando usarlo*:
+
+    * **Tooltip**: piccolo riquadro di testo che appare sopra un bottone; restando in posizione evita di spostare il layout.
+    * **Animazioni**: elementi che devono riapparire nello stesso punto senza causare *layout shift* (spostamento improvviso dei contenuti che infastidisce l’utente).
+
+* **Glossario rapido**
+
+  * **Menu chiuso**: l’elenco di link nascosto dietro l’icona ☰, visibile solo al click/tap.
+  * **Modale**: finestra sopra la pagina che blocca l’interazione finché non viene chiusa.
+  * **Step wizard**: formulario diviso in più passi sequenziali (passo 1, passo 2…).
+  * **Tooltip**: etichetta di aiuto che appare al passaggio del mouse o al focus tastiera.
+  * **Layout shift**: salto improvviso del contenuto (testo o bottoni che si spostano) causato dall’aggiunta/rimozione di spazio.
+
+* **Analogia**:
+
+  * `display: none` → togli la sedia dalla stanza: pavimento libero.
+  * `visibility: hidden` → lasci la sedia ma la rendi invisibile: nessuno la vede, ma occupa ancora posto.
+
+---
+
+## 6. Effetti & Trasformazioni
+
+### `box-shadow`
+
+* **Cosa fa**: aggiunge un’ombra dietro (o dentro, con `inset`) all’elemento, simulando profondità.
+* **Snippet**
+
+  ```css
+  .card {
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25); /* offset‑x | offset‑y | blur | colore */
+  }
+  .inset {
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.3); /* ombra verso l’interno */
+  }
+  ```
+* **Analogia**: puntare una lampada sul tavolo: l’oggetto proietta un’ombra più o meno sfocata a seconda della distanza.
+* **Quando usarlo**: card elevate, bottoni in stato hover, ombre interne per “incassare” campi input.
+
+---
+
+### `filter: blur()`
+
+* **Cosa fa**: applica un effetto di sfocatura ai pixel dell’elemento.
+* **Snippet**
+
+  ```css
+  .canvas { filter: blur(2px); }
+  .soft   { filter: blur(8px); }
+  ```
+* **Analogia**: guardare l’immagine attraverso un vetro smerigliato: contorni smussati.
+* **Quando usarlo**: sfondo artistico dietro un popup (glass‑morphism), simulare profondità di campo, nascondere temporaneamente contenuti sensibili.
+
+---
+
+### `transform: rotate()`
+
+* **Cosa fa**: ruota l’elemento 2D attorno al proprio centro (o un punto di trasformazione personalizzato).
+* **Snippet**
+
+  ```css
+  .one   { transform: rotate(-0.6deg); } /* lieve inclinazione antioraria */
+  .flip  { transform: rotate(180deg); }  /* capovolge */
+  ```
+* **Analogia**: prendere un post‑it e inclinarlo leggermente per un look “hand‑made”.
+* **Quando usarlo**: dare vivacità a card, creare spinner (rotazione continua), ruotare etichette decorative.
+
+---
+
+### `overflow: hidden`
+
+* **Cosa fa**: taglia tutto ciò che esce dai bordi dell’elemento, nascondendo lo “strabordo”.
+* **Snippet**
+
+  ```css
+  .frame {
+    width: 200px; height: 100px;
+    overflow: hidden; /* ritaglia il contenuto eccedente */
+  }
+  ```
+* **Analogia**: posare il coperchio su una scatola con oggetti che strabordano: ciò che sporge viene coperto e non si vede più.
+* **Quando usarlo**: gallerie con immagini in crop, creare maschere per animazioni che scorrono fuori dal contenitore, impedire che box‑shadow o bordi interni sporchino il layout.
+
+---
+
+## 7. Interazione & Accessibilità CSS
+
+### `accent-color`
+
+* **Cosa fa**: imposta il colore dei controlli nativi (checkbox, radio, slider, progress) in armonia con la palette del sito.
+* **Snippet**
+
+  ```css
+  :root {
+    accent-color: #0fb; /* verde acqua brand */
+  }
+  ```
+* **Analogia**: fornire a tutti i dipendenti la stessa penna con inchiostro brand: ogni spunta e barra di avanzamento avrà quella tinta, senza cambiare la forma della penna.
+* **Quando usarlo**: brandizzare rapidamente i controlli form mantenendo l’aspetto di sistema; preferisci questa via a sostituire i controlli con SVG personalizzati quando possibile.
+
+---
+
+### `appearance: none` (con prefissi)
+
+* **Cosa fa**: azzera lo stile nativo di un **controllo/form widget** (checkbox, radio, slider, `<select>` …) per ridisegnarlo interamente con il tuo CSS.
+* **Snippet cross‑browser**
+
+  ```css
+  .slider {
+    -webkit-appearance: none; /* Safari / Chrome */
+       -moz-appearance: none; /* Firefox       */
+            appearance: none; /* Standard      */
+  }
+  ```
+* **Analogia**: smontare la carrozzeria di serie da un’auto e montare un body‑kit personalizzato.
+* **Quando usarlo**:
+
+  1. Creare **slider**, **select** o **checkbox** custom quando lo stile di default del browser non si integra con il tuo design.
+  2. Dopo aver rimosso l’aspetto nativo, **reintroduci manualmente** gli stati `:hover`, `:focus`, `:disabled` per mantenere contrasto e usabilità.
+
+---
+
+### Gestione `outline` (focus)
+
+* **Cosa fa**: controlla il contorno che indica il focus quando un elemento riceve l’attenzione da tastiera o mouse.
+* **Snippet di personalizzazione**
+
+  ```css
+  button:focus-visible {
+    outline: 2px dashed #ff9800;
+    outline-offset: 2px;
+  }
+
+  /* Se decidi di rimuoverlo, fornisci un sostituto visibile */
+  .btn-alt:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px #ff9800aa;
+  }
+  ```
+* **Analogia**: un **faro da stadio** che illumina il giocatore con la palla: se lo spegni, il pubblico (utenti tastiera) perde il riferimento.
+* **Quando usarlo**:
+
+  1. **Personalizzare** – adatta colore/spessore all’interfaccia mantenendo contrasto sufficiente.
+  2. **Rimuovere con alternativa** – solo se sostituito da un feedback altrettanto evidente (ombra, glow, cambio background).
+  3. **`:focus-visible`** – mostra l’indicatore solo agli utenti che navigano da tastiera, lasciando l’esperienza mouse più pulita.
+
+---
 
 
