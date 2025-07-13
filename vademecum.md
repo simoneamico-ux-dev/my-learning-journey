@@ -1098,3 +1098,6 @@
 * **Quando usarla**: quando vuoi dichiarare colore, immagine e comportamento in un colpo solo (leggibilità ok, evita duplicazioni).
 
 ---
+
+
+
