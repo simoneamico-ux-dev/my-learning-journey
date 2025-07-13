@@ -1,1 +1,120 @@
+<!DOCTYPE html>
+<!-- Dichiara che il file è HTML5, va sempre in prima riga -->
 
+<html lang="en">
+<!-- Tag radice. lang="en" segnala la lingua per SEO, accessibilità, traduttori automatici -->
+
+<head>
+  <meta charset="utf-8">
+  <!-- Codifica dei caratteri UTF-8 (supporta tutte le lettere, simboli, emoji ecc.) -->
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Fa sì che il layout sia responsive: la larghezza della viewport segue il dispositivo -->
+
+  <title>Photo Gallery</title>
+  <!-- Titolo della pagina, visibile nella scheda/tab del browser -->
+
+  <style>
+    /* ===== RESET E BASE ===== */
+    * {
+      box-sizing: border-box;
+      /* box-sizing: border-box rende padding e border inclusi nella width e height dichiarate */
+    }
+
+    body {
+      margin: 0;
+      /* Rimuove il margine di default del browser */
+      font-family: sans-serif;
+      /* Font moderno, senza grazie, leggibile ovunque */
+      background: #f5f6f7;
+      /* Grigio molto chiaro di sfondo */
+    }
+
+    /* ===== HEADER DELLA PAGINA ===== */
+    .header {
+      text-align: center;
+      /* Centra il testo orizzontalmente */
+      text-transform: uppercase;
+      /* Trasforma tutto il testo in maiuscolo */
+      padding: 32px;
+      /* Spazio interno sopra/sotto */
+      background-color: #0a0a23;
+      /* Blu/nero profondo */
+      color: #fff;
+      /* Testo bianco */
+      border-bottom: 4px solid #fdb347;
+      /* Riga decorativa gialla/arancione sotto l'header */
+    }
+
+    /* ===== GALLERIA FOTO FLEXBOX ===== */
+    .gallery {
+      display: flex;
+      /* Abilita Flexbox */
+      flex-direction: row;
+      /* Le foto sono allineate in righe (default) */
+      flex-wrap: wrap;
+      /* Se non c'è più spazio, le immagini vanno a capo */
+      justify-content: center;
+      /* Centra tutte le foto orizzontalmente */
+      align-items: center;
+      /* Centra verticalmente le righe di immagini */
+      gap: 16px;
+      /* Spazio fisso tra le immagini (nuovo in Flexbox, più pratico del margin) */
+      max-width: 1400px;
+      /* Larghezza massima della galleria per layout responsive */
+      margin: 0 auto;
+      /* Centra la galleria orizzontalmente nella pagina */
+      padding: 20px 10px;
+      /* Spazio interno sopra/sotto (20px), ai lati (10px) */
+    }
+
+    /* ===== STILE DELLE FOTO ===== */
+    .gallery img {
+      width: 100%;
+      /* Ogni foto occupa tutta la larghezza dello slot disponibile */
+      max-width: 350px;
+      /* Ma non più di 350px */
+      height: 300px;
+      /* Altezza fissa: uniforma la griglia */
+      object-fit: cover;
+      /* Taglia le immagini per riempire tutto lo spazio senza distorsioni */
+      border-radius: 10px;
+      /* Angoli arrotondati per look più moderno */
+    }
+
+    /* ===== HACK PER ALLINEAMENTO GIUSTIFICATO ===== */
+    .gallery::after {
+      content: "";
+      /* Pseudo-elemento "fantasma" per completare l’ultima riga */
+      width: 350px;
+      /* Occupa lo spazio di una immagine */
+      /* Serve per evitare che l'ultima riga di immagini sia troppo corta
+         e per mantenere il layout giustificato anche se il numero di immagini non è multiplo perfetto */
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ===== HEADER DELLA PAGINA ===== -->
+  <header class="header">
+    <h1>css flexbox photo gallery</h1>
+    <!-- Titolo in maiuscolo, centrato e ben visibile -->
+  </header>
+
+  <!-- ===== GALLERIA FOTOGRAFICA ===== -->
+  <div class="gallery">
+    <!-- Container flex per le foto; la classe .gallery applica tutto il layout con Flexbox -->
+    <img src="https://cdn.freecodecamp.org/curriculum/css-photo-gallery/1.jpg">
+    <img src="https://cdn.freecodecamp.org/curriculum/css-photo-gallery/2.jpg">
+    <img src="https://cdn.freecodecamp.org/curriculum/css-photo-gallery/3.jpg">
+    <img src="https://cdn.freecodecamp.org/curriculum/css-photo-gallery/4.jpg">
+    <img src="https://cdn.freecodecamp.org/curriculum/css-photo-gallery/5.jpg">
+    <img src="https://cdn.freecodecamp.org/curriculum/css-photo-gallery/6.jpg">
+    <img src="https://cdn.freecodecamp.org/curriculum/css-photo-gallery/7.jpg">
+    <img src="https://cdn.freecodecamp.org/curriculum/css-photo-gallery/8.jpg">
+    <img src="https://cdn.freecodecamp.org/curriculum/css-photo-gallery/9.jpg">
+    <!-- Ogni immagine occupa il suo spazio nella griglia.
+         Flexbox + object-fit: cover + max-width rendono tutto reattivo e ordinato -->
+  </div>
+</body>
+</html>
