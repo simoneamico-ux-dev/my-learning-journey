@@ -7,7 +7,7 @@ What I Learned:
 - CSS tricks for indentation, divider styles, and aligning numbers
 - How to analyze real nutrition labels and recreate them from scratch
 
-Time: 1 hour 45 minutes  
+Time: 2 hour 35 minutes  
 (Most of it built in the airport before my flight back to Torino, finished right after getting home because I couldn't wait!)
 
 Personal Note:  
