@@ -13,4 +13,4 @@ Time: 2 hour 35 minutes
 Personal Note:  
 This project was seriously enjoyable, probably because nutrition labels are part of my everyday life with bodybuilding. I went beyond the freeCodeCamp steps, I checked real labels on Google and tried to replicate their layout and style using only what I’ve learned so far. Not every experiment worked, but every mistake taught me something new. The more I code, the more confident I get—and the more I realize how much more there is to explore. It's like a matryoshka doll, every time you open a layer, there’s another inside, even more detailed and interesting.
 
-Next: Keep expanding my real-world HTML/CSS vademecum, and move on to the next freeCodeCamp project!
+Next: Continue expanding my HTML/CSS handbook into the real world and move on to the chapter: Learn accessibility by building a quiz
