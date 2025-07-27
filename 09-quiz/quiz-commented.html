@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<!-- 🎯 DICHIARAZIONE HTML5: Come dire "Ehi browser, questo è codice moderno!" -->
+<!-- È come l'etichetta su una valigia che dice "Fragile" - avvisa di cosa aspettarsi -->
+
+<html lang="en">
+<!-- 🌍 CONTENITORE PRINCIPALE: È come la scatola che contiene tutto il gioco -->
+<!-- lang="en" è come dire "questo gioco è in inglese" - aiuta motori di ricerca e screen reader -->
+
+  <head>
+    <!-- 🧠 CERVELLO DEL DOCUMENTO: Tutte le istruzioni segrete che l'utente non vede -->
+    
+    <meta charset="UTF-8" />
+    <!-- 📝 ALFABETO UNIVERSALE: UTF-8 = "capisco tutti i caratteri del mondo!" -->
+    <!-- È come avere un traduttore universale per emoji, accenti, simboli -->
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 📱 ISTRUZIONI PER MOBILE: "Adattati allo schermo del dispositivo!" -->
+    <!-- width=device-width = "sii largo quanto lo schermo" -->
+    <!-- initial-scale=1.0 = "inizia con zoom al 100%" -->
+    <!-- È come dire a una foto "adattati alla cornice, non importa se è grande o piccola" -->
+    
+    <meta name="description" content="freeCodeCamp Accessibility Quiz practice project" />
+    <!-- 📄 DESCRIZIONE PER GOOGLE: È come la sinossi di un film -->
+    <!-- Appare nei risultati di ricerca sotto il titolo -->
+    
+    <title>Accessibility Quiz</title>
+    <!-- 📑 TITOLO DELLA LINGUETTA: Quello che vedi nella tab del browser -->
+    <!-- È come il nome di un'app sul telefono -->
+    
+    <style>
+      /* 🎨 ===== FOGLIO DI STILE INTERNO: Le Regole del Design ===== */
+      /* È come avere un libro di istruzioni per l'arredamento della casa */
+      
+      @media (prefers-reduced-motion: no-preference) {
+        /* 🎢 RISPETTO PER CHI HA PROBLEMI CON IL MOVIMENTO: Accessibilità vera! */
+        /* È come chiedere "Ti danno fastidio le animazioni?" */
+        /* Se la risposta è "no", allora aggiungiamo lo scroll fluido */
+        /* no-preference = "non ho preferenze, va bene tutto" */
+        
+        * {
+          scroll-behavior: smooth;
+          /* 🎠 SCORRIMENTO FLUIDO: Come un ascensore invece che un salto */
+          /* Quando clicchi un link che va a un'altra sezione, scorre dolcemente */
+          /* È la differenza tra un teletrasporto e un viaggio in macchina */
+        }
+      }
+
+      body {
+        /* 🏠 IL CORPO DELLA PAGINA: È come dipingere le pareti di casa */
+        
+        background: #f5f6f7;
+        /* 🎨 SFONDO GRIGIO CHIARO: Come le pareti di un ufficio moderno */
+        /* #f5f6f7 = grigio molto tenue, rilassante per gli occhi */
+        
+        color: #1b1b32;
+        /* ✏️ COLORE TESTO: Blu scuro, quasi nero */
+        /* #1b1b32 = più elegante del nero puro, meno stancante */
+        
+        font-family: Helvetica;
+        /* ✍️ FONT PRINCIPALE: Helvetica = font pulito, professionale */
+        /* È come scegliere una calligrafia leggibile per scrivere lettere */
+        
+        margin: 0;
+        /* 🚫 ZERO MARGINI: Toglie gli spazi di default del browser */
+        /* È come togliere la cornice bianca da un quadro */
+      }
+
+      header {
+        /* 📰 INTESTAZIONE: Come la testata di un giornale */
+        
+        width: 100%;
+        /* 📏 LARGHEZZA PIENA: Si estende per tutta la larghezza dello schermo */
+        /* 100% = "occupa tutto lo spazio disponibile" */
+        
+        height: 50px;
+        /* 📐 ALTEZZA FISSA: 50px di altezza, come una barra degli strumenti */
+        
+        background-color: #1b1b32;
+        /* 🎨 SFONDO BLU SCURO: Stessa tonalità del testo ma come sfondo */
+        /* Crea contrasto con il grigio chiaro del body */
+        
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        /* ⚖️ LAYOUT FLESSIBILE: È come organizzare oggetti su un tavolo */
+        /* flex = "comportati come una scatola flessibile" */
+        /* space-between = "logo a sinistra, menu a destra, spazio nel mezzo" */
+        /* align-items: center = "tutto allineato al centro verticalmente" */
+        /* È come mettere oggetti su una mensola: uno agli estremi, centrati in altezza */
+        
+        top: 0;
+        /* 📌 POSIZIONE SUPERIORE: Preparazione per eventuali posizionamenti */
+      }
+
+      #logo {
+        /* 🏷️ IL LOGO: Come il marchio su una maglietta */
+        
+        width: max(10rem, 18vw);
+        /* 📏 LARGHEZZA INTELLIGENTE: "Prendi il valore più grande tra questi due" */
+        /* 10rem = 160px (dimensione minima garantita) */
+        /* 18vw = 18% della larghezza dello schermo (si adatta al dispositivo) */
+        /* È come dire "sii almeno così grande, ma cresci con lo schermo" */
+        
+        background-color: #0a0a23;
+        /* 🎨 SFONDO PIÙ SCURO: Blu ancora più scuro per far risaltare il logo */
+        
+        aspect-ratio: 35 / 4;
+        /* 📐 PROPORZIONI FISSE: "Mantieni sempre questo rapporto larghezza/altezza" */
+        /* 35:4 = rettangolo molto largo e basso, tipico dei loghi orizzontali */
+        /* È come un foglio A4 che mantiene sempre le stesse proporzioni */
+        
+        padding: 0.4rem;
+        /* 🏠 SPAZIO INTERNO: Piccolo cuscino intorno al logo */
+        /* 0.4rem = 6.4px di "respiro" intorno all'immagine */
+      }
+
+      h1 {
+        /* 📰 TITOLO PRINCIPALE: Il nome del quiz, grande e visibile */
+        
+        color: #f1be32;
+        /* 🌟 COLORE ORO: Giallo dorato che spicca sul blu scuro */
+        /* #f1be32 = tonalità calda che attira l'attenzione */
+        
+        font-size: min(5vw, 1.2em);
+        /* 📏 DIMENSIONE INTELLIGENTE: "Prendi il valore più piccolo" */
+        /* 5vw = 5% della larghezza dello schermo (responsive) */
+        /* 1.2em = 19.2px (dimensione massima) */
+        /* È come dire "cresci con lo schermo ma non diventare troppo grande" */
+        
+        text-align: center;
+        /* ⚖️ TESTO CENTRATO: Come il titolo di un libro */
+      }
+
+      nav {
+        /* 🧭 NAVIGAZIONE: Il menu principale, come le directory di un edificio */
+        
+        width: 50%;
+        /* 📏 METÀ LARGHEZZA: Occupa metà dello spazio dell'header */
+        
+        max-width: 300px;
+        /* 📐 LARGHEZZA MASSIMA: Non diventare mai più largo di 300px */
+        /* È come dire "puoi crescere, ma non oltre questo limite" */
+        
+        height: 50px;
+        /* 📐 STESSA ALTEZZA DELL'HEADER: Per allinearsi perfettamente */
+      }
+
+      nav > ul {
+        /* 📝 LISTA DI NAVIGAZIONE: I pulsanti del menu */
+        /* Il selettore > significa "solo ul che sono figli DIRETTI di nav" */
+        
+        display: flex;
+        justify-content: space-evenly;
+        /* ⚖️ DISTRIBUZIONE UNIFORME: "Distribuisci i link uniformemente" */
+        /* space-evenly = spazio uguale tra tutti gli elementi E ai lati */
+        /* È come disporre le sedie intorno a un tavolo rotondo */
+        
+        flex-wrap: wrap;
+        /* 🔄 AVVOLGIMENTO: "Se non c'è spazio, vai a capo" */
+        /* Come quando scrivi e arrivi a fine riga */
+        
+        align-items: center;
+        /* ⚖️ ALLINEAMENTO VERTICALE: Tutto centrato in altezza */
+        
+        padding-inline-start: 0;
+        /* 🚫 NIENTE RIENTRO: Toglie i puntini default delle liste */
+        /* padding-inline-start = versione moderna di padding-left */
+        
+        margin-block: 0;
+        /* 🚫 NIENTE MARGINE VERTICALE: margin-block = top e bottom insieme */
+        
+        height: 100%;
+        /* 📐 ALTEZZA PIENA: Occupa tutta l'altezza del contenitore nav */
+      }
+
+      nav > ul > li {
+        /* 🔗 SINGOLI ELEMENTI DEL MENU: Come i pulsanti di un telecomando */
+        
+        color: #dfdfe2;
+        /* 🎨 GRIGIO CHIARO: Colore neutro che si vede bene sul blu scuro */
+        
+        margin: 0 0.2rem;
+        /* 🌬️ SPAZIO TRA ELEMENTI: Piccola separazione tra i pulsanti */
+        /* 0.2rem = 3.2px di spazio orizzontale */
+        
+        padding: 0.2rem;
+        /* 🏠 AREA CLICCABILE: Rende i pulsanti più facili da cliccare */
+        /* È come allargare il bersaglio di una freccetta */
+        
+        display: block;
+        /* 📦 COMPORTAMENTO A BLOCCO: Ogni elemento occupa il suo spazio */
+      }
+
+      nav > ul > li:hover {
+        /* ✨ EFFETTO AL PASSAGGIO DEL MOUSE: La magia dell'interattività! */
+        /* :hover = "quando il mouse passa sopra" */
+        
+        background-color: #dfdfe2;
+        color: #1b1b32;
+        /* 🔄 INVERSIONE COLORI: Sfondo chiaro, testo scuro */
+        /* È come accendere una lampadina quando entri in una stanza */
+        
+        cursor: pointer;
+        /* 👆 CURSORE A MANINA: "Ehi, puoi cliccarmi!" */
+        /* Cambia il cursore da freccia a manina per indicare interattività */
+      }
+
+      li > a {
+        /* 🔗 LINK DENTRO I PULSANTI: I collegamenti veri e propri */
+        
+        color: inherit;
+        /* 🎨 COLORE EREDITATO: "Usa lo stesso colore del genitore" */
+        /* inherit = "prendi il colore dal li che mi contiene" */
+        
+        text-decoration: none;
+        /* 🚫 NIENTE SOTTOLINEATURA: Toglie la linea blu tipica dei link */
+        /* I link sembrano pulsanti puliti invece che link tradizionali */
+      }
+
+      main {
+        /* 📄 CONTENUTO PRINCIPALE: Il corpo del documento */
+        
+        padding-top: 50px;
+        /* 🏠 SPAZIO SUPERIORE: Lascia spazio per l'header fisso */
+        /* 50px = stessa altezza dell'header, evita sovrapposizioni */
+        /* È come lasciare spazio per non coprire un cartello stradale */
+      }
+
+      section {
+        /* 📦 SEZIONI DEL QUIZ: Come i capitoli di un libro */
+        
+        width: 80%;
+        /* 📏 LARGHEZZA: Occupa l'80% dello spazio disponibile */
+        /* Lascia il 20% come margini laterali per non riempire tutto lo schermo */
+        
+        margin: 0 auto 10px auto;
+        /* ⚖️ CENTRATURA + SPAZIO: "Centrato orizzontalmente, 10px sotto" */
+        /* 0 = niente margine sopra */
+        /* auto = centrato orizzontalmente */
+        /* 10px = spazio sotto ogni sezione */
+        /* auto = centrato orizzontalmente */
+        
+        max-width: 600px;
+        /* 📐 LARGHEZZA MASSIMA: Mai più largo di 600px */
+        /* Mantiene la leggibilità su schermi grandi */
+        /* È come limitare la lunghezza delle righe in un libro */
+      }
+
+      h1,
+      h2 {
+        /* 📰 TITOLI PRINCIPALI: Font più elegante per i titoli */
+        
+        font-family: Verdana, Tahoma;
+        /* ✍️ FONT PIÙ FORMALE: Verdana = font chiaro per i titoli */
+        /* Tahoma = piano B se Verdana non è disponibile */
+        /* È come usare un carattere più elegante per i titoli di giornale */
+      }
+
+      h2 {
+        /* 📰 TITOLI DI SEZIONE: Come i titoli dei capitoli */
+        
+        border-bottom: 4px solid #dfdfe2;
+        /* 📏 RIGA SOTTO: Spessa linea grigia sotto ogni titolo */
+        /* 4px = bella spessa, solid = continua, #dfdfe2 = grigio chiaro */
+        /* È come sottolineare con un evidenziatore spesso */
+        
+        margin-top: 0px;
+        /* 🚫 NIENTE SPAZIO SOPRA: Attaccato al bordo superiore della sezione */
+        
+        padding-top: 60px;
+        /* 🏠 SPAZIO INTERNO SOPRA: 60px di "cuscino" sopra il titolo */
+        /* Crea spazio per i link di navigazione che saltano alle sezioni */
+      }
+
+      .info {
+        /* ℹ️ SEZIONE INFORMAZIONI STUDENTE: Come un modulo da compilare */
+        
+        padding: 10px 0 0 5px;
+        /* 🏠 SPAZIO INTERNO: 10px sopra, 5px a sinistra */
+        /* Crea una piccola indentazione per i campi del form */
+      }
+
+      .formrow {
+        /* 📝 RIGA DEL FORM: Contenitore per domande complesse */
+        
+        margin-top: 30px;
+        /* 🌬️ SPAZIO SOPRA: 30px di respiro prima di ogni riga */
+        
+        padding: 0px 15px;
+        /* 🏠 SPAZIO INTERNO: 15px ai lati per indentare il contenuto */
+      }
+
+      input {
+        /* ⌨️ CAMPI DI INPUT: Dove gli studenti scrivono le risposte */
+        
+        font-size: 1rem;
+        /* 📏 DIMENSIONE TESTO: 1rem = 16px, dimensione standard leggibile */
+        /* Stesso font del resto del documento per coerenza */
+      }
+
+      .info label, .info input {
+        /* 🏷️ ETICHETTE E CAMPI NELLA SEZIONE INFO: Layout a due colonne */
+        
+        display: inline-block;
+        /* 📦 BLOCCHI IN LINEA: Come scatole che stanno sulla stessa riga */
+        /* Permette di avere larghezza e altezza ma rimanere in linea */
+      }
+
+      .info input {
+        /* ⌨️ CAMPI INPUT NELLA SEZIONE INFO: L'area dove si scrive */
+        
+        width: 50%;
+        /* 📏 METÀ LARGHEZZA: Occupa metà dello spazio disponibile */
+        
+        text-align: left;
+        /* ⬅️ TESTO A SINISTRA: Il testo inizia da sinistra (normale) */
+      }
+
+      .info label {
+        /* 🏷️ ETICHETTE NELLA SEZIONE INFO: I nomi dei campi */
+        
+        width: 10%;
+        /* 📏 LARGHEZZA PICCOLA: Solo il 10% dello spazio */
+        
+        min-width: 55px;
+        /* 📐 LARGHEZZA MINIMA: Almeno 55px anche su schermi piccoli */
+        /* Garantisce che "Name:", "Email:" etc. siano sempre leggibili */
+        
+        text-align: right;
+        /* ➡️ TESTO A DESTRA: Allinea le etichette verso i campi */
+        /* È come allineare i prezzi in uno scontrino */
+      }
+
+      .question-block {
+        /* ❓ BLOCCO DOMANDA: Contenitore per ogni singola domanda */
+        
+        text-align: left;
+        /* ⬅️ TESTO A SINISTRA: Allineamento normale per leggibilità */
+        
+        display: block;
+        /* 📦 COMPORTAMENTO A BLOCCO: Ogni domanda su una riga separata */
+        
+        width: 100%;
+        /* 📏 LARGHEZZA PIENA: Occupa tutto lo spazio disponibile */
+        
+        margin-top: 20px;
+        /* 🌬️ SPAZIO SOPRA: 20px di separazione tra domande */
+        
+        padding-top: 5px;
+        /* 🏠 PICCOLO CUSCINO SOPRA: 5px di spazio interno */
+      }
+
+      h3 {
+        /* 📰 TITOLI DOMANDE: I numeri delle domande */
+        
+        margin-top: 5px;
+        /* 🌬️ PICCOLO SPAZIO SOPRA: 5px di separazione */
+        
+        padding-left: 15px;
+        /* 🏠 RIENTRO A SINISTRA: 15px di indentazione */
+        
+        font-size: 1.375rem;
+        /* 📏 DIMENSIONE: 1.375rem = 22px, più grande del testo normale */
+        /* Abbastanza grande da essere notato ma non invadente */
+      }
+
+      h3::before {
+        /* ✨ CONTENUTO MAGICO: Aggiunge testo automaticamente! */
+        
+        content: "Question #";
+        /* 📝 TESTO AUTOMATICO: Scrive "Question #" prima del numero */
+        /* È come avere un timbro che aggiunge automaticamente del testo */
+        /* Se l'HTML dice <h3>1</h3>, il browser mostra "Question #1" */
+        /* Trucco CSS per non ripetere "Question #" in ogni titolo! */
+      }
+
+      .question {
+        /* ❓ FIELDSET DOMANDA: Contenitore semantico per le opzioni */
+        
+        border: none;
+        /* 🚫 NIENTE BORDO: Toglie il bordo di default del fieldset */
+        /* I fieldset normalmente hanno un bordo, noi lo togliamo per design pulito */
+        
+        padding-bottom: 0;
+        /* 🚫 NIENTE SPAZIO SOTTO: Elimina padding di default */
+      }
+
+      .answers-list {
+        /* 📝 LISTA RISPOSTE: Contenitore per True/False, A/B/C etc. */
+        
+        list-style: none;
+        /* 🚫 NIENTE PUNTINI: Toglie i pallini delle liste */
+        /* Le opzioni sembrano pulsanti radio puliti invece che una lista */
+        
+        padding: 0;
+        /* 🚫 NIENTE RIENTRO: Toglie l'indentazione di default delle liste */
+      }
+
+      button {
+        /* 🔘 PULSANTE DI INVIO: Il grande pulsante finale */
+        
+        display: block;
+        /* 📦 COMPORTAMENTO A BLOCCO: Occupa una riga intera */
+        
+        margin: 40px auto;
+        /* ⚖️ CENTRATURA CON SPAZIO: 40px sopra/sotto, centrato orizzontalmente */
+        /* auto = "browser, centralo tu!" */
+        
+        width: 40%;
+        /* 📏 LARGHEZZA: 40% dello spazio, abbastanza grande ma non invadente */
+        
+        padding: 15px;
+        /* 🏠 SPAZIO INTERNO: 15px di "cuscino" per renderlo facile da cliccare */
+        
+        font-size: 1.438rem;
+        /* 📏 TESTO GRANDE: 1.438rem = ~23px, ben visibile */
+        
+        background: #d0d0d5;
+        /* 🎨 SFONDO GRIGIO: Colore neutro per il pulsante */
+        
+        border: 3px solid #3b3b4f;
+        /* 🖼️ BORDO SPESSO: 3px di bordo blu scuro */
+        /* solid = linea continua, #3b3b4f = blu scuro che contrasta */
+      }
+
+      footer {
+        /* 👣 PIÈ DI PAGINA: Come i crediti alla fine di un film */
+        
+        background-color: #2a2a40;
+        /* 🎨 SFONDO BLU SCURO: Colore simile all'header ma diverso */
+        
+        display: flex;
+        justify-content: center;
+        /* ⚖️ CONTENUTO CENTRATO: Come centrare un logo in fondo alla pagina */
+      }
+
+      footer,
+      footer a {
+        /* 🎨 COLORI DEL FOOTER: Testo e link dello stesso colore chiaro */
+        
+        color: #dfdfe2;
+        /* 🎨 GRIGIO CHIARO: Stesso colore del testo del menu */
+        /* Coerenza cromatica in tutto il design */
+      }
+
+      address {
+        /* 📍 INFORMAZIONI INDIRIZZO: Elemento semantico HTML per i contatti */
+        
+        text-align: center;
+        /* ⚖️ TESTO CENTRATO: Come un indirizzo su una busta */
+        
+        padding: 0.3em;
+        /* 🏠 PICCOLO SPAZIO: 0.3em = piccolo cuscino intorno all'indirizzo */
+      }
+
+      .sr-only {
+        /* ♿ ACCESSIBILITÀ: Testo per gli screen reader! */
+        /* "sr" = Screen Reader - per chi usa software che legge lo schermo */
+        
+        position: absolute;
+        /* 📌 POSIZIONAMENTO ASSOLUTO: Esce dal flusso normale */
+        
+        width: 1px;
+        height: 1px;
+        /* 📐 DIMENSIONI MINUSCOLE: 1px x 1px = praticamente invisibile */
+        
+        overflow: hidden;
+        /* 🙈 NASCONDE CONTENUTO: Impedisce che trabocchi */
+        
+        clip: rect(0, 0, 0, 0);
+        clip-path: inset(50%);
+        /* ✂️ RITAGLIO: Due metodi per "ritagliare" l'elemento */
+        /* Lo nasconde visivamente ma rimane accessibile agli screen reader */
+        
+        white-space: nowrap;
+        /* 🚫 NON ANDARE A CAPO: Tutto su una riga */
+        
+        /* QUESTO È UN TRUCCO GENIALE! 🎩✨ */
+        /* L'elemento è invisibile ma gli screen reader lo leggono comunque */
+        /* È come sussurrare qualcosa che solo certe persone possono sentire */
+        /* Permette di aggiungere contesto extra per chi ne ha bisogno */
+      }
+    </style>
+  </head>
+  
+  <body>
+    <!-- 🏗️ ===== STRUTTURA DELLA PAGINA: Inizia la Costruzione ===== -->
+    
+    <header>
+      <!-- 📰 INTESTAZIONE: La parte superiore, sempre visibile -->
+      
+      <img id="logo" alt="freeCodeCamp" src="https://cdn.freecodecamp.org/platform/universal/fcc_primary.svg">
+      <!-- 🖼️ LOGO: L'immagine identificativa -->
+      <!-- alt="freeCodeCamp" = descrizione per chi non può vedere l'immagine -->
+      <!-- È come descrivere una foto a qualcuno al telefono -->
+      
+      <h1>HTML/CSS Quiz</h1>
+      <!-- 📰 TITOLO PRINCIPALE: Nome del gioco/test -->
+      
+      <nav>
+        <!-- 🧭 NAVIGAZIONE: Il menu per saltare alle sezioni -->
+        
+        <ul>
+          <!-- 📝 LISTA MENU: I pulsanti di navigazione -->
+          
+          <li><a href="#student-info">INFO</a></li>
+          <!-- 🔗 LINK ALLA SEZIONE INFO: href="#student-info" salta alla sezione con id="student-info" -->
+          <!-- È come un indice di un libro che ti porta direttamente al capitolo -->
+          
+          <li><a href="#html-questions">HTML</a></li>
+          <!-- 🔗 LINK ALLE DOMANDE HTML: Salta alla sezione HTML -->
+          
+          <li><a href="#css-questions">CSS</a></li>
+          <!-- 🔗 LINK ALLE DOMANDE CSS: Salta alla sezione CSS -->
+        </ul>
+      </nav>
+    </header>
+    
+    <main>
+      <!-- 📄 CONTENUTO PRINCIPALE: Il cuore del quiz -->
+      
+      <form method="post" action="https://freecodecamp.org/practice-project/accessibility-quiz">
+        <!-- 📝 MODULO PRINCIPALE: Come un foglio d'esame da compilare -->
+        <!-- method="post" = "invia i dati in modo sicuro" -->
+        <!-- action="..." = "invia i dati a questo indirizzo quando si clicca Send" -->
+        
+        <section role="region" aria-labelledby="student-info">
+          <!-- 📦 SEZIONE INFO STUDENTE: Prima parte del quiz -->
+          <!-- role="region" = "questa è una regione importante della pagina" -->
+          <!-- aria-labelledby="student-info" = "il titolo di questa sezione è l'elemento con id='student-info'" -->
+          <!-- Questi attributi aiutano gli screen reader a capire la struttura -->
+          
+          <h2 id="student-info">Student Info</h2>
+          <!-- 📰 TITOLO SEZIONE: Con id che collega all'aria-labelledby sopra -->
+          
+          <div class="info">
+            <!-- ℹ️ CONTENITORE INFO: Raggruppa etichetta + campo -->
+            
+            <label for="student-name">Name:</label>
+            <!-- 🏷️ ETICHETTA: Descrive il campo che segue -->
+            <!-- for="student-name" = "questa etichetta è per il campo con id='student-name'" -->
+            <!-- È come mettere un'etichetta su un barattolo -->
+            
+            <input type="text" name="student-name" id="student-name" />
+            <!-- ⌨️ CAMPO TESTO: Dove scrivere il nome -->
+            <!-- type="text" = "accetta qualsiasi testo" -->
+            <!-- name="student-name" = "quando invii il form, questo valore si chiamerà 'student-name'" -->
+            <!-- id="student-name" = "collegato alla label sopra" -->
+          </div>
+          
+          <div class="info">
+            <label for="student-email">Email:</label>
+            <input type="email" name="student-email" id="student-email" />
+            <!-- ⌨️ CAMPO EMAIL: type="email" controlla che sia un'email valida -->
+            <!-- È come avere un controllore che dice "questo non sembra un'email!" -->
+          </div>
+          
+          <div class="info">
+            <label for="birth-date">Date of Birth:</label>
+            <input type="date" name="birth-date" id="birth-date" />
+            <!-- 📅 CAMPO DATA: type="date" fa apparire un calendario -->
+            <!-- È come avere un calendario integrato nel modulo -->
+          </div>
+        </section>
+        
+        <section role="region" aria-labelledby="html-questions">
+          <!-- 📦 SEZIONE DOMANDE HTML: Seconda parte del quiz -->
+          
+          <h2 id="html-questions">HTML</h2>
+          <!-- 📰 TITOLO SEZIONE HTML -->
+          
+          <div class="question-block">
+            <!-- ❓ BLOCCO PRIMA DOMANDA -->
+            
+            <h3><span class="sr-only">Question</span>1</h3>
+            <!-- 📰 NUMERO DOMANDA: CSS aggiunge automaticamente "Question #" -->
+            <!-- span class="sr-only" = testo solo per screen reader -->
+            <!-- Screen reader sentirà "Question Question #1" ma è per chiarezza -->
+            
+            <fieldset class="question" name="html-question-one">
+              <!-- 📦 GRUPPO DOMANDA: fieldset raggruppa domanda + risposte -->
+              <!-- È come mettere una cornice intorno a una domanda d'esame -->
+              
+              <legend>
+                The legend element represents a caption for the content of its
+                parent fieldset element
+              </legend>
+              <!-- 📝 TESTO DOMANDA: legend descrive il contenuto del fieldset -->
+              <!-- È come il titolo di una sezione in un modulo -->
+              
+              <ul class="answers-list">
+                <!-- 📝 LISTA RISPOSTE: Contenitore per le opzioni -->
+                
+                <li>
+                  <label for="q1-a1">
+                    <!-- 🏷️ ETICHETTA RISPOSTA: Cliccando qui si seleziona il radio button -->
+                    
+                    <input type="radio" id="q1-a1" name="q1" value="true" />
+                    <!-- ⚪ PULSANTE RADIO: Solo uno selezionabile per gruppo -->
+                    <!-- name="q1" = tutti i radio con lo stesso name sono un gruppo -->
+                    <!-- value="true" = se selezionato, invia "true" -->
+                    
+                    True
+                  </label>
+                </li>
+                <li>
+                  <label for="q1-a2">
+                    <input type="radio" id="q1-a2" name="q1" value="false" />
+                    False
+                  </label>
+                </li>
+              </ul>
+            </fieldset>
+          </div>
+          
+          <div class="question-block">
+            <!-- ❓ BLOCCO SECONDA DOMANDA: Stessa struttura della prima -->
+            
+            <h3><span class="sr-only">Question</span>2</h3>
+            <fieldset class="question" name="html-question-two">
+              <legend>
+                A label element nesting an input element is required to have a
+                for attribute with the same value as the input's id
+              </legend>
+              <ul class="answers-list">
+                <li>
+                  <label for="q2-a1">
+                    <input type="radio" id="q2-a1" name="q2" value="true" />
+                    <!-- ⚪ NUOVO GRUPPO: name="q2" crea un gruppo separato da q1 -->
+                    True
+                  </label>
+                </li>
+                <li>
+                  <label for="q2-a2">
+                    <input type="radio" id="q2-a2" name="q2" value="false" />
+                    False
+                  </label>
+                </li>
+              </ul>
+            </fieldset>
+          </div>
+        </section>
+        
+        <section role="region" aria-labelledby="css-questions">
+          <!-- 📦 SEZIONE CSS: Terza e ultima parte -->
+          
+          <h2 id="css-questions">CSS</h2>
+          
+          <div class="formrow">
+            <!-- 📝 RIGA FORM: Contenitore per domande più complesse -->
+            
+            <div class="question-block">
+              <label for="selector">Can the CSS margin property accept negative values?</label>
+              <!-- 🏷️ ETICHETTA DOMANDA: Collegata al select sotto -->
+            </div>
+            
+            <div class="answer">
+              <!-- 📝 CONTENITORE RISPOSTA -->
+              
+              <select name="selector" id="selector" required>
+                <!-- 📋 MENU A TENDINA: Scelta tra opzioni predefinite -->
+                <!-- required = "questa domanda è obbligatoria" -->
+                
+                <option value="">Select an option</option>
+                <!-- ❓ OPZIONE VUOTA: Placeholder che forza una scelta -->
+                
+                <option value="yes">Yes</option>
+                <!-- ✅ OPZIONE SI: value="yes" viene inviato se selezionato -->
+                
+                <option value="no">No</option>
+                <!-- ❌ OPZIONE NO -->
+              </select>
+            </div>
+            
+            <div class="question-block">
+              <label for="css-textarea">Do you have any questions:</label>
+              <!-- 🏷️ ETICHETTA PER AREA TESTO -->
+            </div>
+            
+            <div class="answer">
+              <textarea id="css-textarea" name="css-questions" rows="5" cols="24"></textarea>
+              <!-- 📝 AREA TESTO LIBERO: Per commenti o domande -->
+              <!-- rows="5" = 5 righe di altezza -->
+              <!-- cols="24" = 24 caratteri di larghezza (circa) -->
+              <!-- È come un blocco note integrato nel quiz -->
+            </div>
+          </div>
+        </section>
+        
+        <button type="submit">Send</button>
+        <!-- 🔘 PULSANTE INVIO: Invia tutto il modulo -->
+        <!-- type="submit" = "quando clicchi, invia il form" -->
+        <!-- È come il pulsante "Consegna" di un esame -->
+      </form>
+    </main>
+    
+    <footer>
+      <!-- 👣 PIÈ DI PAGINA: Informazioni finali -->
+      
+      <address>
+        <!-- 📍 INFORMAZIONI CONTATTO: Elemento semantico per indirizzi -->
+        
+        <a href="https://freecodecamp.org">freeCodeCamp</a><br />
+        <!-- 🔗 LINK AL SITO PRINCIPALE: <br /> = vai a capo -->
+        
+        San Francisco<br />
+        California<br />
+        USA
+        <!-- 📍 INDIRIZZO FISICO: Città, stato, paese -->
+      </address>
+    </footer>
+  </body>
+</html>
