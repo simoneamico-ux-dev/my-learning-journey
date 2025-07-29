@@ -47,7 +47,7 @@
         margin-bottom: 8px;
       }
 
-      figure {
+      #img-div {
         display: block;
         margin: 0 auto;
         max-width: 900px;
@@ -58,13 +58,15 @@
         background-color: #F0F4F8;
       }
 
-      figure img {
+      #image {
         width: 100%;
         height: auto;
         display: block;
+        max-width: 100%;
+        margin: 0 auto;
       }
 
-      figcaption {
+      #img-caption {
         font-style: italic;
         color: #777;
         font-size: 0.95em;
@@ -116,13 +118,12 @@
         margin-bottom: 30px;
       }
 
-      /* Media Queries per il Responsive */
       @media (max-width: 768px) {
         ul, p {
           width: 80%; 
         }
         
-        figure {
+        #img-div {
           border-width: 20px 50px 30px 50px;
           max-width: 95%;
         }
@@ -133,7 +134,7 @@
           width: 90%;
         }
         
-        figure {
+        #img-div {
           border-width: 15px 20px 20px 20px;
           max-width: 98%;
         }
@@ -148,16 +149,16 @@
     <div class="container">
         <header>
             <div>
-                <h1>Dr. Donald Arthur Norman</h1>
+                <h1 id="title">Dr. Donald Arthur Norman</h1>
                 <p class="subtitle">The father of user experience</p>
             </div>
         </header>
-        <main>
-            <figure>
-                <img src="don-norman.jpg" alt="A photo of Dr. Donald Norman that discusses human-centered design principles during a conference">
-                <figcaption>Dr. Donald Norman that discusses human-centered design principles during a conference, part of his lifelong mission to improve human-technology interaction</figcaption>
-            </figure>
-            <article>
+        <main id="main">
+            <div id="img-div">
+                <img id="image" src="don-norman.jpg" alt="A photo of Dr. Donald Norman that discusses human-centered design principles during a conference">
+                <div id="img-caption">Dr. Donald Norman that discusses human-centered design principles during a conference, part of his lifelong mission to improve human-technology interaction</div>
+            </div>
+            <article id="tribute-info">
                 <h2>Here's a timeline of Dr. Norman's life:</h2>
                 <ul>
                     <li><strong>1935</strong> - Born December 25 in Cresco, Iowa</li>
@@ -193,7 +194,7 @@
                 </ul>
             <p class="citazione">"Design is really an act of communication, which means having a deep understanding of the person with whom the designer is communicating."</p>
             <p class="autore-citazione">-- Donald Arthur Norman</p>
-            <p class="link">If you have time, you should read more about this incredible human being on his <a href="https://en.wikipedia.org/wiki/Don_Norman">Wikipedia entry</a>.</p>
+            <p class="link">If you have time, you should read more about this incredible human being on his <a id="tribute-link" href="https://en.wikipedia.org/wiki/Don_Norman" target="_blank">Wikipedia entry</a>.</p>
             </article>
         </main>
     </div>
