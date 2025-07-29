@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<!-- 🎯 DICHIARAZIONE HTML5: Come dire "Ehi browser, questo è codice moderno!" -->
+<!-- È come l'etichetta su una valigia che dice "Made in 2024" -->
+
+<html lang="en">
+<!-- 🌍 CONTENITORE PRINCIPALE: È come la scatola che contiene tutto il progetto -->
+<!-- lang="en" = "questo contenuto è in inglese" - aiuta motori di ricerca e screen reader -->
+
+  <head>
+    <!-- 🧠 CERVELLO DEL DOCUMENTO: Tutte le istruzioni segrete che l'utente non vede -->
+    
+    <meta charset="UTF-8" />
+    <!-- 📝 ALFABETO UNIVERSALE: UTF-8 = "capisco tutti i caratteri del mondo!" -->
+    <!-- È come avere un traduttore universale per emoji, accenti, simboli cinesi, arabi, etc. -->
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 📱 ISTRUZIONI PER MOBILE: "Adattati allo schermo del dispositivo!" -->
+    <!-- width=device-width = "sii largo quanto lo schermo" -->
+    <!-- initial-scale=1.0 = "inizia con zoom al 100%, non più piccolo o grande" -->
+    <!-- È come dire a una foto "adattati alla cornice, che sia piccola o gigante" -->
+    
+    <meta name="description" content="freeCodeCamp Tribute Page practice project" />
+    <!-- 📄 DESCRIZIONE PER GOOGLE: È come la sinossi di un film sul retro del DVD -->
+    <!-- Questo testo appare nei risultati di ricerca sotto il titolo -->
+    <!-- Aiuta le persone a capire di cosa parla la tua pagina prima di cliccare -->
+    
+    <title>Tribute Page</title>
+    <!-- 📑 TITOLO DELLA LINGUETTA: Quello che vedi nella tab del browser -->
+    <!-- È come il nome di un'app sul telefono o l'etichetta su una cartella -->
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- ⚡ ACCELERATORI FONT: Preparano la connessione ai server Google Fonts -->
+    <!-- preconnect = "connettiti a questo server prima che io te lo chieda" -->
+    <!-- È come prenotare un tavolo al ristorante prima di arrivarci -->
+    <!-- Velocizza il caricamento dei font personalizzati -->
+    
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- 🎨 IMPORTAZIONE FONT: Scarica i font personalizzati da Google -->
+    <!-- Crimson Text = font elegante per il testo (come Times New Roman ma più bello) -->
+    <!-- Roboto Condensed = font moderno per i titoli (compatto e leggibile) -->
+    <!-- È come andare in una tipografia e scegliere caratteri speciali -->
+    
+    <style>
+      /* 🎨 ===== FOGLIO DI STILE INTERNO: Le Regole del Design ===== */
+      /* È come avere un libro di istruzioni per l'arredamento della casa */
+      
+      @media (prefers-reduced-motion: no-preference) {
+        /* 🎢 RISPETTO PER CHI HA PROBLEMI CON IL MOVIMENTO: Accessibilità vera! */
+        /* È come chiedere "Ti danno fastidio le animazioni?" */
+        /* Se la risposta è "no, non mi danno fastidio", allora aggiungiamo lo scroll fluido */
+        /* no-preference = "non ho preferenze particolari, va bene tutto" */
+        
+        * {
+          scroll-behavior: smooth;
+          /* 🎠 SCORRIMENTO FLUIDO: Come un ascensore invece che un teletrasporto */
+          /* Quando clicchi un collegamento che va a un'altra sezione, scorre dolcemente */
+          /* È la differenza tra un viaggio in macchina e un salto quantico */
+        }
+      }
+
+      .container {
+        /* 🏠 CONTENITORE PRINCIPALE: È come le pareti della casa che tengono tutto insieme */
+        
+        max-width: 1200px;
+        /* 📐 LARGHEZZA MASSIMA: "Non diventare mai più largo di 1200px" */
+        /* È come dire "puoi crescere, ma non oltre questa misura" */
+        /* Mantiene il sito leggibile anche su schermi giganti */
+        
+        margin: 0 auto;
+        /* ⚖️ CENTRATURA MAGICA: "Centrati perfettamente nella pagina" */
+        /* 0 = niente margine sopra/sotto */
+        /* auto = "browser, centrami tu orizzontalmente!" */
+        /* È come un quadro che si posiziona automaticamente al centro della parete */
+        
+        padding: 0 20px;
+        /* 🌬️ RESPIRO AI LATI: 20px di spazio interno a destra e sinistra */
+        /* È come lasciare un po' di margine quando scrivi su un foglio */
+      }
+
+      body {
+        /* 🏠 IL CORPO DELLA PAGINA: È come dipingere le pareti di tutta la casa */
+        
+        margin: 0;
+        /* 🚫 NIENTE MARGINE: Toglie lo spazio bianco di default del browser */
+        /* I browser hanno margini preimpostati, noi li resettiamo */
+        
+        padding: 0;
+        /* 🚫 NIENTE PADDING: Nessuno spazio interno di default */
+        /* È come partire con una tela bianca pulita */
+        
+        box-sizing: border-box;
+        /* 📦 CALCOLO SCATOLA: "Include padding e border nella larghezza totale" */
+        /* È come dire: se dico width: 100px, voglio che TUTTO sia 100px, bordi inclusi */
+        
+        font-size: 1.05em;
+        /* 📏 DIMENSIONE TESTO BASE: 1.05em = leggermente più grande del normale */
+        /* 1em = 16px di default, quindi 1.05em = circa 17px */
+        /* È come scegliere caratteri leggermente più grandi per leggere meglio */
+        
+        font-family: 'Crimson Text', serif;
+        /* ✍️ FONT PRINCIPALE: Crimson Text per eleganza, serif come piano B */
+        /* serif = font con le "zampette" (come Times New Roman) */
+        /* È come scegliere una bella calligrafia per scrivere lettere */
+        
+        background-color: #D9E2EC;
+        /* 🎨 SFONDO AZZURRO TENUE: Colore rilassante come il cielo di mattina */
+        /* #D9E2EC = azzurro molto chiaro, quasi grigio-blu */
+        
+        color: #102A43;
+        /* ✏️ COLORE TESTO: Blu scuro, elegante e leggibile */
+        /* #102A43 = blu navy scuro, perfetto contrasto con lo sfondo chiaro */
+      }
+
+      header {
+        /* 📰 INTESTAZIONE: Come la testata di un giornale */
+        
+        text-align: center;
+        /* ⚖️ TESTO CENTRATO: Tutto allineato al centro come un titolo di libro */
+        
+        font-family: 'Roboto Condensed', sans-serif;
+        /* ✍️ FONT MODERNO: Roboto Condensed per un look professionale */
+        /* sans-serif = font senza "zampette", più pulito e moderno */
+        /* È come usare un carattere da logo aziendale */
+        
+        font-size: 1.1em;
+        /* 📏 LEGGERMENTE PIÙ GRANDE: 1.1em = circa 18px invece di 16px */
+        
+        color: #102A43;
+        /* 🎨 STESSO COLORE DEL TESTO: Coerenza cromatica */
+        
+        padding: 1em 0 0.05em 0;
+        /* 🏠 SPAZIO INTERNO: 1em sopra, quasi niente sotto, niente ai lati */
+        /* 1em sopra = spazio generoso per "respirare" */
+        /* 0.05em sotto = piccolissimo spazio prima del sottotitolo */
+        
+        margin-top: -32px;
+        /* ⬆️ SPOSTAMENTO VERSO L'ALTO: Compensa spazi indesiderati */
+        /* -32px = "spostati 32px verso l'alto per essere più vicino al bordo" */
+        /* È come spingere un quadro un po' più in su sulla parete */
+      }
+
+      .subtitle {
+        /* 📝 SOTTOTITOLO: La descrizione sotto il nome principale */
+        
+        font-family: 'Crimson Text', serif;
+        /* ✍️ FONT ELEGANTE: Stesso del corpo per coerenza */
+        
+        text-align: center;
+        /* ⚖️ CENTRATO: Allineato con il titolo sopra */
+        
+        margin-bottom: 8px;
+        /* 🌬️ PICCOLO SPAZIO SOTTO: 8px di separazione prima dell'immagine */
+      }
+
+      figure {
+        /* 🖼️ CONTENITORE IMMAGINE: È come una cornice da quadro */
+        
+        display: block;
+        /* 📦 COMPORTAMENTO A BLOCCO: Occupa tutta la riga */
+        
+        margin: 0 auto;
+        /* ⚖️ CENTRATURA: Stesso trucco del container principale */
+        /* 0 = niente margine sopra/sotto */
+        /* auto = "centrami orizzontalmente" */
+        
+        max-width: 900px;
+        /* 📐 LARGHEZZA MASSIMA: Mai più largo di 900px */
+        /* Mantiene proporzioni ragionevoli anche su schermi giganti */
+        
+        width: 100%;
+        /* 📏 LARGHEZZA PIENA: Occupa tutto lo spazio disponibile del contenitore */
+        /* 100% = "sii largo quanto il tuo genitore te lo permette" */
+        
+        border-style: solid;
+        /* 🖼️ BORDO CONTINUO: Linea continua, non tratteggiata */
+        
+        border-color: #F0F4F8;
+        /* 🎨 COLORE BORDO: Grigio chiarissimo, quasi bianco */
+        /* È come una cornice bianca intorno a una foto */
+        
+        border-width: 30px 200px 50px 200px;
+        /* 🖼️ SPESSORE BORDI: Sopra=30px, Destra=200px, Sotto=50px, Sinistra=200px */
+        /* È come una cornice molto larga ai lati, più sottile sopra/sotto */
+        /* Crea l'effetto "passepartout" delle cornici professionali */
+        
+        background-color: #F0F4F8;
+        /* 🎨 SFONDO INTERNO: Stesso colore del bordo per continuità */
+        /* È come la parte interna della cornice */
+      }
+
+      figure img {
+        /* 🖼️ IMMAGINE DENTRO LA CORNICE: L'elemento principale */
+        
+        width: 100%;
+        /* 📏 LARGHEZZA PIENA: Riempie tutto lo spazio disponibile nella cornice */
+        /* È come una foto che si adatta perfettamente alla cornice */
+        
+        height: auto;
+        /* 📐 ALTEZZA AUTOMATICA: Mantiene le proporzioni originali */
+        /* Se la larghezza cambia, l'altezza si adatta automaticamente */
+        /* È come ridimensionare una foto senza deformarla */
+        
+        display: block;
+        /* 📦 COMPORTAMENTO A BLOCCO: Elimina piccoli spazi indesiderati */
+        /* Le immagini di default hanno piccoli spazi sotto, questo li toglie */
+      }
+
+      figcaption {
+        /* 📝 DIDASCALIA IMMAGINE: La descrizione sotto la foto */
+        
+        font-style: italic;
+        /* ✍️ TESTO CORSIVO: Stile elegante per le didascalie */
+        /* È come il testo delle didascalie nei musei */
+        
+        color: #777;
+        /* 🎨 GRIGIO MEDIO: Più tenue del testo principale */
+        /* #777 = grigio che non disturba ma si legge bene */
+        
+        font-size: 0.95em;
+        /* 📏 LEGGERMENTE PIÙ PICCOLO: 0.95em = circa 15px invece di 16px */
+        /* Le didascalie sono tradizionalmente più piccole del testo normale */
+        
+        margin-top: 10px;
+        /* 🌬️ SPAZIO SOPRA: 10px di separazione dall'immagine */
+        
+        text-align: center;
+        /* ⚖️ CENTRATO: Allineato con l'immagine sopra */
+        
+        background-color: #F0F4F8;
+        /* 🎨 SFONDO CONTINUO: Stesso del bordo per omogeneità */
+      }
+
+      article {
+        /* 📄 ARTICOLO PRINCIPALE: Il contenuto principale della pagina */
+        
+        margin-top: 36px;
+        /* 🌬️ SPAZIO SOPRA: 36px di separazione dall'immagine */
+        /* Crea una chiara divisione tra immagine e contenuto testuale */
+        
+        font-size: 1.05em;
+        /* 📏 DIMENSIONE TESTO: Stesso del body per coerenza */
+        
+        justify-content: center;
+        /* ⚖️ CONTENUTO CENTRATO: (Proprietà che potrebbe non essere necessaria qui) */
+        
+        font-family: 'Crimson Text', serif;
+        /* ✍️ FONT ELEGANTE: Coerenza con il resto del sito */
+        
+        background-color: #D9E2EC;
+        /* 🎨 STESSO SFONDO: Continua il colore del body */
+        
+        color: #102A43;
+        /* 🎨 STESSO COLORE TESTO: Coerenza cromatica */
+      }
+
+      h2 {
+        /* 📰 TITOLO SEZIONE: "Here's a timeline of Dr. Norman's life:" */
+        
+        text-align: center;
+        /* ⚖️ CENTRATO: Come tutti i titoli principali */
+        
+        margin-bottom: 8px;
+        /* 🌬️ PICCOLO SPAZIO SOTTO: 8px prima della lista */
+      }
+
+      ul, p {
+        /* 📝 LISTE E PARAGRAFI: Timeline e testi principali */
+        
+        text-align: left;
+        /* ⬅️ ALLINEAMENTO A SINISTRA: Standard per la leggibilità */
+        /* Il testo allineato a sinistra è più facile da leggere di quello centrato */
+        
+        width: 50%;
+        /* 📏 METÀ LARGHEZZA: Occupa il 50% dello spazio disponibile */
+        /* Su desktop crea una colonna di testo comoda da leggere */
+        /* Non troppo stretta, non troppo larga */
+        
+        margin: 0 auto;
+        /* ⚖️ CENTRATURA: Anche se il testo è allineato a sinistra, il blocco è centrato */
+        /* È come avere un foglio centrato su una scrivania, ma con testo allineato a sinistra */
+      }
+
+      .citazione, .autore-citazione {
+        /* 💬 CITAZIONE E AUTORE: Il quote di Don Norman */
+        
+        font-style: italic;
+        /* ✍️ CORSIVO: Stile classico per le citazioni */
+        /* È come mettere le virgolette stilistiche */
+        
+        margin-top: 48px;
+        /* 🌬️ SPAZIO SOPRA: 48px di separazione dalla timeline */
+        /* Crea una chiara divisione tra contenuto informativo e citazione */
+        
+        line-height: 1.5;
+        /* 📏 ALTEZZA RIGHE: 1.5 = 50% di spazio extra tra le righe */
+        /* Rende il testo più leggibile e arioso */
+        /* È come avere più spazio tra le righe di un quaderno */
+      }
+
+      .autore-citazione {
+        /* ✍️ FIRMA DELL'AUTORE: "-- Donald Arthur Norman" */
+        
+        margin-top: 8px;
+        /* 🌬️ SPAZIO PICCOLO: Solo 8px sopra, molto vicino alla citazione */
+        /* L'autore deve essere chiaramente collegato alla citazione sopra */
+      }
+
+      ul {
+        /* 📝 LISTA TIMELINE: I punti della vita di Don Norman */
+        
+        line-height: 2;
+        /* 📏 RIGHE MOLTO SPAZIOSE: 2 = doppio spazio tra le righe */
+        /* Rende ogni punto della timeline ben separato e leggibile */
+        /* È come avere un elenco con molto respiro */
+      }
+
+      a, .link {
+        /* 🔗 COLLEGAMENTI: Link al Wikipedia */
+        
+        margin-top: 48px;
+        /* 🌬️ SPAZIO SOPRA: 48px di separazione, stesso della citazione */
+        
+        color: #102A43;
+        /* 🎨 STESSO COLORE DEL TESTO: Link discreti, non blu classico */
+        /* Si integrano elegantemente nel design invece di risaltare troppo */
+      }
+
+      .link {
+        /* 🔗 PARAGRAFO CON LINK: Il testo finale "If you have time..." */
+        
+        margin-bottom: 30px;
+        /* 🌬️ SPAZIO SOTTO: 30px prima del footer (se ci fosse) */
+        /* Chiude elegantemente il contenuto principale */
+      }
+
+      /* 📱 ===== MEDIA QUERIES: RESPONSIVE DESIGN ===== */
+      /* È come avere vestiti di taglie diverse per occasioni diverse */
+
+      @media (max-width: 768px) {
+        /* 📱 TABLET E SCHERMI MEDI: Quando la larghezza è 768px o meno */
+        /* 768px = dimensione tipica di un tablet in orizzontale */
+        
+        ul, p {
+          width: 80%;
+          /* 📏 PIÙ LARGO: 80% invece del 50% */
+          /* Su schermi più piccoli, possiamo usare più spazio disponibile */
+          /* È come allargare un libro quando hai meno spazio sul tavolo */
+        }
+        
+        figure {
+          border-width: 20px 50px 30px 50px;
+          /* 🖼️ BORDI PIÙ PICCOLI: Cornice meno invadente */
+          /* 50px ai lati invece di 200px = più spazio per l'immagine */
+          
+          max-width: 95%;
+          /* 📐 QUASI TUTTA LA LARGHEZZA: 95% dello spazio disponibile */
+          /* Su tablet usiamo quasi tutto lo schermo */
+        }
+      }
+
+      @media (max-width: 480px) {
+        /* 📱 TELEFONI: Schermi molto piccoli */
+        /* 480px = dimensione tipica di uno smartphone */
+        
+        ul, p {
+          width: 90%;
+          /* 📏 ANCORA PIÙ LARGO: 90% dello spazio */
+          /* Su telefono ogni pixel conta! */
+        }
+        
+        figure {
+          border-width: 15px 20px 20px 20px;
+          /* 🖼️ BORDI MINIMI: Cornice sottilissima */
+          /* 20px ai lati = cornice discreta che non ruba spazio */
+          
+          max-width: 98%;
+          /* 📐 QUASI TUTTO LO SCHERMO: Solo 2% di margine */
+        }
+        
+        header {
+          font-size: 0.9em;
+          /* 📏 TITOLO PIÙ PICCOLO: 0.9em = circa 14px */
+          /* Su telefono riduciamo leggermente la dimensione per far entrare tutto */
+        }
+      }
+
+      /* 🎯 COME FUNZIONANO LE MEDIA QUERIES: */
+      /* È come avere 3 set di istruzioni diverse: */
+      /* DESKTOP (niente media query): "Usa bordi grandi, testo al 50%" */
+      /* TABLET (max-width: 768px): "Riduci i bordi, allarga il testo all'80%" */
+      /* TELEFONO (max-width: 480px): "Bordi minimi, testo al 90%, titolo più piccolo" */
+      
+      /* Il browser sceglie automaticamente quale set di regole usare */
+      /* È come avere un guardaroba che si adatta automaticamente all'occasione! */
+    </style>
+  </head>
+  
+  <body>
+    <!-- 🏗️ ===== STRUTTURA DELLA PAGINA: Inizia la Costruzione ===== -->
+    
+    <div class="container">
+      <!-- 🏠 CONTENITORE PRINCIPALE: La "casa" che contiene tutto -->
+      <!-- È come le pareti perimetrali di una casa che delimitano lo spazio -->
+      
+      <header>
+        <!-- 📰 INTESTAZIONE: La parte superiore, come la testata di un giornale -->
+        
+        <div>
+          <!-- 📦 CONTENITORE HEADER: Raggruppa titolo e sottotitolo -->
+          
+          <h1>Dr. Donald Arthur Norman</h1>
+          <!-- 📰 TITOLO PRINCIPALE: Il nome del protagonista -->
+          <!-- h1 = "heading 1" = titolo più importante della pagina -->
+          <!-- È come il nome sul cartellone di un film -->
+          
+          <p class="subtitle">The father of user experience</p>
+          <!-- 📝 SOTTOTITOLO: La descrizione sotto il nome -->
+          <!-- class="subtitle" = applica gli stili CSS della classe .subtitle -->
+          <!-- È come il tagline di un supereroe -->
+        </div>
+      </header>
+      
+      <main>
+        <!-- 📄 CONTENUTO PRINCIPALE: Il cuore della tribute page -->
+        <!-- main = elemento semantico che indica "questo è il contenuto più importante" -->
+        
+        <figure>
+          <!-- 🖼️ FIGURA: Contenitore semantico per immagine + didascalia -->
+          <!-- È come una cornice da museo che include sia la foto che la targhetta -->
+          
+          <img src="don-norman.jpg" alt="A photo of Dr. Donald Norman that discusses human-centered design principles during a conference">
+          <!-- 🖼️ IMMAGINE PRINCIPALE: La foto di Don Norman -->
+          <!-- src="don-norman.jpg" = "prendi l'immagine da questo file" -->
+          <!-- alt="..." = descrizione per chi non può vedere l'immagine -->
+          <!-- È fondamentale per l'accessibilità - gli screen reader leggono questa descrizione -->
+          
+          <figcaption>Dr. Donald Norman that discusses human-centered design principles during a conference, part of his lifelong mission to improve human-technology interaction</figcaption>
+          <!-- 📝 DIDASCALIA: La descrizione sotto l'immagine -->
+          <!-- figcaption = "caption di figure" = didascalia semanticamente collegata all'immagine -->
+          <!-- È come il testo sotto le foto nei giornali -->
+        </figure>
+        
+        <article>
+          <!-- 📄 ARTICOLO: Il contenuto principale della biografia -->
+          <!-- article = elemento semantico per contenuto indipendente e completo -->
+          <!-- È come un articolo di giornale che può stare in piedi da solo -->
+          
+          <h2>Here's a timeline of Dr. Norman's life:</h2>
+          <!-- 📰 TITOLO SEZIONE: Introduce la timeline -->
+          <!-- h2 = "heading 2" = titolo di secondo livello -->
+          
+          <ul>
+            <!-- 📝 LISTA NON ORDINATA: La timeline della vita -->
+            <!-- ul = "unordered list" = lista con puntini invece che numeri -->
+            <!-- È come un elenco di punti importanti -->
+            
+            <li><strong>1935</strong> - Born December 25 in Cresco, Iowa</li>
+            <!-- 📌 ELEMENTO LISTA: Un singolo punto della timeline -->
+            <!-- li = "list item" = elemento di una lista -->
+            <!-- strong = "testo importante" = grassetto semantico -->
+            <!-- È come evidenziare le date con un marcatore -->
+            
+            <li><strong>1957</strong> - Graduates with a B.S. in Electrical Engineering from Massachusetts Institute of Technology (MIT)</li>
+            <!-- ⚡ LAUREA MIT: Primo traguardo importante -->
+            
+            <li><strong>1959</strong> - Receives M.S. in Electrical Engineering from University of Pennsylvania</li>
+            <!-- 🎓 MASTER: Continua la formazione -->
+            
+            <li><strong>1962</strong> - Earns Ph.D. in Psychology from University of Pennsylvania, under advisor Duncan Luce. One of the earliest graduates from the Mathematical Psychology group</li>
+            <!-- 🧠 DOTTORATO: Cambio di campo dall'ingegneria alla psicologia -->
+            
+            <li><strong>1962-1966</strong> - Postdoctoral researcher at Harvard University's Center for Cognitive Studies, becomes lecturer within a year</li>
+            <!-- 🏛️ HARVARD: Inizio carriera accademica -->
+            
+            <li><strong>1966</strong> - Moves to University of California, San Diego (UCSD) as Associate Professor of Psychology</li>
+            <!-- 🌴 CALIFORNIA: Trasferimento sulla costa ovest -->
+            
+            <li><strong>1972</strong> - Publishes "Human Information Processing: An Introduction to Psychology" with Peter Lindsay, influential textbook that helped introduce information processing to psychology</li>
+            <!-- 📚 PRIMO LIBRO IMPORTANTE: Inizia l'influenza accademica -->
+            
+            <li><strong>1974-1978</strong> - Chair of Psychology Department at UCSD</li>
+            <!-- 👔 LEADERSHIP: Ruolo di responsabilità -->
+            
+            <li><strong>1979</strong> - Co-organizes the first meeting of the Cognitive Science Society on UCSD campus along with Roger Schank and Allan Collins</li>
+            <!-- 🧠 COGNITIVE SCIENCE: Contributo alla nascita di una nuova disciplina -->
+            
+            <li><strong>1981</strong> - Writes "The Trouble with Unix: The User Interface is Horrid," pioneering critique of user interfaces</li>
+            <!-- 💻 CRITICA UNIX: Primo interesse per le interfacce utente -->
+            
+            <li><strong>1986</strong> - Publishes "User Centered System Design: New Perspectives on Human-Computer Interaction" with Stephen Draper, first introducing the concept of user-centered design</li>
+            <!-- 🎯 USER-CENTERED DESIGN: Nasce il concetto rivoluzionario -->
+            
+            <li><strong>1988</strong> - Publishes "The Psychology of Everyday Things" (later renamed "The Design of Everyday Things"), groundbreaking book that becomes the bible of user experience design</li>
+            <!-- 📖 LIBRO RIVOLUZIONARIO: La "bibbia" del design UX -->
+            
+            <li><strong>1988-1993</strong> - Professor and Chair of Cognitive Science Department at UCSD (founding chair of the department)</li>
+            <!-- 🏗️ FONDATORE: Crea un nuovo dipartimento -->
+            
+            <li><strong>1991</strong> - Elected to American Academy of Arts and Sciences</li>
+            <!-- 🏆 RICONOSCIMENTO: Onore accademico prestigioso -->
+            
+            <li><strong>1993</strong> - Leaves UCSD to join Apple Computer as Apple Fellow and User Experience Architect (first use of "User Experience" in a job title), later becomes Vice President of Advanced Technology Group</li>
+            <!-- 🍎 APPLE: Porta l'accademia nell'industria - inventa il titolo "User Experience"! -->
+            
+            <li><strong>1995</strong> - Receives honorary degree in Psychology from University of Padua</li>
+            <!-- 🇮🇹 ITALIA: Riconoscimento internazionale -->
+            
+            <li><strong>1996</strong> - Works as executive at Hewlett-Packard</li>
+            <!-- 💼 HP: Continua nell'industria tecnologica -->
+            
+            <li><strong>1998</strong> - Co-founds Nielsen Norman Group with Jakob Nielsen, leading user experience consulting firm</li>
+            <!-- 🏢 CONSULENZA: Crea la sua azienda con un altro guru UX -->
+            
+            <li><strong>1998-2010</strong> - Professor of Computer Science at Northwestern University and co-director of Segal Design Institute</li>
+            <!-- 🏫 RITORNO ACCADEMIA: Bilancia industria e insegnamento -->
+            
+            <li><strong>2001</strong> - Becomes Fellow of Association for Computing Machinery (ACM)</li>
+            <!-- 💻 ACM: Riconoscimento dalla comunità informatica -->
+            
+            <li><strong>2002</strong> - Receives "Lifetime Achievement Award" from CHI (Computer-Human Interaction), professional organization he helped found</li>
+            <!-- 🏆 LIFETIME ACHIEVEMENT: Premio alla carriera dall'organizzazione che ha aiutato a fondare -->
+            
+            <li><strong>2004</strong> - Publishes "Emotional Design: Why We Love (or Hate) Everyday Things," expanding design theory beyond functionality</li>
+            <!-- ❤️ DESIGN EMOTIVO: Espande la teoria oltre la funzionalità -->
+            
+            <li><strong>2006</strong> - Receives Benjamin Franklin Medal in Computer & Cognitive Science from Franklin Institute</li>
+            <!-- 🏅 BENJAMIN FRANKLIN MEDAL: Altro prestigioso riconoscimento -->
+            
+            <li><strong>2009</strong> - Named Honorary Fellow of Design Research Society</li>
+            <!-- 🎨 DESIGN RESEARCH: Riconoscimento dalla comunità del design -->
+            
+            <li><strong>2010</strong> - Publishes "Living with Complexity," arguing that complexity is necessary and beneficial</li>
+            <!-- 🧩 COMPLESSITÀ: Nuovo libro che sfida le idee precedenti -->
+            
+            <li><strong>2014</strong> - Returns to UCSD to become director of newly established The Design Lab</li>
+            <!-- 🔬 DESIGN LAB: Torna dove tutto è iniziato per creare un nuovo centro -->
+            
+            <li><strong>2020</strong> - Retires from UCSD (his fifth retirement)</li>
+            <!-- 😄 QUINTO PENSIONAMENTO: Umorismo sul fatto che continua a lavorare -->
+            
+            <li><strong>2021</strong> - Receives Sir Misha Black Medal for Distinguished Services to Design Education in London</li>
+            <!-- 🇬🇧 LONDRA: Riconoscimento internazionale per l'educazione al design -->
+            
+            <li><strong>2023</strong> - Publishes "Design for a Better World: Meaningful, Sustainable, Humanity Centered"</li>
+            <!-- 🌍 ULTIMO LIBRO: Focus su sostenibilità e miglioramento del mondo -->
+            
+            <li><strong>Today</strong> - Active in Don Norman Design Award and Summit, nonprofit organization rewarding individuals and organizations practicing Humanity-Centered Design for societal good. Member of National Academy of Engineering</li>
+            <!-- 🌟 OGGI: Continua l'attivismo per un design migliore -->
+          </ul>
+          
+          <p class="citazione">"Design is really an act of communication, which means having a deep understanding of the person with whom the designer is communicating."</p>
+          <!-- 💬 CITAZIONE PRINCIPALE: Una frase famosa di Don Norman -->
+          <!-- class="citazione" = applica gli stili CSS per le citazioni -->
+          <!-- È come mettere in evidenza la frase più importante di un discorso -->
+          
+          <p class="autore-citazione">-- Donald Arthur Norman</p>  
+          <!-- ✍️ ATTRIBUZIONE: Firma dell'autore della citazione -->
+          <!-- class="autore-citazione" = stili specifici per la firma -->
+          <!-- È come la firma sotto un autografo -->
+          
+          <p class="link">If you have time, you should read more about this incredible human being on his <a href="https://en.wikipedia.org/wiki/Don_Norman">Wikipedia entry</a>.</p>
+          <!-- 🔗 LINK FINALE: Invito ad approfondire su Wikipedia -->
+          <!-- a href="..." = collegamento ipertestuale -->
+          <!-- È come dire "se vuoi saperne di più, vai a leggere qui" -->
+        </article>
+      </main>
+    </div>
+  </body>
+</html>
+
+<!-- 🎯 ===== RIASSUNTO DELL'ARCHITETTURA ===== -->
+<!-- 
+🏠 STRUTTURA COMPLETA:
+│
+├── 🧠 HEAD (cervello invisibile)
+│   ├── 📝 Meta tags (informazioni sulla pagina)
+│   ├── 🎨 Google Fonts (caratteri personalizzati)
+│   └── 🎨 CSS interno (tutte le regole di stile)
+│
+└── 🏗️ BODY (struttura visibile)
+    └── 🏠 Container (scatola principale)
+        ├── 📰 Header (titolo + sottotitolo)
+        └── 📄 Main (contenuto principale)
+            ├── 🖼️ Figure (immagine + didascalia)
+            └── 📄 Article (biografia completa)
+                ├── 📰 H2 (titolo timeline)
+                ├── 📝 UL (lista eventi)
+                ├── 💬 Citazione (quote famosa)
+                ├── ✍️ Autore citazione (firma)
+                └── 🔗 Link Wikipedia (approfondimento)
+
+🎨 RESPONSIVE DESIGN:
+├── 🖥️ Desktop: Bordi larghi, testo al 50%
+├── 📱 Tablet: Bordi medi, testo all'80%
+└── 📱 Mobile: Bordi minimi, testo al 90%
+
+È come avere una casa che si adatta automaticamente al numero di ospiti! 🏠✨
+-->
