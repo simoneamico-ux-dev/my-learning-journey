@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<!-- 🎯 DICHIARAZIONE HTML5: Il biglietto da visita del nostro documento -->
+<!-- È come dire "Salve, sono un documento HTML moderno e professionale!" -->
+
+<html lang="en">
+<!-- 🌍 CONTENITORE PRINCIPALE: La cassaforte che contiene tutto il bilancio -->
+<!-- lang="en" = "questo documento è in inglese" - aiuta i lettori di schermo a pronunciare correttamente -->
+
+  <head>
+    <!-- 🧠 IL CERVELLO DEL BILANCIO: Tutte le istruzioni invisibili ma fondamentali -->
+    <!-- È come il quadro elettrico di casa - non lo vedi, ma fa funzionare tutto! -->
+    
+    <meta charset="UTF-8">
+    <!-- 📝 ALFABETO UNIVERSALE: UTF-8 = capisce simboli di valuta $€¥£ e caratteri speciali -->
+    <!-- Fondamentale per un bilancio internazionale! -->
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 📱 ADATTAMENTO MOBILE: "Adattati allo schermo, che sia un telefono o un computer!" -->
+    <!-- È come avere un foglio Excel che si ridimensiona automaticamente -->
+    
+    <title>Balance Sheet</title>
+    <!-- 📑 TITOLO DELLA TAB: Quello che vedi nella linguetta del browser -->
+    <!-- Breve e professionale, come l'etichetta su una cartella di documenti -->
+    
+    <style>
+      /* 🎨 ===== FOGLIO DI STILE: Le Regole Visive del Nostro Bilancio ===== */
+      
+      /* 👁️‍🗨️ ===== ACCESSIBILITÀ: Testo Solo per Screen Reader ===== */
+      span[class~="sr-only"] {
+        /* 🦮 SCREEN READER ONLY: Contenuto invisibile agli occhi ma leggibile dai lettori di schermo */
+        /* È come il Braille - informazioni per chi ne ha bisogno, invisibili agli altri */
+        /* [class~="sr-only"] = seleziona elementi che hanno "sr-only" tra le loro classi */
+        
+        border: 0 !important;
+        /* 🚫 NIENTE BORDI: Elimina ogni possibile bordo */
+        
+        clip: rect(1px, 1px, 1px, 1px) !important;
+        /* ✂️ RITAGLIO OLD-SCHOOL: Vecchio metodo per nascondere elementi */
+        /* rect() crea un rettangolo di ritaglio piccolissimo (1px x 1px) */
+        /* È come guardare attraverso il buco di una serratura microscopica */
+        
+        clip-path: inset(50%) !important;
+        /* ✂️ RITAGLIO MODERNO: Metodo nuovo per nascondere elementi */
+        /* inset(50%) = taglia il 50% da ogni lato, non rimane nulla! */
+        /* È come chiudere completamente le tende */
+        
+        height: 1px !important;
+        width: 1px !important;
+        /* 📏 DIMENSIONI MINIME: 1 pixel, praticamente invisibile */
+        /* È come rimpicciolire qualcosa fino a renderlo microscopico */
+        
+        position: absolute !important;
+        /* 🎯 POSIZIONE ASSOLUTA: Esce dal flusso normale della pagina */
+        /* È come togliere un libro dallo scaffale - non occupa più spazio */
+        
+        overflow: hidden !important;
+        /* 🚪 NASCONDI TUTTO CIÒ CHE ESCE: Se qualcosa sporge, nascondilo */
+        /* È come chiudere la porta di un armadio disordinato */
+        
+        white-space: nowrap !important;
+        /* 📜 TESTO SU UNA RIGA: Non andare mai a capo */
+        /* È come scrivere tutto su un unico lungo rotolo di carta */
+        
+        padding: 0 !important;
+        margin: -1px !important;
+        /* 🎯 ZERO SPAZI + MARGINE NEGATIVO: Assicura che sia veramente invisibile */
+        /* Il margine -1px è un trucco per evitare problemi di focus */
+        /* !important = "queste regole sono OBBLIGATORIE, non cambiarle!" */
+      }
+
+      /* 🏗️ ===== IMPOSTAZIONI BASE ===== */
+      
+      html {
+        box-sizing: border-box;
+        /* 📦 CALCOLO INTELLIGENTE: Include padding e bordi nella larghezza totale */
+        /* È come dire "una scatola da 30cm include già il cartone delle pareti" */
+        /* Senza questo, dovresti fare calcoli complicati per ogni elemento! */
+      }
+
+      body {
+        font-family: sans-serif;
+        /* ✍️ FONT PULITO: sans-serif = senza "grazie" (quelle piccole decorazioni) */
+        /* È come usare Arial o Helvetica - pulito e professionale per numeri */
+        
+        color: #0a0a23;
+        /* 🎨 BLU SCURO QUASI NERO: Più elegante del nero puro */
+        /* È come indossare un abito blu notte invece che nero */
+      }
+
+      /* 📊 ===== INTESTAZIONE DEL BILANCIO ===== */
+      
+      h1 {
+        max-width: 37.25rem;
+        /* 📏 LARGHEZZA MASSIMA: 37.25rem ≈ 596px */
+        /* rem = unità relativa, si adatta se l'utente cambia la dimensione del testo */
+        /* È come dire "non più largo di un foglio A4" */
+        
+        margin: 0 auto;
+        /* ⚖️ CENTRATURA MAGICA: 0 sopra/sotto, auto ai lati = centrato orizzontalmente */
+        /* È come mettere un quadro perfettamente al centro della parete */
+        
+        padding: 1.5rem 1.25rem;
+        /* 🏠 RESPIRO INTERNO: 1.5rem sopra/sotto, 1.25rem ai lati */
+        /* È come lasciare margini eleganti su un documento importante */
+      }
+
+      h1 .flex {
+        display: flex;
+        /* 🎯 LAYOUT FLESSIBILE: Gli elementi si dispongono in modo intelligente */
+        /* È come avere scatole che si organizzano da sole sullo scaffale */
+        
+        flex-direction: column-reverse;
+        /* 🔄 ORDINE INVERTITO: L'ultimo elemento appare per primo */
+        /* È come leggere dal basso verso l'alto - "Balance Sheet" sopra, "AcmeWidgetCorp" sotto */
+        /* Utile per dare più importanza visiva a "Balance Sheet" */
+        
+        gap: 1rem;
+        /* 🌬️ SPAZIO TRA ELEMENTI: 1rem di distanza tra le due righe */
+        /* È come lasciare una riga vuota tra paragrafi */
+      }
+
+      h1 .flex span:first-of-type {
+        font-size: 0.7em;
+        /* 📏 PRIMO SPAN PIÙ PICCOLO: 70% della dimensione normale */
+        /* "AcmeWidgetCorp" appare più piccolo */
+        /* È come scrivere il nome dell'azienda in piccolo sotto il titolo */
+      }
+
+      h1 .flex span:last-of-type {
+        font-size: 1.2em;
+        /* 📏 ULTIMO SPAN PIÙ GRANDE: 120% della dimensione normale */
+        /* "Balance Sheet" appare più grande e importante */
+        /* È come un titolo di giornale - grande e in evidenza */
+      }
+
+      /* 📋 ===== SEZIONE PRINCIPALE ===== */
+      
+      section {
+        max-width: 40rem;
+        /* 📏 LARGHEZZA MASSIMA: 40rem ≈ 640px */
+        /* È come la larghezza di un documento standard */
+        
+        margin: 0 auto;
+        /* ⚖️ CENTRATURA: Il bilancio sta al centro della pagina */
+        
+        border: 2px solid #d0d0d5;
+        /* 🖼️ CORNICE GRIGIA: 2px di spessore, colore grigio chiaro */
+        /* È come mettere il bilancio in una cornice elegante */
+      }
+
+      /* 📅 ===== BARRA DEGLI ANNI (STICKY HEADER) ===== */
+      
+      #years {
+        display: flex;
+        /* 🎯 LAYOUT FLESSIBILE: Gli anni si dispongono in orizzontale */
+        
+        justify-content: flex-end;
+        /* ➡️ ALLINEAMENTO A DESTRA: Gli anni sono allineati a destra */
+        /* È come allineare le colonne di Excel a destra */
+        
+        position: sticky;
+        /* 🔝 POSIZIONE APPICCICOSA: Resta in cima quando scorri! */
+        /* È come l'intestazione di Excel che rimane visibile mentre scorri */
+        /* MAGIA MODERNA del CSS! */
+        
+        z-index: 999;
+        /* 🏔️ LIVELLO DI ALTEZZA: 999 = sta sopra quasi tutto */
+        /* È come mettere un foglio trasparente sopra tutti gli altri */
+        /* z-index alto assicura che rimanga visibile sopra le tabelle */
+        
+        top: 0;
+        /* 📍 INCOLLATO IN CIMA: Si attacca al bordo superiore quando scorri */
+        
+        background: #0a0a23;
+        /* 🎨 SFONDO BLU SCURO: Stesso colore del testo per contrasto */
+        
+        color: #fff;
+        /* ⚪ TESTO BIANCO: Massimo contrasto su sfondo scuro */
+        
+        padding: 0.5rem calc(1.25rem + 2px) 0.5rem 0;
+        /* 🏠 PADDING CALCOLATO: calc() fa i conti per noi! */
+        /* 1.25rem + 2px = compensa il bordo della sezione */
+        /* È come fare i conti con la calcolatrice incorporata nel CSS */
+        
+        margin: 0 -2px;
+        /* 📐 MARGINE NEGATIVO: -2px compensa il bordo della sezione */
+        /* È come estendere la barra oltre i limiti per coprire tutto */
+      }
+
+      #years span[class] {
+        font-weight: bold;
+        /* 🔤 TESTO IN GRASSETTO: Gli anni sono ben visibili */
+        
+        width: 4.5rem;
+        /* 📏 LARGHEZZA FISSA: Ogni anno occupa lo stesso spazio */
+        /* È come le colonne di Excel con larghezza fissa */
+        
+        text-align: right;
+        /* ➡️ ALLINEAMENTO A DESTRA: Come i numeri in contabilità */
+      }
+
+      /* 📊 ===== CONTENITORE DELLE TABELLE ===== */
+      
+      .table-wrap {
+        padding: 0 0.75rem 1.5rem 0.75rem;
+        /* 🏠 PADDING: 0 sopra, 0.75rem ai lati, 1.5rem sotto */
+        /* È come i margini di un documento Word ben formattato */
+      }
+
+      /* 📋 ===== STILI DELLE TABELLE ===== */
+      
+      table {
+        border-collapse: collapse;
+        /* 🔗 BORDI UNITI: Elimina gli spazi tra le celle */
+        /* È come quando in Excel unisci i bordi delle celle */
+        /* Senza questo, ogni cella avrebbe il suo bordo separato! */
+        
+        border: 0;
+        /* 🚫 NIENTE BORDO: La tabella stessa non ha bordo */
+        
+        width: 100%;
+        /* 📏 LARGHEZZA PIENA: Occupa tutto lo spazio disponibile */
+        
+        position: relative;
+        /* 📍 POSIZIONE RELATIVA: Serve per posizionare il caption */
+        /* È come dire "i miei figli si posizioneranno rispetto a me" */
+        
+        margin-top: 3rem;
+        /* 🌬️ SPAZIO SOPRA: 3rem di separazione tra tabelle */
+      }
+
+      table caption {
+        /* 🏷️ TITOLO DELLA TABELLA: "Assets", "Liabilities", "Net Worth" */
+        
+        color: #356eaf;
+        /* 🎨 BLU ACCATTIVANTE: Colore che attira l'attenzione */
+        
+        font-size: 1.3em;
+        /* 📏 DIMENSIONE MAGGIORE: 130% del testo normale */
+        
+        font-weight: normal;
+        /* 🔤 PESO NORMALE: Non in grassetto, elegante */
+        
+        position: absolute;
+        /* 🎯 POSIZIONE ASSOLUTA: Si posiziona rispetto alla tabella */
+        /* È come un post-it attaccato sopra la tabella */
+        
+        top: -2.25rem;
+        /* ⬆️ SOPRA LA TABELLA: -2.25rem lo sposta in alto */
+        /* I valori negativi lo tirano fuori dalla tabella */
+        
+        left: 0.5rem;
+        /* ⬅️ LEGGERO RIENTRO: 0.5rem dal bordo sinistro */
+      }
+
+      /* 📊 ===== CELLE DEL CORPO TABELLA ===== */
+      
+      tbody td {
+        width: 100vw;
+        /* 📏 LARGHEZZA VIEWPORT: 100vw = 100% della larghezza della finestra */
+        /* vw = viewport width, unità moderna e responsiva */
+        
+        min-width: 4rem;
+        /* 📏 LARGHEZZA MINIMA: Non più strette di 4rem */
+        
+        max-width: 4rem;
+        /* 📏 LARGHEZZA MASSIMA: Non più larghe di 4rem */
+        /* min e max insieme = larghezza fissa di 4rem! */
+        /* È come dire "questa colonna deve essere ESATTAMENTE 4rem" */
+      }
+
+      tbody th {
+        width: calc(100% - 12rem);
+        /* 🧮 CALCOLO DINAMICO: 100% meno 12rem (3 colonne da 4rem) */
+        /* calc() è come avere una calcolatrice nel CSS! */
+        /* Occupa tutto lo spazio rimanente dopo le 3 colonne di numeri */
+      }
+
+      /* 💰 ===== RIGHE DEI TOTALI ===== */
+      
+      tr[class="total"] {
+        border-bottom: 4px double #0a0a23;
+        /* 📏 DOPPIA LINEA SOTTO: 4px con stile double (doppia linea) */
+        /* È come la doppia sottolineatura nei bilanci cartacei! */
+        /* Indica "questo è il totale finale" in contabilità */
+        
+        font-weight: bold;
+        /* 🔤 GRASSETTO: I totali sono evidenziati */
+      }
+
+      tr[class="total"] th {
+        text-align: left;
+        /* ⬅️ ALLINEAMENTO A SINISTRA: Il testo "Total" a sinistra */
+        
+        padding: 0.5rem 0 0.25rem 0.5rem;
+        /* 🏠 PADDING: Spazio interno per respirare */
+        /* 0.5rem sopra, 0 destra, 0.25rem sotto, 0.5rem sinistra */
+      }
+
+      tr.total td {
+        text-align: right;
+        /* ➡️ NUMERI A DESTRA: Standard contabile */
+        /* I numeri si allineano a destra per facilitare la lettura */
+        
+        padding: 0 0.25rem;
+        /* 🏠 PADDING LATERALE: Un po' di spazio ai lati */
+      }
+
+      tr.total td:nth-of-type(3) {
+        /* 🎯 TERZA COLONNA: L'ultima colonna (anno corrente) */
+        /* nth-of-type(3) = "seleziona il terzo td" */
+        
+        padding-right: 0.5rem;
+        /* ➡️ PADDING EXTRA A DESTRA: Più spazio per l'ultima colonna */
+      }
+
+      tr.total:hover {
+        /* 🖱️ EFFETTO HOVER: Quando passi sopra con il mouse */
+        
+        background-color: #99c9ff;
+        /* 🎨 SFONDO BLU CHIARO: Si illumina al passaggio del mouse */
+        /* È come evidenziare una riga con l'evidenziatore! */
+      }
+
+      /* 📅 ===== ANNO CORRENTE ===== */
+      
+      td.current {
+        font-style: italic;
+        /* ✍️ CORSIVO: L'anno corrente (2021) è in corsivo */
+        /* È come cerchiare l'anno corrente con la penna */
+      }
+
+      /* 📊 ===== RIGHE DEI DATI ===== */
+      
+      tr.data {
+        background-image: linear-gradient(to bottom, #dfdfe2 1.845rem, white 1.845rem);
+        /* 🎨 SFONDO A GRADIENTE: Effetto "carta a righe" per contabilità! */
+        /* linear-gradient = sfumatura lineare */
+        /* to bottom = dall'alto verso il basso */
+        /* #dfdfe2 per 1.845rem = grigio chiaro per l'altezza del titolo */
+        /* white dopo = bianco per il resto */
+        /* È come la carta millimetrata per i conti! */
+      }
+
+      tr.data th {
+        text-align: left;
+        /* ⬅️ TITOLI A SINISTRA: "Cash", "Checking", etc. */
+        
+        padding-top: 0.3rem;
+        padding-left: 0.5rem;
+        /* 🏠 PADDING: Spazio per respirare */
+      }
+
+      tr.data th .description {
+        /* 📝 DESCRIZIONI: Il testo esplicativo sotto ogni voce */
+        
+        display: block;
+        /* 📦 BLOCCO: Va a capo rispetto al titolo */
+        /* È come mettere una nota sotto il titolo */
+        
+        font-weight: normal;
+        /* 🔤 PESO NORMALE: Non in grassetto come il titolo */
+        
+        font-style: italic;
+        /* ✍️ CORSIVO: Per distinguerlo dal titolo */
+        
+        padding: 1rem 0 0.75rem;
+        /* 🏠 PADDING: 1rem sopra, 0 ai lati, 0.75rem sotto */
+        /* Crea spazio tra titolo e descrizione */
+        
+        margin-right: -13.5rem;
+        /* ➡️ MARGINE NEGATIVO: Si estende nelle colonne dei numeri! */
+        /* È un trucco per far stare la descrizione su più colonne */
+        /* Come scrivere una nota che attraversa più colonne in Excel */
+      }
+
+      tr.data td {
+        vertical-align: top;
+        /* ⬆️ ALLINEAMENTO VERTICALE: I numeri partono dall'alto */
+        /* È come scrivere i numeri nella parte alta della cella */
+        
+        padding: 0.3rem 0.25rem 0;
+        /* 🏠 PADDING: Piccolo respiro intorno ai numeri */
+        
+        text-align: right;
+        /* ➡️ NUMERI A DESTRA: Standard contabile */
+      }
+
+      tr.data td:last-of-type {
+        /* 🎯 ULTIMA COLONNA: L'ultimo td di ogni riga */
+        
+        padding-right: 0.5rem;
+        /* ➡️ PADDING EXTRA: Più spazio a destra per l'ultima colonna */
+      }
+    </style>
+  </head>
+  
+  <body>
+    <!-- 🏗️ ===== INIZIO DEL DOCUMENTO VISIBILE ===== -->
+    
+    <main>
+      <!-- 📄 CONTENUTO PRINCIPALE: Il tag semantico che dice "qui c'è la roba importante" -->
+      <!-- È come l'area principale di un ufficio dove si svolgono le attività principali -->
+      
+      <section>
+        <!-- 📋 SEZIONE BILANCIO: Il contenitore di tutto il nostro bilancio -->
+        <!-- È come la cartella che contiene tutti i documenti finanziari -->
+        
+        <h1>
+          <!-- 📰 INTESTAZIONE PRINCIPALE: Il titolo del nostro documento -->
+          
+          <span class="flex">
+            <!-- 🎯 CONTENITORE FLESSIBILE: Per invertire l'ordine visivo -->
+            
+            <span>AcmeWidgetCorp</span>
+            <!-- 🏢 NOME AZIENDA: Apparirà sotto grazie a flex-direction: column-reverse -->
+            
+            <span>Balance Sheet</span>
+            <!-- 📊 TIPO DOCUMENTO: Apparirà sopra, più grande e importante -->
+          </span>
+        </h1>
+        
+        <div id="years" aria-hidden="true">
+          <!-- 📅 BARRA DEGLI ANNI: L'intestazione che resta sempre visibile -->
+          <!-- aria-hidden="true" = "lettori di schermo, ignorate questo" -->
+          <!-- È nascosto perché l'informazione è già presente nelle tabelle per accessibilità -->
+          
+          <span class="year">2019</span>
+          <span class="year">2020</span>
+          <span class="year">2021</span>
+          <!-- 📅 ANNI: Le colonne temporali del nostro bilancio -->
+          <!-- Come le etichette delle colonne in Excel -->
+        </div>
+        
+        <div class="table-wrap">
+          <!-- 📊 CONTENITORE TABELLE: Raggruppa tutte le tabelle con padding uniforme -->
+          
+          <!-- 💰 ===== TABELLA ASSETS (ATTIVITÀ) ===== -->
+          <table>
+            <caption>Assets</caption>
+            <!-- 🏷️ TITOLO TABELLA: "Assets" - cosa l'azienda possiede -->
+            <!-- È come l'etichetta "ENTRATE" sul cassetto di un archivio -->
+            
+            <thead>
+              <!-- 🎩 INTESTAZIONE TABELLA: La parte superiore con le colonne -->
+              
+              <tr>
+                <!-- 📏 RIGA: Una riga della tabella -->
+                
+                <td></td>
+                <!-- 🔲 CELLA VUOTA: Angolo superiore sinistro, sopra i nomi delle voci -->
+                
+                <th><span class="sr-only year">2019</span></th>
+                <th><span class="sr-only year">2020</span></th>
+                <th class="current"><span class="sr-only year">2021</span></th>
+                <!-- 👁️‍🗨️ INTESTAZIONI INVISIBILI: Gli anni sono già nella barra sticky -->
+                <!-- sr-only = visibili solo ai lettori di schermo per accessibilità -->
+                <!-- È come avere il Braille su un documento -->
+              </tr>
+            </thead>
+            
+            <tbody>
+              <!-- 📊 CORPO TABELLA: Dove stanno i dati veri e propri -->
+              
+              <tr class="data">
+                <!-- 💵 RIGA DATI: Una voce del bilancio -->
+                
+                <th>Cash <span class="description">This is the cash we currently have on hand.</span></th>
+                <!-- 💵 CONTANTI: Prima voce con descrizione -->
+                <!-- th = table header, anche nelle righe per indicare il titolo della riga -->
+                
+                <td>$25</td>
+                <td>$30</td>
+                <td class="current">$28</td>
+                <!-- 💰 VALORI: I soldi per ogni anno -->
+                <!-- class="current" = anno corrente in corsivo -->
+              </tr>
+              
+              <tr class="data">
+                <th>Checking <span class="description">Our primary transactional account.</span></th>
+                <!-- 🏦 CONTO CORRENTE: Per le transazioni quotidiane -->
+                
+                <td>$54</td>
+                <td>$56</td>
+                <td class="current">$53</td>
+              </tr>
+              
+              <tr class="data">
+                <th>Savings <span class="description">Funds set aside for emergencies.</span></th>
+                <!-- 💰 RISPARMI: Il salvadanaio dell'azienda -->
+                
+                <td>$500</td>
+                <td>$650</td>
+                <td class="current">$728</td>
+              </tr>
+              
+              <tr class="total">
+                <!-- ➕ RIGA TOTALE: La somma di tutti gli assets -->
+                
+                <th>Total <span class="sr-only">Assets</span></th>
+                <!-- 🧮 TOTALE: "Assets" è nascosto visivamente ma presente per screen reader -->
+                
+                <td>$579</td>
+                <td>$736</td>
+                <td class="current">$809</td>
+                <!-- 💰 TOTALI: Con doppia sottolineatura CSS! -->
+              </tr>
+            </tbody>
+          </table>
+          
+          <!-- 💸 ===== TABELLA LIABILITIES (PASSIVITÀ) ===== -->
+          <table>
+            <caption>Liabilities</caption>
+            <!-- 🏷️ PASSIVITÀ: Quello che l'azienda deve -->
+            <!-- È come l'etichetta "USCITE" sull'altro cassetto -->
+            
+            <thead>
+              <tr>
+              <td></td>
+              <th><span class="sr-only">2019</span></th>
+              <th><span class="sr-only">2020</span></th>
+              <th><span class="sr-only">2021</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="data">
+                <th>Loans <span class="description">The outstanding balance on our startup loan.</span></th>
+                <!-- 🏦 PRESTITI: I soldi che devono essere restituiti -->
+                
+                <td>$500</td>
+                <td>$250</td>
+                <td class="current">$0</td>
+                <!-- 🎉 NOTA: Il prestito è stato ripagato nel 2021! -->
+              </tr>
+              
+              <tr class="data">
+                <th>Expenses <span class="description">Annual anticipated expenses, such as payroll.</span></th>
+                <!-- 💼 SPESE: Stipendi e costi operativi -->
+                
+                <td>$200</td>
+                <td>$300</td>
+                <td class="current">$400</td>
+              </tr>
+              
+              <tr class="data">
+                <th>Credit <span class="description">The outstanding balance on our credit card.</span></th>
+                <!-- 💳 CARTA DI CREDITO: Debiti a breve termine -->
+                
+                <td>$50</td>
+                <td>$50</td>
+                <td class="current">$75</td>
+              </tr>
+              
+              <tr class="total">
+                <th>Total <span class="sr-only">Liabilities</span></th>
+                <td>$750</td>
+                <td>$600</td>
+                <td class="current">$475</td>
+                <!-- 📉 BUONE NOTIZIE: I debiti stanno diminuendo! -->
+              </tr>
+            </tbody>
+          </table>
+          
+          <!-- 💎 ===== TABELLA NET WORTH (PATRIMONIO NETTO) ===== -->
+          <table>
+            <caption>Net Worth</caption>
+            <!-- 🏷️ PATRIMONIO NETTO: Assets - Liabilities = Quanto vale veramente l'azienda -->
+            <!-- È come il saldo finale del tuo conto dopo aver pagato tutti i debiti -->
+            
+            <thead>
+              <tr>
+              <td></td>
+              <th><span class="sr-only">2019</span></th>
+              <th><span class="sr-only">2020</span></th>
+              <th><span class="sr-only">2021</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="total">
+                <!-- 🎯 UNICA RIGA: Solo il totale finale -->
+                
+                <th>Total <span class="sr-only">Net Worth</span></th>
+                <td>$-171</td>
+                <!-- 🔴 2019: Valore negativo! L'azienda doveva più di quanto possedeva -->
+                
+                <td>$136</td>
+                <!-- 🟡 2020: Tornata in positivo! -->
+                
+                <td class="current">$334</td>
+                <!-- 🟢 2021: In crescita! L'azienda sta andando bene -->
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
+
+<!-- 🎯 ===== RIASSUNTO DELL'ARCHITETTURA ===== -->
+<!-- 
+💼 STRUTTURA DEL BILANCIO:
+│
+├── 🧠 HEAD (configurazioni invisibili)
+│   ├── 📝 Meta tags (charset, viewport)
+│   └── 🎨 CSS interno con:
+│       ├── 👁️‍🗨️ Classe sr-only per accessibilità
+│       ├── 📊 Stili per tabelle contabili
+│       ├── 🔝 Header sticky per gli anni
+│       └── 🖱️ Effetti hover sui totali
+│
+└── 📊 BODY (il bilancio visibile)
+    └── 📄 Main
+        └── 📋 Section (cornice del bilancio)
+            ├── 📰 H1 (nome azienda + "Balance Sheet")
+            ├── 📅 Barra anni sticky (2019-2021)
+            └── 📊 Table-wrap
+                ├── 💰 Tabella Assets (contanti, conti, risparmi)
+                ├── 💸 Tabella Liabilities (prestiti, spese, crediti)
+                └── 💎 Tabella Net Worth (patrimonio netto)
+
+🎨 TRUCCHI CSS SPECIALI:
+├── 🔝 Position: sticky per la barra anni (come Excel!)
+├── 🧮 calc() per calcoli automatici delle larghezze
+├── 🎨 linear-gradient per l'effetto "carta contabile"
+├── 👁️‍🗨️ sr-only per testo accessibile ma invisibile
+└── 🖱️ :hover per evidenziare i totali
+
+📱 RESPONSIVE: Le tabelle si adattano grazie a:
+├── rem per dimensioni scalabili
+├── Larghezze in percentuali
+└── max-width per non esplodere su schermi grandi
+
+È come avere un foglio Excel che si trasforma in una pagina web elegante! 💼✨
+-->
