@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<!-- 🎯 DICHIARAZIONE HTML5: "Ciao browser, sto per disegnare un gatto con puro CSS!" -->
+<!-- È come annunciare "Farò un ritratto usando solo forme geometriche!" -->
+
+<html lang="en">
+<!-- 🌍 CONTENITORE PRINCIPALE: La tela su cui dipingeremo il nostro micio -->
+<!-- lang="en" = lingua inglese, anche se il gatto parla tutte le lingue! 🐱 -->
+
+<head>
+    <!-- 🧠 IL CERVELLO ARTISTICO: Dove prepariamo pennelli e colori (CSS) -->
+    <!-- È come preparare la tavolozza prima di iniziare a dipingere -->
+    
+    <meta charset="UTF-8">
+    <!-- 📝 SUPPORTO CARATTERI UNIVERSALE: UTF-8 capisce anche le emoji! 😺 -->
+    
+    <title>fCC Cat Painting</title>
+    <!-- 📑 TITOLO DELLA TAB: "fCC" = freeCodeCamp, la scuola di coding -->
+    <!-- È come firmare il quadro prima ancora di iniziare! -->
+    
+    <style>
+        /* 🎨 ===== LA TAVOLOZZA CSS: Dove Avviene la Magia del Disegno ===== */
+        
+        * {
+          box-sizing: border-box;
+          /* 📦 REGOLA UNIVERSALE: "Includi bordi e padding nelle dimensioni" */
+          /* * = TUTTI gli elementi della pagina */
+          /* È come dire "quando dico che una scatola è 100px, intendo TUTTO incluso" */
+          /* Senza questo, dovremmo fare calcoli complicati per ogni elemento! */
+        }
+
+        body {
+          background-color: #c9d2fc;
+          /* 🌅 SFONDO LAVANDA: Un bel cielo pastello per il nostro gatto */
+          /* #c9d2fc = un viola molto chiaro e rilassante */
+          /* È come dipingere il cielo prima di aggiungere il soggetto */
+        }
+
+        /* 🐱 ===== LA TESTA DEL GATTO ===== */
+        
+        .cat-head {
+          position: absolute;
+          /* 🎯 POSIZIONAMENTO ASSOLUTO: Si posiziona rispetto alla finestra */
+          /* È come poter mettere un adesivo ovunque su un foglio */
+          
+          right: 0;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          /* 🎪 TRUCCO DI CENTRATURA: Tutti i lati a 0... */
+          /* È come tirare elastici da tutti i lati */
+          
+          margin: auto;
+          /* ⚖️ ...PIÙ MARGIN AUTO = CENTRATURA PERFETTA! */
+          /* Il browser calcola automaticamente il centro esatto */
+          /* È il trucco più elegante per centrare elementi con position: absolute */
+          
+          background: linear-gradient(#5e5e5e 85%, #45454f 100%);
+          /* 🎨 SFUMATURA GRIGIA: Dal grigio chiaro al grigio scuro */
+          /* 85% grigio chiaro, poi sfuma al grigio scuro nell'ultimo 15% */
+          /* È come il pelo del gatto che si scurisce verso il basso */
+          
+          width: 205px;
+          height: 180px;
+          /* 📏 DIMENSIONI FACCIONE: Un bel musetto paffuto! */
+          
+          border: 1px solid #000;
+          /* 🖼️ CONTORNO NERO: Per definire bene la forma */
+          
+          border-radius: 46%;
+          /* 🟦→🟢 ARROTONDAMENTO: 46% rende la testa ovale */
+          /* È come trasformare un rettangolo in un'ellisse morbida */
+        }
+
+        /* 👂 ===== ORECCHIO SINISTRO ===== */
+        
+        .cat-left-ear {
+          position: absolute;
+          /* 🎯 POSIZIONAMENTO: Relativo alla testa del gatto */
+          
+          top: -26px;
+          left: -31px;
+          /* 📍 POSIZIONE: Sopra e a sinistra della testa */
+          /* Valori negativi = esce dai confini della testa */
+          
+          z-index: 1;
+          /* 🏔️ LIVELLO: z-index 1 = sta sopra la testa (livello 0) */
+          /* È come mettere l'orecchio su un piano superiore */
+          
+          border-top-left-radius: 90px;
+          border-top-right-radius: 10px;
+          /* 🌙 FORMA CURVA: Molto curvo a sinistra (90px), poco a destra (10px) */
+          /* Crea la forma tipica dell'orecchio di gatto */
+          
+          transform: rotate(-45deg);
+          /* 🔄 ROTAZIONE: -45° in senso antiorario */
+          /* È come inclinare l'orecchio verso l'esterno */
+          
+          /* 🎩 TRUCCO DEL TRIANGOLO CSS! */
+          border-left: 35px solid transparent;
+          border-right: 35px solid transparent;
+          border-bottom: 70px solid #5e5e5e;
+          /* 🔺 MAGIA: Bordi trasparenti ai lati + bordo colorato sotto = TRIANGOLO! */
+          /* È uno dei trucchi CSS più geniali: creare forme con i bordi */
+          /* Immagina di tagliare gli angoli di un quadrato fino a ottenere un triangolo */
+        }
+
+        .cat-right-ear {
+          /* 👂 ORECCHIO DESTRO: Gemello speculare del sinistro */
+          position: absolute;
+          top: -26px;
+          left: 163px;
+          /* 📍 POSIZIONE: Stesso livello ma sul lato destro */
+          
+          z-index: 1;
+          transform: rotate(45deg);
+          /* 🔄 ROTAZIONE OPPOSTA: 45° in senso orario */
+          
+          border-top-left-radius: 90px;
+          border-top-right-radius: 10px;
+          border-left: 35px solid transparent;
+          border-right: 35px solid transparent;
+          border-bottom: 70px solid #5e5e5e;
+          /* 🔺 STESSO TRUCCO: Un altro triangolo per l'altro orecchio */
+        }
+
+        /* 🌸 ===== INTERNO ORECCHIE ===== */
+        
+        .cat-left-inner-ear {
+          position: absolute;
+          top: 22px;
+          left: -20px;
+          /* 📍 DENTRO L'ORECCHIO: Posizionato dentro l'orecchio esterno */
+          
+          border-top-left-radius: 90px;
+          border-top-right-radius: 10px;
+          border-bottom-right-radius: 40%;
+          border-bottom-left-radius: 40%;
+          /* 🌸 FORMA PETALO: Curvo sopra, arrotondato sotto */
+          /* 40% crea una curva morbida nella parte inferiore */
+          
+          border-left: 20px solid transparent;
+          border-right: 20px solid transparent;
+          border-bottom: 40px solid #3b3b4f;
+          /* 🔺 TRIANGOLO PIÙ PICCOLO: Rosa scuro per l'interno */
+          /* È come l'interno rosa delle orecchie dei gatti veri! */
+        }
+
+        .cat-right-inner-ear {
+          /* 🌸 STESSO STILE: Copia esatta per l'orecchio destro */
+          position: absolute;
+          top: 22px;
+          left: -20px;
+          border-top-left-radius: 90px;
+          border-top-right-radius: 10px;
+          border-bottom-right-radius: 40%;
+          border-bottom-left-radius: 40%;
+          border-left: 20px solid transparent;
+          border-right: 20px solid transparent;
+          border-bottom: 40px solid #3b3b4f;
+        }
+
+        /* 👁️ ===== OCCHI DEL GATTO ===== */
+        
+        .cat-left-eye {
+          position: absolute;
+          top: 54px;
+          left: 39px;
+          /* 📍 POSIZIONE OCCHIO SINISTRO: Nella metà superiore della faccia */
+          
+          border-radius: 60%;
+          /* 🥚 FORMA OVALE: 60% crea un ovale invece di un cerchio */
+          
+          transform: rotate(25deg);
+          /* 🔄 INCLINAZIONE: L'occhio è leggermente obliquo */
+          /* I gatti hanno occhi a mandorla inclinati! */
+          
+          width: 30px;
+          height: 40px;
+          /* 📏 PROPORZIONI: Più alto che largo per l'effetto mandorla */
+          
+          background-color: #000;
+          /* ⚫ NERO PROFONDO: Come le pupille dilatate di un gatto */
+        }
+
+        .cat-right-eye {
+          position: absolute;
+          top: 54px;
+          left: 134px;
+          /* 📍 OCCHIO DESTRO: Simmetrico ma non identico */
+          
+          border-radius: 60%;
+          transform: rotate(-25deg);
+          /* 🔄 ROTAZIONE OPPOSTA: -25° per simmetria naturale */
+          /* Gli occhi non sono perfettamente identici, come in natura! */
+          
+          width: 30px;
+          height: 40px;
+          background-color: #000;
+        }
+
+        /* ✨ ===== RIFLESSI NEGLI OCCHI ===== */
+        
+        .cat-left-inner-eye {
+          position: absolute;
+          top: 8px;
+          left: 2px;
+          /* 📍 RIFLESSO IN ALTO A SINISTRA: Come la luce che colpisce l'occhio */
+          
+          width: 10px;
+          height: 20px;
+          /* 📏 PICCOLO E ALLUNGATO: Un riflesso realistico */
+          
+          transform: rotate(10deg);
+          /* 🔄 LEGGERA ROTAZIONE: Segue la curva dell'occhio */
+          
+          background-color: #fff;
+          /* ⚪ BIANCO PURO: Il riflesso della luce */
+          
+          border-radius: 60%;
+          /* 🥚 OVALE: Stesso stile dell'occhio esterno */
+          /* È come il puntino di luce che vedi negli occhi dei gatti! */
+        }
+
+        .cat-right-inner-eye {
+          position: absolute;
+          top: 8px;
+          left: 18px;
+          /* 📍 RIFLESSO DIVERSO: Non perfettamente simmetrico */
+          /* La luce colpisce gli occhi in modo leggermente diverso */
+          
+          transform: rotate(-5deg);
+          /* 🔄 ROTAZIONE DIVERSA: Più realismo */
+          
+          width: 10px;
+          height: 20px;
+          background-color: #fff;
+          border-radius: 60%;
+        }
+
+        /* 👃 ===== NASO DEL GATTO ===== */
+        
+        .cat-nose {
+          position: absolute;
+          top: 108px;
+          left: 85px;
+          /* 📍 CENTRO DELLA FACCIA: Dove si incontrano tutte le linee */
+          
+          border-top-left-radius: 50%;
+          border-bottom-right-radius: 50%;
+          border-bottom-left-radius: 50%;
+          /* 🔻 FORMA A CUORE ROVESCIATO: Tipica del naso felino */
+          
+          transform: rotate(180deg);
+          /* 🔄 CAPOVOLGIMENTO: Il triangolo punta verso il basso */
+          
+          border-left: 15px solid transparent;
+          border-right: 15px solid transparent;
+          border-bottom: 20px solid #442c2c;
+          /* 🔺 TRIANGOLO MARRONE: Color cioccolato per il nasino */
+          /* Un altro uso creativo del trucco dei bordi! */
+        }
+
+        /* 👄 ===== BOCCA DEL GATTO ===== */
+        
+        .cat-mouth div {
+          width: 30px;
+          height: 50px;
+          /* 📏 DIMENSIONI BASE: Per le curve della bocca */
+          
+          border: 2px solid #000;
+          /* 🖊️ CONTORNO NERO: Solo il bordo, non riempimento */
+          
+          border-radius: 190%/190px 150px 0 0;
+          /* 🌙 MAGIA DELLE CURVE ELLITTICHE! */
+          /* 190% = curvatura orizzontale estrema */
+          /* 190px 150px 0 0 = curvo sopra, dritto sotto */
+          /* È come piegare un filo di ferro in una U molto stretta */
+          
+          border-color: black transparent transparent transparent;
+          /* 🎭 TRUCCO: Solo il bordo superiore è visibile! */
+          /* transparent = invisibile per gli altri lati */
+          /* Risultato: una curva perfetta per il sorriso */
+        }
+
+        .cat-mouth-line-left {
+          position: absolute;
+          top: 88px;
+          left: 74px;
+          transform: rotate(170deg);
+          /* 🔄 ROTAZIONE ESTREMA: Crea la curva sinistra del sorriso */
+          /* 170° = quasi capovolta! */
+        }
+
+        .cat-mouth-line-right {
+          position: absolute;
+          top: 88px;
+          left: 91px;
+          transform: rotate(165deg);
+          /* 🔄 LEGGERMENTE DIVERSA: 165° per asimmetria naturale */
+          /* Il sorriso non è mai perfettamente simmetrico! */
+        }
+
+        /* 🔤 ===== BAFFI DEL GATTO ===== */
+        
+        .cat-whiskers-left div,
+        .cat-whiskers-right div {
+          width: 40px;
+          height: 1px;
+          background-color: #000;
+          /* 📏 LINEE SOTTILI: 1px di altezza = baffi delicati */
+          /* width: 40px = baffi di buona lunghezza */
+        }
+
+        .cat-whisker-left-top {
+          position: absolute;
+          top: 120px;
+          left: 52px;
+          transform: rotate(10deg);
+          /* 🔄 BAFFO SUPERIORE: Punta leggermente verso l'alto */
+        }
+
+        .cat-whisker-left-middle {
+          position: absolute;
+          top: 127px;
+          left: 52px;
+          transform: rotate(3deg);
+          /* 🔄 BAFFO CENTRALE: Quasi orizzontale */
+        }
+
+        .cat-whisker-left-bottom {
+          position: absolute;
+          top: 134px;
+          left: 52px;
+          transform: rotate(-3deg);
+          /* 🔄 BAFFO INFERIORE: Punta leggermente verso il basso */
+          /* I tre baffi creano un ventaglio naturale! */
+        }
+
+        .cat-whisker-right-top {
+          position: absolute;
+          top: 120px;
+          left: 109px;
+          transform: rotate(-10deg);
+          /* 🔄 SPECULARE: Angolazione opposta per simmetria */
+        }
+
+        .cat-whisker-right-middle {
+          position: absolute;
+          top: 127px;
+          left: 109px;
+          transform: rotate(-3deg);
+          /* 🔄 QUASI DRITTO: Con leggera inclinazione */
+        }
+
+        .cat-whisker-right-bottom {
+          position: absolute;
+          top: 134px;
+          left: 109px;
+          transform: rotate(3deg);
+          /* 🔄 VERSO L'ALTO: Completa il ventaglio di baffi */
+        }
+    </style>
+</head>
+<body>
+    <!-- 🎨 ===== IL CORPO: La Tela del Nostro Capolavoro Felino ===== -->
+    
+    <main>
+        <!-- 📄 CONTENUTO PRINCIPALE: Il palcoscenico per il nostro gatto -->
+        
+      <div class="cat-head">
+        <!-- 🐱 TESTA: Il contenitore principale di tutto il muso -->
+        
+        <div class="cat-ears">
+          <!-- 👂 CONTENITORE ORECCHIE: Raggruppa le orecchie per organizzazione -->
+          
+          <div class="cat-left-ear">
+            <!-- 👂 ORECCHIO SINISTRO: Il triangolo inclinato a sinistra -->
+            
+            <div class="cat-left-inner-ear"></div>
+            <!-- 🌸 INTERNO ROSA: Il dettaglio che rende l'orecchio realistico -->
+          </div>
+          
+          <div class="cat-right-ear">
+            <!-- 👂 ORECCHIO DESTRO: Il gemello speculare -->
+            
+            <div class="cat-right-inner-ear"></div>
+            <!-- 🌸 INTERNO ROSA: Anche questo orecchio ha il suo interno -->
+          </div>
+        </div>
+
+        <div class="cat-eyes">
+          <!-- 👀 CONTENITORE OCCHI: Raggruppa gli occhi -->
+          
+          <div class="cat-left-eye">
+            <!-- 👁️ OCCHIO SINISTRO: L'ovale nero inclinato -->
+            
+            <div class="cat-left-inner-eye"></div>
+            <!-- ✨ RIFLESSO: Il puntino bianco che dà vita allo sguardo -->
+          </div>
+          
+          <div class="cat-right-eye">
+            <!-- 👁️ OCCHIO DESTRO: L'altro ovale con inclinazione opposta -->
+            
+            <div class="cat-right-inner-eye"></div>
+            <!-- ✨ RIFLESSO: Anche questo occhio brilla! -->
+          </div>
+        </div>
+        
+        <div class="cat-nose"></div>
+        <!-- 👃 NASO: Il triangolino marrone al centro -->
+
+        <div class="cat-mouth">
+          <!-- 👄 CONTENITORE BOCCA: Per il sorriso felino -->
+          
+          <div class="cat-mouth-line-left"></div>
+          <!-- 😊 CURVA SINISTRA: Metà del sorriso -->
+          
+          <div class="cat-mouth-line-right"></div>
+          <!-- 😊 CURVA DESTRA: L'altra metà del sorriso -->
+        </div>
+
+        <div class="cat-whiskers">
+          <!-- 🔤 CONTENITORE BAFFI: Organizza tutti i baffi -->
+          
+          <div class="cat-whiskers-left">
+            <!-- 🔤 BAFFI SINISTRI: Il gruppo di sinistra -->
+            
+            <div class="cat-whisker-left-top"></div>
+            <!-- 📏 BAFFO ALTO: Punta verso l'alto -->
+            
+            <div class="cat-whisker-left-middle"></div>
+            <!-- 📏 BAFFO MEDIO: Quasi orizzontale -->
+            
+            <div class="cat-whisker-left-bottom"></div>
+            <!-- 📏 BAFFO BASSO: Punta verso il basso -->
+          </div>
+          
+          <div class="cat-whiskers-right">
+            <!-- 🔤 BAFFI DESTRI: Il gruppo di destra -->
+            
+            <div class="cat-whisker-right-top"></div>
+            <!-- 📏 BAFFO ALTO: Speculare al sinistro -->
+            
+            <div class="cat-whisker-right-middle"></div>
+            <!-- 📏 BAFFO MEDIO: Posizione centrale -->
+            
+            <div class="cat-whisker-right-bottom"></div>
+            <!-- 📏 BAFFO BASSO: Completa il set -->
+          </div>
+        </div>
+
+      </div>
+    </main>
+</body>
+</html>
+
+<!-- 🎯 ===== RIASSUNTO DELL'ARTE CSS ===== -->
+<!-- 
+🐱 ANATOMIA DEL GATTO CSS:
+│
+├── 🧠 HEAD (stili e preparazione)
+│   └── 🎨 CSS con trucchi incredibili:
+│       ├── 🔺 Triangoli con bordi trasparenti
+│       ├── 🌙 Curve ellittiche complesse
+│       ├── 🔄 Transform rotate per ogni elemento
+│       └── 📍 Position absolute per precisione pixel
+│
+└── 😺 BODY (il gatto assemblato)
+    └── 🐱 Cat-head (contenitore principale)
+        ├── 👂 Orecchie (triangoli ruotati)
+        │   └── 🌸 Interni rosa (triangoli più piccoli)
+        ├── 👀 Occhi (ovali inclinati)
+        │   └── ✨ Riflessi (vita nello sguardo)
+        ├── 👃 Naso (triangolo capovolto)
+        ├── 😊 Bocca (curve con bordi parziali)
+        └── 🔤 Baffi (linee sottili ruotate)
+
+🎨 TECNICHE CSS MAGISTRALI:
+├── 🔺 Trucco dei triangoli: bordi trasparenti + 1 colorato
+├── ⚖️ Centratura assoluta: position absolute + margin auto
+├── 🌙 Border-radius avanzato: percentuali per curve custom
+├── 🔄 Transform rotate: ogni elemento ha la sua angolazione
+└── 🎭 Bordi selettivi: transparent per nascondere lati
+
+È come creare origami digitali - solo pieghe di CSS! 🗾✨
+-->
