@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<!-- 🎯 DICHIARAZIONE HTML5: "Preparatevi per un concerto CSS!" -->
+<!-- È come accordare gli strumenti prima di suonare 🎵 -->
+
+<html lang="en">
+<!-- 🌍 CONTENITORE PRINCIPALE: Il palcoscenico per il nostro pianoforte -->
+<!-- lang="en" = lingua inglese, ma la musica è universale! 🎼 -->
+
+  <head>
+    <!-- 🧠 LA MENTE MUSICALE: Dove scriviamo le partiture CSS -->
+    <!-- È come preparare gli spartiti prima del concerto -->
+    
+    <meta charset="UTF-8" />
+    <!-- 📝 CARATTERI UNIVERSALI: UTF-8 capisce tutte le note del mondo! ♪♫♬ -->
+    
+    <title>Piano</title>
+    <!-- 📑 TITOLO DELLA TAB: Semplice e diretto come una nota DO -->
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 📱 ADATTAMENTO RESPONSIVE: "Suona bene su ogni dispositivo!" -->
+    <!-- È come avere un piano che si ridimensiona magicamente -->
+    
+    <style>
+      /* 🎨 ===== GLI SPARTITI CSS: La Magia del Piano Digitale ===== */
+      
+      html {
+        box-sizing: border-box;
+        /* 📦 CALCOLO INTELLIGENTE: Include padding e bordi nelle dimensioni */
+        /* È come dire "quando ordino un piano da 992px, voglio TUTTO incluso" */
+      }
+      
+      *, *::before, *::after {
+        box-sizing: inherit;
+        /* 🧬 EREDITÀ UNIVERSALE: Tutti gli elementi ereditano la regola del padre */
+        /* * = TUTTI gli elementi */
+        /* ::before e ::after = anche gli pseudo-elementi! */
+        /* È come dire "tutti i tasti seguono la stessa regola di misurazione" */
+        /* inherit = "prendi la regola dal genitore" */
+      }
+      
+      /* 🎹 ===== IL PIANOFORTE ===== */
+      
+      #piano {
+        background-color: #00471b;
+        /* 🎨 VERDE FORESTA SCURO: Il colore classico del feltro dei pianoforti */
+        /* È come il panno verde che protegge il legno del piano */
+        
+        width: 992px;
+        height: 290px;
+        /* 📏 DIMENSIONI MAESTOSE: Un piano a grandezza quasi naturale! */
+        /* 992px ≈ quasi un metro di larghezza sul monitor */
+        
+        margin: 80px auto;
+        /* ⚖️ CENTRATURA CON RESPIRO: 80px sopra/sotto, auto ai lati */
+        /* auto = "browser, centralo tu orizzontalmente!" */
+        /* È come posizionare il piano al centro del palco */
+        
+        padding: 90px 20px 0 20px;
+        /* 🏠 SPAZIO INTERNO: 90px sopra (per il logo), 20px ai lati */
+        /* È lo spazio tra il bordo del piano e i tasti */
+        
+        position: relative;
+        /* 📍 CONTENITORE DI RIFERIMENTO: Per posizionare il logo */
+        /* relative = "i miei figli si posizioneranno rispetto a me" */
+        
+        border-radius: 10px;
+        /* 🔄 ANGOLI MORBIDI: 10px di arrotondamento */
+        /* I pianoforti moderni hanno angoli smussati per sicurezza */
+      }
+      
+      /* 🎼 ===== LA TASTIERA ===== */
+      
+      .keys {
+        background-color: #040404;
+        /* ⚫ NERO QUASI ASSOLUTO: Lo spazio tra i tasti */
+        /* È come la fessura nera che vedi tra un tasto e l'altro */
+        
+        width: 949px;
+        height: 180px;
+        /* 📏 DIMENSIONI TASTIERA: Leggermente più stretta del piano */
+        /* Lascia un po' di bordo verde visibile */
+        
+        padding-left: 2px;
+        /* 🔧 MICRO-AGGIUSTAMENTO: 2px per allineare perfettamente i tasti */
+        /* È come dare una piccola spinta per far combaciare tutto */
+        
+        overflow: hidden;
+        /* ✂️ TAGLIA L'ECCESSO: Nasconde qualsiasi cosa esca dai bordi */
+        /* FONDAMENTALE quando usi float! Contiene i tasti flottanti */
+        /* È come una cornice che taglia tutto ciò che sporge */
+      }
+      
+      /* ⚪ ===== TASTI BIANCHI ===== */
+      
+      .key {
+        background-color: #ffffff;
+        /* ⚪ BIANCO PURO: Come l'avorio dei tasti classici */
+        
+        position: relative;
+        /* 📍 POSIZIONE RELATIVA: Serve per i tasti neri! */
+        /* I tasti neri saranno posizionati rispetto a questi */
+        
+        width: 41px;
+        height: 175px;
+        /* 📏 PROPORZIONI REALISTICHE: Lunghi e stretti come i veri tasti */
+        
+        margin: 2px;
+        /* 🌬️ SPAZIO TRA TASTI: 2px di separazione */
+        /* È lo spazio nero che vedi tra i tasti bianchi */
+        
+        float: left;
+        /* 🏊 GALLEGGIAMENTO A SINISTRA: I tasti si allineano uno dopo l'altro */
+        /* float: left = "galleggia a sinistra e lascia che gli altri ti seguano" */
+        /* È come mettere in fila dei blocchi di legno */
+        
+        border-radius: 0 0 3px 3px;
+        /* 🔄 ARROTONDAMENTO SOLO IN BASSO: 0 0 3px 3px */
+        /* Top-left: 0, Top-right: 0, Bottom-right: 3px, Bottom-left: 3px */
+        /* I tasti del piano sono arrotondati solo nella parte inferiore! */
+      }
+      
+      /* ⚫ ===== TASTI NERI (IL TRUCCO GENIALE!) ===== */
+      
+      .key.black--key::after {
+        /* 🎩 PSEUDO-ELEMENTO MAGICO: Crea i tasti neri SENZA HTML aggiuntivo! */
+        /* ::after = "aggiungi un elemento fantasma dopo il contenuto" */
+        /* È come avere un assistente invisibile che posiziona i tasti neri */
+        
+        background-color: #1d1e22;
+        /* ⚫ NERO ANTRACITE: Non completamente nero per realismo */
+        /* I tasti neri veri non sono mai nero puro */
+        
+        content: "";
+        /* 📭 CONTENUTO VUOTO: Necessario per far apparire lo pseudo-elemento */
+        /* Senza content, ::after non esiste! */
+        
+        position: absolute;
+        /* 🎯 POSIZIONAMENTO ASSOLUTO: Si posiziona rispetto al tasto bianco */
+        /* È come sovrapporre un pezzo sopra un altro */
+        
+        left: -18px;
+        /* ⬅️ SPOSTAMENTO A SINISTRA: -18px per centrarlo tra due bianchi */
+        /* Valore negativo = va oltre il bordo sinistro del tasto bianco */
+        /* È posizionato A CAVALLO tra due tasti bianchi! */
+        
+        width: 32px;
+        height: 100px;
+        /* 📏 DIMENSIONI TASTO NERO: Più stretto e più corto dei bianchi */
+        /* Proprio come in un vero pianoforte! */
+        
+        border-radius: 0 0 3px 3px;
+        /* 🔄 STESSA CURVATURA: Arrotondato solo in basso come i bianchi */
+      }
+      
+      /* 🎨 ===== LOGO FREECODECAMP ===== */
+      
+      .logo {
+        width: 200px;
+        /* 📏 LARGHEZZA LOGO: Dimensione rispettosa ma visibile */
+        
+        position: absolute;
+        /* 🎯 POSIZIONAMENTO ASSOLUTO: Rispetto al piano (position: relative) */
+        
+        top: 23px;
+        /* 📍 DISTANZA DAL BORDO SUPERIORE: Nel "coperchio" del piano */
+        /* È come mettere la marca del produttore sul piano */
+      }
+      
+      /* 📱 ===== MEDIA QUERIES: Il Piano che si Adatta! ===== */
+      
+      @media (max-width: 768px) {
+        /* 📱 TABLET E MOBILE: Schermi fino a 768px */
+        /* È come avere un piano portatile per piccoli spazi! */
+        
+        #piano {
+          width: 358px;
+          /* 🎹 MINI PIANO: Circa 1/3 della dimensione originale */
+          /* Da 992px a 358px = piano da viaggio! */
+        }
+        
+        .keys {
+          width: 318px;
+          /* 🎼 TASTIERA RIDOTTA: Proporzionale al piano piccolo */
+        }
+        
+        .logo {
+          width: 150px;
+          /* 🔄 LOGO PIÙ PICCOLO: Si adatta al piano ridotto */
+        }
+      }
+      
+      @media (max-width: 1199px) and (min-width: 769px) {
+        /* 💻 LAPTOP E TABLET GRANDI: Tra 769px e 1199px */
+        /* È la taglia media, come un piano verticale invece che a coda */
+        
+        #piano {
+          width: 675px;
+          /* 🎹 PIANO MEDIO: 2/3 della dimensione originale circa */
+        }
+        
+        .keys {
+          width: 633px;
+          /* 🎼 TASTIERA MEDIA: Sempre proporzionale */
+        }
+        /* 📝 NOTA: Il logo mantiene la dimensione originale qui */
+      }
+    </style>
+  </head>
+  
+  <body>
+    <!-- 🎭 ===== IL PALCOSCENICO: Dove il Piano Prende Vita ===== -->
+    
+    <div id="piano">
+      <!-- 🎹 IL PIANOFORTE: Il contenitore principale verde -->
+      
+      <img class="logo" src="https://cdn.freecodecamp.org/platform/universal/fcc_primary.svg" alt="freeCodeCamp Logo" />
+      <!-- 🎨 LOGO: Il marchio di fabbrica sul nostro piano digitale -->
+      <!-- alt="..." = descrizione per accessibilità -->
+      
+      <div class="keys">
+        <!-- 🎼 LA TASTIERA: Contenitore di tutti i tasti -->
+        
+        <!-- ⚪⚫ PATTERN DEI TASTI: Come una vera tastiera di piano! -->
+        <!-- Schema: DO, DO#/REb, RE, RE#/MIb, MI, FA, FA#/SOLb, SOL, SOL#/LAb, LA, LA#/SIb, SI -->
+        
+        <div class="key"></div>
+        <!-- ⚪ DO: Primo tasto bianco -->
+        
+        <div class="key black--key"></div>
+        <!-- ⚫ DO#: Il ::after crea il tasto nero! -->
+        
+        <div class="key black--key"></div>
+        <!-- ⚪ RE: Ha un tasto nero (RE#) -->
+        
+        <div class="key"></div>
+        <!-- ⚪ MI: Nessun tasto nero dopo (non esiste MI#) -->
+        
+        <div class="key black--key"></div>
+        <!-- ⚪ FA: Ha il tasto nero FA# -->
+        
+        <div class="key black--key"></div>
+        <!-- ⚪ SOL: Ha il tasto nero SOL# -->
+        
+        <div class="key black--key"></div>
+        <!-- ⚪ LA: Ha il tasto nero LA# -->
+        
+        <div class="key"></div>
+        <!-- ⚪ SI: Nessun tasto nero dopo (non esiste SI#) -->
+        
+        <!-- 🔄 IL PATTERN SI RIPETE: Seconda ottava -->
+        <div class="key black--key"></div>
+        <div class="key black--key"></div>
+        <div class="key"></div>
+        <div class="key black--key"></div>
+        <div class="key black--key"></div>
+        <div class="key black--key"></div>
+        
+        <!-- 🔄 TERZA OTTAVA PARZIALE -->
+        <div class="key"></div>
+        <div class="key black--key"></div>
+        <div class="key black--key"></div>
+        <div class="key"></div>
+        <div class="key black--key"></div>
+        <div class="key black--key"></div>
+        <div class="key black--key"></div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<!-- 🎯 ===== RIASSUNTO DELLA SINFONIA CSS ===== -->
+<!-- 
+🎹 ARCHITETTURA DEL PIANO:
+│
+├── 🧠 HEAD (preparazione musicale)
+│   └── 🎨 CSS con trucchi geniali:
+│       ├── 📦 Box-sizing per calcoli precisi
+│       ├── 🎩 ::after per creare tasti neri dal nulla!
+│       ├── 🏊 Float per allineare i tasti
+│       ├── ✂️ Overflow: hidden per contenere i float
+│       └── 📱 Media queries per piano responsive
+│
+└── 🎼 BODY (il piano assemblato)
+    └── 🎹 Piano (contenitore verde)
+        ├── 🎨 Logo freeCodeCamp
+        └── 🎼 Keys (tastiera nera)
+            ├── ⚪ Tasti bianchi (div normali)
+            └── ⚫ Tasti neri (creati con ::after!)
+
+🎩 TRUCCHI CSS MAGISTRALI:
+├── 🎯 Pseudo-elemento ::after: Un tasto nero senza HTML extra!
+├── 🏊 Float: left: I tasti si allineano automaticamente
+├── ✂️ Overflow: hidden: Contiene i float (trucco storico!)
+├── 📍 Position relative/absolute: Per sovrapporre i tasti neri
+└── 📱 Media queries: 3 dimensioni di piano!
+
+🎵 PATTERN MUSICALE:
+├── Schema ottava: DO-RE-MI-FA-SOL-LA-SI
+├── Tasti neri: Tra tutti tranne MI-FA e SI-DO
+└── 2.5 ottave totali nel nostro piano
+
+È come costruire un vero strumento musicale con solo CSS! 🎵✨
+-->
