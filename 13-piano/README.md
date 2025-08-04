@@ -1,4 +1,4 @@
-# Building a Piano - freeCodeCamp Project
+# Piano - freeCodeCamp Project
 
 ### The Project
 Interactive piano developed with responsive CSS, where the number of keys automatically adapts to screen size using media queries.
