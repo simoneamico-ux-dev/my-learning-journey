@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Git & GitHub Documentation</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <style>
+            * {
+                font-family: apple-system, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell, Helvetica Neue;
+                font-weight: 400;
+                color: rgba(255, 255, 255, 0.900);
+                background-color: #161616;
+            }
+
+            html {
+                scroll-behavior: smooth;
+            }
+
+            h1 {
+                font-weight: 600;
+                font-size: 18px;
+                padding-left: 8px;
+                margin-top: 48px;
+            }
+
+            h2 {
+                font-weight: 600;
+                font-size: 32px;
+                padding-top: 24px;
+                margin-bottom: 16px;
+            }
+
+            #main-doc > .main-section:first-child h2 {
+                padding-top: 0;
+            }
+
+            p {
+                max-width: 75em;
+                margin-bottom: 16px;
+            }
+
+            #navbar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 270px;
+                height: calc(100vh - 8px);
+                overflow-y: auto;
+                box-sizing: border-box;
+                border-right: 2px solid #33333379;
+            }
+
+            #main-doc {
+                margin-left: 280px;
+                margin-top: 16px;
+                max-width: 800px;
+            }
+
+            .nav-link {
+                display: block;
+                text-decoration: none;
+                padding: 16px;
+                color: rgba(255, 255, 255, 0.7);
+            }
+
+            .nav-link:hover {
+                padding-left: 20px;
+                transition: all 0.3s ease;
+                background-color: #0A558C;
+                color: white;
+            }
+
+            section {
+                padding-left: 4px;
+            }
+
+            main {
+                padding-bottom: 12px;
+            }
+
+            code {
+                display: block;
+                background-color: #2d2d2d;
+                padding: 12px;
+                margin: 16px 0;
+                border-radius: 4px;
+                font-family: 'Courier New', monospace;
+                white-space: pre-line;
+            }
+
+            ul {
+                margin: 16px 0;
+                padding-left: 20px;
+            }
+
+            li {
+                margin-bottom: 8px;
+            }
+
+            @media (max-width: 768px) {
+                #navbar {
+                    position: static;
+                    width: 100%;
+                    height: auto;
+                    margin-top: 0;
+                    text-align: center;
+                }
+                
+                #main-doc {
+                    margin-left: 0;
+                    margin-top: 0;
+                    padding: 16px;
+                }
+                
+                h1 {
+                    text-align: center;
+                    margin-top: 16px;
+                }
+
+                h2 {
+                    font-size: 24px;
+                }
+
+                * {
+                    font-size: 14px;
+                }
+
+                .nav-link {
+                    font-size: 16px;
+                }
+
+                .nav-link:hover {
+                    padding-left: 16px;
+                    background-color: #0A558C;
+                    color: white;
+                    transform: scale(1.02); 
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <nav id="navbar">
+            <header><h1>Git & GitHub</h1></header>
+
+            <a class="nav-link" href="#Introduction_to_Git">Introduction to Git</a>
+
+            <a class="nav-link" href="#Basic_Git_Commands">Basic Git Commands</a>
+            
+            <a class="nav-link" href="#Understanding_GitHub">Understanding GitHub</a>
+
+            <a class="nav-link" href="#Working_with_Branches">Working with Branches</a>
+
+            <a class="nav-link" href="#Collaboration_and_Pull_Requests">Collaboration and Pull Requests</a>
+
+            <a class="nav-link" href="#Git_Configuration">Git Configuration</a>
+
+            <a class="nav-link" href="#Remote_Repositories">Remote Repositories</a>
+
+            <a class="nav-link" href="#Merge_Conflicts">Merge Conflicts</a>
+
+            <a class="nav-link" href="#Git_History_and_Logs">Git History and Logs</a>
+
+            <a class="nav-link" href="#GitHub_Issues_and_Projects">GitHub Issues and Projects</a>
+
+            <a class="nav-link" href="#Git_Best_Practices">Git Best Practices</a>
+
+            <a class="nav-link" href="#Troubleshooting_Common_Issues">Troubleshooting Common Issues</a>
+        </nav>
+        <main id="main-doc">
+
+            <section class="main-section" id="Introduction_to_Git">
+                <header><h2>Introduction to Git</h2></header>
+                <p>Git is like a "magic diary" for your code. Imagine writing a book: every time you finish a chapter, you take a photo of the page. If you mess something up later, you can always go back to that photo!</p>
+                <p>Git keeps track of all the changes you make to your files. It's like having a time machine for your project: you can see what you changed, when you changed it, and why you changed it.</p>
+                <code>git --version</code>
+                <ul>
+                    <li>Keeps track of modifications</li>
+                    <li>Allows you to go back in time</li>
+                    <li>Facilitates teamwork</li>
+                </ul>
+            </section>
+
+            <section class="main-section" id="Basic_Git_Commands">
+                <header><h2>Basic Git Commands</h2></header>
+                <p>Basic Git commands are like the most important words of a foreign language. With these few commands you can already do a lot!</p>
+                <p>The first command you'll always use is git init, which transforms a normal folder into a "Git warehouse". It's like saying "from today this folder is special, keep track of everything!"</p>
+                <p>Then there's git add, which is like putting files in a box before shipping it. And git commit is like sealing the box and writing on it what it contains.</p>
+                <code>git init
+git add .
+git commit -m "My first commit"</code>
+                <ul>
+                    <li>git init: initializes a repository</li>
+                    <li>git add: prepares files for commit</li>
+                    <li>git commit: saves changes permanently</li>
+                </ul>
+            </section>
+
+            <section class="main-section" id="Understanding_GitHub">
+                <header><h2>Understanding GitHub</h2></header>
+                <p>GitHub is like a "social network for programmers". It's a place where you can store your Git projects online and share them with the world.</p>
+                <p>Think of it as Instagram, but instead of photos, you share code. You can follow other programmers, "like" (star) their projects, and even contribute to them!</p>
+                <p>GitHub makes collaboration incredibly easy. It's like having a shared workspace where everyone can see what others are doing and contribute their ideas.</p>
+                <code>git clone https://github.com/username/repository.git
+git remote add origin https://github.com/username/repository.git</code>
+                <ul>
+                    <li>Repository hosting: store projects online</li>
+                    <li>Collaboration tools: work with others</li>
+                    <li>Open source community: share and contribute</li>
+                </ul>
+            </section>
+
+            <section class="main-section" id="Working_with_Branches">
+                <header><h2>Working with Branches</h2></header>
+                <p>Branches are one of Git's most powerful features. Imagine your project as a tree: the main trunk is the "main" branch, and you can create branches to try new features.</p>
+                <p>If you're working on a new feature, you create a separate branch. It's like having a copy of your project where you can experiment without breaking the original!</p>
+                <p>When your feature is ready, you can "merge" the branch with the main one. It's like grafting the branch onto the main tree.</p>
+                <code>git branch new-feature
+git checkout new-feature
+git switch -c another-feature</code>
+                <ul>
+                    <li>main/master: main branch</li>
+                    <li>feature branches: for new functionalities</li>
+                    <li>hotfix branches: for urgent bug fixes</li>
+                </ul>
+            </section>
+
+            <section class="main-section" id="Collaboration_and_Pull_Requests">
+                <header><h2>Collaboration and Pull Requests</h2></header>
+                <p>Pull Requests are the heart of collaboration on GitHub. It's like knocking on the door and saying "Hey, I improved your project, want to see?"</p>
+                <p>When you make a Pull Request, you're asking the project owner to "pull" your changes into their repository. It's a polite way to propose changes.</p>
+                <p>Before your changes get accepted, other developers can review your code, suggest improvements, or approve the changes. It's like having a group of friends check your homework before you turn it in!</p>
+                <code>git push origin my-feature</code>
+                <ul>
+                    <li>Fork: copy a repository to your account</li>
+                    <li>Pull Request: propose changes</li>
+                    <li>Code Review: other developers check your code</li>
+                </ul>
+            </section>
+
+            <section class="main-section" id="Git_Configuration">
+                <header><h2>Git Configuration</h2></header>
+                <p>Before using Git for the first time, it's like introducing yourself: you need to say who you are! Git needs to know your name and email to "sign" your commits.</p>
+                <p>Configuration is done once on your computer, and it's like filling out a digital ID card. Every time you make a commit, Git will use this information.</p>
+                <p>You can also configure your preferred text editor and many other details to customize Git according to your preferences.</p>
+                <code>git config --global user.name "Your Name"
+git config --global user.email "your@email.com"
+git config --global core.editor "code --wait"</code>
+                <ul>
+                    <li>Global configuration: applies to all projects</li>
+                    <li>Local configuration: only for one project</li>
+                </ul>
+            </section>
+
+            <section class="main-section" id="Remote_Repositories">
+                <header><h2>Remote Repositories</h2></header>
+                <p>Remote repositories are like "backup copies" of your project stored on the internet. The most famous is GitHub, but there are others like GitLab and Bitbucket.</p>
+                <p>It's like having your personal diary (local repository) and a copy in a bank vault (remote repository). If your computer breaks, the copy is always safe!</p>
+                <p>You can connect your local project to multiple remote repositories simultaneously. It's useful when you want to backup on different services.</p>
+                <code>git remote -v
+git push origin main
+git pull origin main</code>
+                <ul>
+                    <li>origin: standard name for the main repository</li>
+                    <li>upstream: original repository when you fork</li>
+                </ul>
+            </section>
+
+            <section class="main-section" id="Merge_Conflicts">
+                <header><h2>Merge Conflicts</h2></header>
+                <p>Merge conflicts are like when two people modify the same sentence of a document simultaneously. Git doesn't know which version to keep!</p>
+                <p>Don't be scared of conflicts: they're completely normal when working in teams. It's like two chefs modifying the same recipe - someone has to decide which ingredient to use.</p>
+                <p>When it happens, Git shows you exactly where the differences are and you have to choose what to keep. It's like being a judge deciding between two versions.</p>
+                <code><<<<<<< HEAD
+My version of the code
+=======
+Someone else's version
+>>>>>>> branch-name</code>
+                <ul>
+                    <li>HEAD: the version in your current branch</li>
+                    <li>Markers: <<<<<<< ======= >>>>>>> show the conflict</li>
+                </ul>
+            </section>
+
+            <section class="main-section" id="Git_History_and_Logs">
+                <header><h2>Git History and Logs</h2></header>
+                <p>Git history is like a detailed log of everything that happened to your project. Each commit is like a diary entry with date, time, and description.</p>
+                <p>With git log you can see who did what and when. It's incredibly useful for understanding how the project evolved or finding when a bug was introduced.</p>
+                <p>You can also see differences between different versions, like comparing two photos of the same place taken at different times.</p>
+                <code>git log --oneline
+git show commit-hash
+git diff HEAD~1</code>
+                <ul>
+                    <li>git log: shows complete history</li>
+                    <li>git show: details of a specific commit</li>
+                </ul>
+            </section>
+
+            <section class="main-section" id="GitHub_Issues_and_Projects">
+                <header><h2>GitHub Issues and Projects</h2></header>
+                <p>GitHub Issues are like a public "to-do list" for your project. You can report bugs, propose new features, or ask questions.</p>
+                <p>It's like having a bulletin board where anyone can stick post-it notes with suggestions or problem reports. Much more organized than scattered comments!</p>
+                <p>Projects are like digital Kanban boards: you can organize Issues in columns like "To Do", "In Progress", "Done". Perfect for managing complex projects!</p>
+                <code># In a commit message
+git commit -m "Fix login bug - closes #42"</code>
+                <ul>
+                    <li>Bug reports: error notifications</li>
+                    <li>Feature requests: proposals for new functions</li>
+                </ul>
+            </section>
+
+            <section class="main-section" id="Git_Best_Practices">
+                <header><h2>Git Best Practices</h2></header>
+                <p>Using Git well is like driving: there are unwritten rules that make everything safer and more organized for everyone.</p>
+                <p>Commit messages should be clear and descriptive, like photo captions: "Add login function" is much better than "random stuff".</p>
+                <p>Make small and frequent commits instead of one giant one at the end. It's like saving a document every paragraph instead of only at the end - if something goes wrong, you've lost less work!</p>
+                <code># Good example
+git commit -m "Add user authentication system"
+# Bad example
+git commit -m "stuff"</code>
+                <ul>
+                    <li>Frequent and small commits</li>
+                    <li>Descriptive messages</li>
+                    <li>Branch for each feature</li>
+                </ul>
+            </section>
+
+            <section class="main-section" id="Troubleshooting_Common_Issues">
+                <header><h2>Troubleshooting Common Issues</h2></header>
+                <p>Everyone makes mistakes with Git, even experienced programmers! It's normal and there are always solutions. It's like learning to ride a bike - some falls are inevitable.</p>
+                <p>The most useful command ever is git status. It's like asking "where am I?" when you're lost. It always tells you what's happening and what you can do.</p>
+                <p>If you made a wrong commit, don't panic! Git keeps track of everything and you can almost always go back. It's like having a very powerful "undo" button.</p>
+                <code>git status
+git reset --soft HEAD~1
+git stash</code>
+                <ul>
+                    <li>git status: to always orient yourself</li>
+                    <li>git reset: to undo commits</li>
+                    <li>git stash: to save temporary work</li>
+                </ul>
+            </section>
+
+        </main>
+    </body>
+</html>
