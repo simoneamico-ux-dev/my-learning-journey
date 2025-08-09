@@ -728,9 +728,16 @@ aria-labelledby: "Usa il testo che c'è già là 👉"
 
 
 
+
+
+
+
+
+
+
 # CSS Vademecum
 
-## 1. Importazione font esterni ← NUOVO
+## 1. Importazione font esterni
 
 ### Link Google Fonts
 **Cosa fa**: Importa font professionali gratis da Google nel tuo sito.
@@ -832,6 +839,28 @@ p[lang="en"] { font-style: italic; }
 
 **Quando usarlo**: Quando vuoi riutilizzare lo stesso stile su elementi diversi.
 
+### Selettori multipli (senza spazio)
+**Cosa fa**: Seleziona elementi che hanno TUTTE le classi specificate.
+
+**Snippet**:
+```css
+/* Elemento con ENTRAMBE le classi */
+.key.black--key {
+  background: black;
+}
+```
+
+**HTML che corrisponde**:
+```html
+<div class="key"></div>                ❌ NO (solo .key)
+<div class="black--key"></div>         ❌ NO (solo .black--key)  
+<div class="key black--key"></div>     ✅ SÌ (entrambe!)
+```
+
+**Analogia**: Come dire "cerco persone con giacca E cravatta" - non basta uno solo dei due!
+
+**Quando usarlo**: Per stili molto specifici che si applicano solo quando sono presenti più condizioni.
+
 ### Pseudo-classi di stato
 **Cosa fanno**: Cambiano lo stile in base all'interazione dell'utente.
 
@@ -871,7 +900,7 @@ Focus:  [|Bottone|] (selezionato)
 
 **Quando usarle**: SEMPRE! Migliorano l'esperienza utente mostrando feedback visivo.
 
-### `:not()` pseudo-classe ← NUOVO
+### `:not()` pseudo-classe
 **Cosa fa**: Seleziona tutto TRANNE quello che specifichi.
 
 **Snippet**:
@@ -895,6 +924,113 @@ li:not(:last-child) {
 **Analogia**: Come dire "tutti alla festa tranne Mario" - selezioni per esclusione!
 
 **Quando usarlo**: Quando è più facile dire cosa NON vuoi che dire cosa vuoi. Perfetto per eccezioni!
+
+### Pseudo-selettori di tipo
+**Cosa fanno**: Selezionano elementi in base alla loro posizione tra fratelli dello stesso tipo.
+
+**Snippet**:
+```css
+/* Primo span tra i suoi fratelli */
+span:first-of-type {
+  color: red;
+}
+
+/* Ultimo span */
+span:last-of-type {
+  color: blue;
+}
+
+/* Secondo span */
+span:nth-of-type(2) {
+  font-weight: bold;
+}
+
+/* Span in posizioni dispari */
+span:nth-of-type(odd) {
+  background: #f0f0f0;
+}
+
+/* Span in posizioni pari */
+span:nth-of-type(even) {
+  background: #e0e0e0;
+}
+```
+
+**Confronto con classi manuali**:
+```
+SENZA pseudo-selettori (manuale):
+HTML: <span class="primo"> <span> <span>
+CSS:  .primo { }
+
+CON pseudo-selettori (automatico):
+HTML: <span> <span> <span>
+CSS:  span:first-of-type { }
+```
+
+**Analogia**: Come dire al browser "colora il primo libro rosso sullo scaffale" senza dover mettere un'etichetta su ogni libro!
+
+**Quando usarli**: Liste, righe di tabella alternate, styling del primo/ultimo elemento senza modificare HTML.
+
+### Pseudo-elementi `::before` e `::after`
+**Cosa fanno**: Creano elementi "fantasma" che il CSS aggiunge automaticamente.
+
+**Snippet base**:
+```css
+/* Aggiunge contenuto prima */
+.persona::before {
+  content: "👑";
+}
+
+/* Aggiunge contenuto dopo */
+.persona::after {
+  content: "👟";
+}
+```
+
+**HTML**:
+```html
+<div class="persona">Mario</div>
+```
+
+**Risultato visivo**: 👑 Mario 👟
+
+**Utilizzo avanzato con `content: ""`** ← AGGIORNATO:
+```css
+/* Content vuoto ma NECESSARIO per rendere visibile lo pseudo-elemento */
+.elemento::after {
+  content: "";  /* Stringa vuota - OBBLIGATORIA! */
+  display: block;
+  width: 100px;
+  height: 20px;
+  background: red;
+}
+```
+
+**Perché `content: ""` è necessario**:
+```css
+/* ❌ INVISIBILE - manca content */
+.box::after {
+  background: black;
+  width: 100px;
+  height: 100px;
+}
+
+/* ✅ VISIBILE - ha content anche se vuoto */
+.box::after {
+  content: "";
+  background: black;
+  width: 100px;
+  height: 100px;
+}
+```
+
+**Analogia**: È come dire "crea una scatola invisibile" - senza `content` il browser non la crea proprio, con `content: ""` la crea vuota ma presente!
+
+**Quando usarli**: 
+- Decorazioni (icone, badge)
+- Elementi grafici senza inquinare HTML
+- Forme geometriche CSS pure
+- Overlay e effetti visivi
 
 ## 3. Box Model & Spaziatura
 
@@ -936,7 +1072,7 @@ Container: |                    |
            |    [   Card   ]    | ← Entrambi auto = centro!
 ```
 
-**Margini negativi** ← NUOVO:
+**Margini negativi**:
 ```css
 h1 {
   margin-top: -10px; /* Si sposta SU di 10px */
@@ -1025,9 +1161,49 @@ border: 4px double green;  /* ══════ */
 }
 ```
 
-**Analogia**: Come scegliere la cornice per un quadro - puoi avere legno sottile, metallo spesso, o plastica colorata.
+### `border-radius` avanzato ← NUOVO
+**Cosa fa**: Arrotonda gli angoli, ma puoi controllare ogni angolo separatamente!
 
-**Quando usarlo**: Definire confini visuali, creare badge, evidenziare elementi importanti.
+**Sintassi completa**:
+```css
+/* Un valore = tutti gli angoli */
+border-radius: 10px;
+
+/* Due valori = top-left/bottom-right | top-right/bottom-left */
+border-radius: 10px 5px;
+
+/* Quattro valori = ogni angolo in senso orario */
+border-radius: 10px 5px 15px 20px;
+/* top-left | top-right | bottom-right | bottom-left */
+
+/* Solo angoli specifici */
+border-top-left-radius: 10px;
+border-top-right-radius: 5px;
+border-bottom-right-radius: 15px;
+border-bottom-left-radius: 20px;
+```
+
+**Esempio pratico - tasti del piano**:
+```css
+.key {
+  border-radius: 0 0 3px 3px;
+  /* Squadrato sopra, arrotondato sotto */
+}
+```
+
+**Visual**:
+```
+border-radius: 10px:        border-radius: 0 0 10px 10px:
+╭─────────╮                 ┌─────────┐
+│         │                 │         │
+│         │                 │         │
+╰─────────╯                 ╰─────────╯
+Tutti arrotondati          Solo sotto arrotondati
+```
+
+**Analogia**: Come tagliare gli angoli di una foto - puoi scegliere quali angoli smussare e quanto!
+
+**Quando usarlo**: Bottoni con forme particolari, tab, elementi che sembrano "attaccati" ad altri.
 
 ### `box-sizing`
 **Cosa fa**: Cambia come vengono calcolate le dimensioni della scatola.
@@ -1063,20 +1239,32 @@ content-box:           border-box:
 └─────────────┘        └─────────────┘
 ```
 
-**Reset consigliato**:
+**Pattern di reset con inherit** ← AGGIORNATO:
 ```css
-*,
-*::before,
-*::after {
+/* Pattern consigliato */
+html {
   box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
 }
 ```
 
-**Analogia**: 
-- `content-box` = Comprare una pizza "30cm" e poi aggiungere cartone
-- `border-box` = Comprare una pizza "30cm cartone incluso"
+**Perché usare inherit invece di border-box diretto**:
+```css
+/* Se in futuro vuoi cambiare strategia */
+.special-component {
+  box-sizing: content-box;
+}
 
-**Quando usarlo**: SEMPRE usa border-box! Rende i calcoli molto più semplici.
+/* Tutti i figli di .special-component 
+   erediteranno automaticamente content-box! */
+```
+
+**Analogia**: È come impostare una regola di famiglia - "in questa casa si fa così" - ma se un figlio si trasferisce e cambia regola, i suoi figli seguiranno la nuova regola automaticamente!
+
+**Quando usarlo**: SEMPRE usa il pattern con inherit! È più flessibile del semplice `* { box-sizing: border-box; }`.
 
 ### Dimensioni & unità
 **Proprietà principali**:
@@ -1194,7 +1382,7 @@ h1 { font-size: 2rem; }     /* 32px se root=16px */
 
 **Quando usarli**:
 - `rem`: Titoli, paragrafi, layout (consigliato!)
-- `em`: Componenti che devono scalare col contesto
+- `em`: Componenti interni che devono scalare col contesto
 - `px`: Dettagli piccolissimi, bordi
 
 ### `font-weight`
@@ -1270,7 +1458,7 @@ center:               justify:
 - `right`: Numeri in tabelle, prezzi
 - `justify`: Testi lunghi tipo articoli
 
-### `letter-spacing` ← NUOVO
+### `letter-spacing`
 **Cosa fa**: Aggiunge o toglie spazio tra le lettere.
 
 **Snippet**:
@@ -1343,6 +1531,44 @@ hsl(0, 100%, 50%)
 - HEX: Colori precisi da brand
 - RGBA: Quando serve trasparenza
 - HSL: Per creare variazioni di uno stesso colore
+
+### Calcolare colori complementari
+**Cosa fa**: Trova il colore opposto sulla ruota dei colori.
+
+**Con HEX**:
+```
+Colore: #3A5F7D
+Complementare:
+FF - 3A = C5
+FF - 5F = A0  
+FF - 7D = 82
+Risultato: #C5A082
+```
+
+**Con RGB**:
+```
+Colore: rgb(58, 95, 125)
+Complementare:
+255 - 58 = 197
+255 - 95 = 160
+255 - 125 = 130
+Risultato: rgb(197, 160, 130)
+```
+
+**Visual della ruota**:
+```
+     🔴 Rosso
+   🟠   🟣
+ 🟡       🔵
+   🟢 💚
+Verde  Blu-verde
+
+Complementari sono opposti!
+```
+
+**Analogia**: Come il negativo di una foto - ogni colore diventa il suo opposto!
+
+**Quando usarlo**: Creare contrasto forte, design accattivanti, call-to-action che risaltano.
 
 ### `background-color`
 **Cosa fa**: Colora lo sfondo dell'elemento.
@@ -1463,6 +1689,66 @@ to bottom (default)    to right          45deg
 
 **Quando usarlo**: Bottoni moderni, sfondi hero, effetti overlay su immagini.
 
+### `repeating-linear-gradient()`
+**Cosa fa**: Crea pattern ripetuti con gradienti.
+
+**Sintassi base**:
+```css
+/* Strisce orizzontali */
+background: repeating-linear-gradient(
+  0deg,                    /* Direzione (verticale) */
+  #333 0%,                 /* Colore 1 */
+  #333 10%,                /* Fine colore 1 */
+  #666 10%,                /* Inizio colore 2 */
+  #666 20%                 /* Fine colore 2 - poi ripete */
+);
+```
+
+**Pattern complessi (sovrapposizione)**:
+```css
+/* Due gradienti sovrapposti per creare griglie */
+background: 
+  repeating-linear-gradient(
+    0deg,                      /* Verticale */
+    transparent 0%,
+    transparent 5%,
+    rgba(0,0,0,0.1) 5%,
+    rgba(0,0,0,0.1) 10%
+  ),
+  repeating-linear-gradient(
+    90deg,                     /* Orizzontale */
+    white 0%,
+    white 5%,
+    #f0f0f0 5%,
+    #f0f0f0 10%
+  );
+```
+
+**Come funzionano le percentuali nei gradienti**:
+```
+IMPORTANTE: Le % si riferiscono alla DIREZIONE del gradiente!
+
+0deg (verticale ↓): % dell'ALTEZZA
+90deg (orizzontale →): % della LARGHEZZA
+
+Elemento 100px × 200px:
+- 10% a 0deg = 20px (10% di 200px altezza)
+- 10% a 90deg = 10px (10% di 100px larghezza)
+```
+
+**Visual del pattern**:
+```
+Gradiente singolo:        Due gradienti sovrapposti:
+█░█░█░█░█░               ╬═╬═╬═╬═╬
+█░█░█░█░█░               ╬═╬═╬═╬═╬
+█░█░█░█░█░               ╬═╬═╬═╬═╬
+Strisce                  Griglia!
+```
+
+**Analogia**: Come sovrapporre due fogli trasparenti con righe - uno orizzontale e uno verticale - per creare carta millimetrata!
+
+**Quando usarlo**: Pattern geometrici, sfondi texture, simulare materiali (tessuti, griglie metalliche).
+
 ### Proprietà shorthand `background`
 **Cosa fa**: Combina tutte le proprietà background in una riga.
 
@@ -1544,7 +1830,7 @@ flex:
 [┌─┐┌──┐┌───┐] ← figli in fila
 ```
 
-**Display flex su elementi inline** ← NUOVO:
+**Display flex su elementi inline**:
 ```css
 /* Anche <p> può diventare flex! */
 p {
@@ -1566,42 +1852,107 @@ p {
 - `inline-block`: Bottoni, badge
 - `flex`: TUTTO il layout moderno!
 
-### `position` ← NUOVO
+### `position`
 **Cosa fa**: Controlla come un elemento si posiziona nella pagina.
 
 **Tutti i valori**:
-```css
-/* Static - normale (default) */
-.normal {
-  position: static;
-  /* Segue il flusso normale */
-}
 
-/* Relative - spostamento relativo */
+#### `position: static` (default)
+```css
+.element {
+  position: static;
+  /* Comportamento normale, segue il flusso */
+  top: 100px;  /* ❌ IGNORATO! */
+  left: 50px;  /* ❌ IGNORATO! */
+}
+```
+
+**Analogia**: Come persone in fila al supermercato - ognuno sta al suo posto naturale, non puoi dire "spostati 3 metri a destra".
+
+**Quando usarlo**: È il default, spesso non lo scrivi. Utile per "resettare" un elemento.
+
+#### `position: relative`
+```css
 .shifted {
   position: relative;
   top: 10px;    /* Giù di 10px */
   left: 20px;   /* Destra di 20px */
   /* Lo spazio originale resta occupato! */
 }
+```
 
-/* Absolute - posizione assoluta */
+**Visual**:
+```
+Prima:              Dopo:
+┌───┐ ┌───┐        ┌───┐ ┌───┐
+│ A │ │ B │   →    │ A │ │   │  ← spazio vuoto!
+└───┘ └───┘        └───┘ └───┘
+                           ┌───┐
+                           │ B │  ← spostato ma occupa ancora il posto
+                           └───┘
+```
+
+**Analogia**: Spostare una sedia lasciando il segno di dove stava - il "fantasma" rimane!
+
+#### `position: absolute`
+```css
 .popup {
   position: absolute;
   top: 20px;
   right: 20px;
   /* Esce dal flusso, si posiziona nel contenitore relative più vicino */
 }
+```
 
-/* Fixed - fisso alla viewport */
+**Il trucco relative + absolute**:
+```css
+.container {
+  position: relative;  /* "Io sono il punto zero!" */
+}
+
+.child {
+  position: absolute;  /* "Mi posiziono rispetto al container!" */
+  top: 10px;
+  left: 10px;
+}
+```
+
+**Valori negativi con absolute** ← NUOVO:
+```css
+.element {
+  position: absolute;
+  left: -18px;  /* Esce a sinistra del contenitore! */
+  top: -10px;   /* Esce sopra il contenitore! */
+}
+```
+
+**Visual posizionamento negativo**:
+```
+Container normale:          Con left: -18px:
+┌──────────────┐           ┌──────────────┐
+│              │         ┌─┤              │
+│   ┌────┐     │         │█│              │
+│   │elem│     │         └─┤              │
+│   └────┘     │           └──────────────┘
+└──────────────┘           Elemento esce!
+```
+
+**Analogia**: Il sistema solare - il sole (relative) è il punto di riferimento, i pianeti (absolute) orbitano rispetto a lui!
+
+#### `position: fixed`
+```css
 .cookie-banner {
   position: fixed;
   bottom: 0;
   width: 100%;
   /* Resta fisso anche scrollando */
 }
+```
 
-/* Sticky - ibrido */
+**Analogia**: Un adesivo sul vetro della finestra - anche se scorri la pagina, lui resta sempre lì!
+
+#### `position: sticky`
+```css
 .nav {
   position: sticky;
   top: 0;
@@ -1609,35 +1960,158 @@ p {
 }
 ```
 
-**Visual dei comportamenti**:
+**Analogia**: Un post-it che diventa magnetico quando sta per cadere - segue il contenuto finché non rischia di uscire dallo schermo!
+
+### `z-index`
+**Cosa fa**: Controlla l'ordine di sovrapposizione degli elementi (asse Z).
+
+**Sintassi**:
+```css
+.back {
+  z-index: 1;      /* Più indietro */
+}
+
+.middle {
+  z-index: 10;     /* Nel mezzo */
+}
+
+.front {
+  z-index: 100;    /* Davanti a tutti */
+}
+
+.behind {
+  z-index: -1;     /* Dietro anche al contenuto normale */
+}
 ```
-Relative:           Absolute:
-┌─────────┐         ┌─────────┐
-│ normale │         │ genitore│relative
-│ ┌─────┐ │         │   ┌───┐ │← absolute
-│ │sposto│ │         │   │qui│ │  
-│ └─────┘ │         └───┴───┴─┘
-└─────────┘         
 
-Fixed:              Sticky:
-═══════════         ═══════════
-█ fisso qui         Scorre...poi
-─────────           ═══════════
-│ scroll │          █ incollato
-│ scroll │          ─────────
+**IMPORTANTE**: Funziona solo con position diverso da static!
+```css
+/* ❌ NON funziona */
+.element {
+  z-index: 999;
+  /* position: static (default) */
+}
+
+/* ✅ Funziona */
+.element {
+  z-index: 999;
+  position: relative; /* o absolute, fixed, sticky */
+}
 ```
 
-**Analogia**:
-- `relative` = Spostare una sedia ma lasciare il posto "riservato"
-- `absolute` = Post-it volante sopra il foglio
-- `fixed` = Adesivo sul vetro della finestra
-- `sticky` = Post-it che segue finché non trova il bordo
+**Visual 3D**:
+```
+     ↗️ Z-axis (profondità)
+    /
+   /  z-index: 100 ┌───┐
+  /                │ C │ (sopra)
+ /   z-index: 10  ┌─│─┐─┘
+/                │ B │ (mezzo)
+/   z-index: 1  ┌─│─┐─┘  
+                │ A │ (sotto)
+───────────────└───┘────→ X-axis
+```
 
-**Quando usarli**:
-- `relative`: Piccoli aggiustamenti, contenitore per absolute
-- `absolute`: Tooltip, menu dropdown, badge su card
-- `fixed`: Chat widget, cookie banner
-- `sticky`: Navbar, titoli sezioni lunghe
+**Analogia**: Come un mazzo di carte - il valore più alto sta sopra, quello più basso sotto. I valori negativi vanno sotto il tavolo!
+
+**Quando usarlo**:
+- Modal/popup (z-index: 9999)
+- Menu dropdown (z-index: 1000) 
+- Tooltip (z-index: 10)
+- Elementi decorativi dietro (z-index: -1)
+
+### `float`
+**Cosa fa**: Fa "galleggiare" gli elementi a sinistra o destra, permettendo al testo di scorrergli intorno.
+
+**Sintassi base**:
+```css
+.image {
+  float: left;
+  margin-right: 20px;
+}
+
+.sidebar {
+  float: right;
+  width: 300px;
+}
+```
+
+**Trasformazione magica**:
+```
+Prima (elementi block normali):
+┌────────────────┐
+│ Elemento 1     │
+└────────────────┘
+┌────────────────┐
+│ Elemento 2     │
+└────────────────┘
+
+Dopo float: left:
+┌──┐┌──┐┌──┐┌──┐
+│E1││E2││E3││E4│  ← Tutti in fila!
+└──┘└──┘└──┘└──┘
+```
+
+### `overflow: hidden` per contenere float ← NUOVO
+**Cosa fa**: Quando usi `float`, il contenitore "collassa". `overflow: hidden` lo forza a contenere gli elementi flottanti.
+
+**Il problema del float**:
+```css
+/* ❌ PROBLEMA - contenitore collassa */
+.container {
+  background: red;
+  /* altezza diventa 0! */
+}
+
+.child {
+  float: left;
+  width: 100px;
+  height: 100px;
+}
+```
+
+**La soluzione con overflow**:
+```css
+/* ✅ SOLUZIONE - contenitore contiene i float */
+.container {
+  background: red;
+  overflow: hidden;  /* Magia! */
+  /* ora ha l'altezza giusta */
+}
+```
+
+**Visual del problema e soluzione**:
+```
+Senza overflow: hidden:          Con overflow: hidden:
+┌─────────────────────┐          ┌─────────────────────┐
+│ Container (h: 0!)   │          │ Container           │
+└─────────────────────┘          │ ┌───┐┌───┐┌───┐    │
+┌───┐┌───┐┌───┐                  │ │ F ││ F ││ F │    │
+│ F ││ F ││ F │ ← Float          │ └───┘└───┘└───┘    │
+└───┘└───┘└───┘   escono!        └─────────────────────┘
+                                 Container li contiene!
+```
+
+**Altri metodi clearfix**:
+```css
+/* Metodo moderno con pseudo-elemento */
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Metodo semplice */
+.container {
+  overflow: auto; /* o hidden */
+}
+```
+
+**Analogia**: È come un recinto magico - i float sono pecore che tendono a scappare, `overflow: hidden` è il recinto che le tiene dentro!
+
+**Quando usarlo**: 
+- Contenitori con elementi float
+- Alternative moderne: usa Flexbox o Grid invece di float!
 
 ### `vertical-align`
 **Cosa fa**: Allinea elementi inline verticalmente sulla stessa riga.
@@ -1690,7 +2164,7 @@ flex-wrap: wrap;     /* Va a capo */
 justify-content: flex-start;   /* |■■■      | */
 justify-content: center;       /* |  ■■■    | */
 justify-content: flex-end;     /* |      ■■■| */
-justify-content: space-between;/* |■   ■   ■| */ ← NUOVO
+justify-content: space-between;/* |■   ■   ■| */
 justify-content: space-around; /* | ■  ■  ■ | */
 justify-content: space-evenly; /* | ■  ■  ■ | */
 
@@ -1698,7 +2172,7 @@ justify-content: space-evenly; /* | ■  ■  ■ | */
 align-items: stretch;     /* Default - riempie */
 align-items: center;      /* Centra verticalmente */
 align-items: flex-start;  /* In alto */
-align-items: flex-end;    /* In basso */ ← NUOVO
+align-items: flex-end;    /* In basso */
 ```
 
 **Visual space-between vs space-around**:
@@ -1790,7 +2264,61 @@ Normale:           display:none      visibility:hidden
 - `display: none` = Rimuovere la sedia dalla stanza
 - `visibility: hidden` = Coprire la sedia con un telo invisibile
 
-## 7. Effetti & Trasformazioni
+## 7. Valori speciali CSS
+
+### `inherit`
+**Cosa fa**: Dice all'elemento "copia il valore dal tuo genitore".
+
+**Snippet**:
+```css
+.parent {
+  color: blue;
+  font-size: 20px;
+}
+
+.child {
+  color: inherit;      /* Sarà blu come il padre */
+  font-size: inherit;  /* Sarà 20px come il padre */
+}
+```
+
+**Esempio pratico con box-sizing**:
+```css
+html {
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;  /* Tutti copiano da html */
+}
+```
+
+**Analogia**: Come dire ai figli "fate come fa papà" - se il papà parla italiano, anche i figli parlano italiano. Se cambia lingua, cambiano tutti!
+
+**Quando usarlo**:
+- Reset globali che devono propagarsi
+- Componenti che devono adattarsi al contesto
+- Evitare di ripetere valori
+
+### Altri valori speciali utili
+```css
+/* initial - torna al valore di default del browser */
+.reset {
+  color: initial;  /* Nero, il default */
+}
+
+/* unset - cancella il valore (inherit se ereditabile, initial altrimenti) */
+.mixed {
+  all: unset;  /* Reset totale */
+}
+
+/* currentColor - usa il colore del testo corrente */
+.border-text-color {
+  border: 2px solid currentColor;  /* Bordo dello stesso colore del testo */
+}
+```
+
+## 8. Effetti & Trasformazioni
 
 ### `box-shadow`
 **Cosa fa**: Aggiunge ombre agli elementi per dare profondità.
@@ -1914,6 +2442,10 @@ Standard:          Inset:
                   └─┘
 ```
 
+**Perché i gradi negativi?**:
+- Positivo = senso orario ↻
+- Negativo = senso antiorario ↺
+
 **Analogia**: 
 - `rotate` = Girare una foto sul tavolo
 - `scale` = Zoom con la lente
@@ -1966,9 +2498,9 @@ hidden:            visible:         scroll:
 
 **Analogia**: Come una cornice per foto - mostra solo quello che sta dentro, il resto viene tagliato.
 
-**Quando usarlo**: Immagini circolari, card con immagini, container con dimensioni fisse, slider.
+**Quando usarlo**: Immagini circolari, card con immagini, container con dimensioni fisse, slider, contenere float!
 
-## 8. Responsive Design ← NUOVA SEZIONE
+## 8. Responsive Design
 
 ### Media Queries
 **Cosa fanno**: Applicano stili diversi in base alle caratteristiche del dispositivo.
@@ -1992,6 +2524,40 @@ hidden:            visible:         scroll:
   }
 }
 ```
+
+### Operatore `and` per range specifici ← ESPANSO
+```css
+/* Solo tablet (769px - 1199px) */
+@media (min-width: 769px) and (max-width: 1199px) {
+  .element {
+    font-size: 18px;
+  }
+}
+
+/* Esempio dal piano */
+@media (max-width: 1199px) and (min-width: 769px) {
+  #piano { width: 675px; }
+  .keys { width: 633px; }
+}
+```
+
+**Come funziona `and`**:
+```
+Condizione 1: min-width: 769px (schermo almeno 769px)
+     AND
+Condizione 2: max-width: 1199px (schermo massimo 1199px)
+     =
+Range: 769px ← → 1199px
+```
+
+**Visual dei range**:
+```
+📱 Mobile     📱 Tablet    💻 Desktop   🖥️ Large
+0 ──── 768 ──── 1199 ──── ∞
+   📱      🎯 RANGE 🎯      🖥️
+```
+
+**Analogia**: Come dire "accetta persone tra 18 E 65 anni" - servono ENTRAMBE le condizioni!
 
 **Breakpoint comuni**:
 ```css
@@ -2027,18 +2593,24 @@ hidden:            visible:         scroll:
 }
 ```
 
-**Visual breakpoint**:
-```
-320px     768px    1024px    1440px
-📱────────┼────────┼─────────┼──────🖥️
-Mobile   Tablet  Desktop  Wide
+**IMPORTANTE - Proporzioni responsive**:
+```css
+/* ❌ SBAGLIATO - stesse proporzioni ovunque */
+h1 { font-size: 2.5em; }
+
+/* ✅ CORRETTO - proporzioni diverse per device */
+h1 { font-size: 2.5em; }  /* Desktop */
+
+@media (max-width: 768px) {
+  h1 { font-size: 1.5em; }  /* Mobile - proporzione diversa! */
+}
 ```
 
-**Analogia**: Come avere vestiti diversi per occasioni diverse - tuta per palestra, completo per ufficio, pigiama per casa. Il sito si "veste" diversamente per ogni schermo!
+**Analogia**: Come avere vestiti diversi per occasioni diverse - non è solo "rimpicciolire" ma adattare le proporzioni! Un bambino non è un adulto in miniatura!
 
 **Quando usarle**: 
 - Layout che cambiano tra mobile/desktop
-- Font size responsive
+- Font size responsive con proporzioni appropriate
 - Nascondere/mostrare elementi per device
 
 ## 9. Interazione & Accessibilità CSS
