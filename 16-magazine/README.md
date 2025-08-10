@@ -2,9 +2,6 @@
 
 <img width="536" height="892" alt="Magazine-Desktop" src="https://github.com/user-attachments/assets/a7be7d2d-b81e-48b4-b6e3-c0bdd039a798" />
 
-<img width="345" height="812" alt="Magazine-Mobile" src="https://github.com/user-attachments/assets/bb56658e-f429-4765-8142-256805630f26" />
-
-
 
 ### The Project
 Digital magazine developed with CSS Grid, replicating the typical layout of a magazine with columns, sections, and complex graphic elements. A return to the origins of editorial design applied to the web.
