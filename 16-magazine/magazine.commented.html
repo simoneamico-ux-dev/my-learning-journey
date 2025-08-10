@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<!-- 🎯 DICHIARAZIONE HTML5: "Benvenuti nella redazione digitale!" -->
+<!-- È come aprire le porte di una casa editrice moderna 📰 -->
+
+<html lang="en">
+<!-- 🌍 CONTENITORE PRINCIPALE: La nostra rivista digitale -->
+<!-- lang="en" = inglese, la lingua del giornalismo web internazionale! 🗞️ -->
+
+  <head>
+    <!-- 🧠 LA REDAZIONE: Dove prepariamo font, stili e tutto il necessario -->
+    <!-- È come la scrivania dell'editore prima di stampare -->
+    
+    <meta charset="UTF-8" />
+    <!-- 📝 CARATTERI UNIVERSALI: UTF-8 per tutti i simboli editoriali! "✍️📰" -->
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 📱 DESIGN RESPONSIVE: "Leggimi bene su carta, tablet o smartphone!" -->
+    <!-- È come avere una rivista che si adatta magicamente al dispositivo -->
+    
+    <title>Magazine</title>
+    <!-- 📑 TITOLO DELLA TAB: Semplice ed elegante come una testata -->
+    
+    <link
+      href="https://fonts.googleapis.com/css?family=Anton%7CBaskervville%7CRaleway&display=swap"
+      rel="stylesheet"
+    />
+    <!-- 🔤 FONT GOOGLE: Tre font per tre scopi diversi! -->
+    <!-- Anton = titoli d'impatto (sans-serif boldissimo) -->
+    <!-- Baskervville = testo elegante (serif classico) -->
+    <!-- Raleway = sottotitoli moderni (sans-serif pulito) -->
+    <!-- %7C = "|" codificato nell'URL (pipe separator) -->
+    <!-- display=swap = carica i font senza bloccare la pagina -->
+    <!-- È come scegliere tre tipi di caratteri per la tipografia! -->
+    
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+    />
+    <!-- 🎨 FONT AWESOME: La libreria di icone più famosa del web! -->
+    <!-- Per i social media icons: Facebook, Twitter, Instagram... -->
+    <!-- v5.8.2 = versione specifica per compatibilità -->
+    
+    <style>
+      /* 📰 ===== IL LAYOUT EDITORIALE: Stile da Magazine Professionale ===== */
+      
+      *,
+      ::before,
+      ::after {
+        /* 🔄 RESET UNIVERSALE: Azzera tutto per partire puliti! */
+        /* * = tutti gli elementi */
+        /* ::before e ::after = anche gli pseudo-elementi */
+        
+        padding: 0;
+        margin: 0;
+        /* 🚫 ZERO SPAZI: Toglie padding e margini di default del browser */
+        /* È come pulire la pagina prima di impaginare */
+        
+        box-sizing: border-box;
+        /* 📦 CALCOLO INTELLIGENTE: Include padding e bordi nelle dimensioni */
+      }
+
+      html {
+        font-size: 62.5%;
+        /* 🔢 TRUCCO DEL 62.5%: Rende 1rem = 10px! */
+        /* Default browser: 16px, quindi 62.5% di 16px = 10px */
+        /* Ora è facilissimo: 1.8rem = 18px, 2.4rem = 24px... */
+        /* È come avere una calcolatrice incorporata per le dimensioni! */
+      }
+
+      body {
+        font-family: 'Baskervville', serif;
+        /* ✍️ FONT PRINCIPALE: Elegante serif per il corpo del testo */
+        /* serif = con le "grazie", perfetto per lunghe letture */
+        
+        color: linen;
+        /* 🏻 COLOR LINO: Un bianco caldo e sofisticato */
+        /* linen = #FAF0E6, più morbido del bianco puro */
+        
+        background-color: rgb(20, 30, 40);
+        /* 🌑 SFONDO SCURO: Blu-nero profondo per contrasto elegante */
+        /* rgb(20, 30, 40) = quasi nero con una punta di blu */
+        /* È come leggere su carta nera con inchiostro chiaro */
+      }
+
+      h1 {
+        font-family: 'Anton', sans-serif;
+        /* 🗣️ TITOLO PRINCIPALE: Font d'impatto per catturare l'attenzione */
+        /* Anton = grassetto e compresso, perfetto per titoloni */
+      }
+
+      h2, h3, h4, h5, h6 {
+        font-family: 'Raleway', sans-serif;
+        /* 📰 SOTTOTITOLI: Font moderno e pulito per la gerarchia */
+        /* Raleway = elegante ma leggibile, perfetto per heading secondari */
+      }
+
+      a {
+        text-decoration: none;
+        /* 🚫 NIENTE SOTTOLINEATURA: Link puliti e moderni */
+        
+        color: linen;
+        /* 🔗 STESSO COLORE DEL TESTO: Link discreti e integrati */
+      }
+
+      /* 🏗️ ===== LAYOUT PRINCIPALE CON CSS GRID ===== */
+      
+      main {
+        display: grid;
+        /* 🎯 GRID CONTAINER: Il layout più potente del CSS moderno! */
+        
+        grid-template-columns: minmax(2rem, 1fr) minmax(min-content, 94rem) minmax(2rem, 1fr);
+        /* 🏛️ TRE COLONNE GENIALI: margine | contenuto | margine */
+        /* PRIMA COLONNA: minmax(2rem, 1fr) = minimo 2rem, massimo tutto lo spazio disponibile */
+        /* COLONNA CENTRALE: minmax(min-content, 94rem) = il contenuto, max 94rem (940px) */
+        /* TERZA COLONNA: come la prima, bilancia il layout */
+        /* È come avere margini automatici che si adattano! */
+        /* Su schermi grandi: margini larghi */
+        /* Su schermi piccoli: margini di almeno 2rem */
+        
+        row-gap: 3rem;
+        /* 🌬️ SPAZIO TRA RIGHE: 3rem di respiro tra le sezioni */
+      }
+
+      img {
+        width: 100%;
+        /* 📏 LARGHEZZA PIENA: Le immagini riempiono il contenitore */
+        
+        object-fit: cover;
+        /* 🖼️ RITAGLIO INTELLIGENTE: Copre l'area senza deformarsi */
+        /* cover = ritaglia se necessario ma mantieni proporzioni */
+        /* È come ritagliare una foto per farla stare in una cornice */
+      }
+
+      hr {
+        margin: 1.5rem 0;
+        /* 🌬️ SPAZIO VERTICALE: Respiro sopra e sotto la linea */
+        
+        border: 1px solid rgba(120, 120, 120, 0.6);
+        /* 📏 LINEA SOTTILE: Grigia semi-trasparente */
+        /* rgba con 0.6 alpha = 60% opacità */
+      }
+
+      /* 📰 ===== SEZIONE HEADING ===== */
+      
+      .heading {
+        grid-column: 2 / 3;
+        /* 📍 POSIZIONAMENTO: Occupa solo la colonna centrale */
+        /* 2 / 3 = dalla linea 2 alla linea 3 della griglia */
+        /* Salta i margini laterali automaticamente! */
+        
+        display: grid;
+        /* 🎯 SOTTO-GRIGLIA: Grid dentro grid! */
+        
+        grid-template-columns: repeat(2, 1fr);
+        /* 📏 DUE COLONNE UGUALI: repeat(2, 1fr) = due colonne 50/50 */
+        /* Per author e social icons affiancati */
+        
+        row-gap: 1.5rem;
+        /* 🌬️ SPAZIO TRA RIGHE: Più compatto della griglia principale */
+      }
+
+      /* 📄 ===== TESTO PRINCIPALE ===== */
+      
+      .text {
+        grid-column: 2 / 3;
+        /* 📍 COLONNA CENTRALE: Come .heading */
+        
+        font-size: 1.8rem;
+        /* 📏 DIMENSIONE TESTO: 18px (grazie al trucco del 62.5%) */
+        
+        letter-spacing: 0.6px;
+        /* 🔤 SPAZIATURA LETTERE: Leggermente più ariosa */
+        /* Migliora la leggibilità su testi lunghi */
+        
+        column-width: 25rem;
+        /* 📰 COLONNE AUTOMATICHE: Come un vero giornale! */
+        /* Se c'è spazio per colonne da 25rem, le crea automaticamente */
+        /* È la magia del layout multi-colonna CSS! */
+        
+        text-align: justify;
+        /* 📐 TESTO GIUSTIFICATO: Bordi allineati come sui giornali */
+        /* Crea un blocco di testo uniforme e professionale */
+      }
+
+      /* 🦸 ===== HERO SECTION ===== */
+      
+      .hero {
+        grid-column: 1 / -1;
+        /* 📍 LARGHEZZA PIENA: 1 / -1 = dalla prima all'ultima colonna */
+        /* -1 = l'ultima colonna (trucco CSS Grid!) */
+        /* L'immagine hero va da bordo a bordo! */
+        
+        position: relative;
+        /* 📍 CONTENITORE: Per posizionare elementi al suo interno */
+      }
+
+      .hero-title {
+        text-align: center;
+        /* ⚖️ CENTRATO: Il titolone al centro dell'attenzione */
+        
+        color: orangered;
+        /* 🔥 ARANCIONE FUOCO: Colore d'impatto per il titolo principale */
+        
+        font-size: 8rem;
+        /* 📏 GIGANTE: 80px di puro impatto visivo! */
+        /* È come un titolo di prima pagina che urla */
+      }
+
+      .hero-subtitle {
+        font-size: 2.4rem;
+        /* 📏 SOTTOTITOLO: 24px, più modesto ma leggibile */
+        
+        color: orangered;
+        /* 🔥 STESSO COLORE: Coerenza visiva con il titolo */
+        
+        text-align: center;
+        /* ⚖️ CENTRATO: Allineato con il titolo principale */
+      }
+
+      /* ✍️ ===== INFORMAZIONI AUTORE ===== */
+      
+      .author {
+        font-size: 2rem;
+        /* 📏 DIMENSIONE: 20px per buona leggibilità */
+        
+        font-family: "Raleway", sans-serif;
+        /* 🔤 FONT MODERNO: Override del Baskervville per varietà */
+      }
+
+      .author-name a:hover {
+        background-color: #306203;
+        /* 🟢 VERDE SCURO: Effetto hover insolito ma efficace */
+        /* È come evidenziare con un pennarello verde */
+      }
+
+      .publish-date {
+        color: rgba(255, 255, 255, 0.5);
+        /* ⚪ BIANCO 50%: Semi-trasparente per info secondaria */
+        /* La data è importante ma non deve dominare */
+      }
+
+      /* 🔗 ===== ICONE SOCIAL ===== */
+      
+      .social-icons {
+        display: grid;
+        /* 🎯 GRID PER ICONE: Perfetto per allineamento */
+        
+        font-size: 3rem;
+        /* 📏 ICONE GRANDI: 30px, ben cliccabili */
+        
+        grid-template-columns: repeat(5, 1fr);
+        /* 📏 CINQUE COLONNE: Una per ogni social */
+        
+        grid-auto-flow: column;
+        /* ➡️ FLUSSO ORIZZONTALE: Le icone si dispongono in fila */
+        
+        grid-auto-columns: 1fr;
+        /* 📏 COLONNE AUTOMATICHE: Se aggiungi social, si adattano */
+        
+        align-items: center;
+        /* ⚖️ CENTRATE VERTICALMENTE: Perfetto allineamento */
+      }
+
+      /* 🔤 ===== CAPOLETTERA DECORATIVO ===== */
+      
+      .first-paragraph::first-letter {
+        /* 🎨 PSEUDO-ELEMENTO MAGICO: Seleziona SOLO la prima lettera! */
+        
+        font-size: 6rem;
+        /* 📏 LETTERA GIGANTE: 60px, come nei manoscritti medievali */
+        
+        color: orangered;
+        /* 🔥 COLORE ACCENTO: Si collega visivamente al titolo */
+        
+        float: left;
+        /* 🏊 GALLEGGIAMENTO: Il testo scorre intorno alla lettera */
+        /* È come nei libri antichi con le iniziali decorate */
+        
+        margin-right: 1rem;
+        /* ➡️ SPAZIO: Tra la lettera e il testo che la circonda */
+      }
+
+      /* 💬 ===== CITAZIONI ===== */
+      
+      .quote {
+        color: #00beef;
+        /* 🔵 BLU CIANO: Colore distintivo per le citazioni */
+        /* #00beef = "beef" è uno scherzo dei programmatori! */
+        
+        font-size: 2.4rem;
+        /* 📏 PIÙ GRANDE: Le citazioni devono risaltare */
+        
+        text-align: center;
+        /* ⚖️ CENTRATE: Come in una slide di presentazione */
+        
+        font-family: "Raleway", sans-serif;
+        /* 🔤 FONT DIVERSO: Per distinguerle dal testo normale */
+      }
+
+      .quote::before {
+        content: '" ';
+        /* 🔤 VIRGOLETTE APERTE: Aggiunte automaticamente! */
+      }
+
+      .quote::after {
+        content: ' "';
+        /* 🔤 VIRGOLETTE CHIUSE: CSS fa il lavoro sporco */
+        /* È come avere un assistente che aggiunge le virgolette */
+      }
+
+      /* 🖼️ ===== TESTO CON IMMAGINI ===== */
+      
+      .text-with-images {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        /* 📏 COLONNE ASIMMETRICHE: 1/3 testo, 2/3 immagini */
+        /* 1fr + 2fr = il testo occupa 1 parte, le immagini 2 parti */
+        
+        column-gap: 3rem;
+        /* 🌬️ SPAZIO TRA COLONNE: Separa testo e immagini */
+        
+        margin-bottom: 3rem;
+        /* ⬇️ MARGINE INFERIORE: Spazio prima della sezione successiva */
+      }
+
+      /* 📋 ===== LISTE STILIZZATE ===== */
+      
+      .lists {
+        list-style-type: none;
+        /* 🚫 NIENTE PALLINI: Liste pulite e moderne */
+        
+        margin-top: 2rem;
+        /* ⬆️ SPAZIO SOPRA: Separa dalla introduzione */
+      }
+
+      .lists li {
+        margin-bottom: 1.5rem;
+        /* ⬇️ SPAZIO TRA ELEMENTI: Ogni voce ha il suo respiro */
+      }
+
+      .list-title, .list-subtitle {
+        color: #00beef;
+        /* 🔵 COLORE ACCENTO: Come le quote, per coerenza */
+      }
+
+      /* 🖼️ ===== GRIGLIA IMMAGINI COMPLESSA ===== */
+      
+      .image-wrapper {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        /* 📏 COLONNE ASIMMETRICHE: Grande + piccola */
+        
+        grid-template-rows: repeat(3, min-content);
+        /* 📏 TRE RIGHE: Si adattano al contenuto */
+        /* min-content = alte quanto serve, non di più */
+        
+        gap: 2rem;
+        /* 🌬️ SPAZIO: Tra tutte le celle della griglia */
+        
+        place-items: center;
+        /* ⚖️ CENTRATURA TOTALE: Orizzontale E verticale */
+        /* Shorthand per align-items + justify-items */
+      }
+
+      .image-1, .image-3 {
+        grid-column: 1 / -1;
+        /* 📍 LARGHEZZA PIENA: Occupano entrambe le colonne */
+        /* Mentre image-2 e blockquote stanno affiancate */
+      }
+
+      /* 📱 ===== MEDIA QUERIES: Il Magazine si Adatta! ===== */
+      
+      @media only screen and (max-width: 720px) {
+        /* 📱 TABLET: Sotto i 720px */
+        
+        .image-wrapper {
+          grid-template-columns: 1fr;
+          /* 📏 COLONNA SINGOLA: Le immagini si impilano */
+          /* Non c'è più spazio per affiancarle */
+        }
+      }
+
+      @media only screen and (max-width: 600px) {
+        /* 📱 PHABLET: Sotto i 600px */
+        
+        .text-with-images {
+          grid-template-columns: 1fr;
+          /* 📏 TUTTO IMPILATO: Testo e immagini uno sopra l'altro */
+        }
+      }
+
+      @media only screen and (max-width: 550px) {
+        /* 📱 SMARTPHONE: Sotto i 550px */
+        
+        .hero-title {
+          font-size: 6rem;
+          /* 📏 TITOLO RIDOTTO: Da 80px a 60px */
+        }
+        
+        .hero-subtitle,
+        .author,
+        .quote,
+        .list-title {
+          font-size: 1.8rem;
+          /* 📏 TESTI UNIFORMATI: Tutti a 18px per coerenza */
+        }
+        
+        .social-icons {
+          font-size: 2rem;
+          /* 📏 ICONE PIÙ PICCOLE: Ma ancora toccabili */
+        }
+
+        .text {
+          font-size: 1.6rem;
+          /* 📏 TESTO RIDOTTO: 16px per più contenuto visibile */
+        } 
+      }
+
+      @media only screen and (max-width: 420px) {
+        /* 📱 SMARTPHONE PICCOLI: L'ultimo breakpoint */
+        
+        .hero-title {
+          font-size: 4.5rem;
+          /* 📏 TITOLO COMPATTO: 45px per non andare a capo */
+        }
+      }
+    </style>
+  </head>
+  
+  <body>
+    <!-- 📰 ===== IL MAGAZINE PRENDE VITA ===== -->
+    
+    <main>
+      <!-- 📰 CONTENITORE PRINCIPALE: La griglia che orchestra tutto -->
+      
+      <section class="heading">
+        <!-- 📰 SEZIONE INTESTAZIONE: Hero + info + social -->
+        
+        <header class="hero">
+          <!-- 🦸 HERO SECTION: L'immagine e titolo di impatto -->
+          
+          <img
+            src="https://cdn.freecodecamp.org/platform/universal/fcc_meta_1920X1080-indigo.png"
+            alt="freecodecamp logo"
+            loading="lazy"
+            class="hero-img"
+          />
+          <!-- 🖼️ IMMAGINE HERO: Il banner principale -->
+          <!-- loading="lazy" = carica solo quando serve (performance!) -->
+          <!-- È come dire "carica questa immagine solo quando stai per vederla" -->
+          
+          <h1 class="hero-title">OUR NEW CURRICULUM</h1>
+          <!-- 📰 TITOLONE: In Anton, impossibile da ignorare -->
+          
+          <p class="hero-subtitle">
+            Our efforts to restructure our curriculum with a more project-based
+            focus
+          </p>
+          <!-- 📝 SOTTOTITOLO: Spiega di cosa parla l'articolo -->
+        </header>
+        
+        <div class="author">
+          <!-- ✍️ INFO AUTORE: Chi ha scritto e quando -->
+          
+          <p class="author-name">
+            By
+            <a href="https://freecodecamp.org" target="_blank" rel="noreferrer"
+              >freeCodeCamp</a
+            >
+            <!-- 🔗 LINK AUTORE: target="_blank" = apre in nuova scheda -->
+            <!-- rel="noreferrer" = sicurezza, non passa info del referrer -->
+          </p>
+          <p class="publish-date">March 7, 2019</p>
+          <!-- 📅 DATA: In grigio semi-trasparente per essere discreta -->
+        </div>
+        
+        <div class="social-icons">
+          <!-- 🔗 ICONE SOCIAL: Font Awesome in azione! -->
+          
+          <a href="https://www.facebook.com/freecodecamp/">
+            <i class="fab fa-facebook-f"></i>
+            <!-- 📘 FACEBOOK: fab = font awesome brands -->
+          </a>
+          <a href="https://twitter.com/freecodecamp/">
+            <i class="fab fa-twitter"></i>
+            <!-- 🐦 TWITTER: La classe definisce l'icona -->
+          </a>
+          <a href="https://instagram.com/freecodecamp">
+            <i class="fab fa-instagram"></i>
+            <!-- 📷 INSTAGRAM: Solo una classe per un'icona! -->
+          </a>
+          <a href="https://www.linkedin.com/school/free-code-camp/">
+            <i class="fab fa-linkedin-in"></i>
+            <!-- 💼 LINKEDIN: -in è la versione dell'icona -->
+          </a>
+          <a href="https://www.youtube.com/freecodecamp">
+            <i class="fab fa-youtube"></i>
+            <!-- 📺 YOUTUBE: Grid le allinea perfettamente -->
+          </a>
+        </div>
+      </section>
+      
+      <section class="text">
+        <!-- 📄 TESTO PRINCIPALE: Il corpo dell'articolo -->
+        
+        <p class="first-paragraph">
+          <!-- 🔤 PRIMO PARAGRAFO: Con capolettera decorativo! -->
+          Soon the freeCodeCamp curriculum will be 100% project-driven learning. Instead of a series of coding challenges, you'll learn through building projects - step by step. Before we get into the details, let me emphasize: we are not changing the certifications. All 6 certifications will still have the same 5 required projects. We are only changing the optional coding challenges.
+        </p>
+        
+        <p>
+          After years - years - of pondering these two problems and how to solve them, I slipped, hit my head on the sink, and when I came to I had a revelation! A vision! A picture in my head! A picture of this! This is what makes time travel possible: the flux capacitor!
+          <!-- 🎬 RIFERIMENTO: Back to the Future! -->
+        </p>
+        
+        <p>
+          It wasn't as dramatic as Doc's revelation in Back to the Future. It
+          just occurred to me while I was going for a run. The revelation: the entire curriculum should be a series of projects. Instead of individual coding challenges, we'll just have projects, each with their own seamless series of tests. Each test gives you just enough information to figure out how to get it to pass. (And you can view hints if that isn't enough.)
+        </p>
+        
+        <blockquote>
+          <!-- 💬 CITAZIONE: Con hr per enfasi visiva -->
+          <hr />
+          <p class="quote">
+            The entire curriculum should be a series of projects
+          </p>
+          <hr />
+        </blockquote>
+        
+        <p>
+          No more walls of explanatory text. No more walls of tests. Just one
+          test at a time, as you build up a working project. Over the course of passing thousands of tests, you build up projects and your own understanding of coding fundamentals. There is no transition between lessons and projects, because the lessons themselves are baked into projects. And there's plenty of repetition to help you retain everything because - hey - building projects in real life has plenty of repetition.
+        </p>
+        
+        <p>
+          The main design challenge is taking what is currently paragraphs of explanation and instructions and packing them into a single test description text. Each project will involve dozens of tests like this. People will be coding the entire time, rather than switching back and forth from "reading mode" to "coding mode".
+        </p>
+        
+        <p>
+          Instead of a series of coding challenges, people will be in their code editor passing one test after another, quickly building up a project. People will get into a real flow state, similar to what they experience when they build the required projects at the end of each certification. They'll get that sense of forward progress right from the beginning. And freeCodeCamp will be a much smoother experience.
+        </p>
+      </section>
+      
+      <section class="text text-with-images">
+        <!-- 📰 SEZIONE MISTA: Testo a sinistra, immagini a destra -->
+        
+        <article class="brief-history">
+          <!-- 📜 STORIA: Timeline del curriculum -->
+          
+          <h3 class="list-title">A Brief History</h3>
+          <p>Of the Curriculum</p>
+          
+          <ul class="lists">
+            <!-- 📋 TIMELINE: Lista senza pallini -->
+            
+            <li>
+              <h4 class="list-subtitle">V1 - 2014</h4>
+              <p>
+                We launched freeCodeCamp with a simple list of 15 resources,
+                including Harvard's CS50 and Stanford's Database Class.
+              </p>
+            </li>
+            <li>
+              <h4 class="list-subtitle">V2 - 2015</h4>
+              <p>We added interactive algorithm challenges.</p>
+            </li>
+            <li>
+              <h4 class="list-subtitle">V3 - 2015</h4>
+              <p>
+                We added our own HTML+CSS challenges (before we'd been relying on
+                General Assembly's Dash course for these).
+              </p>
+            </li>
+            <li>
+              <h4 class="list-subtitle">V4 - 2016</h4>
+              <p>
+                We expanded the curriculum to 3 certifications, including Front
+                End, Back End, and Data Visualization. They each had 10 required
+                projects, but only the Front End section had its own challenges.
+                For the other certs, we were still using external resources like
+                Node School.
+              </p>
+            </li>
+            <li>
+              <h4 class="list-subtitle">V5 - 2017</h4>
+              <p>We added the back end and data visualization challenges.</p>
+            </li>
+            <li>
+              <h4 class="list-subtitle">V6 - 2018</h4>
+              <p>
+                We launched 6 new certifications to replace our old ones. This was
+                the biggest curriculum improvement to date.
+              </p>
+            </li>
+          </ul>
+        </article>
+        
+        <aside class="image-wrapper">
+          <!-- 🖼️ GALLERIA IMMAGINI: Layout grid complesso -->
+          
+          <img
+            src="https://cdn.freecodecamp.org/testable-projects-fcc/images/random-quote-machine.png"
+            alt="image of the quote machine project"
+            loading="lazy"
+            class="image-1"
+            width="600"
+            height="400"
+          />
+          <!-- 🖼️ IMMAGINE 1: Occupa entrambe le colonne -->
+          <!-- width/height = dimensioni native per migliori performance -->
+          
+          <img
+            src="https://cdn.freecodecamp.org/testable-projects-fcc/images/calc.png"
+            alt="image of a calculator project"
+            loading="lazy"
+            class="image-2"
+            width="400"
+            height="400"
+          />
+          <!-- 🖼️ IMMAGINE 2: Nella griglia 2x1 -->
+          
+          <blockquote class="image-quote">
+            <!-- 💬 CITAZIONE TRA IMMAGINI: Per varietà visiva -->
+            <hr />
+            <p class="quote">
+              The millions of people who are learning to code through freeCodeCamp
+              will have an even better resource to help them learn these
+              fundamentals.
+            </p>
+            <hr />
+          </blockquote>
+          
+          <img
+            src="https://cdn.freecodecamp.org/testable-projects-fcc/images/survey-form-background.jpeg"
+            alt="four people working on code"
+            loading="lazy"
+            class="image-3"
+            width="600"
+            height="400"
+          />
+          <!-- 🖼️ IMMAGINE 3: Di nuovo larghezza piena -->
+        </aside>
+      </section>
+    </main>
+  </body>
+</html>
+
+<!-- 🎯 ===== RIASSUNTO DEL LAYOUT EDITORIALE ===== -->
+<!-- 
+📰 STRUTTURA DEL MAGAZINE:
+│
+├── 🧠 HEAD (preparazione editoriale)
+│   └── 🎨 Risorse e stili:
+│       ├── 🔤 Google Fonts (3 font per 3 scopi)
+│       ├── 🎨 Font Awesome (icone social)
+│       └── 📐 CSS con:
+│           ├── 🏗️ CSS Grid avanzato (layout principale)
+│           ├── 📰 Multi-column text (colonne automatiche)
+│           ├── 🔤 ::first-letter (capolettera)
+│           ├── 💬 ::before/::after (virgolette auto)
+│           └── 📱 4 breakpoint responsive
+│
+└── 📰 BODY (il magazine)
+    └── 📄 Main (griglia 3 colonne)
+        ├── 📰 Heading section
+        │   ├── 🦸 Hero (immagine + titolone)
+        │   ├── ✍️ Author info
+        │   └── 🔗 Social icons
+        ├── 📄 Text section (multi-colonna)
+        │   ├── 🔤 Paragrafi con capolettera
+        │   └── 💬 Blockquote stilizzate
+        └── 📰 Text-with-images
+            ├── 📜 Article (timeline storia)
+            └── 🖼️ Aside (griglia immagini)
+
+🎨 TECNICHE EDITORIALI CSS:
+├── 📐 Grid principale: margini automatici geniali
+├── 📰 column-width: testo multi-colonna automatico
+├── 🔤 Tipografia gerarchica: 3 font diversi
+├── 💡 rem trick: 62.5% per calcoli facili
+├── 🖼️ Grid annidate: layout complessi
+└── 📱 Responsive fluido: 4 breakpoint mirati
+
+È come InDesign ma fatto interamente in CSS! 📰✨
+-->
