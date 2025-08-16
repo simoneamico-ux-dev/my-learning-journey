@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<!-- 🎯 DICHIARAZIONE HTML5: "Benvenuti nella fabbrica di landing page!" -->
+<!-- È come aprire le porte di un'agenzia di marketing digitale 🚀 -->
+
+<html lang="en">
+<!-- 🌍 CONTENITORE PRINCIPALE: La nostra vetrina digitale -->
+<!-- lang="en" = inglese, la lingua del business online! 💼 -->
+
+    <head>
+        <!-- 🧠 IL QUARTIER GENERALE: Dove pianifichiamo la conversione dei visitatori -->
+        <!-- È come la sala riunioni dove si decide la strategia di vendita -->
+        
+        <meta charset="UTF-8">
+        <!-- 📝 CARATTERI UNIVERSALI: UTF-8 per comunicare con il mondo intero! 🌐 -->
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- 📱 RESPONSIVE DESIGN: "Funziona su ogni dispositivo, garantito!" -->
+        <!-- È come avere un negozio che si ridimensiona per ogni cliente -->
+        
+        <title> My First Landing Page</title>
+        <!-- 📑 TITOLO DELLA TAB: Il primo biglietto da visita digitale -->
+        
+        <style>
+            /* 🎨 ===== LA BIBLIOTECA DI VARIABILI CSS: Il Santo Graal del Design System! ===== */
+            
+            :root {
+                /* 🎨 PALETTE COLORI: I barattoli di vernice digitale */
+                --wallpaper: #F1F4F8;
+                /* 🏠 SFONDO: Grigio chiaro elegante, come una parete moderna */
+                
+                --color-1: #377A84;
+                /* 🌊 TURCHESE SCURO: Colore primario sofisticato */
+                
+                --color-2: #7F94D6;
+                /* 💙 BLU LAVANDA: Per accenti delicati */
+                
+                --color-3: #4C63B6;
+                /* 🔵 BLU REALE: Più intenso e professionale */
+                
+                --color-4: #35469C;
+                /* 🌌 BLU PROFONDO: Per elementi importanti */
+                
+                --color-5: #19216C;
+                /* 🌃 BLU NOTTE: Il più scuro della palette */
+                
+                --color-black: black;
+                /* ⚫ NERO: Per testi e contrasti forti */
+                
+                --color-hover: #0A6C74;
+                /* 🎯 HOVER TURCHESE: Feedback visivo al passaggio del mouse */
+                
+                --color-input-bg: rgba(0, 0, 0, 10%);
+                /* 🔲 SFONDO INPUT: Nero al 10% di opacità, sottile ma visibile */
+                
+                /* 📏 ===== SISTEMA DI SPAZIATURE: La Griglia Invisibile ===== */
+                /* È come avere un righello universale per tutto il sito! */
+                
+                --spacing-title-top: 32px;
+                --spacing-title-bottom: 32px;
+                /* 📐 SPAZI TITOLO: Respiro sopra e sotto */
+                
+                --spacing-first-buttom-top: 48px;
+                --spacing-first-buttom-bottom: 700px;
+                /* 🔘 SPAZI BOTTONE: Notare il typo "buttom" invece di "button"! */
+                /* 700px bottom = spazio ENORME per l'hero section */
+                
+                --spacing-p-bottom: 16px;
+                /* 📝 SPAZIO PARAGRAFI: Tra un paragrafo e l'altro */
+                
+                --spacing-h3-top: 48px;
+                /* 📰 SPAZIO H3: Separa bene le sezioni */
+                
+                --navbar-height: 60px;
+                /* 🧭 ALTEZZA NAVBAR: Per compensare con margin-top */
+                
+                --spacing-nav-padding: 16px 32px;
+                /* 🧭 PADDING NAV: 16px verticale, 32px orizzontale */
+                
+                --spacing-nav-link: 16px;
+                /* 🔗 SPAZIO LINK: Tra i link di navigazione */
+                
+                --spacing-gap: 80px;
+                /* 🌉 GAP FLEXBOX: Spazio tra elementi flex */
+                
+                --spacing-hero-padding: 60px 40px 100px 40px;
+                --spacing-hero-padding-clean: 60px 0 100px 0;
+                /* 🦸 PADDING HERO: Due versioni, una con padding laterale, una senza */
+                
+                --spacing-button-padding: 16px 32px;
+                /* 🔘 PADDING BOTTONI: Spazio interno confortevole */
+                
+                --spacing-form-top: 192px;
+                /* 📝 SPAZIO FORM: Grande margine sopra il form */
+                
+                --spacing-how-it-works: 128px;
+                /* 🔧 SPAZIO SEZIONE: Per "How It Works" */
+                
+                --spacing-email-margin: 48px 0 32px;
+                /* 📧 MARGINI EMAIL: Top, laterali, bottom */
+                
+                --spacing-footer-bottom: 25px;
+                /* 🦶 SPAZIO FOOTER: Dal fondo della pagina */
+                
+                --spacing-footer-side: 100px;
+                /* 🦶 MARGINI FOOTER: Spazio laterale generoso */
+                
+                --spacing-social-right: 24px;
+                /* 🔗 SPAZIO SOCIAL: Tra le icone social */
+                
+                --spacing-li-bottom: 16px;
+                /* 📋 SPAZIO LISTE: Tra elementi della lista */
+                
+                --spacing-button-input: 16px 24px;
+                /* 🔘 PADDING INPUT/BUTTON: Per form elements */
+                
+                --spacing-transform: -1px;
+                /* 🎯 MICRO-MOVIMENTO: Per effetto hover sottile */
+                
+                /* 🔤 ===== SISTEMA TIPOGRAFICO: Le Dimensioni dei Font ===== */
+                
+                --font-size-title: 65px;
+                /* 📰 TITOLONE: Impossibile da ignorare! */
+                
+                --font-size-subtitle: 24px;
+                /* 📄 SOTTOTITOLO: Leggibile ma non invadente */
+                
+                --font-size-nav: 16px;
+                /* 🧭 NAVIGAZIONE: Dimensione standard */
+                
+                --font-size-p: 16px;
+                /* 📝 PARAGRAFI: Stesso della nav per coerenza */
+                
+                --font-size-h4: 32px;
+                /* 📰 HEADING 4: Importante ma non quanto il titolo */
+                
+                --font-size-nav-button: 10px;
+                /* 🔘 BOTTONE NAV: Più piccolo per stare nella navbar */
+                
+                /* 💪 ===== PESI DEI FONT: Grassetto o Normale? ===== */
+                
+                --font-weight-bold: 700;
+                /* 🏋️ GRASSETTO: Per titoli d'impatto */
+                
+                --font-weight-normal: 400;
+                /* 🏃 NORMALE: Per testo leggibile */
+                
+                --font-weight-medium: 500;
+                /* 🚶 MEDIO: Un compromesso elegante */
+                
+                /* 🔄 ===== BORDER RADIUS: Angoli Arrotondati ===== */
+                
+                --radius-button: 33px;
+                /* 🔘 BOTTONI: Super arrotondati, quasi pillole! */
+                
+                --radius-input: 32px;
+                /* 📝 INPUT: Stesso stile dei bottoni */
+                
+                --radius-hero: 0 0 20px 20px;
+                /* 🦸 HERO: Arrotondato solo in basso */
+                /* È come una tenda che scende morbida */
+                
+                /* 📐 ===== DIMENSIONI FISSE: Larghezze e Altezze ===== */
+                
+                --logo-width: 66px;
+                --logo-height: 39px;
+                /* 🏷️ LOGO: Proporzioni precise */
+                
+                --button-width-nav: 110px;
+                --button-height-nav: 40px;
+                /* 🔘 BOTTONE NAVBAR: Compatto per la nav */
+                
+                --button-width: 180px;
+                --button-height: 65px;
+                /* 🔘 BOTTONE STANDARD: Più grande e cliccabile */
+                
+                --input-width: 230px;
+                --input-height: 63px;
+                /* 📝 INPUT EMAIL: Abbastanza largo per un'email */
+                
+                --youtube-width: 44px;
+                --youtube-height: 33px;
+                /* 📺 YOUTUBE: Icona proporzionata */
+                
+                --instagram-width: 37px;
+                --instagram-height: 36px;
+                /* 📷 INSTAGRAM: Quasi quadrata */
+                
+                --linkedin-width: 37px;
+                --linkedin-height: 36px;
+                /* 💼 LINKEDIN: Come Instagram */
+                
+                /* 🎭 ===== EFFETTI E ANIMAZIONI ===== */
+                
+                --transition-normal: all 0.2s ease;
+                /* 🎢 TRANSIZIONE: 0.2 secondi, movimento fluido */
+                /* all = anima tutte le proprietà */
+                /* ease = accelera e decelera naturalmente */
+                
+                --line-height-title: 1;
+                /* 📏 INTERLINEA TITOLO: Nessuno spazio extra tra righe */
+                
+                --background-size: 100%;
+                /* 🖼️ DIMENSIONE SFONDO: Copre tutto */
+                
+                --background-position: center 30px;
+                /* 📍 POSIZIONE SFONDO: Centrato, 30px dal top */
+            }
+
+            /* 🔄 ===== RESET UNIVERSALE ===== */
+            
+            * {
+                margin: 0;
+                padding: 0;
+                /* 🚫 AZZERA TUTTO: Partiamo da zero! */
+                
+                box-sizing: border-box;
+                /* 📦 CALCOLO INTELLIGENTE: Include padding e bordi */
+            }
+
+            html {
+                background-color: var(--wallpaper);
+                /* 🏠 SFONDO HTML: Usando la variabile! */
+                
+                scroll-behavior: smooth;
+                /* 🎢 SCROLL FLUIDO: Come scivolare sulla seta */
+                /* Quando clicchi un link interno, scorre dolcemente */
+            }
+
+            /* 🧭 ===== NAVBAR: La Barra di Navigazione Fissa ===== */
+            
+            nav {
+                width: 100%;
+                /* 📏 LARGHEZZA PIENA: Da bordo a bordo */
+                
+                font-size: var(--font-size-nav);
+                /* 🔤 DIMENSIONE FONT: Dalla variabile */
+                
+                display: flex;
+                /* 🎯 FLEXBOX: Il modo moderno di allineare */
+                
+                justify-content: space-between;
+                /* ⚖️ SPAZIO TRA: Logo a sinistra, link centro, bottone destra */
+                
+                align-items: center;
+                /* 📐 ALLINEAMENTO VERTICALE: Tutto sulla stessa linea */
+                
+                padding: var(--spacing-nav-padding);
+                /* 🏠 PADDING: Respiro interno dalla variabile */
+                
+                background: var(--wallpaper);
+                /* 🎨 SFONDO: Stesso colore della pagina */
+                
+                position: fixed;
+                /* 🔒 POSIZIONE FISSA: Resta sempre in cima! */
+                /* È come un post-it attaccato allo schermo */
+                
+                top: 0;
+                /* 📍 IN CIMA: Incollata al bordo superiore */
+                
+                box-sizing: border-box;
+                /* 📦 CALCOLO: Include padding nella larghezza */
+            }
+
+            a {
+                text-decoration: none;
+                /* 🚫 NIENTE SOTTOLINEATURA: Link puliti */
+                
+                color: var(--color-black);
+                /* ⚫ COLORE NERO: Per tutti i link */
+            }
+
+            .central-link {
+                display: flex;
+                /* 🎯 FLEX CONTAINER: Per i link centrali */
+                
+                gap: var(--spacing-gap);
+                /* 🌉 GAP: 80px tra ogni link! Tantissimo spazio */
+                /* gap è la proprietà moderna per spaziare elementi flex */
+            }
+
+            .logo-image {
+                width: var(--logo-width);
+                height: var(--logo-height);
+                /* 🏷️ DIMENSIONI LOGO: Precise dalle variabili */
+            }
+
+            .nav-link:first-child {
+                margin-left: var(--spacing-nav-link);
+                /* ⬅️ MARGINE PRIMO LINK: Piccolo stacco dal logo */
+            }
+
+            #nav-start-demo {
+                margin-right: var(--spacing-nav-link);
+                /* ➡️ MARGINE BOTTONE: Stacco dal bordo destro */
+            }
+
+            /* 🦸 ===== HERO SECTION: La Sezione Principale ===== */
+            
+            .title-subtitle-button {
+                text-align: center;
+                /* ⚖️ TUTTO CENTRATO: Il contenuto hero */
+                
+                margin-top: var(--navbar-height);
+                /* ⬆️ COMPENSA LA NAVBAR: 60px per non finire sotto */
+                
+                background: url('sfondo-hero.png');
+                /* 🖼️ IMMAGINE DI SFONDO: Il visual principale */
+                
+                background-size: var(--background-size);
+                /* 📏 DIMENSIONE SFONDO: 100% dalla variabile */
+                
+                background-position: var(--background-position);
+                /* 📍 POSIZIONE: Centrato con offset */
+                
+                background-repeat: no-repeat;
+                /* 🚫 NO RIPETIZIONE: Una sola immagine */
+                
+                padding: var(--spacing-hero-padding);
+                /* 🏠 PADDING: Primo valore con padding */
+                
+                border-radius: var(--radius-hero);
+                /* 🔄 BORDI ARROTONDATI: Solo in basso! */
+                
+                padding: var(--spacing-hero-padding-clean);
+                /* 🏠 PADDING PULITO: Sovrascrive il precedente! */
+                /* ⚠️ ATTENZIONE: Duplicato che sovrascrive! */
+            }
+
+            .title {
+                font-size: var(--font-size-title);
+                /* 📏 DIMENSIONE: 65px di puro impatto! */
+                
+                font-weight: var(--font-weight-bold);
+                /* 💪 GRASSETTO: 700 per massima forza */
+                
+                margin-top: var(--spacing-title-top);
+                margin-bottom: var(--spacing-title-bottom);
+                /* 🌬️ MARGINI: 32px sopra e sotto */
+                
+                line-height: var(--line-height-title);
+                /* 📏 INTERLINEA: 1 = nessuno spazio extra */
+            }
+
+            .subtitle {
+                font-weight: var(--font-weight-normal);
+                /* 🏃 PESO NORMALE: Per contrasto col titolo */
+            }
+
+            .subtitle-top {
+                font-size: var(--font-size-subtitle-top);
+                /* ⚠️ VARIABILE NON DEFINITA! Bug nel codice */
+            }
+
+            .subtitle-bottom {
+                font-size: var(--font-size-subtitle-bottom);
+                /* ⚠️ ANCHE QUESTA NON DEFINITA! */
+                
+                margin-bottom: var(--spacing-first-buttom-top);
+                /* ⬇️ MARGINE: 48px prima del bottone */
+            }
+
+            .desktop-only {
+                display: inline;
+                /* 💻 SOLO DESKTOP: Sarà nascosto su mobile */
+                /* inline = resta nella riga di testo */
+            }
+
+            .solution {
+                text-align: center;
+                /* ⚖️ CENTRATO: La sezione soluzioni */
+            }
+
+            .first-start-demo {
+                margin-bottom: var(--spacing-first-buttom-bottom);
+                /* ⬇️ SPAZIO ENORME: 700px! Crea molto scroll */
+            }
+
+            h3 {
+                margin-top: var(--spacing-h3-top);
+                /* ⬆️ SPAZIO SOPRA: 48px per ogni h3 */
+            }
+
+            /* 🔘 ===== BOTTONI START DEMO ===== */
+            
+            .start-demo {
+                display: inline-block;
+                /* 📦 INLINE-BLOCK: Si comporta come testo ma accetta dimensioni */
+                
+                padding: var(--spacing-button-padding);
+                /* 🏠 PADDING: 16px 32px per area cliccabile */
+                
+                text-decoration: none;
+                /* 🚫 NO SOTTOLINEATURA: Pulito */
+                
+                border-radius: var(--radius-button);
+                /* 🔄 SUPER ARROTONDATO: 33px = pillola! */
+                
+                font-weight: var(--font-weight-normal);
+                /* 🏃 PESO NORMALE: Non grassetto */
+                
+                font-size: var(--font-size-nav);
+                /* 📏 DIMENSIONE: 16px standard */
+                
+                cursor: pointer;
+                /* 👆 CURSORE MANINA: "Sono cliccabile!" */
+                
+                transition: var(--transition-normal);
+                /* 🎢 TRANSIZIONE: Per effetti hover fluidi */
+                
+                text-align: center;
+                /* ⚖️ TESTO CENTRATO: Nel bottone */
+                
+                width: var(--button-width);
+                height: var(--button-height);
+                /* 📐 DIMENSIONI FISSE: 180x65px */
+                
+                background: none;
+                /* 🚫 NO SFONDO: Trasparente di default */
+            }
+
+            #nav-start-demo {
+                width: var(--button-width-nav);
+                height: var(--button-height-nav);
+                /* 📏 DIMENSIONI RIDOTTE: 110x40px per la navbar */
+                
+                font-size: var(--font-size-nav-button);
+                /* 🔤 FONT PICCOLO: 10px per stare nel bottone */
+                
+                white-space: nowrap;
+                /* 📏 NO A CAPO: Il testo resta su una riga */
+                
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                /* 🎯 CENTRATURA PERFETTA: Flexbox per allineamento */
+            }
+
+            #submit:hover {
+                background: var(--color-hover);
+                /* 🎨 SFONDO HOVER: Turchese scuro */
+                
+                transform: translateY(var(--spacing-transform));
+                /* ⬆️ MICRO-MOVIMENTO: -1px verso l'alto */
+                /* È come se il bottone si alzasse leggermente! */
+            }
+
+            .form-start {
+                margin-top: var(--spacing-form-top);
+                /* ⬆️ GRANDE SPAZIO: 192px sopra il form */
+            }
+
+            /* 🔧 ===== SEZIONE HOW IT WORKS ===== */
+            
+            .how-it-works {
+                text-align: center;
+                /* ⚖️ TUTTO CENTRATO: Testo e lista */
+                
+                margin: var(--spacing-how-it-works);
+                /* 🌬️ MARGINI: 128px sopra e sotto */
+            }
+
+            .how-it-works ol{
+                list-style-position: inside;
+                /* 📋 NUMERI DENTRO: I numeri sono parte del contenuto */
+                /* inside = i numeri sono dentro il box dell'elemento */
+                
+                padding-left: 0;
+                /* 🚫 NO PADDING: Già centrato */
+            }
+
+            .how-it-works li{
+                margin-bottom: var(--spacing-li-bottom);
+                /* ⬇️ SPAZIO TRA ELEMENTI: 16px */
+            }
+
+            .how-it-works li:last-child {
+                margin-bottom: 0;
+                /* 🚫 ULTIMO SENZA MARGINE: Per pulizia */
+                /* :last-child = selettore per l'ultimo elemento */
+            }
+
+            /* 📺 ===== IFRAME VIDEO ===== */
+            
+            .iframe > iframe {
+                /* > = selettore figlio diretto */
+                
+                display: flex;
+                /* 🎯 FLEX: Ma su iframe non ha molto senso... */
+                
+                justify-content: center;
+                /* ⚖️ CENTRATURA: Anche questa non funziona su iframe */
+                
+                margin-bottom: 0 !important;
+                /* 🚨 !IMPORTANT: Override forzato, cattiva pratica! */
+                
+                width: 100% !important;
+                /* 📏 LARGHEZZA PIENA: Forzata con !important */
+                
+                height: 200px !important;
+                /* 📐 ALTEZZA FISSA: 200px sempre */
+            }
+
+            /* 📧 ===== SEZIONE CONTATTI ===== */
+            
+            #Contact {
+                display: flex;
+                /* 🎯 FLEX CONTAINER: Per centrare il form */
+                
+                justify-content: center;
+                /* ⚖️ CENTRATURA ORIZZONTALE: Il form al centro */
+                
+                text-align: center;
+                /* 📝 TESTO CENTRATO: Anche il contenuto */
+            }
+
+            #email {
+                margin-top: var(--spacing-first-buttom-top);
+                margin-bottom: var(--spacing-title-bottom);
+                /* 🌬️ MARGINI: 48px sopra, 32px sotto */
+                
+                width: var(--input-width);
+                height: var(--input-height);
+                /* 📐 DIMENSIONI: 230x63px */
+                
+                background-color: var(--color-input-bg);
+                /* 🔲 SFONDO: Nero al 10% di opacità */
+            }
+
+            h4 {
+                font-size: var(--font-size-h4);
+                /* 📏 DIMENSIONE: 32px per importanza */
+                
+                font-weight: var(--font-weight-medium);
+                /* 💪 PESO MEDIO: 500, tra normale e grassetto */
+            }
+
+            input[type="email"] {
+                /* 📧 SELETTORE ATTRIBUTO: Solo input di tipo email */
+                
+                width: fit-content;
+                /* 📏 LARGHEZZA: Si adatta al contenuto */
+                /* ⚠️ Conflitto con #email width! */
+                
+                padding: var(--spacing-button-input);
+                /* 🏠 PADDING: 16px 24px interno */
+                
+                font-size: var(--font-size-nav);
+                /* 🔤 FONT: 16px standard */
+                
+                border-radius: var(--radius-input);
+                /* 🔄 ARROTONDATO: 32px come i bottoni */
+                
+                margin: var(--spacing-email-margin);
+                /* 🌬️ MARGINI: 48px top, 0 lati, 32px bottom */
+            }
+
+            /* 🦶 ===== FOOTER ===== */
+            
+            footer {
+                margin-bottom: var(--spacing-footer-bottom);
+                /* ⬇️ MARGINE BOTTOM: 25px dal fondo */
+            }
+
+            address {
+                /* 📍 TAG SEMANTICO: Per informazioni di contatto */
+                
+                display: flex;
+                /* 🎯 FLEX: Per allineare logo e social */
+                
+                justify-content: space-between;
+                /* ⚖️ SPAZIO TRA: Logo a sinistra, social a destra */
+            }
+
+            .logo-footer {
+                width: var(--logo-width);
+                height: var(--logo-height);
+                /* 📐 STESSE DIMENSIONI: Del logo navbar */
+                
+                margin-left: var(--spacing-footer-side);
+                /* ⬅️ MARGINE: 100px dal bordo sinistro */
+            }
+
+            .social-link {
+                display: flex;
+                /* 🎯 FLEX: Per allineare le icone */
+                
+                align-items: center;
+                /* 📐 ALLINEAMENTO VERTICALE: Icone sulla stessa linea */
+                
+                margin-right: var(--spacing-footer-side);
+                /* ➡️ MARGINE: 100px dal bordo destro */
+            }
+
+            /* 🔗 ===== ICONE SOCIAL ===== */
+            
+            .social-youtube {
+                width: var(--youtube-width);
+                height: var(--youtube-height);
+                /* 📺 YOUTUBE: 44x33px */
+                
+                margin-right: var(--spacing-social-right);
+                /* ➡️ SPAZIO: 24px prima della prossima */
+            }
+
+            .social-instagram {
+                width: var(--instagram-width);
+                height: var(--instagram-height);
+                /* 📷 INSTAGRAM: 37x36px */
+                
+                margin-right: var(--spacing-social-right);
+                /* ➡️ SPAZIO: Altri 24px */
+            }
+
+            .social-linkedin {
+                width: var(--linkedin-width);
+                height: var(--linkedin-height);
+                /* 💼 LINKEDIN: 37x36px, nessun margine destro */
+            }
+
+            /* 📱 ===== MEDIA QUERY: La Magia del Mobile! ===== */
+            
+            @media (max-width: 768px) {
+                /* 📱 TABLET E MOBILE: Sotto i 768px tutto cambia! */
+                
+                :root {
+                    /* 🔄 OVERRIDE DELLE VARIABILI: Geniale! */
+                    /* Ridefinendo le variabili, tutto si adatta automaticamente */
+                    
+                    /* 📏 SPAZIATURE RIDOTTE: Tutto più compatto */
+                    --spacing-title-top: 16px;
+                    --spacing-title-bottom: 16px;
+                    /* Da 32px a 16px = metà spazio */
+                    
+                    --spacing-first-buttom-top: 24px;
+                    --spacing-first-buttom-bottom: 230px;
+                    /* Da 700px a 230px = molto meno scroll */
+                    
+                    --spacing-p-bottom: 8px;
+                    --spacing-h3-top: 24px;
+                    --navbar-height: 30px;
+                    /* Navbar più bassa su mobile */
+                    
+                    --spacing-gap: 20px;
+                    /* Da 80px a 20px = link più vicini */
+                    
+                    --spacing-how-it-works: 64px;
+                    /* Metà dello spazio desktop */
+                    
+                    /* 🔤 FONT PIÙ PICCOLI: Per più contenuto visibile */
+                    --font-size-title: 35px;
+                    /* Da 65px a 35px = quasi metà! */
+                    
+                    --font-size-subtitle-top: 18px;
+                    --font-size-subtitle-bottom: 12px;
+                    /* Finalmente definite! */
+                    
+                    --font-size-nav: 12px;
+                    --font-size-p: 12px;
+                    --font-size-h4: 20px;
+                    /* Tutto ridotto proporzionalmente */
+                    
+                    /* 📐 DIMENSIONI RIDOTTE: Elementi più piccoli */
+                    --logo-width: 33px;
+                    --logo-height: 19.5px;
+                    /* Logo a metà dimensione */
+                    
+                    --button-width: 110px;
+                    --button-height: 40px;
+                    /* Bottoni più compatti */
+                    
+                    --input-width: 163px;
+                    --input-height: 40px;
+                    /* Input più stretto */
+                    
+                    /* 🖼️ SFONDO ADATTATO: Per mobile */
+                    --background-size: 150%;
+                    /* Ingrandito per riempire meglio */
+                    
+                    --background-position: center 130px;
+                    /* Spostato più in basso */
+                }
+
+                .subtitle-top {
+                    margin-top: -20px;
+                    /* ⬆️ MARGINE NEGATIVO: Avvicina al titolo */
+                    /* I margini negativi "tirano" gli elementi */
+                }
+
+                #nav-start-demo {
+                    display: none;
+                    /* 🚫 NASCOSTO: Il bottone nella navbar sparisce */
+                    /* Non c'è spazio su mobile! */
+                }
+
+                .start-demo {
+                    white-space: nowrap;
+                    /* 📏 NO A CAPO: Testo su una riga */
+                    
+                    display: inline-flex;
+                    /* 🎯 INLINE-FLEX: Per centratura migliore */
+                    
+                    align-items: center;
+                    justify-content: center;
+                    text-align: center;
+                    /* ⚖️ TRIPLA CENTRATURA: Overkill ma sicuro! */
+                }
+
+                nav {
+                    padding: 16px;
+                    /* 🏠 PADDING UNIFORME: Invece di 16px 32px */
+                    
+                    margin-left: -10px;
+                    /* ⬅️ MARGINE NEGATIVO: Compensa qualcosa... */
+                }
+
+                .central-link {
+                    position: absolute;
+                    /* 🎯 POSIZIONE ASSOLUTA: Esce dal flusso normale */
+                    
+                    left: 100px; 
+                    /* ⬅️ POSIZIONE FISSA: 100px dal bordo */
+                    /* Potrebbe essere problematico su schermi molto piccoli */
+                }
+
+                .desktop-only {
+                    display: none;
+                    /* 🚫 NASCOSTO SU MOBILE: Come promesso dal nome */
+                }
+
+                h3 {
+                    font-size: 16px;
+                    /* 📏 OVERRIDE DIRETTO: Invece di usare variabile */
+                }
+
+                p {
+                    font-size: 12px;
+                    /* 📏 PARAGRAFI PICCOLI: Per mobile */
+                }
+
+                .iframe {
+                    margin-bottom: -70px;
+                    /* ⬆️ MARGINE NEGATIVO: Avvicina al contenuto sotto */
+                    /* Trucco per compensare l'altezza dell'iframe */
+                }
+
+                footer {
+                    margin-top: 48px;
+                    /* ⬆️ SPAZIO SOPRA: Separa dal contenuto */
+                }
+
+                address {
+                    display: flex;
+                    align-items: center;
+                    /* 📐 ALLINEAMENTO: Centra verticalmente */
+                    
+                    gap: 90px;
+                    /* 🌉 GAP: Spazio tra logo e social */
+                }
+
+                .logo-footer {
+                    margin-left: 40px;
+                    /* ⬅️ MARGINE RIDOTTO: Da 100px a 40px */
+                }
+
+                .social-link {
+                    transform: scale(0.8);
+                    /* 🔍 SCALA: Icone all'80% della dimensione */
+                    /* transform: scale() ridimensiona visivamente */
+                    /* È come rimpicciolire con una lente! */
+                }
+            }
+        </style>
+    </head>
+    
+    <body>
+        <!-- 🚀 ===== IL CORPO DELLA LANDING PAGE ===== -->
+        
+        <main>
+            <!-- 📄 CONTENUTO PRINCIPALE: Il wrapper semantico -->
+            
+            <header id="header">
+                <!-- 📰 HEADER: Contiene tutta la parte superiore -->
+                <!-- ⚠️ Struttura strana: tutto dentro header, anche sezioni non header -->
+                
+                <img src="" alt="" id="header-img">
+                <!-- 🖼️ IMMAGINE HEADER: Vuota! src e alt sono vuoti -->
+                <!-- Probabilmente richiesta per i test di freeCodeCamp -->
+                
+                <nav id="nav-bar">
+                    <!-- 🧭 BARRA DI NAVIGAZIONE: Il menu principale -->
+                    
+                    <img src="logo.png" class="logo-image">
+                    <!-- 🏷️ LOGO AZIENDA: Primo elemento della nav -->
+                    
+                    <div class="central-link">
+                        <!-- 🔗 LINK CENTRALI: Contenitore per navigazione -->
+                        
+                        <a href="#Solution" class="nav-link">Solution</a>
+                        <!-- 🔗 LINK 1: Ancora interna alla sezione Solution -->
+                        
+                        <a href="#How-It-Works" class="nav-link">How It Works</a>
+                        <!-- 🔗 LINK 2: Ancora alla sezione How It Works -->
+                        
+                        <a href="#Contact" class="nav-link">Contact</a>
+                        <!-- 🔗 LINK 3: Ancora alla sezione Contact -->
+                    </div>
+                    
+                    <button id="nav-start-demo" type="submit" class="start-demo">START DEMO</button>
+                    <!-- 🔘 CTA NAVBAR: Call-to-action sempre visibile -->
+                    <!-- type="submit" su un button fuori form è strano... -->
+                </nav>
+
+                <section class="title-subtitle-button">
+                    <!-- 🦸 HERO SECTION: La sezione principale d'impatto -->
+                    
+                    <h2 class="subtitle subtitle-top">Keep running, no maintenance worries.</h2>
+                    <!-- 📰 SOTTOTITOLO SOPRA: Invertito con h1! -->
+                    <!-- ⚠️ h2 prima di h1 = gerarchia semantica sbagliata -->
+                    
+                    <h1 class="title">Smart maintenance,<br>Zero downtime</h1>
+                    <!-- 📰 TITOLO PRINCIPALE: Il messaggio chiave -->
+                    <!-- <br> = a capo forzato nel titolo -->
+                    
+                    <h2 class="subtitle subtitle-bottom">Stay on top of maintenance. Log issues, track fixes, keep production <br class="desktop-only">running— no interruptions.</span></h2>
+                    <!-- 📄 SOTTOTITOLO SOTTO: Più descrittivo -->
+                    <!-- ⚠️ </span> di chiusura senza apertura! Bug HTML -->
+                    
+                    <button id="hero-start-demo" type="submit" class="start-demo first-start-demo">START DEMO</button>
+                    <!-- 🔘 CTA PRINCIPALE: Il bottone più importante -->
+                </section>
+
+                <section id="Solution" class="solution">
+                    <!-- 💡 SEZIONE SOLUZIONI: I vantaggi del prodotto -->
+                    
+                    <h3>Real‑time Tracking</h3>
+                    <!-- 🔍 VANTAGGIO 1: Tracking in tempo reale -->
+                    <!-- ‑ = trattino non-breaking per evitare a capo -->
+                    
+                    <p>Follow each maintenance request as it<br>happens, with nothing slipping through.</p>
+                    <!-- 📝 DESCRIZIONE: Con <br> per controllo righe -->
+                    
+                    <h3>Automatic Shift Handover</h3>
+                    <!-- 🔄 VANTAGGIO 2: Passaggio turni automatico -->
+                    
+                    <p>Smooth handover between teams, with no<br>details lost.</p>
+                    
+                    <h3>Live Priority Dashboard</h3>
+                    <!-- 📊 VANTAGGIO 3: Dashboard priorità -->
+                    
+                    <p class="end-solution">See urgent interventions at a glance, all in<br>one view.</p>
+                    <!-- 📝 ULTIMA DESCRIZIONE: classe speciale ma non usata nel CSS -->
+                </section>
+            
+                <section id="How-It-Works" class="how-it-works">
+                    <!-- 🔧 SEZIONE COME FUNZIONA: I 3 step -->
+                    
+                    <ol>
+                        <!-- 📋 LISTA ORDINATA: Perfetta per step sequenziali -->
+                        
+                        <li>Report an issue in just a few taps, attach photos for clarity</li>
+                        <!-- 1️⃣ STEP 1: Segnalazione facile -->
+                        
+                        <li>Maintenance team receives and manages requests instantly</li>
+                        <!-- 2️⃣ STEP 2: Gestione immediata -->
+                        
+                        <li>Get automatic notifications when the problem is resolved</li>
+                        <!-- 3️⃣ STEP 3: Notifiche automatiche -->
+                    </ol>
+                </section>
+
+                <section id="youtube-video" class="youtube-video">
+                    <!-- 📺 SEZIONE VIDEO: Demo o spiegazione -->
+                    
+                    <div class="iframe">
+                        <!-- 📦 CONTENITORE IFRAME: Per styling -->
+                        
+                        <iframe src="https://www.youtube.com/watch?v=pCtkD5AMbDo" id="video" width="650" height="400"></iframe>
+                        <!-- 📺 VIDEO YOUTUBE: Ma l'URL è sbagliato! -->
+                        <!-- ⚠️ Dovrebbe essere /embed/ non /watch/ per iframe -->
+                    </div>
+                </section>
+                
+                <section id="Contact">
+                    <!-- 📧 SEZIONE CONTATTI: Il form finale -->
+                    
+                    <form action="https://www.freecodecamp.com/email-submit" id="form">
+                        <!-- 📝 FORM: Action verso freeCodeCamp (per test) -->
+                        
+                        <h4 class="form-start">Enter your email to start demo</h4>
+                        <!-- 📰 TITOLO FORM: Call-to-action chiara -->
+                        
+                        <div class="email-address">
+                            <!-- 📦 CONTENITORE INPUT: Per styling -->
+                            
+                            <input name="email" type="email" id="email" placeholder="Enter your email address" required>
+                            <!-- 📧 INPUT EMAIL: Con validazione HTML5 -->
+                            <!-- required = campo obbligatorio -->
+                            <!-- type="email" = validazione email automatica -->
+                        </div>
+                        
+                        <button id="form-start-demo" type="submit" class="start-demo">START DEMO</button>
+                        <!-- 🔘 SUBMIT BUTTON: Per inviare il form -->
+                        <!-- type="submit" = questo sì che ha senso! -->
+                    </form>
+                </section>
+
+            </header>
+            <!-- ⚠️ Chiusura header dopo tutto il contenuto main! -->
+        </main>
+        
+        <footer>
+            <!-- 🦶 FOOTER: Le informazioni finali -->
+            
+            <address>
+                <!-- 📍 ADDRESS: Tag semantico per contatti -->
+                <!-- È il tag HTML corretto per informazioni di contatto -->
+                
+                <img src="logo.png" alt="logo azienda 'SA'" class="logo-footer">
+                <!-- 🏷️ LOGO FOOTER: Ripetizione del brand -->
+                
+                <div class="social-link">
+                    <!-- 🔗 LINK SOCIAL: Contenitore icone -->
+                    
+                    <img src="youtube.svg" alt="link a YouTube Channel di SA" class="social-youtube">
+                    <!-- 📺 YOUTUBE: Icona SVG -->
+                    
+                    <img src="instagram.svg" alt="link ad Instagram di SA" class="social-instagram">
+                    <!-- 📷 INSTAGRAM: Icona SVG -->
+                    
+                    <img src="linkedin.svg" alt="link a Linkedin di SA" class="social-linkedin">
+                    <!-- 💼 LINKEDIN: Icona SVG -->
+                    <!-- ⚠️ Mancano i link <a> intorno alle immagini! -->
+                </div>
+            </address>
+        </footer>
+    </body>
+</html>
+
+<!-- 🎯 ===== RIASSUNTO DELL'ARCHITETTURA LANDING PAGE ===== -->
+<!-- 
+🚀 STRUTTURA DELLA LANDING:
+│
+├── 🧠 HEAD (sistema di design)
+│   └── 🎨 CSS con:
+│       ├── 📚 50+ CSS Variables (design system completo!)
+│       ├── 🧭 Navbar fissa con flexbox
+│       ├── 🦸 Hero section con sfondo
+│       ├── 🔘 Bottoni pill-shaped (33px radius)
+│       └── 📱 Media query responsive completa
+│
+└── 🚀 BODY (la landing page)
+    ├── 📄 Main
+    │   └── 📰 Header (contiene tutto! struttura strana)
+    │       ├── 🧭 Navbar (logo + link + CTA)
+    │       ├── 🦸 Hero (titoli + CTA principale)
+    │       ├── 💡 Solution (3 vantaggi)
+    │       ├── 🔧 How It Works (3 step)
+    │       ├── 📺 Video (iframe YouTube)
+    │       └── 📧 Contact (form email)
+    └── 🦶 Footer
+        └── 📍 Address (logo + social)
+
+🎨 TECNICHE NOTEVOLI:
+├── 📚 CSS Variables massive: Un vero design system!
+├── 🔄 Override variabili in media query (geniale!)
+├── 🎯 Flexbox per allineamenti precisi
+├── 🔘 Bottoni ultra-arrotondati stile moderno
+├── 📱 Responsive che cambia TUTTO su mobile
+└── 🎢 Transizioni hover sottili ma efficaci
+
+⚠️ PROBLEMI NEL CODICE:
+├── 📝 Gerarchia heading sbagliata (h2 prima di h1)
+├── 🏷️ Tag span chiuso senza apertura
+├── 📺 URL YouTube sbagliato per iframe
+├── 🔗 Immagini social senza link
+└── 📰 Tutto dentro header (struttura semantica strana)
+
+È come una Ferrari con qualche graffio - bellissima ma con margini di miglioramento! 🏎️✨
+-->
