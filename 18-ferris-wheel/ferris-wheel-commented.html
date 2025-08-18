@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<!-- 🎯 DICHIARAZIONE HTML5: "Benvenuti al luna park CSS!" -->
+<!-- È come aprire i cancelli di un parco divertimenti digitale! 🎡 -->
+
+<html lang="en">
+<!-- 🌍 CONTENITORE PRINCIPALE: Il nostro parco giochi virtuale -->
+<!-- lang="en" = inglese, ma il divertimento è universale! 🎠 -->
+
+  <head>
+    <!-- 🧠 LA CABINA DI CONTROLLO: Dove programmiamo le giostre -->
+    <!-- È come la sala controllo del luna park! -->
+    
+    <meta charset="UTF-8">
+    <!-- 📝 CARATTERI UNIVERSALI: UTF-8 per tutti i simboli del divertimento! 🎪🎨🎭 -->
+    
+    <title>Ferris Wheel</title>
+    <!-- 📑 TITOLO DELLA TAB: Semplice e diretto come l'insegna di una giostra -->
+    
+    <style>
+      /* 🎡 ===== LA MAGIA CSS DELLA RUOTA PANORAMICA ===== */
+      
+      .wheel {
+        /* 🎡 LA RUOTA PRINCIPALE: Il cerchio gigante che gira! */
+        
+        border: 2px solid black;
+        /* 🖤 BORDO NERO: Il telaio metallico della ruota */
+        
+        border-radius: 50%;
+        /* ⭕ CERCHIO PERFETTO: 50% trasforma un quadrato in cerchio! */
+        /* È la formula magica per creare cerchi in CSS */
+        
+        margin-left: 50px;
+        /* ⬅️ MARGINE SINISTRO: Sposta la ruota dal bordo */
+        
+        position: absolute;
+        /* 🎯 POSIZIONE ASSOLUTA: Si posiziona rispetto alla finestra */
+        /* È come poter mettere la giostra ovunque nel parco */
+        
+        height: 55vw;
+        width: 55vw;
+        /* 📏 DIMENSIONI RESPONSIVE: 55% della larghezza viewport! */
+        /* vw = viewport width, si adatta allo schermo */
+        /* Un quadrato perfetto che si ridimensiona! */
+        
+        max-width: 500px;
+        max-height: 500px;
+        /* 🚫 LIMITE MASSIMO: Non più grande di 500px */
+        /* È come dire "ok, ma non esageriamo con le dimensioni!" */
+        
+        animation-name: wheel;
+        /* 🎬 NOME ANIMAZIONE: Si chiama "wheel" */
+        /* Collegata al @keyframes wheel più sotto */
+        
+        animation-duration: 10s;
+        /* ⏱️ DURATA: Un giro completo in 10 secondi */
+        /* È la velocità della nostra ruota panoramica */
+        
+        animation-iteration-count: infinite;
+        /* ♾️ RIPETIZIONI INFINITE: Gira per sempre! */
+        /* Come una vera ruota panoramica che non si ferma mai */
+        
+        animation-timing-function: linear;
+        /* 📈 VELOCITÀ COSTANTE: Nessuna accelerazione o decelerazione */
+        /* linear = sempre alla stessa velocità, realistica per una ruota */
+      }
+      
+      /* 📏 ===== I RAGGI DELLA RUOTA ===== */
+      
+      .line {
+        /* 📏 LINEA BASE: Il modello per tutti i raggi */
+        
+        background-color: black;
+        /* ⚫ COLORE NERO: Come travi d'acciaio */
+        
+        width: 50%;
+        /* 📏 LARGHEZZA: Metà del diametro della ruota */
+        /* Parte dal centro e arriva al bordo */
+        
+        height: 2px;
+        /* 📏 ALTEZZA: Solo 2px, una linea sottile */
+        
+        position: absolute;
+        /* 🎯 POSIZIONE ASSOLUTA: Per posizionarle precisamente */
+        
+        top: 50%;
+        left: 50%;
+        /* 📍 PUNTO DI PARTENZA: Esattamente al centro della ruota */
+        /* 50% e 50% = il centro perfetto */
+        
+        transform-origin: 0% 0%;
+        /* 🎯 PUNTO DI ROTAZIONE: L'angolo in alto a sinistra */
+        /* 0% 0% = ruota dal suo inizio, non dal centro */
+        /* È come piantare un chiodo all'inizio della linea */
+      }
+      
+      .line:nth-of-type(2) {
+        transform: rotate(60deg);
+        /* 🔄 ROTAZIONE 60°: Secondo raggio */
+        /* 360° ÷ 6 raggi = 60° tra ogni raggio */
+      }
+      
+      .line:nth-of-type(3) {
+        transform: rotate(120deg);
+        /* 🔄 ROTAZIONE 120°: Terzo raggio */
+        /* 60° × 2 = 120° */
+      }
+      
+      .line:nth-of-type(4) {
+        transform: rotate(180deg);
+        /* 🔄 ROTAZIONE 180°: Quarto raggio, perfettamente opposto */
+        /* Forma il diametro orizzontale */
+      }
+      
+      .line:nth-of-type(5) {
+        transform: rotate(240deg);
+        /* 🔄 ROTAZIONE 240°: Quinto raggio */
+        /* 60° × 4 = 240° */
+      }
+      
+      .line:nth-of-type(6) {
+        transform: rotate(300deg);
+        /* 🔄 ROTAZIONE 300°: Sesto e ultimo raggio */
+        /* 60° × 5 = 300° */
+        /* Insieme formano una stella a 6 punte! */
+      }
+      
+      /* 🎪 ===== LE CABINE DELLA RUOTA ===== */
+      
+      .cabin {
+        /* 🎪 CABINA BASE: Dove siedono i passeggeri! */
+        
+        background-color: red;
+        /* 🔴 ROSSO VIVACE: Colore iniziale delle cabine */
+        
+        width: 20%;
+        height: 20%;
+        /* 📏 DIMENSIONI: 20% della ruota, proporzionate */
+        /* Abbastanza grandi per essere visibili */
+        
+        position: absolute;
+        /* 🎯 POSIZIONE ASSOLUTA: Per piazzarle precisamente */
+        
+        border: 2px solid;
+        /* 🖤 BORDO: Contorno nero (colore ereditato) */
+        
+        transform-origin: 50% 0%;
+        /* 🎯 PUNTO DI ROTAZIONE: Centro-alto della cabina */
+        /* 50% 0% = il centro del lato superiore */
+        /* È come se fossero appese dall'alto! */
+        /* GENIALE: così restano dritte mentre la ruota gira! */
+        
+        animation: cabins 10s ease-in-out infinite;
+        /* 🎬 ANIMAZIONE CABINE: Nome "cabins" */
+        /* 10s = stessa durata della ruota */
+        /* ease-in-out = accelera e decelera dolcemente */
+        /* infinite = gira per sempre */
+      }
+      
+      /* 📍 ===== POSIZIONAMENTO DELLE 6 CABINE ===== */
+      
+      .cabin:nth-of-type(1) {
+        right: -8.5%;
+        top: 50%;
+        /* 📍 CABINA 1: A destra, a metà altezza */
+        /* right: -8.5% = sporge leggermente fuori! */
+      }
+      
+      .cabin:nth-of-type(2) {
+        right: 17%;
+        top: 93.5%;
+        /* 📍 CABINA 2: In basso a destra */
+        /* Posizionata con precisione millimetrica */
+      }
+      
+      .cabin:nth-of-type(3) {
+        right: 67%;
+        top: 93.5%;
+        /* 📍 CABINA 3: In basso a sinistra */
+        /* right: 67% = più verso sinistra */
+      }
+      
+      .cabin:nth-of-type(4) {
+        left: -8.5%;
+        top: 50%;
+        /* 📍 CABINA 4: A sinistra, a metà altezza */
+        /* Speculare alla cabina 1 */
+      }
+      
+      .cabin:nth-of-type(5) {
+        left: 17%;
+        top: 7%;
+        /* 📍 CABINA 5: In alto a sinistra */
+        /* top: 7% = quasi in cima */
+      }
+      
+      .cabin:nth-of-type(6) {
+        right: 17%;
+        top: 7%;
+        /* 📍 CABINA 6: In alto a destra */
+        /* Completa il cerchio di cabine! */
+        /* 🎯 Le cabine formano un esagono perfetto! */
+      }
+      
+      /* 🎬 ===== ANIMAZIONE DELLA RUOTA ===== */
+      
+      @keyframes wheel {
+        /* 🎡 ROTAZIONE RUOTA: L'animazione principale */
+        
+         0% {
+           transform: rotate(0deg);
+           /* 🔄 INIZIO: Posizione di partenza, 0 gradi */
+         }
+         
+         100% {
+           transform: rotate(360deg);
+           /* 🔄 FINE: Un giro completo, 360 gradi */
+           /* In 10 secondi fa un giro completo */
+         }
+      }
+      
+      /* 🎨 ===== ANIMAZIONE DELLE CABINE ===== */
+      
+      @keyframes cabins {
+        /* 🎪 CONTRO-ROTAZIONE + COLORI: Doppia magia! */
+        
+        0% {
+          transform: rotate(0deg);
+          /* 🔄 INIZIO: Posizione normale */
+        }
+        
+        25% {
+          background-color: yellow;
+          /* 💛 25% DEL GIRO: Diventa gialla! */
+          /* Come le luci che cambiano colore */
+        }
+        
+        50% {
+          background-color: purple;
+          /* 💜 METÀ GIRO: Diventa viola! */
+          /* Il punto più alto del giro */
+        }
+        
+        75% {
+          background-color: yellow;
+          /* 💛 75% DEL GIRO: Torna gialla! */
+          /* Simmetria nel cambio colori */
+        }
+        
+        100% {
+          transform: rotate(-360deg);
+          /* 🔄 CONTRO-ROTAZIONE GENIALE! */
+          /* -360deg = gira nella direzione OPPOSTA */
+          /* Mentre la ruota gira in senso orario... */
+          /* ...le cabine girano in senso ANTIORARIO! */
+          /* RISULTATO: Le cabine restano DRITTE! */
+          /* È come camminare sul tapis roulant nella direzione opposta */
+        }
+      }
+    </style>
+  </head>
+  
+  <body>
+    <!-- 🎡 ===== LA RUOTA PANORAMICA PRENDE VITA! ===== -->
+    
+    <div class="wheel">
+      <!-- 🎡 CONTENITORE RUOTA: Il cerchio principale che gira -->
+      
+      <!-- 📏 I 6 RAGGI DELLA RUOTA: Come i raggi di una bicicletta -->
+      <span class="line"></span>
+      <!-- 📏 RAGGIO 1: Orizzontale (0°) -->
+      
+      <span class="line"></span>
+      <!-- 📏 RAGGIO 2: 60° -->
+      
+      <span class="line"></span>
+      <!-- 📏 RAGGIO 3: 120° -->
+      
+      <span class="line"></span>
+      <!-- 📏 RAGGIO 4: 180° (opposto al primo) -->
+      
+      <span class="line"></span>
+      <!-- 📏 RAGGIO 5: 240° -->
+      
+      <span class="line"></span>
+      <!-- 📏 RAGGIO 6: 300° -->
+      
+      <!-- 🎪 LE 6 CABINE: Dove siedono i visitatori -->
+      <div class="cabin"></div>
+      <!-- 🎪 CABINA 1: Posizione ore 3 -->
+      
+      <div class="cabin"></div>
+      <!-- 🎪 CABINA 2: Posizione ore 5 -->
+      
+      <div class="cabin"></div>
+      <!-- 🎪 CABINA 3: Posizione ore 7 -->
+      
+      <div class="cabin"></div>
+      <!-- 🎪 CABINA 4: Posizione ore 9 -->
+      
+      <div class="cabin"></div>
+      <!-- 🎪 CABINA 5: Posizione ore 11 -->
+      
+      <div class="cabin"></div>
+      <!-- 🎪 CABINA 6: Posizione ore 1 -->
+    </div>
+  </body>
+</html>
+
+<!-- 🎯 ===== RIASSUNTO DELLA GIOSTRA CSS ===== -->
+<!-- 
+🎡 ARCHITETTURA DELLA RUOTA PANORAMICA:
+│
+├── 🧠 HEAD (controllo giostra)
+│   └── 🎨 CSS con animazioni:
+│       ├── 🎡 .wheel: cerchio principale che ruota
+│       ├── 📏 .line: 6 raggi posizionati con rotate()
+│       ├── 🎪 .cabin: 6 cabine che contro-ruotano
+│       └── 🎬 @keyframes: 2 animazioni sincronizzate
+│
+└── 🎡 BODY (la giostra assemblata)
+    └── 🎡 div.wheel
+        ├── 📏 6 span.line (raggi a 60° l'uno dall'altro)
+        └── 🎪 6 div.cabin (cabine in esagono)
+
+🎨 TRUCCHI CSS GENIALI:
+├── ⭕ border-radius: 50% = cerchio perfetto!
+├── 📏 vw units: dimensioni responsive (55vw)
+├── 🎯 transform-origin: punti di rotazione strategici
+├── 🔄 nth-of-type(): selettori per ogni elemento
+├── 🎬 Animazioni sincronizzate a 10 secondi
+└── 💡 CONTRO-ROTAZIONE: Le cabine restano dritte!
+
+🎭 LA MAGIA DELLA CONTRO-ROTAZIONE:
+├── Ruota: rotate(360deg) in 10s
+├── Cabine: rotate(-360deg) in 10s
+└── Risultato: Cabine sempre verticali! 🤯
+
+È come costruire una vera ruota panoramica con solo HTML e CSS! 🎡✨
+-->
