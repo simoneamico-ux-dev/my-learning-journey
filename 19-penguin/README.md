@@ -1,5 +1,7 @@
 # Penguin - freeCodeCamp Project
 
+![ezgif-45b86ddfcc7ada](https://github.com/user-attachments/assets/291520c4-4802-4481-9fcb-77c48899a8bf)
+
 ### The Project
 Animated and interactive penguin developed with CSS Transforms, creating a complete character with animations, interactions and an Antarctic landscape. The last guided project before the final portfolio.
 
@@ -26,9 +28,6 @@ cursor: text;           /* 📝 Text cursor */
 **The UX impact of cursors:** Each cursor instantly communicates an affordance to the user. `pointer` says "you can click", `grab` suggests "you can drag", `wait` informs "the system is processing", `not-allowed` prevents frustration by clearly showing limits. They're micro-interactions that make the interface more intuitive.
 
 ### What I Learned
-
-![ezgif-45b86ddfcc7ada](https://github.com/user-attachments/assets/291520c4-4802-4481-9fcb-77c48899a8bf)
-
 
 **Advanced CSS Transforms:**
 - **transform-origin** for custom rotation points
