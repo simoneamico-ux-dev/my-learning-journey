@@ -1,6 +1,7 @@
 # Penguin - freeCodeCamp Project
 
-![ezgif-45b86ddfcc7ada](https://github.com/user-attachments/assets/291520c4-4802-4481-9fcb-77c48899a8bf)
+![penguin](https://github.com/user-attachments/assets/c7aaff8a-0f6b-4dc6-94cc-167328debb73)
+
 
 ### The Project
 Animated and interactive penguin developed with CSS Transforms, creating a complete character with animations, interactions and an Antarctic landscape. The last guided project before the final portfolio.
