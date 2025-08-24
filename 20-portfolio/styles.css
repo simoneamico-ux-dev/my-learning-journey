@@ -45,7 +45,7 @@ html, body {
     height: 100%;
     font-family: 'Inter', sans-serif;
     background-image: 
-        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), /* overlay bianco 50% */
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
         url("https://github.com/user-attachments/assets/52383e7b-cd63-4058-9464-bbc15e27508b");
     background-repeat: no-repeat;
     background-position: center;
