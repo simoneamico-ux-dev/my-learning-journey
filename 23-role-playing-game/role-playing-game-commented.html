@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<!-- 🎯 DICHIARAZIONE HTML5: "Benvenuti nel mondo dei giochi RPG browser!" -->
+<!-- È come aprire le porte di una taverna medievale digitale! ⚔️ -->
+
+<html lang="en">
+<!-- 🌍 CONTENITORE PRINCIPALE: Il nostro regno fantasy -->
+<!-- lang="en" = inglese, la lingua degli avventurieri! 🗡️ -->
+
+<head>
+    <!-- 🧠 IL QUARTIER GENERALE: Dove pianifichiamo l'avventura -->
+    
+    <meta charset="utf-8">
+    <!-- 📝 CARATTERI UNIVERSALI: Per draghi di ogni lingua! 🐲 -->
+    
+    <title>RPG - Dragon Repeller</title>
+    <!-- 📑 TITOLO DELLA TAB: Il nome della nostra quest! -->
+    
+    <style>
+        /* 🎨 ===== LO STILE DEL NOSTRO GIOCO FANTASY ===== */
+        
+        body {
+            background-color: #0a0a23;
+            /* 🌑 SFONDO BLU NOTTE: L'oscurità che circonda il villaggio */
+            /* È il colore classico di freeCodeCamp! */
+        }
+
+        #text {
+            background-color: #0a0a23;
+            /* 🌑 STESSO SFONDO: Per il testo narrativo */
+            
+            color: #ffffff;
+            /* ⚪ TESTO BIANCO: Contrasto perfetto sul blu scuro */
+            
+            padding: 10px;
+            /* 🏠 PADDING: Spazio interno per respirare */
+        }
+
+        #game {
+            max-width: 500px;
+            max-height: 400px;
+            /* 📏 DIMENSIONI MASSIME: Il nostro "schermo" di gioco */
+            /* È come la finestra di un Game Boy gigante! */
+            
+            background-color: #ffffff;
+            /* ⚪ SFONDO BIANCO: Il canvas del gioco */
+            
+            color: #ffffff;
+            /* ⚪ COLORE TESTO: Ma verrà sovrascritto dai figli */
+            
+            margin: 30px auto 0px;
+            /* ⚖️ CENTRATURA: 30px sopra, auto ai lati, 0 sotto */
+            
+            padding: 10px;
+            /* 🏠 PADDING: Cornice interna */
+        }
+
+        #controls,
+        #stats {
+            /* 🎮 CONTROLLI E STATISTICHE: Stesso stile */
+            
+            border: 1px solid #0a0a23;
+            /* 🖼️ BORDO BLU SCURO: Definisce le sezioni */
+            
+            padding: 5px;
+            /* 🏠 PADDING PICCOLO: Per i pannelli di controllo */
+            
+            color: #0a0a23;
+            /* 🌑 TESTO BLU SCURO: Su sfondo bianco */
+        }
+
+        #monsterStats {
+            display: none;
+            /* 🙈 NASCOSTO INIZIALMENTE: Appare solo in battaglia! */
+            
+            border: 1px solid #0a0a23;
+            padding: 5px;
+            color: #ffffff;
+            /* ⚪ TESTO BIANCO: Per contrasto */
+            
+            background-color: #c70d0d;
+            /* 🔴 SFONDO ROSSO SANGUE: Pericolo! Mostro! */
+            /* È come un alert di battaglia */
+        }
+
+        .stat {
+            padding-right: 10px;
+            /* ➡️ SPAZIO A DESTRA: Separa le statistiche */
+            /* XP: 0   Health: 100   Gold: 50 */
+        }
+
+        button {
+            cursor: pointer;
+            /* 👆 CURSORE MANINA: "Cliccami per l'avventura!" */
+            
+            color: #0a0a23;
+            /* 🌑 TESTO BLU SCURO: Leggibile sul giallo */
+            
+            background-color: #feac32;
+            /* 🟡 GIALLO ORO: Come monete d'oro! */
+            
+            background-image: linear-gradient(#fecc4c, #ffac33);
+            /* 🌟 GRADIENTE DORATO: Dal chiaro allo scuro */
+            /* Crea un effetto 3D sui bottoni */
+            
+            border: 3px solid #feac32;
+            /* 🖼️ BORDO COORDINATO: Stesso colore base */
+        }
+    </style>
+</head>
+<body>
+    <!-- ⚔️ ===== IL GIOCO PRENDE VITA! ===== -->
+    
+    <div id="game">
+        <!-- 🎮 CONTENITORE GIOCO: La nostra "console" -->
+        
+        <div id="stats">
+            <!-- 📊 PANNELLO STATISTICHE: I parametri vitali dell'eroe -->
+            
+            <span class="stat">XP: <strong><span id="xpText">0</span></strong></span>
+            <!-- 🌟 ESPERIENZA: Parte da 0, come ogni eroe novizio -->
+            
+            <span class="stat">Health: <strong><span id="healthText">100</span></strong></span>
+            <!-- ❤️ SALUTE: 100 HP, piena energia! -->
+            
+            <span class="stat">Gold: <strong><span id="goldText">50</span></strong></span>
+            <!-- 💰 ORO: 50 monete iniziali per iniziare l'avventura -->
+        </div>
+        
+        <div id="controls">
+            <!-- 🎮 PANNELLO CONTROLLI: I nostri bottoni azione -->
+            
+            <button id="button1">Go to store</button>
+            <!-- 🏪 BOTTONE 1: Inizialmente porta al negozio -->
+            
+            <button id="button2">Go to cave</button>
+            <!-- 🕳️ BOTTONE 2: Inizialmente porta alla caverna -->
+            
+            <button id="button3">Fight dragon</button>
+            <!-- 🐉 BOTTONE 3: Inizialmente sfida il drago (coraggioso!) -->
+        </div>
+        
+        <div id="monsterStats">
+            <!-- 👹 STATISTICHE MOSTRO: Nascosto finché non combatti -->
+            
+            <span class="stat">Monster Name: <strong><span id="monsterName"></span></strong></span>
+            <!-- 👾 NOME MOSTRO: Vuoto inizialmente -->
+            
+            <span class="stat">Health: <strong><span id="monsterHealth"></span></strong></span>
+            <!-- 💔 VITA MOSTRO: Anche questa vuota -->
+        </div>
+        
+        <div id="text">
+            <!-- 📜 AREA NARRATIVA: Dove si svolge la storia -->
+            Welcome to Dragon Repeller. You must defeat the dragon that is preventing people from leaving the town. You are in the town square. Where do you want to go? Use the buttons above.
+            <!-- 🏰 INTRODUZIONE: La quest principale è chiara! -->
+        </div>
+    </div>
+
+    <script>
+        /* 🎮 ===== IL CERVELLO DEL GIOCO: JavaScript! ===== */
+        
+        // 🎯 ===== STATO DEL GIOCO: Le Variabili Globali =====
+        
+        let xp = 0;
+        // 🌟 PUNTI ESPERIENZA: L'eroe parte dal livello zero
+        
+        let health = 100;
+        // ❤️ PUNTI VITA: 100 HP, piena salute!
+        
+        let gold = 50;
+        // 💰 ORO INIZIALE: Abbastanza per qualche pozione
+        
+        let currentWeapon = 0;
+        // ⚔️ ARMA CORRENTE: Indice nell'array weapons (0 = stick)
+        
+        let fighting;
+        // 👹 MOSTRO COMBATTUTO: Indice del mostro corrente
+        // undefined inizialmente (non stiamo combattendo)
+        
+        let monsterHealth;
+        // 💔 VITA DEL MOSTRO: Si riempie quando inizia la battaglia
+        
+        let inventory = ["stick"];
+        // 🎒 INVENTARIO: Array che parte con un bastone
+        // È come lo zaino dell'eroe!
+
+        // 🔍 ===== RIFERIMENTI DOM: I Collegamenti con l'HTML =====
+        
+        const button1 = document.querySelector('#button1');
+        const button2 = document.querySelector("#button2");
+        const button3 = document.querySelector("#button3");
+        // 🔘 I TRE BOTTONI: Li prendiamo per ID
+        // querySelector è come dire "trovami questo elemento!"
+        
+        const text = document.querySelector("#text");
+        // 📜 AREA TESTO: Dove raccontiamo la storia
+        
+        const xpText = document.querySelector("#xpText");
+        const healthText = document.querySelector("#healthText");
+        const goldText = document.querySelector("#goldText");
+        // 📊 DISPLAYS STATISTICHE: Per aggiornare i numeri
+        
+        const monsterStats = document.querySelector("#monsterStats");
+        const monsterName = document.querySelector("#monsterName");
+        const monsterHealthText = document.querySelector("#monsterHealth");
+        // 👹 ELEMENTI MOSTRO: Per le battaglie
+
+        // ⚔️ ===== DATABASE ARMI: Array di Oggetti =====
+        
+        const weapons = [
+            { name: 'stick', power: 5 },
+            // 🏏 BASTONE: L'arma del principiante, 5 di danno
+            
+            { name: 'dagger', power: 30 },
+            // 🗡️ PUGNALE: Primo upgrade serio, 30 di danno
+            
+            { name: 'claw hammer', power: 50 },
+            // 🔨 MARTELLO: Arma intermedia, 50 di danno
+            
+            { name: 'sword', power: 100 }
+            // ⚔️ SPADA: L'arma definitiva, 100 di danno!
+        ];
+
+        // 👾 ===== DATABASE MOSTRI: I Nostri Nemici =====
+        
+        const monsters = [
+            {
+                name: "slime",
+                level: 2,
+                health: 15
+            },
+            // 🟢 SLIME: Il mostro tutorial, facile da battere
+            
+            {
+                name: "fanged beast",
+                level: 8,
+                health: 60
+            },
+            // 🐺 BESTIA: Difficoltà media, richiede strategia
+            
+            {
+                name: "dragon",
+                level: 20,
+                health: 300
+            }
+            // 🐉 DRAGO: Il boss finale, preparati bene!
+        ];
+
+        // 🗺️ ===== DATABASE LOCATIONS: La Mappa del Gioco =====
+        
+        const locations = [
+            {
+                name: "town square",
+                "button text": ["Go to store", "Go to cave", "Fight dragon"],
+                // 📝 TESTI BOTTONI: Cosa mostrano i 3 bottoni
+                // Notare le virgolette per le chiavi con spazi!
+                
+                "button functions": [goStore, goCave, fightDragon],
+                // 🎯 FUNZIONI: Cosa fanno i bottoni quando cliccati
+                // Riferimenti diretti alle funzioni (senza parentesi!)
+                
+                text: "You are in the town square. You see a sign that says \"Store\"."
+                // 📜 DESCRIZIONE: Il testo narrativo della location
+            },
+            {
+                name: "store",
+                "button text": ["Buy 10 health (10 gold)", "Buy weapon (30 gold)", "Go to town square"],
+                // 🏪 NEGOZIO: Compra vita, armi, o torna indietro
+                
+                "button functions": [buyHealth, buyWeapon, goTown],
+                text: "You enter the store."
+            },
+            {
+                name: "cave",
+                "button text": ["Fight slime", "Fight fanged beast", "Go to town square"],
+                // 🕳️ CAVERNA: Scegli quale mostro affrontare
+                
+                "button functions": [fightSlime, fightBeast, goTown],
+                text: "You enter the cave. You see some monsters."
+            },
+            {
+                name: "fight",
+                "button text": ["Attack", "Dodge", "Run"],
+                // ⚔️ BATTAGLIA: Le opzioni di combattimento
+                
+                "button functions": [attack, dodge, goTown],
+                text: "You are fighting a monster."
+            },
+            {
+                name: "kill monster",
+                "button text": ["Go to town square", "Go to town square", "Go to town square"],
+                // 🎉 VITTORIA: Tutti i bottoni riportano in città
+                // Ma il terzo ha una sorpresa...
+                
+                "button functions": [goTown, goTown, easterEgg],
+                // 🥚 EASTER EGG: Il terzo bottone nasconde un segreto!
+                
+                text: 'The monster screams "Arg!" as it dies. You gain experience points and find gold.'
+            },
+            {
+                name: "lose",
+                "button text": ["REPLAY?", "REPLAY?", "REPLAY?"],
+                // 💀 SCONFITTA: Game over, vuoi riprovare?
+                
+                "button functions": [restart, restart, restart],
+                text: "You die. &#x2620;"
+                // &#x2620; = ☠️ simbolo del teschio in HTML!
+            },
+            {
+                name: "win",
+                "button text": ["REPLAY?", "REPLAY?", "REPLAY?"],
+                // 🏆 VITTORIA FINALE: Hai battuto il drago!
+                
+                "button functions": [restart, restart, restart],
+                text: "You defeat the dragon! YOU WIN THE GAME! &#x1F389;"
+                // &#x1F389; = 🎉 emoji party popper in HTML!
+            },
+            {
+                name: "easter egg",
+                "button text": ["2", "8", "Go to town square?"],
+                // 🎲 GIOCO SEGRETO: Un mini-gioco nascosto!
+                
+                "button functions": [pickTwo, pickEight, goTown],
+                text: "You find a secret game. Pick a number above. Ten numbers will be randomly chosen between 0 and 10. If the number you choose matches one of the random numbers, you win!"
+            }
+        ];
+
+        // 🎮 ===== INIZIALIZZAZIONE: Setup Iniziale =====
+        
+        button1.onclick = goStore;
+        button2.onclick = goCave;
+        button3.onclick = fightDragon;
+        // 🔘 EVENTI INIZIALI: I bottoni partono con queste funzioni
+        // onclick = "quando clicchi, esegui questa funzione"
+
+        // 🔄 ===== FUNZIONE UPDATE: Il Cuore del Sistema di Navigazione =====
+        
+        function update(location) {
+            // 📍 AGGIORNA LOCATION: Cambia tutto in base a dove siamo
+            
+            monsterStats.style.display = "none";
+            // 🙈 NASCONDI STATS MOSTRO: Non sempre combattiamo
+            
+            button1.innerText = location["button text"][0];
+            button2.innerText = location["button text"][1];
+            button3.innerText = location["button text"][2];
+            // 📝 AGGIORNA TESTI: Cambia le scritte sui bottoni
+            
+            button1.onclick = location["button functions"][0];
+            button2.onclick = location["button functions"][1];
+            button3.onclick = location["button functions"][2];
+            // 🎯 AGGIORNA FUNZIONI: Cambia cosa fanno i bottoni
+            
+            text.innerHTML = location.text;
+            // 📜 AGGIORNA NARRAZIONE: Cambia la descrizione
+            // innerHTML permette di usare HTML (come &#x2620;)
+        }
+
+        // 🏃 ===== FUNZIONI DI MOVIMENTO: Navigazione nel Mondo =====
+        
+        function goTown() {
+            update(locations[0]);
+            // 🏰 VAI IN CITTÀ: locations[0] = town square
+        }
+
+        function goStore() {
+            update(locations[1]);
+            // 🏪 VAI AL NEGOZIO: locations[1] = store
+        }
+
+        function goCave() {
+            update(locations[2]);
+            // 🕳️ VAI NELLA CAVERNA: locations[2] = cave
+        }
+
+        // 💰 ===== FUNZIONI NEGOZIO: Economia di Gioco =====
+        
+        function buyHealth() {
+            if (gold >= 10) {
+                // 💵 HAI ABBASTANZA ORO?: Controllo fondi
+                
+                gold -= 10;
+                health += 10;
+                // 💊 TRANSAZIONE: Paga 10 oro, ricevi 10 HP
+                
+                goldText.innerText = gold;
+                healthText.innerText = health;
+                // 📊 AGGIORNA UI: Mostra i nuovi valori
+                
+            } else {
+                text.innerText = "You do not have enough gold to buy health.";
+                // 🚫 FONDI INSUFFICIENTI: Messaggio di errore
+            }
+        }
+
+        function buyWeapon() {
+            if (currentWeapon < weapons.length - 1) {
+                // 🔍 CONTROLLO UPGRADE: Non sei già al massimo?
+                // weapons.length - 1 = indice ultima arma
+                
+                if (gold >= 30) {
+                    // 💵 HAI 30 ORO?: Prezzo fisso per tutte le armi
+                    
+                    gold -= 30;
+                    currentWeapon++;
+                    // 💸 COMPRA: Paga e passa all'arma successiva
+                    
+                    goldText.innerText = gold;
+                    let newWeapon = weapons[currentWeapon].name;
+                    // 🗡️ NUOVA ARMA: Prendi il nome dall'array
+                    
+                    text.innerText = "You now have a " + newWeapon + ".";
+                    inventory.push(newWeapon);
+                    // 🎒 AGGIUNGI ALL'INVENTARIO: push() aggiunge in fondo
+                    
+                    text.innerText += " In your inventory you have: " + inventory;
+                    // 📜 MOSTRA INVENTARIO: += aggiunge al testo esistente
+                    
+                } else {
+                    text.innerText = "You do not have enough gold to buy a weapon.";
+                    // 🚫 ORO INSUFFICIENTE: Non puoi comprare
+                }
+            } else {
+                text.innerText = "You already have the most powerful weapon!";
+                // ⚔️ GIÀ AL MASSIMO: Hai la spada!
+                
+                button2.innerText = "Sell weapon for 15 gold";
+                button2.onclick = sellWeapon;
+                // 🔄 CAMBIA BOTTONE: Ora puoi vendere invece di comprare
+            }
+        }
+
+        function sellWeapon() {
+            if (inventory.length > 1) {
+                // 🎒 HAI PIÙ DI UN'ARMA?: Non vendere l'ultima!
+                
+                gold += 15;
+                goldText.innerText = gold;
+                // 💰 VENDI: Ricevi 15 oro (metà del prezzo)
+                
+                let currentWeapon = inventory.shift();
+                // 🔄 RIMUOVI PRIMA ARMA: shift() toglie dal'inizio
+                // NOTA: Riusa il nome currentWeapon (shadowing)
+                
+                text.innerText = "You sold a " + currentWeapon + ".";
+                text.innerText += " In your inventory you have: " + inventory;
+                // 📜 CONFERMA VENDITA: Mostra cosa hai venduto
+                
+            } else {
+                text.innerText = "Don't sell your only weapon!";
+                // 🚫 PROTEZIONE: Non rimanere disarmato!
+            }
+        }
+
+        // ⚔️ ===== FUNZIONI COMBATTIMENTO: Sistema di Battaglia =====
+        
+        function fightSlime() {
+            fighting = 0;
+            // 🟢 COMBATTI SLIME: monsters[0]
+            goFight();
+        }
+
+        function fightBeast() {
+            fighting = 1;
+            // 🐺 COMBATTI BESTIA: monsters[1]
+            goFight();
+        }
+
+        function fightDragon() {
+            fighting = 2;
+            // 🐉 COMBATTI DRAGO: monsters[2]
+            goFight();
+        }
+
+        function goFight() {
+            update(locations[3]);
+            // ⚔️ MODALITÀ BATTAGLIA: Cambia UI per combattimento
+            
+            monsterHealth = monsters[fighting].health;
+            // 💔 IMPOSTA HP MOSTRO: Prendi dal database
+            
+            monsterStats.style.display = "block";
+            // 👁️ MOSTRA STATS MOSTRO: Ora sono visibili!
+            
+            monsterName.innerText = monsters[fighting].name;
+            monsterHealthText.innerText = monsterHealth;
+            // 📊 AGGIORNA UI MOSTRO: Nome e vita
+        }
+
+        function attack() {
+            text.innerText = "The " + monsters[fighting].name + " attacks.";
+            text.innerText += " You attack it with your " + weapons[currentWeapon].name + ".";
+            // ⚔️ NARRAZIONE BATTAGLIA: Descrivi l'azione
+            
+            health -= getMonsterAttackValue(monsters[fighting].level);
+            // 💔 DANNO RICEVUTO: Formula basata sul livello
+            
+            if (isMonsterHit()) {
+                // 🎯 COLPISCI?: Controllo probabilità
+                
+                monsterHealth -= weapons[currentWeapon].power + Math.floor(Math.random() * xp) + 1;
+                // 💥 DANNO INFLITTO: Potenza arma + bonus XP casuale + 1
+                // Math.floor arrotonda per difetto
+                // Math.random() * xp = da 0 a xp-1
+                
+            } else {
+                text.innerText += " You miss.";
+                // 😵 MANCATO!: Può capitare
+            }
+            
+            healthText.innerText = health;
+            monsterHealthText.innerText = monsterHealth;
+            // 📊 AGGIORNA HP: Mostra i danni
+            
+            if (health <= 0) {
+                lose();
+                // 💀 SEI MORTO: Game over
+                
+            } else if (monsterHealth <= 0) {
+                if (fighting === 2) {
+                    winGame();
+                    // 🏆 HAI BATTUTO IL DRAGO!: Vittoria finale
+                    
+                } else {
+                    defeatMonster();
+                    // 🎉 MOSTRO SCONFITTO: Ma non è finita
+                }
+            }
+            
+            if (Math.random() <= .1 && inventory.length !== 1) {
+                // 🔨 ARMA ROTTA?: 10% di probabilità
+                // MA solo se hai più di un'arma
+                
+                text.innerText += " Your " + inventory.pop() + " breaks.";
+                // 💔 RIMUOVI ULTIMA ARMA: pop() toglie dalla fine
+                
+                currentWeapon--;
+                // ⬇️ TORNA ALL'ARMA PRECEDENTE: Downgrade forzato
+            }
+        }
+
+        function getMonsterAttackValue(level) {
+            // 🧮 CALCOLO DANNO MOSTRO: Formula complessa
+            
+            const hit = (level * 5) - (Math.floor(Math.random() * xp));
+            // FORMULA: (livello × 5) - (random da 0 a xp-1)
+            // Più XP hai = meno danni subisci (esperienza!)
+            
+            console.log(hit);
+            // 🔍 DEBUG: Mostra il danno nella console
+            
+            return hit > 0 ? hit : 0;
+            // 🛡️ MINIMO ZERO: Operatore ternario
+            // Se hit > 0 restituisci hit, altrimenti 0
+            // Non puoi subire danni negativi (che sarebbero cure!)
+        }
+
+        function isMonsterHit() {
+            return Math.random() > .2 || health < 20;
+            // 🎯 PROBABILITÀ COLPO: 80% normale O sempre se hai poca vita
+            // Math.random() > .2 = 80% di probabilità
+            // health < 20 = colpo garantito se stai morendo (pietà!)
+            // || = OR logico, basta una condizione vera
+        }
+
+        function dodge() {
+            text.innerText = "You dodge the attack from the " + monsters[fighting].name;
+            // 🤸 SCHIVA: Eviti il danno per questo turno
+            // Funzione semplice ma tattica importante!
+        }
+
+        function defeatMonster() {
+            gold += Math.floor(monsters[fighting].level * 6.7);
+            // 💰 RICOMPENSA ORO: Livello × 6.7 (arrotondato)
+            // Slime: 2 × 6.7 = 13 oro
+            // Beast: 8 × 6.7 = 53 oro
+            
+            xp += monsters[fighting].level;
+            // 🌟 GUADAGNA XP: Uguale al livello del mostro
+            
+            goldText.innerText = gold;
+            xpText.innerText = xp;
+            // 📊 AGGIORNA UI: Mostra le ricompense
+            
+            update(locations[4]);
+            // 🎉 VAI ALLA SCHERMATA VITTORIA: "kill monster"
+        }
+
+        function lose() {
+            update(locations[5]);
+            // 💀 SCHERMATA GAME OVER: "lose"
+        }
+
+        function winGame() {
+            update(locations[6]);
+            // 🏆 SCHERMATA VITTORIA FINALE: "win"
+        }
+
+        function restart() {
+            // 🔄 RESET COMPLETO: Ricomincia da capo
+            
+            xp = 0;
+            health = 100;
+            gold = 50;
+            currentWeapon = 0;
+            inventory = ["stick"];
+            // 🔄 VALORI INIZIALI: Tutto come all'inizio
+            
+            goldText.innerText = gold;
+            healthText.innerText = health;
+            xpText.innerText = xp;
+            // 📊 AGGIORNA UI: Mostra i reset
+            
+            goTown();
+            // 🏰 TORNA IN CITTÀ: Nuova avventura!
+        }
+
+        // 🥚 ===== EASTER EGG: Il Mini-Gioco Segreto! =====
+        
+        function easterEgg() {
+            update(locations[7]);
+            // 🎲 VAI AL GIOCO SEGRETO: Una sorpresa per i curiosi!
+        }
+
+        function pickTwo() {
+            pick(2);
+            // 2️⃣ SCEGLI 2: Wrapper per pick()
+        }
+
+        function pickEight() {
+            pick(8);
+            // 8️⃣ SCEGLI 8: Wrapper per pick()
+        }
+
+        function pick(guess) {
+            // 🎲 IL GIOCO D'AZZARDO: Indovina il numero!
+            
+            const numbers = [];
+            // 📦 ARRAY VUOTO: Per i numeri casuali
+            
+            while (numbers.length < 10) {
+                numbers.push(Math.floor(Math.random() * 11));
+                // 🎰 GENERA 10 NUMERI: Da 0 a 10
+                // Math.random() * 11 = da 0 a 10.999...
+                // Math.floor arrotonda per difetto
+            }
+            
+            text.innerText = "You picked " + guess + ". Here are the random numbers:\n";
+            // 📜 MOSTRA SCELTA: \n = a capo
+            
+            for (let i = 0; i < 10; i++) {
+                text.innerText += numbers[i] + "\n";
+                // 📊 LISTA NUMERI: Uno per riga
+            }
+            
+            if (numbers.includes(guess)) {
+                // 🔍 HAI VINTO?: Il tuo numero è nella lista?
+                // includes() controlla se l'array contiene il valore
+                
+                text.innerText += "Right! You win 20 gold!";
+                gold += 20;
+                goldText.innerText = gold;
+                // 💰 PREMIO: 20 oro gratis!
+                
+            } else {
+                text.innerText += "Wrong! You lose 10 health!";
+                health -= 10;
+                healthText.innerText = health;
+                // 💔 PENALITÀ: Perdi 10 HP
+                
+                if (health <= 0) {
+                    lose();
+                    // 💀 MORTE PER GIOCO D'AZZARDO: Che modo di andarsene!
+                }
+            }
+        }
+    </script>
+</body>
+</html>
+
+/* 🎮 ===== RIASSUNTO ARCHITETTURA DEL GIOCO =====
+
+📊 STRUTTURA DATI:
+├── 🎯 Stato Gioco: variabili per tracciare progressi
+├── ⚔️ Database Armi: array di oggetti con nome/potenza
+├── 👾 Database Mostri: array con nome/livello/salute
+└── 🗺️ Database Locations: array con UI e navigazione
+
+🎮 SISTEMA DI GIOCO:
+├── 🔄 Update(): Cambia UI basandosi sulla location
+├── 💰 Economia: Compra/vendi con controlli fondi
+├── ⚔️ Combattimento: Formule danno con casualità
+├── 🎲 Easter Egg: Mini-gioco nascosto bonus
+└── 🔄 Game Loop: Città → Preparazione → Battaglia → Vittoria/Sconfitta
+
+🧠 CONCETTI JAVASCRIPT:
+├── 📍 DOM Manipulation: querySelector e innerText
+├── 🎯 Event Handlers: onclick dinamici
+├── 📦 Arrays & Objects: Strutture dati complesse
+├── 🎲 Math.random(): Casualità nel gameplay
+├── 🔀 Control Flow: if/else e operatori ternari
+└── 🔄 State Management: Variabili globali per lo stato
+
+È come un Game Boy programmato in JavaScript! 🎮✨
+*/
