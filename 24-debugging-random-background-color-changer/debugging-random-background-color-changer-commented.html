@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<!-- 🎯 ESERCIZIO DI DEBUG: "Aggiusta il Generatore di Colori di CamperBot!" -->
+<!-- CamperBot ha scritto questo codice ma è pieno di bug... aiutiamolo! 🐛🔧 -->
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Build a random background color changer</title>
+    <style>
+      /* 🎨 IL CSS È PERFETTO! CamperBot almeno qui non ha fatto errori 😅 */
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      :root {
+        --yellow: #f1be32;
+        --golden-yellow: #feac32;
+        --dark-purple: #110815;
+        --light-grey: #efefef;
+      }
+      
+      body {
+        background-color: var(--dark-purple);
+        color: var(--light-grey);
+        text-align: center;
+      }
+      
+      .bg-information-container {
+        margin: 15px 0 25px;
+        font-size: 1.2rem;
+      }
+      
+      .btn {
+        cursor: pointer;
+        padding: 10px;
+        margin: 10px;
+        color: var(--dark-purple);
+        background-color: var(--golden-yellow);
+        background-image: linear-gradient(#fecc4c, #ffac33);
+        border-color: var(--golden-yellow);
+        border-width: 3px;
+      }
+      
+      .btn:hover {
+        background-image: linear-gradient(#ffcc4c, #f89808);
+      }
+    </style>
+  </head>
+  
+  <body>
+    <h1>Random Background Color changer</h1>
+
+    <main>
+      <section class="bg-information-container">
+        <p>Hex Code: <span id="bg-hex-code">#110815</span></p>
+      </section>
+
+      <button class="btn" id="btn">Change Background Color</button>
+    </main>
+    
+    <script>
+      // 🐛 ===== BUG #1: SYNTAX ERROR NELL'ARRAY =====
+      
+      // ❌ VERSIONE BUGATA DI CAMPERBOT:
+      /*
+      const darkColorsArr = [
+        "#2C3E50"
+        "#34495E"  // 🚫 ERRORE! Manca la virgola dopo il primo elemento!
+        "#2C2C2C"  // SyntaxError: Unexpected token, expected ","
+        "#616A6B"
+        "#4A235A"
+        "#2F4F4F"
+        "#0E4B5A"
+        "#36454F"
+        "#2C3E50"
+        "#800020"
+      ];
+      */
+      
+      // ✅ VERSIONE CORRETTA:
+      const darkColorsArr = [
+        "#2C3E50",  // ✓ Virgola dopo ogni elemento
+        "#34495E",  // ✓ Gli array JavaScript richiedono virgole
+        "#2C2C2C",  // ✓ È come una lista della spesa: "mele, pere, banane"
+        "#616A6B",  // ✓ Non "mele pere banane" tutto attaccato!
+        "#4A235A",
+        "#2F4F4F",
+        "#0E4B5A",
+        "#36454F",
+        "#2C3E50",
+        "#800020",  // ✓ Anche l'ultima virgola è ok (trailing comma)
+      ];
+      // 📝 LEZIONE: In JavaScript, ogni elemento dell'array deve essere separato da virgola
+      // Senza virgole, il parser non sa dove finisce un elemento e inizia il successivo
+      
+      
+      // 🐛 ===== BUG #2 & #3: ERRORI NELLA FUNZIONE RANDOM =====
+      
+      // ❌ VERSIONE BUGATA DI CAMPERBOT:
+      /*
+      function getRandomIndex() {
+        // BUG #2: math invece di Math
+        // 🚫 ReferenceError: math is not defined
+        // JavaScript è CASE-SENSITIVE! math ≠ Math
+        
+        // BUG #3: Formula matematica completamente sbagliata
+        const randomIndex = Math.floor(darkColorsArr.length * math.random());
+        // Anche correggendo math → Math, la formula è invertita!
+        // darkColorsArr.length * Math.random() = numero sbagliato
+        // Se length = 10 e random = 0.5, ottieni 5 (ok)
+        // Ma se random = 0.9, ottieni 9 * 10 = 90! 😱
+        
+        return randomIndex;
+      }
+      */
+      
+      // ✅ VERSIONE CORRETTA:
+      function getRandomIndex() {
+        // Prima Math.random() genera 0.0 - 0.999...
+        // Poi moltiplichiamo per la lunghezza dell'array
+        // Infine Math.floor() arrotonda per difetto
+        const randomIndex = Math.floor(Math.random() * darkColorsArr.length);
+        // Esempio: Math.random() = 0.7, length = 10
+        // 0.7 * 10 = 7
+        // Math.floor(7) = 7 (indice valido!)
+        
+        return randomIndex;
+      }
+      // 📝 LEZIONE 1: JavaScript è case-sensitive! Math non math
+      // 📝 LEZIONE 2: La formula corretta è Math.floor(Math.random() * max)
+      
+      
+      // 🐛 ===== BUG #4: QUERY SELECTOR CASE SENSITIVITY =====
+      
+      // ❌ VERSIONE BUGATA:
+      /*
+      const body = document.queryselector("body");
+      // 🚫 TypeError: document.queryselector is not a function
+      // Ancora case sensitivity! querySelector non queryselector
+      */
+      
+      // ✅ VERSIONE CORRETTA (opzione 1):
+      const body = document.querySelector("body");
+      
+      // ✅ ANCORA MEGLIO (opzione 2):
+      // const body = document.body; // Più diretto per il body!
+      
+      // 📝 LEZIONE: I metodi DOM seguono camelCase: querySelector, getElementById, addEventListener
+      
+      
+      // 🐛 ===== BUG #5: SELETTORE SENZA # PER ID =====
+      
+      // ❌ VERSIONE BUGATA:
+      /*
+      const bgHexCodeSpanElement = document.querySelector("bg-hex-code");
+      // 🚫 Restituisce null! Sta cercando un TAG <bg-hex-code>, non l'ID!
+      */
+      
+      // ✅ VERSIONE CORRETTA (opzione 1):
+      const bgHexCodeSpanElement = document.querySelector("#bg-hex-code");
+      // Il # è FONDAMENTALE per gli ID in querySelector!
+      
+      // ✅ ALTERNATIVA (opzione 2):
+      // const bgHexCodeSpanElement = document.getElementById("bg-hex-code");
+      // Con getElementById NON serve il #
+      
+      // 📝 LEZIONE: querySelector usa selettori CSS:
+      // #id per ID, .class per classi, tag per elementi
+      
+      
+      // 🐛 ===== BUG #6: FUNZIONE NON CHIAMATA =====
+      
+      function changeBackgroundColor() {
+        // ❌ VERSIONE BUGATA:
+        /*
+        const color = darkColorsArr[getRandomIndex];
+        // 🚫 color diventa undefined!
+        // getRandomIndex senza () è il RIFERIMENTO alla funzione
+        // non il RISULTATO della funzione!
+        */
+        
+        // ✅ VERSIONE CORRETTA:
+        const color = darkColorsArr[getRandomIndex()];
+        // Le parentesi () ESEGUONO la funzione!
+        // getRandomIndex → [Function: getRandomIndex] (l'oggetto funzione)
+        // getRandomIndex() → 3 (il risultato numerico)
+        
+        // 📝 DEBUGGING TIP: Quando vedi undefined, controlla:
+        // 1. Hai chiamato la funzione con ()?
+        // 2. L'indice esiste nell'array?
+        console.log("Indice random:", getRandomIndex()); // Debug
+        console.log("Colore selezionato:", color);       // Debug
+        
+        // Applica il colore allo sfondo
+        bgHexCodeSpanElement.innerText = color;
+        body.style.backgroundColor = color;
+      }
+      
+      // 📝 LEZIONE: In JavaScript:
+      // nomeFunc = riferimento alla funzione (come un indirizzo)
+      // nomeFunc() = esecuzione della funzione (vai a quell'indirizzo e fai qualcosa)
+      
+      
+      // EVENTO CLICK - Questo era già corretto! 👍
+      const btn = document.querySelector("#btn");
+      btn.onclick = changeBackgroundColor;
+      // Qui VOGLIAMO il riferimento senza (), perché onclick
+      // chiamerà la funzione quando l'utente clicca
+      
+      
+      // 🎯 ===== RIEPILOGO DEGLI ERRORI DI CAMPERBOT =====
+      /*
+      1. SINTASSI ARRAY: Dimenticato le virgole tra gli elementi
+         → Soluzione: Aggiungi virgole dopo ogni elemento
+      
+      2. CASE SENSITIVITY #1: Scritto "math" invece di "Math"
+         → Soluzione: Math con la M maiuscola
+      
+      3. FORMULA ERRATA: Invertito l'ordine delle operazioni random
+         → Soluzione: Math.floor(Math.random() * length)
+      
+      4. CASE SENSITIVITY #2: "queryselector" invece di "querySelector"
+         → Soluzione: querySelector con la S maiuscola
+      
+      5. SELETTORE ERRATO: Dimenticato # per l'ID
+         → Soluzione: "#bg-hex-code" non "bg-hex-code"
+      
+      6. CHIAMATA FUNZIONE: Dimenticato le parentesi ()
+         → Soluzione: getRandomIndex() non getRandomIndex
+      */
+      
+      // 🏆 MORALE DELLA STORIA:
+      // - JavaScript è CASE-SENSITIVE (Math ≠ math)
+      // - Gli array vogliono le virgole
+      // - querySelector vuole selettori CSS (#, ., ecc)
+      // - Le funzioni si chiamano con le parentesi ()
+      // - Usa console.log() per debuggare passo passo!
+    </script>
+  </body>
+</html>
