@@ -2494,6 +2494,7 @@ const dado = Math.floor(Math.random() * 6) + 1;  // 1-6
 const colori = ["rosso", "verde", "blu"];
 const indiceCasuale = Math.floor(Math.random() * colori.length);
 const coloreScelto = colori[indiceCasuale];
+return coloreScelto;
 ```
 
 È come estrarre un biglietto dalla lotteria - `Math.random()` mescola i biglietti, `Math.floor()` ne estrae uno intero.
