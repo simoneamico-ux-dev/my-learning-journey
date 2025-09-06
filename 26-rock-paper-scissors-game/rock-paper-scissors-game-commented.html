@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<!-- 🎯 DICHIARAZIONE HTML5: "Benvenuti all'arena del Sasso, Carta, Forbici!" -->
+<!-- È come aprire le porte di un torneo digitale! ✂️📄🪨 -->
+
+<html lang="en">
+<!-- 🌍 CONTENITORE PRINCIPALE: Il ring del nostro gioco -->
+<!-- lang="en" = inglese, la lingua universale del gaming! 🎮 -->
+
+  <head>
+    <!-- 🧠 IL CERVELLO DEL GIOCO: Dove prepariamo le regole e lo stile -->
+    <!-- È come preparare il tavolo da gioco prima della partita -->
+    
+    <meta charset="UTF-8" />
+    <!-- 📝 CARATTERI UNIVERSALI: UTF-8 per emoji e simboli! ✂️📄🪨 -->
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 📱 RESPONSIVE: "Gioca su qualsiasi dispositivo!" -->
+    
+    <title>Rock, Paper, Scissors game</title>
+    <!-- 📑 TITOLO: Il nome del nostro torneo digitale -->
+    
+    <style>
+      /* 🎨 ===== RESET CSS: Pulizia Totale ===== */
+      
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        /* 🧹 PULIZIA TOTALE: Azzera tutto per partire puliti */
+        /* Include anche pseudo-elementi! */
+      }
+      
+      /* 🎨 ===== PALETTE COLORI: I Colori del Gioco ===== */
+      
+      :root {
+        --very-dark-blue: #0a0a23;
+        /* 🌑 BLU NOTTE: Lo sfondo scuro da arena */
+        
+        --white: #ffffff;
+        /* ⚪ BIANCO: Per testi e contrasti */
+        
+        --yellow: #f1be32;
+        /* 🟡 GIALLO: Per i bordi delle regole */
+        
+        --golden-yellow: #feac32;
+        /* 🏆 GIALLO ORO: Per i bottoni, colore vittoria! */
+      }
+      
+      /* 🎮 ===== STILE DEL CORPO ===== */
+      
+      body {
+        background-color: var(--very-dark-blue);
+        /* 🌑 SFONDO SCURO: Come un'arena notturna */
+        
+        text-align: center;
+        /* ⚖️ TUTTO CENTRATO: Il gioco è al centro dell'attenzione */
+        
+        color: var(--white);
+        /* ⚪ TESTO BIANCO: Contrasto perfetto */
+      }
+      
+      h1 {
+        margin: 15px 0 20px;
+        /* 📏 MARGINI: 15px sopra, 0 lati, 20px sotto */
+      }
+      
+      /* 🔘 ===== STILE DEI BOTTONI ===== */
+      
+      .btn {
+        cursor: pointer;
+        /* 👆 MANINA: "Sono cliccabile!" */
+        
+        width: 100px;
+        /* 📏 LARGHEZZA FISSA: Tutti i bottoni uguali */
+        
+        margin: 10px;
+        /* 🌬️ SPAZIO: Respiro tra i bottoni */
+        
+        color: var(--very-dark-blue);
+        /* 🌑 TESTO SCURO: Su sfondo chiaro */
+        
+        background-color: var(--golden-yellow);
+        /* 🏆 SFONDO ORO: Base del gradiente */
+        
+        background-image: linear-gradient(#fecc4c, #ffac33);
+        /* 🌅 GRADIENTE: Dal giallo chiaro al dorato */
+        /* Crea un effetto 3D sui bottoni! */
+        
+        border-color: var(--golden-yellow);
+        border-width: 3px;
+        /* 🖼️ BORDO: 3px dello stesso colore */
+      }
+      
+      .btn:hover {
+        background-image: linear-gradient(#ffcc4c, #f89808);
+        /* 🔥 HOVER: Gradiente più intenso, più arancione */
+        /* Il bottone si "scalda" al passaggio del mouse! */
+      }
+      
+      /* 📋 ===== CONTENITORE REGOLE ===== */
+      
+      .rules-container {
+        padding: 10px 0;
+        /* 🏠 PADDING VERTICALE: Solo sopra e sotto */
+        
+        margin: auto;
+        /* ⚖️ CENTRATURA: margin auto centra orizzontalmente */
+        
+        border-radius: 15px;
+        /* 🔄 ANGOLI MORBIDI: 15px di arrotondamento */
+        
+        border: 5px solid var(--yellow);
+        /* 🖼️ CORNICE GIALLA: 5px spessa per importanza */
+        
+        background-color: var(--white);
+        /* ⚪ SFONDO BIANCO: Per leggibilità */
+        
+        color: var(--very-dark-blue);
+        /* 🌑 TESTO SCURO: Su sfondo chiaro */
+      }
+      
+      .rules-container ul {
+        list-style-type: none;
+        /* 🚫 NO PALLINI: Liste pulite */
+      }
+      
+      .rules-container p {
+        margin: 10px 0;
+        /* 📏 SPAZIO PARAGRAFI: Respiro tra le righe */
+      }
+      
+      @media (min-width: 760px) {
+        /* 🖥️ DESKTOP: Schermi larghi almeno 760px */
+        
+        .rules-container {
+          width: 60%;
+          /* 📏 LARGHEZZA RIDOTTA: Solo 60% su desktop */
+          /* Su mobile è 100% (default) */
+        }
+      }
+      
+      /* 📊 ===== CONTENITORE PUNTEGGI ===== */
+      
+      .score-container {
+        display: flex;
+        /* 🎯 FLEXBOX: Per allineare i punteggi */
+        
+        justify-content: space-around;
+        /* ⚖️ SPAZIO UNIFORME: Distribuisce i punteggi */
+        /* space-around = spazio uguale intorno agli elementi */
+        
+        margin: 30px 0;
+        /* 📏 MARGINI VERTICALI: 30px sopra e sotto */
+        
+        font-size: 1.2rem;
+        /* 📏 FONT PIÙ GRANDE: 120% della dimensione base */
+      }
+      
+      .score {
+        font-weight: 500;
+        /* 💪 SEMI-GRASSETTO: I numeri risaltano */
+      }
+      
+      /* 📢 ===== CONTENITORE RISULTATI ===== */
+      
+      .results-container {
+        font-size: 1.3rem;
+        /* 📏 FONT GRANDE: Per i messaggi importanti */
+        
+        margin: 15px 0;
+        /* 📏 MARGINI: Spazio verticale */
+      }
+      
+      #winner-msg {
+        margin-top: 25px;
+        /* ⬆️ SPAZIO SOPRA: Separa il messaggio finale */
+      }
+      
+      #reset-game-btn {
+        display: none;
+        /* 🚫 NASCOSTO: Appare solo a fine partita */
+        
+        margin: 20px auto;
+        /* ⚖️ CENTRATO: Con spazio verticale */
+      }
+    </style>
+  </head>
+  
+  <body>
+    <!-- 🎮 ===== IL GIOCO PRENDE VITA! ===== -->
+    
+    <h1>Let's play Rock, Paper, Scissors!</h1>
+    <!-- 🎯 TITOLO: L'invito al gioco! -->
+    
+    <main>
+      <!-- 📄 CONTENUTO PRINCIPALE: L'arena di gioco -->
+      
+      <details class="rules-container">
+        <!-- 📋 DETTAGLI ESPANDIBILI: HTML5 nativo! -->
+        
+        <summary>Rules to the game</summary>
+        <!-- 🔽 SOMMARIO: Clicca per aprire/chiudere -->
+        <!-- details/summary = accordion nativo senza JavaScript! -->
+
+        <p>You will be playing against the computer.</p>
+        <p>You can choose between Rock, Paper, and Scissors.</p>
+        <p>The first one to three points wins.</p>
+        <!-- 📜 REGOLE BASE: Semplici e chiare -->
+
+        <p>Here are the rules to getting a point in the game:</p>
+        <ul>
+          <li>Rock beats Scissors</li>
+          <!-- 🪨 > ✂️ Il sasso rompe le forbici -->
+          
+          <li>Scissors beats Paper</li>
+          <!-- ✂️ > 📄 Le forbici tagliano la carta -->
+          
+          <li>Paper beats Rock</li>
+          <!-- 📄 > 🪨 La carta avvolge il sasso -->
+        </ul>
+        <p>
+          If the player and computer choose the same option (Ex. Paper and
+          Paper), then no one gets the point.
+        </p>
+        <!-- 🤝 PAREGGIO: Stessa scelta = nessun punto -->
+      </details>
+
+      <div class="score-container">
+        <!-- 📊 TABELLONE PUNTEGGI: Il contatore della partita -->
+        
+        <strong
+          >Player Score: <span class="score" id="player-score">0</span></strong
+        >
+        <!-- 👤 PUNTEGGIO GIOCATORE: Parte da 0 -->
+        
+        <strong
+          >Computer Score:
+          <span class="score" id="computer-score">0</span></strong
+        >
+        <!-- 🤖 PUNTEGGIO COMPUTER: Anche lui parte da 0 -->
+      </div>
+
+      <section class="options-container">
+        <!-- 🎯 SEZIONE OPZIONI: I controlli del gioco -->
+        
+        <h2>Choose an option:</h2>
+        <!-- 📢 ISTRUZIONI: Chiare e dirette -->
+        
+        <div class="btn-container">
+          <!-- 🔘 CONTENITORE BOTTONI: Le tre scelte -->
+          
+          <button id="rock-btn" class="btn">Rock</button>
+          <!-- 🪨 SASSO: Prima opzione -->
+          
+          <button id="paper-btn" class="btn">Paper</button>
+          <!-- 📄 CARTA: Seconda opzione -->
+          
+          <button id="scissors-btn" class="btn">Scissors</button>
+          <!-- ✂️ FORBICI: Terza opzione -->
+        </div>
+      </section>
+
+      <div class="results-container">
+        <!-- 📢 AREA RISULTATI: Dove appaiono i messaggi -->
+        
+        <p id="results-msg"></p>
+        <!-- 📝 MESSAGGIO ROUND: Chi ha vinto questo turno -->
+        
+        <p id="winner-msg"></p>
+        <!-- 🏆 MESSAGGIO FINALE: Chi ha vinto la partita -->
+        
+        <button class="btn" id="reset-game-btn">Play again?</button>
+        <!-- 🔄 BOTTONE RESET: Nascosto fino alla fine -->
+      </div>
+    </main>
+    
+    <script>
+      /* 🧠 ===== LA LOGICA DEL GIOCO: JavaScript in Azione! ===== */
+      
+      /* 🎲 ===== FUNZIONE: Scelta Random del Computer ===== */
+      function getRandomComputerResult() {
+        const options = ["Rock", "Paper", "Scissors"];
+        // 📋 ARRAY OPZIONI: Le tre scelte possibili
+        
+        const randomIndex = Math.floor(Math.random() * options.length);
+        // 🎲 NUMERO RANDOM: La formula magica!
+        // Math.random() = numero tra 0 e 0.999...
+        // * options.length = moltiplica per 3 (numero di opzioni)
+        // Math.floor() = arrotonda per difetto
+        // Risultato: 0, 1, o 2 (indici dell'array)
+        
+        return options[randomIndex];
+        // 🎯 RITORNA: L'opzione scelta casualmente
+      }
+      
+      /* 🏆 ===== FUNZIONE: Chi Vince il Round? ===== */
+      function hasPlayerWonTheRound(player, computer) {
+        return (
+          (player === "Rock" && computer === "Scissors") ||
+          (player === "Scissors" && computer === "Paper") ||
+          (player === "Paper" && computer === "Rock")
+        );
+        // 🧮 LOGICA VITTORIA: Tutte le combinazioni vincenti
+        // || = OR logico, basta una condizione vera
+        // && = AND logico, entrambe devono essere vere
+        // Ritorna true se il giocatore vince, false altrimenti
+      }
+      
+      /* 📊 ===== VARIABILI GLOBALI: I Contatori ===== */
+      let playerScore = 0;
+      let computerScore = 0;
+      // 🔢 PUNTEGGI: Iniziano da zero, let perché cambieranno
+      
+      /* 🎮 ===== FUNZIONE: Gestione del Round ===== */
+      function getRoundResults(userOption) {
+        const computerResult = getRandomComputerResult();
+        // 🤖 SCELTA COMPUTER: Chiama la funzione random
+      
+        if (hasPlayerWonTheRound(userOption, computerResult)) {
+          playerScore++;
+          // 👤 VITTORIA GIOCATORE: Incrementa il punteggio
+          // ++ = incremento di 1
+          
+          return `Player wins! ${userOption} beats ${computerResult}`;
+          // 📢 MESSAGGIO VITTORIA: Template literal con variabili
+        
+        } else if (computerResult === userOption) {
+          return `It's a tie! Both chose ${userOption}`;
+          // 🤝 PAREGGIO: Stessa scelta
+        
+        } else {
+          computerScore++;
+          // 🤖 VITTORIA COMPUTER: Incrementa il suo punteggio
+          
+          return `Computer wins! ${computerResult} beats ${userOption}`;
+          // 📢 MESSAGGIO SCONFITTA: Il computer ha vinto
+        }
+      }
+      
+      /* 🎯 ===== SELEZIONE ELEMENTI DOM ===== */
+      const playerScoreSpanElement = document.getElementById("player-score");
+      const computerScoreSpanElement = document.getElementById("computer-score");
+      const roundResultsMsg = document.getElementById("results-msg");
+      const winnerMsgElement = document.getElementById("winner-msg");
+      const optionsContainer = document.querySelector(".options-container");
+      const resetGameBtn = document.getElementById("reset-game-btn");
+      // 🔍 COLLEGAMENTI DOM: Tutti gli elementi che modificheremo
+      // getElementById = seleziona per ID (più veloce)
+      // querySelector = seleziona per classe CSS (più flessibile)
+      
+      /* 🎭 ===== FUNZIONE: Mostra i Risultati ===== */
+      function showResults(userOption) {
+        roundResultsMsg.innerText = getRoundResults(userOption);
+        // 📝 MOSTRA RISULTATO: Aggiorna il messaggio del round
+        
+        computerScoreSpanElement.innerText = computerScore;
+        playerScoreSpanElement.innerText = playerScore;
+        // 📊 AGGIORNA PUNTEGGI: Mostra i nuovi numeri
+      
+        if (playerScore === 3 || computerScore === 3) {
+          // 🏁 FINE PARTITA: Qualcuno ha raggiunto 3 punti!
+          
+          winnerMsgElement.innerText = `${
+            playerScore === 3 ? "Player" : "Computer"
+          } has won the game!`;
+          // 🏆 ANNUNCIA VINCITORE: Operatore ternario elegante
+          // condizione ? se_vero : se_falso
+      
+          resetGameBtn.style.display = "block";
+          // 🔄 MOSTRA RESET: Da none a block
+          
+          optionsContainer.style.display = "none";
+          // 🚫 NASCONDI OPZIONI: Non si può più giocare
+        }
+      };
+      
+      /* 🔄 ===== FUNZIONE: Reset del Gioco ===== */
+      function resetGame() {
+        playerScore = 0;
+        computerScore = 0;
+        // 🔢 AZZERA PUNTEGGI: Ricomincia da capo
+        
+        playerScoreSpanElement.innerText = "0";
+        computerScoreSpanElement.innerText = "0";
+        // 📊 AGGIORNA DISPLAY: Mostra gli zeri
+        
+        resetGameBtn.style.display = "none";
+        // 🚫 NASCONDI RESET: Torna nascosto
+        
+        optionsContainer.style.display = "block";
+        // 🎯 MOSTRA OPZIONI: Si può giocare di nuovo
+        
+        winnerMsgElement.innerText = "";
+        roundResultsMsg.innerText = "";
+        // 🧹 PULISCI MESSAGGI: Tabula rasa
+      };
+      
+      /* 🎧 ===== EVENT LISTENERS: I Controlli del Gioco ===== */
+      
+      resetGameBtn.addEventListener("click", resetGame);
+      // 🔄 CLICK RESET: Quando clicchi, resetta tutto
+      
+      const rockBtn = document.getElementById("rock-btn");
+      const paperBtn = document.getElementById("paper-btn");
+      const scissorsBtn = document.getElementById("scissors-btn");
+      // 🔘 SELEZIONE BOTTONI: I tre controlli principali
+      
+      rockBtn.addEventListener("click", function () {
+        showResults("Rock");
+      });
+      // 🪨 CLICK SASSO: Gioca "Rock"
+      
+      paperBtn.addEventListener("click", function () {
+        showResults("Paper");
+      });
+      // 📄 CLICK CARTA: Gioca "Paper"
+      
+      scissorsBtn.addEventListener("click", function () {
+        showResults("Scissors");
+      });
+      // ✂️ CLICK FORBICI: Gioca "Scissors"
+      
+      // ALTERNATIVA MODERNA:
+      // scissorsBtn.addEventListener("click", () => showResults("Scissors"));
+      // Arrow function più concisa!
+      
+      /* 🎯 ===== FLUSSO DEL GIOCO ===== */
+      // 1. Giocatore clicca un bottone
+      // 2. showResults() viene chiamata con la scelta
+      // 3. Computer fa scelta random
+      // 4. Determina vincitore del round
+      // 5. Aggiorna punteggi e messaggi
+      // 6. Controlla se qualcuno ha vinto (3 punti)
+      // 7. Se sì, mostra vincitore e bottone reset
+      // 8. Click su reset ricomincia tutto
+    </script>
+  </body>
+</html>
+
+<!-- 🎯 ===== RIASSUNTO DEL GIOCO ===== -->
+<!-- 
+🎮 ARCHITETTURA ROCK PAPER SCISSORS:
+│
+├── 🎨 HTML/CSS (interfaccia)
+│   ├── 📋 Details/Summary per regole espandibili
+│   ├── 📊 Score container con flexbox
+│   ├── 🔘 Bottoni dorati con gradienti
+│   └── 📱 Responsive con media query
+│
+└── 🧠 JavaScript (logica)
+    ├── 🎲 Random selection per computer
+    ├── 🏆 Logica vittoria con operatori logici
+    ├── 📊 Gestione punteggi globali
+    ├── 🎭 Manipolazione DOM dinamica
+    └── 🎧 Event listeners per interattività
+
+💡 CONCETTI CHIAVE JAVASCRIPT:
+├── Math.random() per casualità
+├── Template literals per stringhe dinamiche
+├── Operatore ternario per decisioni inline
+├── getElementById vs querySelector
+├── Event listeners per interattività
+└── Manipolazione style.display per show/hide
+
+È come costruire un arbitro digitale che gestisce una partita eterna! 🎮✨
+-->
