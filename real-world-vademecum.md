@@ -2496,6 +2496,13 @@ const indiceCasuale = Math.floor(Math.random() * colori.length);
 const coloreScelto = colori[indiceCasuale];
 return coloreScelto;
 ```
+oppure più abbreviato:
+
+```javascript
+const colori = ["rosso", "verde", "blu"];
+const indiceCasuale = Math.floor(Math.random() * colori.length);
+return colori[indiceCasuale];
+```
 
 È come estrarre un biglietto dalla lotteria - `Math.random()` mescola i biglietti, `Math.floor()` ne estrae uno intero.
 
