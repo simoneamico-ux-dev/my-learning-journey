@@ -2353,13 +2353,15 @@ Capitolo 2: Avanzato
 
 # **JavaScript Vademecum**
 
-## **1. Variabili - I Contenitori di Dati** 📦
+## Parte I - Fondamenti
 
-Le **variabili** sono contenitori che conservano informazioni nel tuo programma. Come scatole etichettate dove riponi oggetti per ritrovarli facilmente.
+### 1. Variabili - I Contenitori di Dati 📦
 
-### **`let` - La Scatola Riutilizzabile**
+Le variabili sono contenitori che conservano informazioni nel tuo programma. Immagina di organizzare un trasloco: hai bisogno di scatole diverse per oggetti diversi. Alcune scatole le riutilizzerai per altri traslochi, altre sono sigillate per conservare oggetti preziosi che non devono essere toccati.
 
-`let` crea una variabile che puoi modificare. È come una lavagna - scrivi, cancelli, riscrivi.
+#### let - La Scatola Riutilizzabile
+
+`let` crea una variabile che puoi modificare nel tempo. È come una lavagna in cucina dove scrivi la lista della spesa - aggiungi, cancelli, riscrivi continuamente.
 
 ```javascript
 let messaggio = "Ciao";
@@ -2370,55 +2372,51 @@ contatore = contatore + 1;  // Incremento
 contatore++;                // Stessa cosa, più breve
 ```
 
-**Quando usarla**: Per valori che cambieranno durante l'esecuzione, come contatori, stati, o input utente.
-
-**Concetto chiave - Block Scope**: `let` vive solo nel suo blocco `{}`. Immagina una casa con stanze - una variabile `let` dichiarata in una stanza (blocco) non esiste nelle altre.
+La caratteristica fondamentale di `let` è il **block scope**: vive solo nel suo blocco delimitato da graffe `{}`. Pensa a un palazzo con appartamenti - una variabile `let` dichiarata in un appartamento (blocco) non esiste negli altri appartamenti.
 
 ```javascript
 if (true) {
-    let dentroIf = "Esisto solo qui";
+    let dentroIf = "Esisto solo qui dentro";
 }
-// console.log(dentroIf); // ❌ Errore! Non esiste fuori dal blocco
+// console.log(dentroIf); // Errore! Non esiste fuori dal blocco
 ```
 
-### **`const` - La Scatola Sigillata**
+Quando usarla: Per valori che cambieranno durante l'esecuzione, come il punteggio in un gioco, il contenuto di un carrello della spesa, o messaggi che si aggiornano.
 
-`const` crea una variabile immutabile. Una volta assegnata, non può essere riassegnata. È come incidere nel marmo.
+#### const - La Scatola Sigillata
+
+`const` crea una variabile che non può essere riassegnata. È come incidere nel marmo o scrivere con l'inchiostro indelebile - una volta scritto, resta così.
 
 ```javascript
 const PI_GRECO = 3.14159;
-// PI_GRECO = 3.14; // ❌ Errore! Non si può modificare
+// PI_GRECO = 3.14; // Errore! Non si può modificare
 
 const utente = { nome: "Mario", eta: 25 };
-utente.eta = 26;  // ✅ Questo funziona! Modifichi il contenuto, non il contenitore
-// utente = { nome: "Luigi" }; // ❌ Errore! Non puoi riassegnare
+utente.eta = 26;  // Questo funziona! Modifichi il contenuto
+// utente = { nome: "Luigi" }; // Errore! Non puoi cambiare scatola
 ```
 
-**Concetto importante**: `const` impedisce la riassegnazione del contenitore, non la modifica del contenuto. Se hai una scatola sigillata con degli oggetti dentro, non puoi cambiare scatola ma puoi riorganizzare gli oggetti all'interno.
+Un concetto cruciale: `const` impedisce di cambiare il contenitore, non il contenuto. È come avere una cassaforte bullonata al pavimento - non puoi spostarla o sostituirla, ma puoi riorganizzare ciò che c'è dentro.
 
-**Quando usarla**: Per valori che non devono cambiare, come configurazioni, costanti matematiche, o riferimenti a elementi.
+Quando usarla: Per riferimenti che non cambiano mai, come elementi del DOM, configurazioni, costanti matematiche. Usa sempre `const` di default, passa a `let` solo quando sai che dovrai riassegnare.
 
-**Regola d'oro**: Usa sempre `const` di default. Passa a `let` solo quando sai che dovrai riassegnare la variabile.
+#### var - Il Vecchio Modo (Da Evitare)
 
-### **`var` - Il Vecchio Modo (Da Evitare)**
-
-`var` è il vecchio modo di dichiarare variabili. Ha comportamenti strani e imprevedibili.
+`var` è il vecchio sistema di dichiarare variabili, con comportamenti imprevedibili. È come avere una variabile fantasma che può apparire in posti inaspettati del tuo codice.
 
 ```javascript
 var vecchioStile = "Evitami";  // Function scope, hoisting strano
 ```
 
-**Perché evitarlo**: `var` ignora i blocchi e può creare bug difficili da trovare. È come avere una variabile che può apparire magicamente in posti inaspettati.
+Perché evitarlo: `var` ignora i blocchi e può creare bug difficili da trovare. Usa sempre `let` o `const`.
 
----
+### 2. Tipi di Dati - Le Forme dell'Informazione 🎭
 
-## **2. Tipi di Dati - Le Forme dell'Informazione** 🎭
+JavaScript gestisce diversi tipi di informazioni, ognuno con le sue caratteristiche. Come in una cucina hai contenitori diversi per liquidi, solidi e spezie, in programmazione hai strutture diverse per testi, numeri e liste.
 
-JavaScript gestisce diversi tipi di informazioni, ognuno con le sue caratteristiche. Come diversi tipi di contenitori per diversi materiali.
+#### Stringhe - Il Testo
 
-### **Stringhe - Il Testo**
-
-Le **stringhe** sono sequenze di caratteri, sempre tra virgolette. Come parole scritte su carta.
+Le stringhe sono sequenze di caratteri, sempre tra virgolette. Come parole scritte su carta, possono essere combinate, tagliate, trasformate.
 
 ```javascript
 const nome = "Marco";
@@ -2428,42 +2426,45 @@ const citazione = `Einstein disse: "E=mc²"`;  // Template literal
 // Template literal - Super potenti!
 const anni = 25;
 const presentazione = `Mi chiamo ${nome} e ho ${anni} anni`;
-// Risultato: "Mi chiamo Marco e ho 25 anni"
 ```
 
-**Template Literal** (backtick ``): Permettono di inserire variabili e espressioni direttamente nella stringa. Come un modulo da compilare dove inserisci i valori nei campi vuoti.
+I template literal (con i backtick ``) sono come moduli prestampati dove inserisci i valori nei campi vuoti. Molto più comodi della concatenazione classica.
 
-**Operazioni comuni**:
+##### Caratteri di Escape
+
+A volte devi inserire caratteri speciali nel testo. Il backslash `\` è il tuo passepartout - dice al computer "il prossimo carattere è speciale".
+
+```javascript
+const negozio = "Sono nel \"Store\"";  // Virgolette dentro virgolette
+const righe = "Prima riga\nSeconda riga";  // A capo
+const colonne = "Nome\tCognome\tEtà";  // Tab per allineare
+const percorso = "C:\\Users\\Documents";  // Backslash letterale
+```
+
+È come quando fai le "virgolette con le dita" mentre parli - il backslash è il gesto che dice "attenzione, questo è letterale!"
+
+Operazioni comuni con le stringhe:
+
 ```javascript
 const parola = "JavaScript";
 console.log(parola.length);        // 10 caratteri
 console.log(parola.toUpperCase()); // "JAVASCRIPT"
-console.log(parola.toLowerCase()); // "javascript"
 console.log(parola[0]);            // "J" - primo carattere
-console.log(parola.indexOf("Script")); // 4 - posizione dove inizia
-
-// Concatenazione
-const saluto = "Ciao" + " " + "mondo";  // "Ciao mondo"
+console.log(parola.indexOf("Script")); // 4 - dove inizia
 ```
 
-**Caratteri speciali**:
-- `\n` - A capo (new line)
-- `\t` - Tab
-- `\"` - Virgolette dentro virgolette
-- `\\` - Backslash letterale
+#### Numeri - I Valori Matematici
 
-### **Numeri - I Valori Matematici**
-
-I **numeri** non hanno virgolette e possono essere interi o decimali.
+I numeri non hanno virgolette e possono essere interi o decimali. Sono i mattoni delle operazioni matematiche.
 
 ```javascript
 const eta = 25;          // Intero
-const prezzo = 19.99;    // Decimale (float)
+const prezzo = 19.99;    // Decimale
 const temperatura = -5;  // Negativo
-const grande = 1e6;     // 1000000 (notazione scientifica)
 ```
 
-**Operazioni matematiche**:
+Operazioni matematiche fondamentali:
+
 ```javascript
 const a = 10;
 const b = 3;
@@ -2472,232 +2473,288 @@ console.log(a + b);   // 13 - Addizione
 console.log(a - b);   // 7  - Sottrazione
 console.log(a * b);   // 30 - Moltiplicazione
 console.log(a / b);   // 3.333... - Divisione
-console.log(a % b);   // 1  - Resto (modulo) - MOLTO utile!
-console.log(a ** b);  // 1000 - Potenza (10³)
+console.log(a % b);   // 1  - Resto (modulo)
+console.log(a ** b);  // 1000 - Potenza
 ```
 
-**Il Modulo `%`** è potentissimo: 
-- Numero pari: `n % 2 === 0`
-- Ogni 3 elementi: `i % 3 === 0`
-- Ciclare in array: `indice % array.length`
+Il modulo `%` è sorprendentemente utile: per verificare numeri pari (`n % 2 === 0`), per ciclare in array (`indice % lunghezza`), per creare pattern ripetitivi.
 
-**Attenzione ai decimali**:
+##### Math.random() e Math.floor() - I Dadi del Codice
+
+`Math.random()` genera un numero casuale tra 0 e 1, come lanciare un dado con infinite facce. `Math.floor()` arrotonda verso il basso, trasformando decimali in interi.
+
 ```javascript
-console.log(0.1 + 0.2);  // 0.30000000000000004 (!!)
-// JavaScript ha problemi con i decimali - usa Math.round() quando serve precisione
+// Numero casuale tra 0 e 0.999...
+const casuale = Math.random();
+
+// Lancio di un dado a 6 facce
+const dado = Math.floor(Math.random() * 6) + 1;  // 1-6
+
+// Scegliere un elemento casuale da un array
+const colori = ["rosso", "verde", "blu"];
+const indiceCasuale = Math.floor(Math.random() * colori.length);
+const coloreScelto = colori[indiceCasuale];
 ```
 
-### **Booleani - Vero o Falso**
+È come estrarre un biglietto dalla lotteria - `Math.random()` mescola i biglietti, `Math.floor()` ne estrae uno intero.
 
-I **booleani** hanno solo due valori: `true` o `false`. Come un interruttore acceso/spento.
+#### Booleani - Vero o Falso
+
+I booleani hanno solo due valori: `true` o `false`. Come un interruttore della luce - acceso o spento, non ci sono vie di mezzo.
 
 ```javascript
 const maggiorenne = true;
 const iscritto = false;
 
 // Nascono spesso da confronti
-const isAdult = eta >= 18;       // true o false
-const isEmpty = testo === "";    // true o false
-const hasItems = array.length > 0;  // true o false
+const puoGuidare = eta >= 18;
+const carelloVuoto = prodotti.length === 0;
 ```
 
-**Valori "Falsy"** (considerati false):
-- `false` (ovviamente)
-- `0` (zero)
-- `""` (stringa vuota)
-- `null`
-- `undefined`
-- `NaN` (Not a Number)
+JavaScript considera alcuni valori come "falsy" (falsi): `0`, `""` (stringa vuota), `null`, `undefined`, `NaN`. Tutto il resto è "truthy" (vero).
 
-Tutto il resto è "Truthy" (considerato true)!
+#### Array - Le Liste Ordinate
 
-### **Array - Le Liste Ordinate**
-
-Gli **array** sono liste ordinate di elementi. Come una fila di cassetti numerati da 0.
+Gli array sono liste ordinate di elementi, come una fila di cassetti numerati partendo da 0.
 
 ```javascript
 const colori = ["rosso", "verde", "blu"];
 console.log(colori[0]);     // "rosso" - primo elemento
 console.log(colori.length);  // 3 - numero elementi
-
-// Modificare array
-colori.push("giallo");      // Aggiunge alla fine
-colori.pop();               // Rimuove dall'ultimo
-colori.unshift("nero");     // Aggiunge all'inizio
-colori.shift();             // Rimuove dal primo
-
-// Array possono contenere tipi misti
-const misto = [42, "testo", true, [1, 2, 3]];
 ```
 
-**Perché partono da 0**: È una convenzione informatica. Pensa all'indice come "quanti passi dal primo elemento".
+Metodi per modificare array:
 
-**Metodi utilissimi**:
+```javascript
+const frutta = ["mela", "pera"];
+
+// Aggiungere e rimuovere dalla fine
+frutta.push("banana");      // ["mela", "pera", "banana"]
+frutta.pop();               // Rimuove "banana"
+
+// Aggiungere e rimuovere dall'inizio
+frutta.unshift("kiwi");     // ["kiwi", "mela", "pera"]
+frutta.shift();             // Rimuove "kiwi"
+```
+
+Metodi di ricerca e verifica:
+
 ```javascript
 const numeri = [1, 2, 3, 4, 5];
 
-// Verifica presenza
-console.log(numeri.includes(3));    // true
-
-// Trova indice
-console.log(numeri.indexOf(4));     // 3 (posizione)
-
-// Crea stringa
-console.log(numeri.join(", "));     // "1, 2, 3, 4, 5"
-
-// Sottolista
-console.log(numeri.slice(1, 3));    // [2, 3]
+console.log(numeri.includes(3));    // true - c'è il 3?
+console.log(numeri.indexOf(4));     // 3 - in che posizione?
+console.log(numeri.join(", "));     // "1, 2, 3, 4, 5" - unisci in stringa
 ```
 
----
+##### Array.from() - Il Trasformatore di Liste
 
-## **3. Operatori - Gli Strumenti di Calcolo** 🔧
-
-Gli **operatori** eseguono operazioni sui dati. Come attrezzi in una cassetta degli attrezzi, ognuno ha uno scopo specifico.
-
-### **Operatori di Assegnazione**
+`Array.from()` converte strutture simili ad array in veri array. È come trasformare una collana di perle in perle singole che puoi riorganizzare.
 
 ```javascript
-let x = 5;      // Assegnazione base
-x += 3;         // x = x + 3 (ora x è 8)
-x -= 2;         // x = x - 2 (ora x è 6)
-x *= 2;         // x = x * 2 (ora x è 12)
-x /= 3;         // x = x / 3 (ora x è 4)
-x %= 3;         // x = x % 3 (ora x è 1)
+// Convertire una stringa in array di caratteri
+const lettere = Array.from("Ciao");  // ["C", "i", "a", "o"]
+
+// Convertire NodeList del DOM in array
+const bottoni = Array.from(document.querySelectorAll("button"));
 ```
 
-**Incremento/Decremento**:
-```javascript
-let count = 0;
-count++;        // Aumenta di 1 (post-incremento)
-++count;        // Aumenta di 1 (pre-incremento)
-count--;        // Diminuisce di 1
+#### Oggetti - I Contenitori Strutturati
 
-// Differenza tra pre e post
+Gli oggetti sono contenitori con compartimenti etichettati. Come un schedario dove ogni cartella ha un'etichetta specifica.
+
+```javascript
+const persona = {
+    nome: "Mario",
+    eta: 25,
+    citta: "Roma"
+};
+
+console.log(persona.nome);      // "Mario" - notazione punto
+console.log(persona["eta"]);    // 25 - notazione bracket
+```
+
+Gli oggetti possono contenere qualsiasi tipo di dato, anche altri oggetti o array:
+
+```javascript
+const giocatore = {
+    nome: "Luigi",
+    stats: {
+        livello: 5,
+        puntiVita: 100
+    },
+    inventario: ["spada", "pozione", "mappa"]
+};
+```
+
+Array di oggetti - come un database:
+
+```javascript
+const prodotti = [
+    { nome: "Laptop", prezzo: 999, disponibile: true },
+    { nome: "Mouse", prezzo: 25, disponibile: false },
+    { nome: "Tastiera", prezzo: 75, disponibile: true }
+];
+
+// Trovare prodotti disponibili
+for (const prodotto of prodotti) {
+    if (prodotto.disponibile) {
+        console.log(`${prodotto.nome}: €${prodotto.prezzo}`);
+    }
+}
+```
+
+### 3. Operatori - Gli Strumenti di Calcolo 🔧
+
+Gli operatori sono gli attrezzi nella tua cassetta degli strumenti di programmazione. Ogni operatore ha uno scopo specifico, come cacciaviti di dimensioni diverse.
+
+#### Operatori di Assegnazione
+
+L'operatore base `=` assegna un valore. Ma esistono versioni abbreviate che combinano operazioni e assegnazione.
+
+```javascript
+let punteggio = 100;
+
+// Forma estesa vs abbreviata
+punteggio = punteggio + 50;  // Forma estesa
+punteggio += 50;             // Forma abbreviata (stesso risultato)
+
+// Altri operatori abbreviati
+punteggio -= 20;   // Sottrai 20
+punteggio *= 2;    // Moltiplica per 2
+punteggio /= 5;    // Dividi per 5
+punteggio %= 3;    // Resto della divisione per 3
+```
+
+È come dire "aggiungi questo al totale" invece di "prendi il totale, aggiungi questo, e rimetti il risultato nel totale".
+
+Incremento e decremento:
+
+```javascript
+let contatore = 0;
+contatore++;  // Aumenta di 1
+contatore--;  // Diminuisce di 1
+
+// Differenza tra pre e post incremento
 let a = 5;
-let b = a++;    // b = 5, poi a diventa 6
-let c = ++a;    // a diventa 7, poi c = 7
+let b = a++;  // b = 5, poi a diventa 6
+let c = ++a;  // a diventa 7, poi c = 7
 ```
 
-### **Operatori di Confronto**
+#### Operatori di Confronto
 
-Restituiscono sempre un booleano:
+Restituiscono sempre un booleano (`true` o `false`). Sono le domande che fai ai tuoi dati.
 
 ```javascript
-// Uguaglianza STRETTA (preferita!)
-5 === 5        // true (stesso valore, stesso tipo)
-5 === "5"      // false (tipi diversi)
+// Uguaglianza STRETTA (sempre preferibile)
+5 === 5        // true - stesso valore, stesso tipo
+5 === "5"      // false - tipi diversi
 
-// Uguaglianza DEBOLE (evitare!)
-5 == "5"       // true (converte e confronta)
-
-// Disuguaglianza
-5 !== "5"      // true (diversi)
-5 != "5"       // false (converte e dice uguali)
-
-// Confronti
+// Confronti di grandezza
 10 > 5         // true
-10 < 5         // false
-10 >= 10       // true
-10 <= 9        // false
+10 <= 10       // true
 ```
 
-**Best practice**: Usa sempre `===` e `!==` per evitare conversioni implicite inaspettate.
+Usa sempre `===` (triplo uguale) per evitare conversioni implicite inaspettate. È come controllare che due chiavi siano identiche, non solo simili.
 
-### **Operatori Logici**
+#### Operatori Logici
 
-Combinano condizioni booleane. Come costruire frasi complesse con "e", "o", "non".
+Combinano condizioni booleane, come costruire frasi complesse con "e", "o", "non".
 
 ```javascript
-// AND (&&) - ENTRAMBE vere
+// AND (&&) - ENTRAMBE devono essere vere
 const puoGuidare = haPatente && maggiorenne;
-true && true    // true
-true && false   // false
-false && false  // false
 
-// OR (||) - ALMENO UNA vera
+// OR (||) - ALMENO UNA deve essere vera
 const puoEntrare = haTicket || èInLista;
-true || false   // true
-false || false  // false
-true || true    // true
 
-// NOT (!) - Inverte
-!true           // false
-!false          // true
-const nonMaggiorenne = !maggiorenne;
+// NOT (!) - Inverte il valore
+const minorenne = !maggiorenne;
 ```
 
-**Short-circuit evaluation**: JavaScript smette di valutare appena sa il risultato:
+##### Short-circuit Evaluation
+
+JavaScript è intelligente: smette di valutare appena conosce il risultato.
+
 ```javascript
-// Se la prima è false, non valuta la seconda (AND)
+// Se la prima è false, non valuta la seconda
 false && funzioneComplessa()  // funzioneComplessa non viene eseguita
 
-// Se la prima è true, non valuta la seconda (OR)
+// Se la prima è true, non valuta la seconda
 true || funzioneComplessa()   // funzioneComplessa non viene eseguita
+
+// Uso pratico: valore di default
+const nome = inputUtente || "Ospite";  // Se inputUtente è vuoto, usa "Ospite"
 ```
 
----
+È come controllare se hai le chiavi di casa prima di controllare se hai chiuso il gas - se non hai le chiavi, il resto non importa!
 
-## **4. Output - Comunicare con l'Esterno** 📢
+## Parte II - Input/Output e Controllo
 
-### **`console.log()` - La Finestra di Debug**
+### 4. Output - Comunicare con l'Esterno 📢
 
-`console.log()` stampa messaggi nella console. È il tuo migliore amico durante lo sviluppo.
+L'output è come il tuo programma parla con te. Hai diversi canali di comunicazione, ognuno con il suo scopo.
+
+#### console.log() - La Finestra di Debug
+
+`console.log()` è il tuo migliore amico durante lo sviluppo. È come avere un assistente che ti riferisce cosa sta succedendo nel programma mentre gira.
 
 ```javascript
 console.log("Messaggio semplice");
 console.log("Valore:", variabile);
-console.log("Multipli", valori, "insieme");
 
-// Oggetti e array
-console.log({ nome: "Mario", eta: 25 });
-console.log([1, 2, 3]);
+// Messaggi stilizzati per importanza
+console.error("Errore critico!");     // Rosso
+console.warn("Attenzione!");          // Giallo
+console.info("Info utile");           // Icona info
 
-// Messaggi stilizzati
-console.error("Errore!");        // Rosso
-console.warn("Attenzione!");     // Giallo
-console.info("Informazione");    // Info icon
-
-// Tabelle per array di oggetti
-const persone = [
-    { nome: "Mario", eta: 25 },
-    { nome: "Luigi", eta: 23 }
+// Tabelle per dati strutturati
+const utenti = [
+    { nome: "Mario", punti: 150 },
+    { nome: "Luigi", punti: 120 }
 ];
-console.table(persone);  // Bella tabella formattata!
+console.table(utenti);  // Tabella formattata!
 ```
 
-**Analogia**: È come avere un assistente che ti riferisce cosa sta succedendo nel programma mentre gira.
+Usa `console.log()` strategicamente per tracciare il flusso del programma:
 
-**Debugging con console.log**:
 ```javascript
-function calcolaPrezzo(base, sconto) {
-    console.log("Input:", base, sconto);  // Verifica input
+function calcolaSconto(prezzo, percentuale) {
+    console.log("Input ricevuti:", prezzo, percentuale);
     
-    const percentuale = sconto / 100;
-    console.log("Percentuale:", percentuale);  // Verifica calcolo
+    const sconto = prezzo * (percentuale / 100);
+    console.log("Sconto calcolato:", sconto);
     
-    const finale = base - (base * percentuale);
-    console.log("Risultato:", finale);  // Verifica output
+    const finale = prezzo - sconto;
+    console.log("Prezzo finale:", finale);
     
     return finale;
 }
 ```
 
-**Usi pratici**:
-- Debug: capire dove si rompe il codice
-- Verificare valori delle variabili
-- Tracciare il flusso di esecuzione
-- Misurare performance con `console.time()` e `console.timeEnd()`
+#### alert() - Il Messaggio Urgente
 
----
+`alert()` mostra un popup che blocca tutto finché l'utente non clicca OK. È come suonare un campanello d'allarme - impossibile da ignorare.
 
-## **5. Controllo del Flusso - Le Decisioni** 🚦
+```javascript
+alert("Attenzione! Stai per cancellare tutto!");
 
-Il **controllo del flusso** determina quali parti del codice vengono eseguite. Come un navigatore GPS che sceglie la strada.
+// Uso in validazione
+if (campoVuoto) {
+    alert("Per favore compila tutti i campi");
+    return;
+}
+```
 
-### **`if/else` - Il Bivio**
+Usa `alert()` con parsimonia - è invasivo e interrompe l'esperienza utente. È come urlare invece di parlare.
 
-La struttura `if` esegue codice solo se una condizione è vera. Come un semaforo che ti lascia passare solo col verde.
+### 5. Controllo del Flusso - Le Decisioni 🚦
+
+Il controllo del flusso determina quali parti del codice vengono eseguite. È il navigatore GPS del tuo programma che decide quale strada prendere.
+
+#### if/else - Il Bivio
+
+La struttura `if` è come un semaforo che ti lascia passare solo col verde.
 
 ```javascript
 const eta = 20;
@@ -2709,36 +2766,19 @@ if (eta < 18) {
 } else {
     console.log("Senior");
 }
-
-// If annidati - Decisioni dentro decisioni
-if (isWeekend) {
-    if (isSunny) {
-        console.log("Andiamo al mare!");
-    } else {
-        console.log("Film a casa");
-    }
-}
 ```
 
-**Operatore Ternario** - If compatto:
+L'operatore ternario è la versione compatta per decisioni semplici:
+
 ```javascript
-// condizione ? seVero : seFalso
-const messaggio = eta >= 18 ? "Maggiorenne" : "Minorenne";
-
-// Equivale a:
-let messaggio;
-if (eta >= 18) {
-    messaggio = "Maggiorenne";
-} else {
-    messaggio = "Minorenne";
-}
+const messaggio = eta >= 18 ? "Puoi votare" : "Troppo giovane per votare";
 ```
 
-**Quando usarlo**: Per decisioni binarie o multiple basate su condizioni.
+È come scegliere tra due strade al bivio - veloce e diretto quando hai solo due opzioni.
 
-### **`switch` - Il Selettore Multiplo**
+#### switch - Il Selettore Multiplo
 
-`switch` confronta un valore con molti casi possibili. Come un centralinista che smista le chiamate.
+`switch` è come un centralinista che smista le chiamate in base al numero composto.
 
 ```javascript
 const azione = "salva";
@@ -2747,14 +2787,14 @@ switch (azione) {
     case "salva":
         salvaDati();
         console.log("Salvato!");
-        break;  // IMPORTANTE!
+        break;  // IMPORTANTE: ferma l'esecuzione
         
     case "carica":
         caricaDati();
         break;
         
     case "elimina":
-    case "cancella":  // Multipli case insieme
+    case "cancella":  // Due case insieme
         eliminaDati();
         break;
         
@@ -2763,108 +2803,103 @@ switch (azione) {
 }
 ```
 
-**Importante**: Non dimenticare `break`, altrimenti l'esecuzione "cade" nel caso successivo (fall-through)!
+Non dimenticare `break`! Senza, l'esecuzione "cade" nel caso successivo come una cascata.
 
-**Switch vs If/Else**:
-- Switch: Quando confronti UNA variabile con MOLTI valori possibili
-- If/Else: Quando hai condizioni complesse o confronti diversi
+#### Return Early Pattern - L'Uscita Anticipata
 
----
+Invece di annidare molti `if`, esci subito quando puoi. È come controllare i documenti all'ingresso - se manca qualcosa, non fai entrare.
 
-## **6. Cicli - Le Ripetizioni** 🔄
+```javascript
+function processaPagamento(carta, importo) {
+    // Controlli di validazione - esci subito se qualcosa non va
+    if (!carta) {
+        return { successo: false, errore: "Carta mancante" };
+    }
+    
+    if (carta.scaduta) {
+        return { successo: false, errore: "Carta scaduta" };
+    }
+    
+    if (importo <= 0) {
+        return { successo: false, errore: "Importo non valido" };
+    }
+    
+    // Se arriviamo qui, tutto è valido
+    elaboraPagamento();
+    return { successo: true, messaggio: "Pagamento completato" };
+}
+```
 
-I **cicli** ripetono blocchi di codice. Come una lavatrice che ripete lo stesso ciclo più volte.
+Questo pattern rende il codice più leggibile evitando la "piramide dell'inferno" di if annidati.
 
-### **`for` - Il Ciclo Contatore**
+### 6. Cicli - Le Ripetizioni 🔄
 
-Perfetto quando sai quante volte ripetere. Ha tre parti: inizio, condizione, incremento.
+I cicli sono come una lavatrice che ripete lo stesso ciclo finché il bucato non è pulito. Automatizzano le operazioni ripetitive.
+
+#### for - Il Ciclo Contatore
+
+Perfetto quando sai quante volte ripetere. Ha tre parti: inizializzazione, condizione, incremento.
 
 ```javascript
 // Struttura: for (inizio; condizione; incremento)
 for (let i = 0; i < 5; i++) {
-    console.log("Iterazione numero:", i);
+    console.log(`Giro numero ${i + 1}`);
 }
 
-// Contare all'indietro
-for (let i = 10; i >= 0; i--) {
-    console.log("Conto alla rovescia:", i);
+// Iterare un array con indici
+const voti = [8, 7, 9, 6, 10];
+let somma = 0;
+for (let i = 0; i < voti.length; i++) {
+    somma += voti[i];
 }
-
-// Saltare numeri
-for (let i = 0; i <= 20; i += 5) {
-    console.log(i);  // 0, 5, 10, 15, 20
-}
-
-// Iterare array con indici
-const frutti = ["mela", "pera", "banana"];
-for (let i = 0; i < frutti.length; i++) {
-    console.log(`${i}: ${frutti[i]}`);
-}
+const media = somma / voti.length;
 ```
 
-**Anatomia dettagliata**: 
-- `let i = 0` - Eseguito UNA volta all'inizio
-- `i < 5` - Controllato PRIMA di ogni iterazione
-- `i++` - Eseguito DOPO ogni iterazione
-- Il corpo viene eseguito se la condizione è vera
+Il ciclo `for` è come salire le scale contando i gradini - sai quanti sono e li conti mentre sali.
 
-### **`while` - Il Ciclo Condizionale**
+#### while - Il Ciclo Condizionale
 
-Continua finché la condizione è vera. Come aspettare che l'acqua bolla.
+Continua finché la condizione è vera. Come aspettare che l'acqua bolla - non sai quanto ci vorrà, ma sai quando fermarti.
 
 ```javascript
 let tentativi = 0;
 const maxTentativi = 3;
 
 while (tentativi < maxTentativi) {
-    console.log(`Tentativo ${tentativi + 1} di ${maxTentativi}`);
+    const password = prompt("Inserisci password:");
+    
+    if (password === "segreta123") {
+        console.log("Accesso consentito!");
+        break;  // Esci dal ciclo
+    }
+    
     tentativi++;
+    console.log(`Tentativi rimasti: ${maxTentativi - tentativi}`);
 }
+```
 
-// Ciclo con condizione complessa
-let password = "";
-while (password !== "segreta123" && tentativi < 3) {
-    password = prompt("Inserisci password:");
-    tentativi++;
-}
+#### do...while - Il Ciclo Garantito
 
-// do...while - Esegue ALMENO una volta
+Esegue almeno una volta, poi controlla. Come assaggiare il cibo prima di decidere se aggiungere sale.
+
+```javascript
 let scelta;
 do {
     scelta = prompt("Vuoi continuare? (s/n)");
-} while (scelta !== "n");
+} while (scelta !== "n" && scelta !== "N");
 ```
 
-**Attenzione ai cicli infiniti**:
-```javascript
-// ⚠️ PERICOLOSO - Ciclo infinito!
-while (true) {
-    // Senza un break, continua per sempre
-}
+È utile quando devi fare qualcosa almeno una volta, come mostrare un menu.
 
-// Sempre avere un'uscita
-let count = 0;
-while (true) {
-    if (count >= 10) break;  // Uscita di emergenza
-    count++;
-}
-```
+#### for...of - Il Ciclo per Array
 
-### **`for...of` - Il Ciclo per Array**
-
-Itera su ogni elemento di un array. Come esaminare ogni oggetto in una scatola.
+Itera direttamente sugli elementi, senza indici. Come esaminare ogni oggetto in una scatola uno alla volta.
 
 ```javascript
-const colori = ["rosso", "verde", "blu"];
+const carrello = ["mele", "pane", "latte"];
 
-// for...of - ottieni l'elemento
-for (const colore of colori) {
-    console.log("Colore:", colore);
-}
-
-// Confronto con for classico
-for (let i = 0; i < colori.length; i++) {
-    console.log("Colore:", colori[i]);  // Più verboso
+for (const prodotto of carrello) {
+    console.log(`Comprare: ${prodotto}`);
 }
 
 // Funziona anche con stringhe!
@@ -2873,603 +2908,1021 @@ for (const lettera of "Ciao") {
 }
 ```
 
-**Controllo del flusso nei cicli**:
+Controllo del flusso nei cicli:
+
 ```javascript
-// break - Esce completamente dal ciclo
+// break - Ferma tutto e esci
 for (let i = 0; i < 10; i++) {
     if (i === 5) break;
     console.log(i);  // 0, 1, 2, 3, 4
 }
 
-// continue - Salta all'iterazione successiva
+// continue - Salta al prossimo giro
 for (let i = 0; i < 10; i++) {
     if (i % 2 === 0) continue;  // Salta i pari
     console.log(i);  // 1, 3, 5, 7, 9
 }
 ```
 
-**Vantaggio**: Non devi gestire indici, ottieni direttamente l'elemento.
+## Parte III - Funzioni e Scope
 
----
+### 7. Funzioni - I Blocchi Riutilizzabili 🧩
 
-## **7. Funzioni - I Blocchi Riutilizzabili** 🧩
+Le funzioni sono come ricette di cucina - una volta scritta la ricetta, puoi preparare quel piatto ogni volta che vuoi, con ingredienti diversi.
 
-Le **funzioni** sono blocchi di codice riutilizzabili. Come ricette che puoi seguire ogni volta che vuoi quel piatto.
+#### Dichiarazione di Funzione
 
-### **Dichiarazione di Funzione**
+Una funzione ha un nome, può ricevere ingredienti (parametri) e restituire un risultato.
 
 ```javascript
-// Funzione base
-function saluta(nome) {
-    return "Ciao " + nome + "!";
-}
-
-// Funzione con più parametri
 function calcolaArea(base, altezza) {
     const area = base * altezza;
     return area;
 }
 
-// Funzione con parametri di default
-function presentati(nome = "Ospite", eta = 0) {
-    return `Sono ${nome} e ho ${eta} anni`;
-}
-
-console.log(presentati());  // "Sono Ospite e ho 0 anni"
-console.log(presentati("Mario", 25));  // "Sono Mario e ho 25 anni"
+// Uso della funzione
+const areaStanza = calcolaArea(4, 3);  // 12 metri quadrati
 ```
 
-**Componenti**:
-- `function` - La parola chiave
-- Nome descrittivo (camelCase)
-- Parametri tra parentesi (gli ingredienti)
-- Corpo tra graffe (le istruzioni)
-- `return` - Il risultato (opzionale)
+#### Parametri di Default
 
-### **Chiamata di Funzione**
+Puoi specificare valori predefiniti per i parametri, come avere ingredienti di riserva in dispensa.
 
 ```javascript
-// Chiamata base
-let messaggio = saluta("Anna");  
-
-// Chiamata con risultato usato direttamente
-console.log(calcolaArea(10, 5));
-
-// Funzione che chiama altra funzione
-function salutaMultiplo(nomi) {
-    for (const nome of nomi) {
-        console.log(saluta(nome));
-    }
+function saluta(nome = "Ospite", orario = "giorno") {
+    return `Buon${orario}, ${nome}!`;
 }
+
+console.log(saluta());  // "Buongiorno, Ospite!"
+console.log(saluta("Mario", "asera"));  // "Buonasera, Mario!"
 ```
 
-### **Return - Il Risultato**
+#### Return - Il Risultato
 
-`return` termina la funzione e restituisce un valore.
+`return` è il piatto finito che esce dalla cucina. Termina la funzione e restituisce un valore.
 
 ```javascript
-function controlla(valore) {
-    if (valore < 0) {
-        return "Negativo";  // Esce qui se vero
+function calcolaSconto(prezzo, percentuale) {
+    if (prezzo <= 0) {
+        return 0;  // Esce subito se il prezzo non è valido
     }
-    if (valore === 0) {
-        return "Zero";      // Esce qui se vero
-    }
-    return "Positivo";      // Altrimenti arriva qui
-}
-
-// Senza return, la funzione restituisce undefined
-function senzaReturn() {
-    console.log("Faccio qualcosa");
-    // Implicitamente: return undefined;
+    
+    const sconto = prezzo * (percentuale / 100);
+    return prezzo - sconto;
+    
+    console.log("Questa riga non verrà mai eseguita");  // Dopo return
 }
 ```
 
-### **Arrow Functions - La Sintassi Moderna**
+#### Arrow Functions - La Sintassi Moderna
+
+Le arrow functions sono una scrittura più concisa, perfette per funzioni semplici.
 
 ```javascript
 // Funzione tradizionale
-function somma(a, b) {
-    return a + b;
+function raddoppia(n) {
+    return n * 2;
 }
 
 // Arrow function equivalente
-const somma = (a, b) => {
-    return a + b;
-};
+const raddoppia = (n) => n * 2;
 
-// Se una sola espressione, return implicito
-const somma = (a, b) => a + b;
-
-// Un solo parametro, parentesi opzionali
-const doppio = n => n * 2;
-
-// Utile per callback
+// Utile con metodi array
 const numeri = [1, 2, 3];
 const doppi = numeri.map(n => n * 2);  // [2, 4, 6]
 ```
 
-**Perché usarle**: 
-- Evitano ripetizioni (DRY principle)
-- Rendono il codice modulare
-- Facilitano il testing
-- Permettono riutilizzo
-- Organizzano meglio il codice
+#### Funzioni che Chiamano Funzioni
 
----
+Le funzioni possono collaborare tra loro, come chef che si passano ingredienti preparati.
 
-## **8. Scope - La Visibilità delle Variabili** 👁️
+```javascript
+function calcolaMedia(voti) {
+    let somma = 0;
+    for (const voto of voti) {
+        somma += voto;
+    }
+    return somma / voti.length;
+}
 
-Lo **scope** determina dove una variabile è accessibile. Come stanze in una casa - ciò che è in una stanza non è sempre visibile dalle altre.
+function determinaGiudizio(media) {
+    if (media >= 9) return "Eccellente";
+    if (media >= 7) return "Buono";
+    if (media >= 6) return "Sufficiente";
+    return "Insufficiente";
+}
 
-### **Scope Globale vs Locale**
+function valutaStudente(voti) {
+    const media = calcolaMedia(voti);
+    const giudizio = determinaGiudizio(media);
+    return `Media: ${media.toFixed(1)} - ${giudizio}`;
+}
+
+console.log(valutaStudente([8, 7, 9, 6, 8]));  // "Media: 7.6 - Buono"
+```
+
+### 8. Scope - La Visibilità delle Variabili 👁️
+
+Lo scope determina dove una variabile è accessibile. È come le stanze di una casa - ciò che è in una stanza non è sempre visibile dalle altre.
+
+#### Scope Globale vs Locale
+
+Le variabili globali sono come gli annunci all'altoparlante - tutti li sentono. Le variabili locali sono come conversazioni private in una stanza.
 
 ```javascript
 // SCOPE GLOBALE - Visibile ovunque
-let variabileGlobale = "Sono ovunque";
+let punteggioGlobale = 0;
 
-function funzione1() {
-    // SCOPE LOCALE - Visibile solo qui
-    let variabileLocale = "Solo in funzione1";
+function gioca() {
+    // SCOPE LOCALE - Solo qui dentro
+    let punteggioRound = 100;
+    punteggioGlobale += punteggioRound;  // Posso accedere al globale
     
-    console.log(variabileGlobale);  // ✅ Funziona
-    console.log(variabileLocale);   // ✅ Funziona
-    
-    function funzioneInterna() {
-        // Può vedere variabili dei genitori
-        console.log(variabileGlobale);  // ✅
-        console.log(variabileLocale);   // ✅
-        
-        let variabileInterna = "Solo qui";
+    function bonus() {
+        // Posso vedere le variabili dei "genitori"
+        let extra = 50;
+        punteggioRound += extra;  // Vedo punteggioRound
+        punteggioGlobale += extra;  // Vedo punteggioGlobale
     }
 }
 
-console.log(variabileGlobale);  // ✅ Funziona
-// console.log(variabileLocale);  // ❌ Errore!
+console.log(punteggioGlobale);  // OK
+// console.log(punteggioRound);  // Errore! Non visibile
 ```
 
-### **Block Scope**
+#### Block Scope
 
-Le variabili `let` e `const` hanno block scope - vivono solo nel loro blocco `{}`.
+Le variabili `let` e `const` vivono solo nel loro blocco `{}`.
 
 ```javascript
 if (true) {
-    let dentroIf = "Solo nel blocco if";
-    const ancheQuesto = "Stesso scope";
-    
-    if (true) {
-        console.log(dentroIf);  // ✅ Visibile dai figli
-        let piuInterno = "Ancora più interno";
-    }
-    // console.log(piuInterno);  // ❌ Non visibile qui
+    let segreta = "Solo qui dentro";
+    const ancheQuesta = "Invisibile fuori";
 }
-// console.log(dentroIf);  // ❌ Non visibile fuori
+// console.log(segreta);  // Errore!
 
-// Nei cicli
+// Nei cicli ogni iterazione ha il suo scope
 for (let i = 0; i < 3; i++) {
-    let dentroFor = i * 2;
-    // i e dentroFor esistono solo qui
+    let temporanea = i * 2;
+    // i e temporanea esistono solo qui
 }
-// console.log(i);  // ❌ i non esiste fuori
 ```
 
-### **Scope Chain - La Catena di Visibilità**
+#### Scope Chain - La Catena di Visibilità
 
-JavaScript cerca le variabili partendo dallo scope corrente e salendo verso l'esterno.
+JavaScript cerca le variabili partendo dallo scope corrente e salendo verso l'esterno, come cercare le chiavi prima in tasca, poi nella borsa, poi in casa.
 
 ```javascript
-const nome = "Globale";
+const messaggio = "Globale";
 
 function esterna() {
-    const nome = "Esterna";  // Shadowing
+    const messaggio = "Esterna";  // Shadowing del globale
     
     function interna() {
-        const nome = "Interna";  // Shadowing di nuovo
-        console.log(nome);  // "Interna" - trova la più vicina
+        const messaggio = "Interna";  // Shadowing di nuovo
+        console.log(messaggio);  // "Interna" - trova la più vicina
     }
     
     interna();
+    console.log(messaggio);  // "Esterna"
 }
 
 esterna();
+console.log(messaggio);  // "Globale"
 ```
 
-**Best practice**: 
-- Mantieni le variabili il più locali possibile
-- Evita variabili globali quando possibile
-- Usa nomi descrittivi per evitare confusione
-- Non fare "shadowing" se non necessario
+## Parte IV - DOM e Interattività
 
----
+### 9. DOM Manipulation - Il Ponte col Browser 🌉
 
-## **9. Commenti - La Documentazione del Codice** 💭
+Il DOM (Document Object Model) è la rappresentazione del tuo HTML come un albero di oggetti. Manipolare il DOM è come ridecorare una stanza - puoi spostare mobili, cambiare colori, aggiungere decorazioni.
 
-I **commenti** sono annotazioni nel codice che JavaScript ignora completamente. Servono a te e ad altri sviluppatori per capire cosa fa il codice e perché. Pensa ai commenti come a *post-it* che lasci su un documento importante.
+#### Selezionare Elementi
 
-### **Commento Singola Linea `//`**
+Prima di modificare qualcosa, devi trovarlo. È come cercare un libro in biblioteca - hai diversi sistemi di ricerca.
 
-Il commento più comune, perfetto per note brevi e spiegazioni veloci. Tutto ciò che viene dopo `//` sulla stessa riga viene ignorato.
+##### document.querySelector() - Il Cercatore Preciso
+
+Usa i selettori CSS per trovare il primo elemento che corrisponde.
 
 ```javascript
-// Questo è un commento
-let eta = 25; // Età minima richiesta
+// Per ID (con #)
+const titolo = document.querySelector("#titolo-principale");
 
-// TODO: Aggiungere validazione
-// FIXME: Non gestisce numeri negativi
-// NOTE: Usa formato ISO per le date
-// HACK: Workaround temporaneo per bug API
+// Per classe (con .)
+const bottone = document.querySelector(".btn-primary");
 
-// Commentare codice temporaneamente
-// let debug = true;  // Disabilitato in produzione
+// Per tipo di elemento
+const primoP = document.querySelector("p");
+
+// Selettori complessi
+const elementoSpecifico = document.querySelector("div.container > p:first-child");
 ```
 
-**Quando usarlo**: Per spiegazioni brevi, note TODO, o per chiarire una singola linea di codice complessa. È come scrivere una nota veloce a margine.
+##### getElementById() - La Ricerca per ID
 
-### **Commento Multi-linea `/* */`**
+Il metodo più veloce quando conosci l'ID esatto.
 
-Perfetto quando hai bisogno di scrivere spiegazioni più lunghe o disattivare temporaneamente blocchi di codice.
+```javascript
+const header = document.getElementById("header");
+const carrello = document.getElementById("shopping-cart");
+```
+
+##### querySelectorAll() - Il Cercatore Multiplo
+
+Trova tutti gli elementi che corrispondono, restituendo una NodeList (simile a un array).
+
+```javascript
+// Tutti i paragrafi
+const paragrafi = document.querySelectorAll("p");
+
+// Tutti gli elementi con una classe
+const cards = document.querySelectorAll(".card");
+
+// Convertire in array per usare metodi array
+const bottoniArray = Array.from(document.querySelectorAll("button"));
+```
+
+#### Modifica del Contenuto
+
+Una volta trovato l'elemento, puoi modificarne il contenuto in vari modi.
+
+##### innerText vs innerHTML vs textContent
+
+Ogni proprietà ha il suo scopo specifico, come diversi tipi di pennelli per dipingere.
+
+```javascript
+const elemento = document.querySelector("#messaggio");
+
+// innerText - Solo testo visibile, rispetta CSS
+elemento.innerText = "Testo pulito e sicuro";
+
+// innerHTML - Può contenere HTML (attenzione alla sicurezza!)
+elemento.innerHTML = "<strong>Testo</strong> con <em>formattazione</em>";
+
+// textContent - Tutto il testo, anche nascosto
+elemento.textContent = "Testo semplice, ignora HTML";
+```
+
+`innerText` è come la trascrizione di una conversazione - solo le parole dette, senza rumori di fondo. `innerHTML` è la registrazione completa con tutti gli effetti. `textContent` è tutto il testo, anche i sussurri.
+
+##### insertAdjacentHTML() - L'Inseritore Chirurgico
+
+Inserisce HTML in posizioni precise rispetto all'elemento, come un chirurgo che opera con precisione.
+
+```javascript
+const lista = document.querySelector("#lista-spesa");
+
+// Quattro posizioni possibili
+lista.insertAdjacentHTML('beforebegin', '<h3>Prima della lista</h3>');
+lista.insertAdjacentHTML('afterbegin', '<li>Primo elemento</li>');
+lista.insertAdjacentHTML('beforeend', '<li>Ultimo elemento</li>');
+lista.insertAdjacentHTML('afterend', '<p>Dopo la lista</p>');
+```
+
+#### Modifica degli Stili
+
+Puoi cambiare l'aspetto degli elementi come un designer d'interni.
+
+##### style.property - Lo Stilista Diretto
+
+Modifica direttamente gli stili inline dell'elemento.
+
+```javascript
+const box = document.querySelector(".box");
+
+box.style.backgroundColor = "blue";  // Nota: camelCase!
+box.style.width = "200px";
+box.style.display = "none";  // Nasconde l'elemento
+
+// Stili multipli
+Object.assign(box.style, {
+    color: "white",
+    padding: "20px",
+    borderRadius: "10px"
+});
+```
+
+##### classList - Il Gestore di Classi
+
+Gestisce le classi CSS dell'elemento, più pulito che modificare stili inline.
+
+```javascript
+const carta = document.querySelector(".carta");
+
+// Aggiungere classi
+carta.classList.add("selezionata", "animata");
+
+// Rimuovere classi
+carta.classList.remove("nascosta");
+
+// Toggle - aggiunge se non c'è, rimuove se c'è
+carta.classList.toggle("attiva");
+
+// Verificare presenza
+if (carta.classList.contains("selezionata")) {
+    console.log("Carta selezionata!");
+}
+```
+
+### 10. Eventi - Le Reazioni del Browser ⚡
+
+Gli eventi sono come campanelli - quando qualcuno suona (click, tastiera, mouse), il tuo codice risponde.
+
+#### onclick - Il Click Diretto
+
+Il modo più semplice per gestire i click, assegnando direttamente una funzione.
+
+```javascript
+const bottone = document.querySelector("#mio-bottone");
+
+bottone.onclick = function() {
+    console.log("Bottone cliccato!");
+};
+
+// O con arrow function
+bottone.onclick = () => alert("Click!");
+```
+
+Limite: puoi avere solo un gestore per evento.
+
+#### addEventListener() - L'Ascoltatore Professionale
+
+Il metodo più flessibile e potente per gestire eventi.
+
+```javascript
+const bottone = document.querySelector("#mio-bottone");
+
+// Puoi aggiungere più listener
+bottone.addEventListener("click", () => {
+    console.log("Primo gestore");
+});
+
+bottone.addEventListener("click", () => {
+    console.log("Secondo gestore");
+});
+
+// Rimuovere un listener specifico
+function gestoreClick() {
+    console.log("Click gestito");
+}
+
+bottone.addEventListener("click", gestoreClick);
+bottone.removeEventListener("click", gestoreClick);
+```
+
+#### Event Object e preventDefault()
+
+Ogni evento porta con sé informazioni utili nell'oggetto evento.
+
+```javascript
+document.querySelector("form").addEventListener("submit", function(evento) {
+    evento.preventDefault();  // Impedisce l'invio normale del form
+    
+    console.log(evento.type);  // "submit"
+    console.log(evento.target);  // L'elemento che ha generato l'evento
+    
+    // Validazione personalizzata
+    const dati = new FormData(evento.target);
+    if (validaDati(dati)) {
+        inviaConAjax(dati);
+    }
+});
+```
+
+#### Event Delegation - La Delega Intelligente
+
+Invece di mettere listener su ogni elemento, mettilo sul genitore. È come avere un receptionist che smista le chiamate.
+
+```javascript
+// Invece di fare questo per ogni bottone...
+// document.querySelectorAll(".btn").forEach(btn => {
+//     btn.addEventListener("click", gestisciClick);
+// });
+
+// Fai questo una volta sola!
+document.querySelector("#contenitore").addEventListener("click", function(e) {
+    if (e.target.classList.contains("btn")) {
+        console.log("Bottone cliccato:", e.target.textContent);
+    }
+});
+```
+
+Vantaggi: funziona anche per elementi aggiunti dinamicamente, usa meno memoria.
+
+## Parte V - Espressioni Regolari
+
+### 11. Regex - Il Linguaggio dei Pattern 🔍
+
+Le espressioni regolari (regex) sono come metal detector per il testo - cercano pattern specifici nelle stringhe. Immagina di dover trovare tutti i numeri di telefono in un documento di 100 pagine - le regex lo fanno in millisecondi.
+
+#### Sintassi Base
+
+Una regex è racchiusa tra due slash `/pattern/`, come una formula matematica tra parentesi.
+
+```javascript
+const regex = /ciao/;
+const testo = "ciao mondo";
+console.log(regex.test(testo));  // true - trova "ciao"
+
+// Con il metodo match
+console.log(testo.match(regex));  // ["ciao"]
+```
+
+#### Caratteri Speciali e Escape
+
+Alcuni caratteri hanno poteri speciali nelle regex. Per usarli letteralmente, devi "disattivarli" con il backslash `\`.
+
+```javascript
+// Caratteri speciali: . * + ? ^ $ { } ( ) [ ] \ |
+const prezzoRegex = /\$\d+\.\d{2}/;  // Cerca prezzi come $19.99
+console.log("Il prezzo è $19.99".match(prezzoRegex));  // ["$19.99"]
+```
+
+Il backslash è come dire "il prossimo carattere è letterale, non speciale". Come mettere le virgolette con le dita mentre parli.
+
+#### Character Classes [] - Le Alternative
+
+Le parentesi quadre creano un set di caratteri alternativi - "uno qualsiasi di questi".
+
+```javascript
+// Cerca a OPPURE e OPPURE i
+const vocali = /[aei]/;
+console.log("ciao".match(vocali));  // ["i"]
+
+// Tutti i match con flag g
+const tutteVocali = /[aeiou]/g;
+console.log("ciao mondo".match(tutteVocali));  // ["i", "a", "o", "o", "o"]
+```
+
+##### Regole dentro le parentesi quadre
+
+Dentro `[]`, la maggior parte dei caratteri speciali diventano normali automaticamente!
+
+```javascript
+// Fuori dalle [] servirebbero escape
+const caratteriSpeciali = /[+*?.]/;  // Cerca +, *, ? o . letteralmente
+
+// Range con il trattino
+const lettereMinuscole = /[a-z]/;  // Dalla a alla z
+const cifre = /[0-9]/;  // Da 0 a 9
+const alfanumerico = /[a-zA-Z0-9]/;  // Lettere e numeri
+
+// Negazione con ^
+const nonVocali = /[^aeiou]/;  // Tutto TRANNE le vocali
+```
+
+È come dire "accetto qualsiasi carta tranne i cuori" in un gioco di carte.
+
+#### Classi Predefinite
+
+JavaScript offre scorciatoie per pattern comuni.
+
+##### \s - Whitespace
+
+Qualsiasi carattere "invisibile": spazio, tab, a capo.
+
+```javascript
+const puliziaTesto = (str) => str.replace(/\s+/g, ' ');
+console.log(puliziaTesto("Troppi    spazi    qui"));  // "Troppi spazi qui"
+```
+
+##### \d - Cifre
+
+Qualsiasi numero da 0 a 9.
+
+```javascript
+// Estrarre numeri da testo
+const testo = "Ho 25 anni e peso 70 kg";
+const numeri = testo.match(/\d+/g);  // ["25", "70"]
+```
+
+##### \w - Word Characters
+
+Lettere, numeri e underscore.
+
+```javascript
+// Validare username
+const usernameValido = /^\w+$/.test("user_123");  // true
+const usernameInvalido = /^\w+$/.test("user-123");  // false (trattino non è \w)
+```
+
+##### Altri caratteri speciali
+
+```javascript
+// \n - A capo
+const righe = "Prima\nSeconda".split(/\n/);  // ["Prima", "Seconda"]
+
+// \t - Tab
+const datiTabulati = "Nome\tEtà\tCittà".split(/\t/);  // ["Nome", "Età", "Città"]
+
+// \b - Confine di parola
+const soloParola = /\bcat\b/;  // Solo "cat", non "cathedral"
+```
+
+#### Quantificatori
+
+Specificano quante volte un pattern deve ripetersi.
+
+```javascript
+// + = uno o più
+const numeri = /\d+/;  // Una o più cifre
+
+// * = zero o più
+const spazi = /\s*/;  // Zero o più spazi
+
+// ? = zero o uno (opzionale)
+const colore = /colou?r/;  // Matcha "color" o "colour"
+
+// {n} = esattamente n volte
+const cap = /\d{5}/;  // Esattamente 5 cifre (CAP italiano)
+
+// {n,m} = da n a m volte
+const password = /\w{8,20}/;  // Da 8 a 20 caratteri
+```
+
+#### Flags
+
+Le flag modificano il comportamento della regex.
+
+```javascript
+// g = global (trova tutti i match, non solo il primo)
+const tuttiNumeri = /\d+/g;
+
+// i = case insensitive
+const ignoraMaiuscole = /ciao/i;  // Matcha "ciao", "CIAO", "Ciao"
+
+// m = multiline
+const inizioRiga = /^inizio/m;  // ^ matcha inizio di ogni riga
+```
+
+#### Pattern Matching Pratico
+
+Esempi dal mondo reale:
+
+```javascript
+// Email semplificata
+const email = /^[\w.]+@[\w]+\.[a-z]{2,}$/i;
+
+// Numero di telefono italiano
+const telefono = /^(\+39\s?)?3\d{2}\s?\d{6,7}$/;
+
+// Pulizia input calorie counter
+function pulisciInput(str) {
+    // Rimuove +, -, spazi
+    return str.replace(/[+\-\s]/g, '');
+}
+
+// Validazione notazione scientifica
+function haNotazioneScientifica(str) {
+    const regex = /\d+e\d+/i;
+    return regex.test(str);
+}
+```
+
+## Parte VI - Strutture Dati e Pattern
+
+### 12. Oggetti e Strutture Complesse 🏗️
+
+Gli oggetti sono il cuore della programmazione JavaScript moderna. Mentre gli array sono liste ordinate, gli oggetti sono dizionari - ogni valore ha una chiave specifica.
+
+#### Oggetti come Dizionari
+
+Un oggetto è come una rubrica telefonica - cerchi per nome (chiave) e trovi il numero (valore).
+
+```javascript
+const giocatore = {
+    nome: "Mario",
+    livello: 5,
+    punteggio: 1500,
+    vite: 3
+};
+
+// Accesso con notazione punto
+console.log(giocatore.nome);  // "Mario"
+
+// Accesso con bracket notation (utile per chiavi dinamiche)
+const proprieta = "punteggio";
+console.log(giocatore[proprieta]);  // 1500
+```
+
+#### Nesting di Strutture
+
+Gli oggetti possono contenere altri oggetti e array, creando strutture complesse come un palazzo con piani e stanze.
+
+```javascript
+const gioco = {
+    giocatore: {
+        nome: "Luigi",
+        stats: {
+            forza: 10,
+            velocita: 15,
+            resistenza: 8
+        },
+        inventario: ["spada", "scudo", "pozione"]
+    },
+    livelloCorrente: 3,
+    nemici: [
+        { tipo: "goblin", salute: 20 },
+        { tipo: "orco", salute: 50 }
+    ]
+};
+
+// Navigare la struttura
+console.log(gioco.giocatore.stats.forza);  // 10
+console.log(gioco.nemici[0].tipo);  // "goblin"
+```
+
+#### Accesso con Bracket Notation
+
+La bracket notation è potente quando le chiavi sono dinamiche o contengono caratteri speciali.
+
+```javascript
+const configurazione = {
+    "colore-sfondo": "blu",
+    "dimensione-font": 16,
+    "usa-tema-scuro": true
+};
+
+// Con trattini, devi usare bracket notation
+console.log(configurazione["colore-sfondo"]);  // "blu"
+
+// Chiavi dinamiche
+function leggiProprietà(oggetto, chiave) {
+    return oggetto[chiave];
+}
+```
+
+#### Iterazione su Oggetti
+
+Esplorare un oggetto è come fare l'inventario di un magazzino.
+
+```javascript
+const punteggi = {
+    Mario: 150,
+    Luigi: 120,
+    Peach: 180
+};
+
+// Object.keys() - lista delle chiavi
+for (const nome of Object.keys(punteggi)) {
+    console.log(`${nome} ha fatto ${punteggi[nome]} punti`);
+}
+
+// Object.values() - lista dei valori
+const totale = Object.values(punteggi).reduce((sum, p) => sum + p, 0);
+
+// Object.entries() - coppie chiave-valore
+for (const [nome, punti] of Object.entries(punteggi)) {
+    console.log(`${nome}: ${punti}`);
+}
+```
+
+### 13. Pattern e Costrutti Pratici 🎯
+
+I pattern sono soluzioni riutilizzabili a problemi comuni. Come ricette collaudate che funzionano sempre.
+
+#### Pattern di Accumulo
+
+L'accumulo è come riempire un secchio goccia a goccia - ogni iterazione aggiunge qualcosa al risultato.
+
+```javascript
+// Somma numerica
+function calcolaTotale(prezzi) {
+    let totale = 0;  // Il secchio vuoto
+    for (const prezzo of prezzi) {
+        totale += prezzo;  // Aggiungi ogni prezzo
+    }
+    return totale;
+}
+
+// Costruzione di stringa
+function creaLista(elementi) {
+    let html = "<ul>";  // Inizio
+    for (const elemento of elementi) {
+        html += `<li>${elemento}</li>`;  // Accumula
+    }
+    html += "</ul>";  // Chiudi
+    return html;
+}
+
+// Filtraggio in nuovo array
+function filtraPositivi(numeri) {
+    const positivi = [];  // Array vuoto
+    for (const num of numeri) {
+        if (num > 0) {
+            positivi.push(num);  // Accumula solo positivi
+        }
+    }
+    return positivi;
+}
+```
+
+#### Flag Booleane - Gli Interruttori
+
+Le flag sono interruttori che controllano il comportamento del programma.
+
+```javascript
+let debugMode = false;
+let isLoading = false;
+let hasError = false;
+
+function eseguiOperazione() {
+    isLoading = true;
+    
+    try {
+        // Operazione...
+        if (debugMode) {
+            console.log("Operazione completata");
+        }
+    } catch (error) {
+        hasError = true;
+        console.error("Errore:", error);
+    } finally {
+        isLoading = false;
+    }
+}
+```
+
+#### Variabili di Stato
+
+Le variabili di stato tengono traccia di "dove siamo" nel programma, come un segnalibro in un libro.
+
+```javascript
+// Stati di un form
+let formState = "editing";  // "editing", "submitting", "submitted", "error"
+
+function gestisciForm() {
+    switch(formState) {
+        case "editing":
+            abilitaCampi();
+            break;
+        case "submitting":
+            mostraSpinner();
+            disabilitaCampi();
+            break;
+        case "submitted":
+            mostraSuccesso();
+            break;
+        case "error":
+            mostraErrore();
+            abilitaRetry();
+            break;
+    }
+}
+```
+
+#### Pattern di Validazione
+
+Verificare i dati prima di usarli è come il controllo qualità in fabbrica.
+
+```javascript
+function validaRegistrazione(dati) {
+    const errori = [];
+    
+    // Controlli sequenziali
+    if (!dati.email) {
+        errori.push("Email richiesta");
+    } else if (!dati.email.includes("@")) {
+        errori.push("Email non valida");
+    }
+    
+    if (!dati.password) {
+        errori.push("Password richiesta");
+    } else if (dati.password.length < 8) {
+        errori.push("Password troppo corta");
+    }
+    
+    if (dati.password !== dati.confermaPassword) {
+        errori.push("Le password non coincidono");
+    }
+    
+    return {
+        valido: errori.length === 0,
+        errori: errori
+    };
+}
+```
+
+#### Game State Pattern
+
+Gestire lo stato di un gioco è come dirigere un'orchestra - ogni elemento deve essere sincronizzato.
+
+```javascript
+const gameState = {
+    player: {
+        x: 0,
+        y: 0,
+        health: 100,
+        score: 0
+    },
+    enemies: [],
+    level: 1,
+    isPaused: false,
+    isGameOver: false
+};
+
+function updateGame() {
+    if (gameState.isPaused || gameState.isGameOver) {
+        return;
+    }
+    
+    // Aggiorna posizione giocatore
+    movePlayer();
+    
+    // Aggiorna nemici
+    gameState.enemies.forEach(enemy => moveEnemy(enemy));
+    
+    // Controlla collisioni
+    checkCollisions();
+    
+    // Aggiorna UI
+    renderGame();
+}
+
+function resetGame() {
+    gameState.player.health = 100;
+    gameState.player.score = 0;
+    gameState.enemies = [];
+    gameState.level = 1;
+    gameState.isGameOver = false;
+}
+```
+
+#### Configuration Objects
+
+Centralizzare le configurazioni rende il codice più manutenibile, come avere tutte le impostazioni in un pannello di controllo.
+
+```javascript
+const CONFIG = {
+    API_URL: "https://api.example.com",
+    MAX_RETRIES: 3,
+    TIMEOUT: 5000,
+    ITEMS_PER_PAGE: 20,
+    COLORS: {
+        primary: "#007bff",
+        success: "#28a745",
+        danger: "#dc3545"
+    }
+};
+
+// Uso nel codice
+async function fetchData(endpoint) {
+    const url = `${CONFIG.API_URL}/${endpoint}`;
+    const response = await fetch(url, {
+        timeout: CONFIG.TIMEOUT
+    });
+    return response.json();
+}
+```
+
+## Parte VII - Codice Professionale
+
+### 14. Commenti - La Documentazione del Codice 💭
+
+I commenti sono post-it nel tuo codice. Servono a te futuro e ai tuoi colleghi per capire cosa fa il codice e perché.
+
+#### Commento Singola Linea //
+
+Perfetto per note brevi e spiegazioni veloci.
+
+```javascript
+// Calcola lo sconto del 20% per i membri premium
+let sconto = isPremium ? 0.2 : 0;
+
+// TODO: Aggiungere validazione email
+// FIXME: Non gestisce numeri negativi
+// NOTE: L'API richiede formato ISO per le date
+```
+
+#### Commento Multi-linea /* */
+
+Per spiegazioni più lunghe o documentazione di funzioni.
 
 ```javascript
 /*
-  Funzione: calcolaSconto
-  Scopo: Calcola lo sconto applicabile
-  Parametri:
-    - prezzo: number - Il prezzo originale
-    - percentuale: number - La percentuale di sconto
-  Ritorna: number - Il prezzo scontato
-  
-  Note: La percentuale deve essere tra 0 e 100
-*/
-function calcolaSconto(prezzo, percentuale) {
-    /* 
-       Formula: prezzo - (prezzo * percentuale / 100)
-       Esempio: 100 - (100 * 20 / 100) = 80
-    */
-    return prezzo - (prezzo * percentuale / 100);
+ * Calcola il prezzo finale con tasse e spedizione
+ * @param {number} prezzo - Prezzo base del prodotto
+ * @param {string} stato - Stato per calcolo tasse
+ * @return {number} Prezzo finale comprensivo
+ */
+function calcolaPrezzoFinale(prezzo, stato) {
+    const tassa = getTassa(stato);
+    const spedizione = prezzo > 50 ? 0 : 9.99;
+    return prezzo + (prezzo * tassa) + spedizione;
 }
-
-/* Codice vecchio conservato per riferimento
-function vecchiaImplementazione() {
-    // Questo metodo è deprecato
-    return 0;
-}
-*/
 ```
 
-**Uso pratico**: Conservare versioni alternative di codice, documentare funzioni complesse, o "commentare" temporaneamente codice durante il debug.
+#### Best Practices per Commenti
 
-### **Best Practices per Commenti**
+I commenti dovrebbero spiegare il "perché", non il "cosa".
 
 ```javascript
-// ❌ CATTIVO: Commento ovvio
-let count = 0; // Imposta count a 0
+// CATTIVO: Commento ovvio
+let count = 0;  // Imposta count a 0
 
-// ✅ BUONO: Spiega il PERCHÉ
-let count = 0; // Contatore per tentativi falliti (max 3 prima del blocco)
+// BUONO: Spiega il perché
+let count = 0;  // Contatore tentativi falliti (max 3 prima del blocco)
 
-// ❌ CATTIVO: Commento che ripete il codice
-// Incrementa i
-i++;
-
-// ✅ BUONO: Spiega la logica non ovvia
-// Salta gli indici pari per ottimizzazione memoria
-i += 2;
-
-// ❌ CATTIVO: Commenti obsoleti
-// Questa funzione calcola il totale
-function calcolaSconto() {  // Il nome non corrisponde più!
+// CATTIVO: Commento obsoleto
+// Calcola il totale
+function calcolaSconto() {  // Nome non corrisponde!
     // ...
 }
 
-// ✅ BUONO: Commenti aggiornati e utili
+// BUONO: Commento utile
 // Applica sconto progressivo: 10% fino a 100€, 20% oltre
 function calcolaSconto(prezzo) {
     // ...
 }
 ```
 
-### **Commenti TODO e Tag Speciali**
+#### Commenti TODO e Tag Speciali
 
-I programmatori usano parole chiave standard per categorizzare i commenti:
+I programmatori usano tag standard per categorizzare i commenti.
 
 ```javascript
-// TODO: Implementare cache per migliorare performance
-// TODO: [2024-01-15] Aggiungere supporto multi-lingua
-
-// FIXME: Non gestisce correttamente array vuoti
-// FIXME: [URGENTE] Memory leak su dataset grandi
-
-// HACK: parseInt() per convertire, sostituire con validazione proper
-// HACK: Timeout per attendere animazione CSS (400ms)
-
-// NOTE: Dipende da libreria esterna v3.0+
-// NOTE: Questo limite è imposto dall'API
-
-// OPTIMIZE: Possibile usare binary search invece di linear
-// DEPRECATED: Usare nuovoMetodo() invece
+// TODO: Implementare cache per performance
+// FIXME: Memory leak con file grandi
+// HACK: Timeout per aspettare animazione CSS (400ms)
+// NOTE: Richiede libreria v3.0+
+// DEPRECATED: Usare nuovoMetodo() dal v2.0
 ```
 
-Questi commenti sono come *segnalibri colorati* - aiutano a ritrovare punti importanti nel codice e molti editor li evidenziano automaticamente.
+### 15. Esempi Integrati - Evoluzione del Codice 🔄
 
----
+Vediamo come il codice evolve da semplice a sofisticato, applicando i principi appresi.
 
-## **10. Pattern e Costrutti Pratici** 🏗️
+#### Da Hardcoded a Dinamico
 
-Un **pattern** è una soluzione riutilizzabile a problemi comuni. Come una ricetta in cucina, una volta imparata puoi applicarla in situazioni simili.
-
-### **Pattern di Accumulo**
-
-L'**accumulo** è quando costruisci gradualmente un risultato. È come riempire un secchio goccia a goccia - ogni iterazione aggiunge qualcosa al risultato finale.
+Il codice hardcoded è rigido come una statua. Il codice dinamico si adatta come un attore.
 
 ```javascript
-// Accumulo numerico - Somma
-let somma = 0;  // Il "secchio" vuoto
-for (let i = 1; i <= 5; i++) {
-    somma += i;  // Aggiungi ogni numero
-}
-console.log(somma); // 15 (1+2+3+4+5)
-
-// Accumulo stringa - Costruzione progressiva
-let frase = "";  // Stringa vuota iniziale
-const parole = ["JavaScript", "è", "potente"];
-for (const parola of parole) {
-    if (frase !== "") {
-        frase += " ";  // Aggiungi spazio se non è la prima
-    }
-    frase += parola;
-}
-console.log(frase); // "JavaScript è potente"
-
-// Accumulo array - Filtro
-const numeri = [1, 2, 3, 4, 5, 6];
-let pari = [];  // Array vuoto iniziale
-for (const num of numeri) {
-    if (num % 2 === 0) {
-        pari.push(num);  // Accumula solo i pari
-    }
-}
-console.log(pari); // [2, 4, 6]
-```
-
-**Quando usarlo**: Ogni volta che devi costruire un risultato complesso partendo da pezzi più piccoli - somme, concatenazioni, filtraggio, trasformazioni.
-
-### **Flag Booleane - Gli Interruttori**
-
-Le **flag** sono variabili booleane che controllano il comportamento del codice. Come un interruttore che decide quale strada prendere.
-
-```javascript
-// Flag semplice
-let debugMode = true;
-let isFirstTime = true;
-
-function processa(dato) {
-    if (debugMode) {
-        console.log("Processing:", dato);
-    }
-    
-    if (isFirstTime) {
-        console.log("Benvenuto nuovo utente!");
-        isFirstTime = false;  // Cambia stato dopo primo uso
-    }
-    
-    // Logica principale...
-}
-
-// Flag per controllo direzione
-function costruisciOutput(items, reverseOrder = false) {
-    let result = [];
-    
-    for (const item of items) {
-        if (reverseOrder) {
-            result.unshift(item);  // Aggiungi all'inizio
-        } else {
-            result.push(item);     // Aggiungi alla fine
-        }
-    }
-    
-    return result;
-}
-
-// Flag per early exit
-function cerca(array, valore) {
-    let trovato = false;  // Flag di stato
-    
-    for (const elemento of array) {
-        if (elemento === valore) {
-            trovato = true;
-            break;  // Esci appena trovi
-        }
-    }
-    
-    return trovato;
-}
-```
-
-**Perché sono utili**: Permettono di cambiare il comportamento del programma senza riscrivere il codice. È come avere un telecomando che modifica il funzionamento.
-
-### **Variabili di Stato**
-
-Le **variabili di stato** tengono traccia di "dove siamo" nel programma. Come un segnalibro che ricorda la pagina del libro.
-
-```javascript
-// Stati di un gioco
-let gameState = "menu";  // "menu", "playing", "paused", "gameOver"
-
-function updateGame() {
-    switch(gameState) {
-        case "menu":
-            showMenu();
-            break;
-        case "playing":
-            updateGameplay();
-            break;
-        case "paused":
-            showPauseScreen();
-            break;
-        case "gameOver":
-            showResults();
-            break;
-    }
-}
-
-// Stati di un processo
-let loadingState = "idle";  // "idle", "loading", "success", "error"
-
-function handleData() {
-    loadingState = "loading";
-    
-    fetchData()
-        .then(data => {
-            loadingState = "success";
-            processData(data);
-        })
-        .catch(error => {
-            loadingState = "error";
-            showError(error);
-        });
-}
-
-// Contatori come stato
-let currentPage = 1;
-let totalPages = 10;
-
-function nextPage() {
-    if (currentPage < totalPages) {
-        currentPage++;
-        loadPage(currentPage);
-    }
-}
-```
-
-### **Pattern di Validazione**
-
-Verificare che i dati siano corretti prima di usarli. Come un buttafuori che controlla i documenti all'ingresso.
-
-```javascript
-// Validazione con early return
-function registraUtente(email, password) {
-    // Controlli di validazione
-    if (!email) {
-        return { success: false, error: "Email richiesta" };
-    }
-    
-    if (!email.includes("@")) {
-        return { success: false, error: "Email non valida" };
-    }
-    
-    if (password.length < 8) {
-        return { success: false, error: "Password troppo corta" };
-    }
-    
-    // Se arriviamo qui, tutto è valido
-    return { success: true, message: "Registrazione completata" };
-}
-
-// Guard clauses - Uscite precoci
-function dividi(a, b) {
-    // Guard clause
-    if (b === 0) {
-        console.error("Impossibile dividere per zero");
-        return null;
-    }
-    
-    return a / b;
-}
-```
-
----
-
-## **11. Esempi Integrati - Evoluzione del Codice** 🔄
-
-Vediamo come il codice evolve da semplice a sofisticato, applicando i concetti appresi.
-
-### **Da Hardcoded a Dinamico**
-
-Il codice **hardcoded** ha valori fissi scritti direttamente. Il codice **dinamico** si adatta a input diversi.
-
-```javascript
-// EVOLUZIONE 1: Hardcoded
+// EVOLUZIONE 1: Completamente hardcoded
 console.log("Benvenuto Mario!");
 console.log("Hai 25 anni");
-console.log("Vivi a Roma");
 
-// EVOLUZIONE 2: Variabili
+// EVOLUZIONE 2: Con variabili
 const nome = "Mario";
 const eta = 25;
-const citta = "Roma";
 console.log(`Benvenuto ${nome}!`);
 console.log(`Hai ${eta} anni`);
-console.log(`Vivi a ${citta}`);
 
-// EVOLUZIONE 3: Dinamico con input
+// EVOLUZIONE 3: Con input utente
 const nome = prompt("Come ti chiami?");
 const eta = prompt("Quanti anni hai?");
-const citta = prompt("Dove vivi?");
 console.log(`Benvenuto ${nome}!`);
 console.log(`Hai ${eta} anni`);
-console.log(`Vivi a ${citta}`);
 
-// EVOLUZIONE 4: Funzione riutilizzabile
+// EVOLUZIONE 4: Con oggetto e funzione
 function presentaUtente(utente) {
-    console.log(`Benvenuto ${utente.nome}!`);
-    console.log(`Hai ${utente.eta} anni`);
-    console.log(`Vivi a ${utente.citta}`);
+    return `Benvenuto ${utente.nome}! Hai ${utente.eta} anni`;
 }
 
 const utente = {
-    nome: prompt("Nome?"),
-    eta: prompt("Età?"),
-    citta: prompt("Città?")
+    nome: document.querySelector("#nome").value,
+    eta: parseInt(document.querySelector("#eta").value)
 };
-presentaUtente(utente);
+
+document.querySelector("#output").innerText = presentaUtente(utente);
 ```
 
-È come la differenza tra una statua (fissa) e un attore (si adatta al ruolo).
+#### Da Ripetitivo a DRY
 
-### **Da Ripetitivo a DRY (Don't Repeat Yourself)**
-
-**DRY** significa "non ripeterti". Se scrivi la stessa cosa più volte, probabilmente puoi migliorare.
+DRY (Don't Repeat Yourself) significa non ripetersi. Se scrivi la stessa cosa più volte, c'è un modo migliore.
 
 ```javascript
-// CODICE RIPETITIVO ❌
+// CODICE RIPETITIVO
 let prezzo1 = 100;
 let sconto1 = 20;
 let finale1 = prezzo1 - (prezzo1 * sconto1 / 100);
-console.log("Prodotto 1:", finale1);
 
 let prezzo2 = 200;
 let sconto2 = 15;
 let finale2 = prezzo2 - (prezzo2 * sconto2 / 100);
-console.log("Prodotto 2:", finale2);
 
-let prezzo3 = 50;
-let sconto3 = 10;
-let finale3 = prezzo3 - (prezzo3 * sconto3 / 100);
-console.log("Prodotto 3:", finale3);
-
-// CODICE DRY ✅
-function calcolaPrezzoFinale(prezzo, sconto) {
-    return prezzo - (prezzo * sconto / 100);
+// CODICE DRY
+function applicaSconto(prezzo, percentuale) {
+    return prezzo - (prezzo * percentuale / 100);
 }
 
 const prodotti = [
-    { nome: "Prodotto 1", prezzo: 100, sconto: 20 },
-    { nome: "Prodotto 2", prezzo: 200, sconto: 15 },
-    { nome: "Prodotto 3", prezzo: 50, sconto: 10 }
+    { nome: "Scarpe", prezzo: 100, sconto: 20 },
+    { nome: "Borsa", prezzo: 200, sconto: 15 }
 ];
 
-for (const prodotto of prodotti) {
-    const finale = calcolaPrezzoFinale(prodotto.prezzo, prodotto.sconto);
-    console.log(`${prodotto.nome}: ${finale}`);
-}
+prodotti.forEach(prodotto => {
+    const finale = applicaSconto(prodotto.prezzo, prodotto.sconto);
+    console.log(`${prodotto.nome}: €${finale}`);
+});
 ```
 
-### **Refactoring Progressivo**
+#### Refactoring Progressivo
 
-Il **refactoring** è migliorare il codice senza cambiare cosa fa. Come riorganizzare una stanza per renderla più funzionale.
+Il refactoring migliora il codice senza cambiare cosa fa, come riorganizzare una stanza.
 
 ```javascript
-// VERSIONE 1: Funziona ma è basilare
+// VERSIONE 1: Funziona ma basilare
 function checkPassword(pwd) {
     if (pwd.length >= 8) {
         return true;
@@ -3486,49 +3939,118 @@ function checkPassword(pwd) {
 // VERSIONE 3: Più controlli
 function checkPassword(pwd) {
     return pwd.length >= 8 && 
-           pwd !== pwd.toLowerCase() &&  // Ha maiuscole
-           pwd !== pwd.toUpperCase();     // Ha minuscole
+           /[A-Z]/.test(pwd) &&  // Ha maiuscole
+           /[a-z]/.test(pwd) &&  // Ha minuscole
+           /\d/.test(pwd);       // Ha numeri
 }
 
-// VERSIONE 4: Informativa con oggetto risultato
+// VERSIONE 4: Con feedback dettagliato
 function checkPassword(pwd) {
-    const checks = {
-        length: pwd.length >= 8,
-        hasUpper: pwd !== pwd.toLowerCase(),
-        hasLower: pwd !== pwd.toUpperCase(),
-        hasNumber: /\d/.test(pwd)
+    const requisiti = {
+        lunghezza: pwd.length >= 8,
+        maiuscola: /[A-Z]/.test(pwd),
+        minuscola: /[a-z]/.test(pwd),
+        numero: /\d/.test(pwd),
+        speciale: /[!@#$%^&*]/.test(pwd)
     };
     
-    const isValid = Object.values(checks).every(check => check);
-    
     return {
-        isValid,
-        checks,
-        message: isValid ? "Password valida" : "Password non soddisfa i requisiti"
+        valida: Object.values(requisiti).every(req => req),
+        requisiti: requisiti,
+        forza: Object.values(requisiti).filter(req => req).length
     };
 }
 ```
 
----
+#### Da Procedurale a Event-Driven
 
-## **12. Best Practices Osservate** ✅
-
-### **Naming Convention - L'Arte di Nominare**
-
-I **nomi delle variabili** dovrebbero raccontare una storia. Un buon nome rende il codice auto-documentante.
+Passare da codice che esegue in sequenza a codice che reagisce agli eventi.
 
 ```javascript
-// ❌ NOMI CATTIVI
+// PROCEDURALE: Esegue subito
+const nome = prompt("Nome?");
+const eta = prompt("Età?");
+alert(`Ciao ${nome}, hai ${eta} anni`);
+
+// EVENT-DRIVEN: Aspetta l'utente
+document.querySelector("#form").addEventListener("submit", function(e) {
+    e.preventDefault();
+    
+    const nome = document.querySelector("#nome").value;
+    const eta = document.querySelector("#eta").value;
+    
+    document.querySelector("#risultato").innerText = 
+        `Ciao ${nome}, hai ${eta} anni`;
+});
+```
+
+#### Da Globale a Modulare
+
+Organizzare il codice in moduli invece di avere tutto nello scope globale.
+
+```javascript
+// TUTTO GLOBALE (problematico)
+let punteggio = 0;
+let vite = 3;
+function aumentaPunteggio() { punteggio += 10; }
+function perdiVita() { vite--; }
+
+// MODULARE (migliore)
+const Game = {
+    stato: {
+        punteggio: 0,
+        vite: 3
+    },
+    
+    aumentaPunteggio(punti = 10) {
+        this.stato.punteggio += punti;
+        this.aggiornaUI();
+    },
+    
+    perdiVita() {
+        this.stato.vite--;
+        if (this.stato.vite <= 0) {
+            this.gameOver();
+        }
+        this.aggiornaUI();
+    },
+    
+    aggiornaUI() {
+        document.querySelector("#punteggio").innerText = this.stato.punteggio;
+        document.querySelector("#vite").innerText = this.stato.vite;
+    },
+    
+    gameOver() {
+        alert("Game Over!");
+        this.reset();
+    },
+    
+    reset() {
+        this.stato.punteggio = 0;
+        this.stato.vite = 3;
+        this.aggiornaUI();
+    }
+};
+```
+
+### 16. Best Practices Osservate ✅
+
+Le best practices sono le regole d'oro accumulate da anni di esperienza collettiva.
+
+#### Naming Convention - L'Arte di Nominare
+
+I nomi delle variabili dovrebbero raccontare una storia.
+
+```javascript
+// NOMI CATTIVI
 let d = new Date();
 let u = getUserData();
 let temp = 25;  // Temperatura o temporaneo?
-let data = [];  // Che tipo di dati?
 
-// ✅ NOMI BUONI
+// NOMI BUONI
 let currentDate = new Date();
 let userData = getUserData();
 let temperatureCelsius = 25;
-let userScores = [];
 
 // Convenzioni standard
 const MAX_ATTEMPTS = 3;        // Costanti in UPPER_SNAKE_CASE
@@ -3536,85 +4058,49 @@ let userName = "Mario";         // Variabili in camelCase
 function calculateTotal() {}    // Funzioni in camelCase
 class UserAccount {}           // Classi in PascalCase
 
-// Nomi booleani dovrebbero essere domande
+// Booleani come domande
 let isActive = true;
 let hasPermission = false;
 let canEdit = true;
-let shouldUpdate = false;
-
-// Nomi di funzioni dovrebbero essere azioni
-function fetchData() {}
-function validateEmail() {}
-function getUserById() {}
-function createAccount() {}
 ```
 
-È come etichettare i cassetti - etichette chiare ti fanno trovare subito quello che cerchi.
+#### Testing Incrementale
 
-### **Testing Incrementale**
-
-Non scrivere tutto e poi testare alla fine. **Testa mentre costruisci**, piccoli pezzi alla volta.
+Testa mentre costruisci, come assaggiare mentre cucini.
 
 ```javascript
 function processOrder(order) {
-    console.log("1. Ricevuto ordine:", order);
+    console.log("1. Ordine ricevuto:", order);
     
-    // Validazione
     if (!order.items || order.items.length === 0) {
-        console.log("2. Ordine vuoto, esco");
+        console.log("2. Ordine vuoto");
         return null;
     }
-    console.log("2. Validazione passata");
     
-    // Calcolo totale
     let total = 0;
     for (const item of order.items) {
-        console.log("3. Processo item:", item);
+        console.log(`3. Processo: ${item.name} - €${item.price}`);
         total += item.price * item.quantity;
     }
-    console.log("4. Totale calcolato:", total);
     
-    // Applica sconto
-    if (order.discountCode) {
-        console.log("5. Applico sconto:", order.discountCode);
-        total *= 0.9;  // 10% sconto
-    }
-    
-    console.log("6. Totale finale:", total);
+    console.log("4. Totale finale:", total);
     return total;
 }
-
-// Test incrementale
-const testOrder = {
-    items: [
-        { price: 10, quantity: 2 },
-        { price: 5, quantity: 1 }
-    ],
-    discountCode: "SAVE10"
-};
-
-processOrder(testOrder);
 ```
 
-È come assaggiare il cibo mentre cucini, non solo quando è tutto pronto.
-
-### **Gestione degli Errori**
+#### Gestione degli Errori
 
 Prevedi cosa può andare storto e gestiscilo con grazia.
 
 ```javascript
-// ❌ SENZA gestione errori
 function dividi(a, b) {
-    return a / b;  // Cosa succede se b è 0?
-}
-
-// ✅ CON gestione errori
-function dividi(a, b) {
+    // Validazione input
     if (typeof a !== 'number' || typeof b !== 'number') {
         console.error("I parametri devono essere numeri");
         return null;
     }
     
+    // Controllo divisione per zero
     if (b === 0) {
         console.error("Impossibile dividere per zero");
         return null;
@@ -3626,63 +4112,445 @@ function dividi(a, b) {
 // Try-catch per errori runtime
 function parseJSON(jsonString) {
     try {
-        const result = JSON.parse(jsonString);
-        return { success: true, data: result };
+        return JSON.parse(jsonString);
     } catch (error) {
         console.error("JSON non valido:", error.message);
-        return { success: false, error: error.message };
+        return null;
     }
 }
 ```
 
-### **Commenta invece di Cancellare**
+#### Separazione delle Responsabilità
 
-Durante lo sviluppo, invece di cancellare codice che potrebbe servirti, commentalo.
+Ogni funzione dovrebbe fare una cosa sola e farla bene.
 
 ```javascript
-function calcolaPrezzo(base, sconto) {
-    // Vecchio metodo - conservato per riferimento
-    // return base - (base * 0.1);  // Sconto fisso 10%
-    
-    // Nuovo metodo - sconto variabile
-    return base - (base * sconto / 100);
+// CATTIVO: Fa troppe cose
+function processUserData(userData) {
+    // Valida
+    if (!userData.email) return false;
+    // Salva nel database
+    database.save(userData);
+    // Invia email
+    sendEmail(userData.email);
+    // Aggiorna UI
+    updateUI(userData);
 }
 
-// Alternative di implementazione
-function generaID() {
-    // Opzione 1: Timestamp
-    // return Date.now();
+// BUONO: Responsabilità separate
+function validateUser(userData) {
+    return userData.email && userData.email.includes("@");
+}
+
+function saveUser(userData) {
+    return database.save(userData);
+}
+
+function notifyUser(email) {
+    return sendEmail(email);
+}
+
+function processUser(userData) {
+    if (!validateUser(userData)) {
+        return { success: false, error: "Validazione fallita" };
+    }
     
-    // Opzione 2: Random
-    // return Math.random().toString(36);
+    saveUser(userData);
+    notifyUser(userData.email);
+    updateUI(userData);
     
-    // Opzione 3: UUID-like (attuale)
-    return Date.now() + '-' + Math.random().toString(36);
+    return { success: true };
 }
 ```
 
-Potrai sempre rimuoverlo definitivamente dopo, ma intanto hai un "backup" immediato delle alternative provate.
+#### Gestione dello Stato Centralizzato
 
-### **Codice Leggibile > Codice Intelligente**
-
-Scrivi codice che sia facile da capire, non codice che mostri quanto sei bravo.
+Mantieni lo stato in un posto solo, come un centro di controllo.
 
 ```javascript
-// ❌ "Intelligente" ma illeggibile
-const r = u.map(x => x.a ? x.b * 2 : x.c / 2).filter(y => y > 10);
-
-// ✅ Chiaro e manutenibile
-const processedResults = users
-    .map(user => {
-        if (user.isActive) {
-            return user.balance * 2;
-        } else {
-            return user.credit / 2;
+const AppState = {
+    data: {
+        user: null,
+        products: [],
+        cart: []
+    },
+    
+    setUser(user) {
+        this.data.user = user;
+        this.notify('userChanged');
+    },
+    
+    addToCart(product) {
+        this.data.cart.push(product);
+        this.notify('cartUpdated');
+    },
+    
+    listeners: {},
+    
+    subscribe(event, callback) {
+        if (!this.listeners[event]) {
+            this.listeners[event] = [];
         }
-    })
-    .filter(amount => amount > 10);
+        this.listeners[event].push(callback);
+    },
+    
+    notify(event) {
+        if (this.listeners[event]) {
+            this.listeners[event].forEach(callback => callback(this.data));
+        }
+    }
+};
+
+// Uso
+AppState.subscribe('cartUpdated', (data) => {
+    document.querySelector("#cart-count").innerText = data.cart.length;
+});
 ```
 
-**Ricorda**: Il codice viene letto molte più volte di quanto viene scritto. Ottimizza per la lettura, non per la scrittura!
+## Parte VIII - Progetti Pratici
+
+### 17. Mini-Progetti Completi 🚀
+
+Mettiamo insieme tutti i concetti in progetti completi e funzionanti.
+
+#### Calcolatore con Validazione
+
+Un calcolatore che valida l'input e gestisce gli errori.
+
+```javascript
+const Calculator = {
+    display: document.querySelector("#display"),
+    
+    validateInput(value) {
+        // Rimuovi caratteri non validi
+        const cleaned = value.replace(/[^\d+\-*/.\s]/g, '');
+        
+        // Controlla notazione scientifica
+        if (/\d+e\d+/i.test(cleaned)) {
+            throw new Error("Notazione scientifica non supportata");
+        }
+        
+        return cleaned;
+    },
+    
+    calculate(expression) {
+        try {
+            const validated = this.validateInput(expression);
+            // In produzione, usa un parser sicuro!
+            const result = Function('"use strict"; return ' + validated)();
+            return result;
+        } catch (error) {
+            return "Errore: " + error.message;
+        }
+    },
+    
+    init() {
+        document.querySelectorAll(".calc-btn").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                const value = e.target.dataset.value;
+                
+                if (value === "=") {
+                    this.display.value = this.calculate(this.display.value);
+                } else if (value === "C") {
+                    this.display.value = "";
+                } else {
+                    this.display.value += value;
+                }
+            });
+        });
+    }
+};
+
+Calculator.init();
+```
+
+#### Gioco Interattivo con Stati
+
+Un mini-gioco che gestisce stati complessi.
+
+```javascript
+const AdventureGame = {
+    state: {
+        location: "town",
+        health: 100,
+        gold: 50,
+        inventory: []
+    },
+    
+    locations: {
+        town: {
+            description: "Sei nella piazza del villaggio",
+            actions: [
+                { text: "Vai al negozio", goto: "shop" },
+                { text: "Vai nella foresta", goto: "forest" }
+            ]
+        },
+        shop: {
+            description: "Il negoziante ti saluta",
+            actions: [
+                { text: "Compra pozione (10 oro)", action: "buyPotion" },
+                { text: "Torna in città", goto: "town" }
+            ]
+        },
+        forest: {
+            description: "La foresta è oscura e misteriosa",
+            actions: [
+                { text: "Cerca tesori", action: "searchTreasure" },
+                { text: "Torna in città", goto: "town" }
+            ]
+        }
+    },
+    
+    render() {
+        const loc = this.locations[this.state.location];
+        
+        document.querySelector("#description").innerText = loc.description;
+        document.querySelector("#stats").innerHTML = `
+            Salute: ${this.state.health} | 
+            Oro: ${this.state.gold} | 
+            Inventario: ${this.state.inventory.join(", ") || "vuoto"}
+        `;
+        
+        const actionsDiv = document.querySelector("#actions");
+        actionsDiv.innerHTML = "";
+        
+        loc.actions.forEach(action => {
+            const btn = document.createElement("button");
+            btn.innerText = action.text;
+            btn.onclick = () => this.handleAction(action);
+            actionsDiv.appendChild(btn);
+        });
+    },
+    
+    handleAction(action) {
+        if (action.goto) {
+            this.state.location = action.goto;
+        } else if (action.action === "buyPotion") {
+            if (this.state.gold >= 10) {
+                this.state.gold -= 10;
+                this.state.inventory.push("pozione");
+                alert("Hai comprato una pozione!");
+            } else {
+                alert("Non hai abbastanza oro!");
+            }
+        } else if (action.action === "searchTreasure") {
+            const found = Math.random() > 0.5;
+            if (found) {
+                const goldFound = Math.floor(Math.random() * 20) + 5;
+                this.state.gold += goldFound;
+                alert(`Hai trovato ${goldFound} oro!`);
+            } else {
+                alert("Non hai trovato nulla...");
+            }
+        }
+        
+        this.render();
+    },
+    
+    init() {
+        this.render();
+    }
+};
+
+AdventureGame.init();
+```
+
+#### Form Dinamico con Regex
+
+Un form che valida l'input in tempo reale usando regex.
+
+```javascript
+const FormValidator = {
+    rules: {
+        email: {
+            pattern: /^[\w.]+@[\w]+\.[a-z]{2,}$/i,
+            message: "Email non valida"
+        },
+        telefono: {
+            pattern: /^(\+39\s?)?3\d{2}\s?\d{6,7}$/,
+            message: "Numero di telefono non valido"
+        },
+        cap: {
+            pattern: /^\d{5}$/,
+            message: "CAP deve essere di 5 cifre"
+        },
+        password: {
+            pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/,
+            message: "Password: minimo 8 caratteri, una maiuscola, una minuscola, un numero"
+        }
+    },
+    
+    validateField(field) {
+        const fieldName = field.name;
+        const value = field.value;
+        const rule = this.rules[fieldName];
+        
+        if (!rule) return true;
+        
+        const isValid = rule.pattern.test(value);
+        const errorElement = field.nextElementSibling;
+        
+        if (!isValid && value) {
+            field.classList.add("error");
+            errorElement.innerText = rule.message;
+            errorElement.style.display = "block";
+        } else {
+            field.classList.remove("error");
+            errorElement.style.display = "none";
+        }
+        
+        return isValid;
+    },
+    
+    init() {
+        document.querySelectorAll("input").forEach(input => {
+            // Aggiungi elemento per errore
+            const errorSpan = document.createElement("span");
+            errorSpan.className = "error-message";
+            errorSpan.style.display = "none";
+            input.parentNode.insertBefore(errorSpan, input.nextSibling);
+            
+            // Valida mentre scrivi
+            input.addEventListener("blur", () => {
+                this.validateField(input);
+            });
+        });
+        
+        document.querySelector("form").addEventListener("submit", (e) => {
+            e.preventDefault();
+            
+            let allValid = true;
+            document.querySelectorAll("input").forEach(input => {
+                if (!this.validateField(input)) {
+                    allValid = false;
+                }
+            });
+            
+            if (allValid) {
+                alert("Form valido! Invio in corso...");
+            }
+        });
+    }
+};
+
+FormValidator.init();
+```
+
+#### Manipolatore di Liste
+
+Un'applicazione per gestire liste dinamiche con filtri e ordinamento.
+
+```javascript
+const ListManager = {
+    items: [],
+    filteredItems: [],
+    
+    init() {
+        this.setupEventListeners();
+        this.render();
+    },
+    
+    setupEventListeners() {
+        // Aggiungi elemento
+        document.querySelector("#add-btn").addEventListener("click", () => {
+            const input = document.querySelector("#item-input");
+            if (input.value.trim()) {
+                this.addItem(input.value.trim());
+                input.value = "";
+            }
+        });
+        
+        // Cerca/filtra
+        document.querySelector("#search").addEventListener("input", (e) => {
+            this.filterItems(e.target.value);
+        });
+        
+        // Ordina
+        document.querySelector("#sort-btn").addEventListener("click", () => {
+            this.sortItems();
+        });
+    },
+    
+    addItem(text) {
+        const item = {
+            id: Date.now(),
+            text: text,
+            completed: false,
+            createdAt: new Date()
+        };
+        
+        this.items.push(item);
+        this.filteredItems = [...this.items];
+        this.render();
+    },
+    
+    removeItem(id) {
+        this.items = this.items.filter(item => item.id !== id);
+        this.filteredItems = this.filteredItems.filter(item => item.id !== id);
+        this.render();
+    },
+    
+    toggleComplete(id) {
+        const item = this.items.find(item => item.id === id);
+        if (item) {
+            item.completed = !item.completed;
+            this.render();
+        }
+    },
+    
+    filterItems(searchTerm) {
+        if (!searchTerm) {
+            this.filteredItems = [...this.items];
+        } else {
+            const regex = new RegExp(searchTerm, 'i');
+            this.filteredItems = this.items.filter(item => 
+                regex.test(item.text)
+            );
+        }
+        this.render();
+    },
+    
+    sortItems() {
+        this.filteredItems.sort((a, b) => 
+            a.text.localeCompare(b.text)
+        );
+        this.render();
+    },
+    
+    render() {
+        const list = document.querySelector("#item-list");
+        list.innerHTML = "";
+        
+        if (this.filteredItems.length === 0) {
+            list.innerHTML = "<li>Nessun elemento</li>";
+            return;
+        }
+        
+        this.filteredItems.forEach(item => {
+            const li = document.createElement("li");
+            li.className = item.completed ? "completed" : "";
+            
+            li.innerHTML = `
+                <span onclick="ListManager.toggleComplete(${item.id})">
+                    ${item.completed ? "✓" : "○"} ${item.text}
+                </span>
+                <button onclick="ListManager.removeItem(${item.id})">×</button>
+            `;
+            
+            list.appendChild(li);
+        });
+        
+        // Aggiorna statistiche
+        document.querySelector("#stats").innerText = 
+            `Totale: ${this.items.length} | Completati: ${
+                this.items.filter(i => i.completed).length
+            }`;
+    }
+};
+
+ListManager.init();
+```
+
+---
 
 
