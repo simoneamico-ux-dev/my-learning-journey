@@ -1,0 +1,1590 @@
+<!DOCTYPE html>
+<!-- 🎯 DICHIARAZIONE HTML5: "Benvenuti nel nostro studio di registrazione digitale!" -->
+<!-- È come aprire le porte di Spotify fatto in casa! 🎧 -->
+
+<html lang="en">
+<!-- 🌍 CONTENITORE PRINCIPALE: Il nostro player musicale -->
+<!-- lang="en" = inglese, la lingua universale della musica digitale! 🎼 -->
+
+  <head>
+    <!-- 🧠 IL CENTRO DI CONTROLLO: Dove impostiamo il palco musicale -->
+    <!-- È come preparare gli strumenti prima del concerto! -->
+    
+    <meta charset="UTF-8" />
+    <!-- 📝 CARATTERI UNIVERSALI: UTF-8 per titoli di canzoni in tutte le lingue! 🌐 -->
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 📱 DESIGN RESPONSIVE: "Il player si adatta a ogni schermo!" -->
+    <!-- È come avere un walkman che si trasforma in stereo! -->
+    
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <!-- 🔤 FONT ROBOTO MONO: Stile da terminale/tech -->
+    <!-- display=swap = carica il font senza bloccare la pagina -->
+    
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato&family=Roboto+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <!-- 🔤 FONT LATO: Per il testo leggibile -->
+    <!-- Duplica Roboto+Mono ma aggiunge Lato -->
+    
+    <title>
+      Learn Basic String and Array Methods by Building a Music Player App
+    </title>
+    <!-- 📑 TITOLO: Un progetto educativo di freeCodeCamp! -->
+    
+    <style>
+      /* 🎨 ===== IL DESIGN SYSTEM DEL PLAYER ===== */
+      
+      :root {
+        /* 🎨 ===== COLORI: La Palette del Music Player ===== */
+        --primary-color: #dfdfe2;
+        /* 🔘 GRIGIO CHIARO: Per testo principale su sfondo scuro */
+        
+        --secondary-color: #ffffff;
+        /* ⚪ BIANCO PURO: Per elementi di massimo contrasto */
+        
+        --app-background-color: #4d4d62;
+        /* 🌑 GRIGIO MEDIO: Lo sfondo generale dell'app */
+        
+        --background-color: #1b1b32;
+        /* ⚫ BLU SCURISSIMO: Per i componenti principali */
+        
+        --foreground-color: #3b3b4f;
+        /* 🔘 GRIGIO-BLU: Per elementi secondari/contenuti */
+        
+        --highlight-color: #f1be32;
+        /* 🟡 GIALLO ORO: Il colore che cattura l'attenzione! */
+        /* Usato per elementi attivi e importanti */
+      
+        /* 📏 ===== DIMENSIONI FONT ===== */
+        --root-font-size: 16px;
+        /* 📐 BASE: 16px è lo standard per il web */
+        
+        font-size: var(--root-font-size);
+        /* 🔧 APPLICA: Imposta sul root per calcoli rem */
+      
+        /* 🔤 ===== FAMIGLIE FONT ===== */
+        --font-headline: "Roboto Mono", monospace;
+        /* 💻 MONOSPACE: Per titoli tech/retro */
+        /* monospace = fallback se Roboto Mono non carica */
+        
+        --font-family: "Lato", sans-serif;
+        /* 📖 SANS-SERIF: Pulito per il contenuto principale */
+      }
+      
+      /* 🔄 ===== RESET UNIVERSALE ===== */
+      
+      *,
+      *::after,
+      *::before {
+        box-sizing: border-box;
+        /* 📦 BORDER-BOX: Include padding e bordi nelle dimensioni */
+        /* Applicato anche ai pseudo-elementi! */
+        /* È come dire "la scatola include tutto il contenuto" */
+      }
+      
+      body {
+        background-color: var(--app-background-color);
+        /* 🎨 SFONDO: Grigio medio dall'app */
+        
+        color: var(--primary-color);
+        /* 🔤 COLORE TESTO: Grigio chiaro per contrasto */
+        
+        font-family: var(--font-family);
+        /* 📝 FONT: Lato per tutto il body */
+      }
+      
+      /* 📰 ===== TITOLI ===== */
+      
+      h1 {
+        font-size: 1.125rem;
+        /* 📏 DIMENSIONE: 1.125 × 16px = 18px */
+        
+        line-height: 1.6;
+        /* 📐 INTERLINEA: 1.6 volte l'altezza del font */
+      }
+      
+      h2 {
+        font-size: var(--root-font-size);
+        /* 📏 DIMENSIONE: Uguale al root (16px) */
+      }
+      
+      ul {
+        margin: 0;
+        /* 🚫 NO MARGINE: Reset del default del browser */
+      }
+      
+      /* 📦 ===== CONTAINER PRINCIPALE ===== */
+      
+      .container {
+        margin-top: 10px;
+        /* ⬆️ MARGINE TOP: Piccolo spazio dal bordo */
+        
+        display: flex;
+        /* 🎯 FLEXBOX: Layout moderno */
+        
+        flex-direction: column;
+        /* 📦 DIREZIONE: Elementi uno sotto l'altro */
+        
+        justify-content: center;
+        /* ⚖️ CENTRA VERTICALMENTE: Nel contenitore */
+        
+        align-items: center;
+        /* ⚖️ CENTRA ORIZZONTALMENTE: Tutti gli elementi */
+        
+        row-gap: 5px;
+        /* 🌉 SPAZIO: 5px tra player e playlist */
+      }
+      
+      /* 🎧 ===== PLAYER E PLAYLIST BASE ===== */
+      
+      .player,
+      .playlist {
+        width: 450px;
+        /* 📏 LARGHEZZA: Fissa a 450px */
+        
+        background-color: var(--background-color);
+        /* 🎨 SFONDO: Blu scurissimo */
+        
+        border: 3px solid var(--foreground-color);
+        /* 🖼️ BORDO: 3px solido grigio-blu */
+      }
+      
+      /* 🎵 ===== PLAYER SPECIFICO ===== */
+      
+      .player {
+        height: 260px;
+        /* 📏 ALTEZZA: Fissa per il player */
+        
+        padding: 10px;
+        /* 🏠 PADDING: Respiro interno */
+        
+        display: flex;
+        /* 🎯 FLEX: Per allineare i contenuti */
+        
+        flex-direction: column;
+        /* 📦 COLONNA: Elementi verticali */
+        
+        align-items: center;
+        /* ⚖️ CENTRA: Orizzontalmente */
+        
+        row-gap: 10px;
+        /* 🌉 SPAZIO: Tra gli elementi interni */
+      }
+      
+      /* 🎯 ===== BARRE SUPERIORI ===== */
+      
+      .player-bar,
+      .playlist-bar {
+        display: flex;
+        /* 🎯 FLEX: Layout orizzontale */
+        
+        justify-content: space-between;
+        /* ⚖️ SPAZIO TRA: Elementi agli estremi */
+        
+        align-items: center;
+        /* 📐 ALLINEA: Verticalmente al centro */
+        
+        padding: 0 5px;
+        /* ↔️ PADDING: Solo orizzontale */
+        
+        width: 100%;
+        /* 📏 LARGHEZZA: Tutta disponibile */
+        
+        height: 30px;
+        /* 📏 ALTEZZA: Fissa a 30px */
+        
+        background-color: var(--foreground-color);
+        /* 🎨 SFONDO: Grigio-blu */
+      }
+      
+      /* 📊 ===== LINEE DECORATIVE ===== */
+      
+      .parallel-lines {
+        display: flex;
+        /* 🎯 FLEX: Per le linee */
+        
+        flex-wrap: wrap;
+        /* 🔄 WRAP: Va a capo se necessario */
+        
+        row-gap: 6px;
+        /* 🌉 SPAZIO: Tra le linee */
+        
+        padding: 0 5px;
+        /* ↔️ PADDING: Orizzontale */
+      }
+      
+      .parallel-lines > div {
+        height: 2px;
+        /* 📏 ALTEZZA: Linee sottili */
+        
+        width: 100%;
+        /* 📏 LARGHEZZA: Tutta disponibile */
+        
+        min-width: 75px;
+        /* 📏 MINIMO: Non più strette di 75px */
+        
+        background-color: var(--highlight-color);
+        /* 🟡 COLORE: Giallo oro per risaltare */
+      }
+      
+      /* 🔤 ===== TITOLI NEL PLAYER ===== */
+      
+      .fcc-title,
+      .playlist-title {
+        color: var(--secondary-color);
+        /* ⚪ COLORE: Bianco per contrasto */
+        
+        margin: 0 10px;
+        /* ↔️ MARGINI: Laterali per respiro */
+        
+        font-family: var(--font-headline);
+        /* 💻 FONT: Roboto Mono per stile tech */
+      }
+      
+      /* 🎼 ===== CONTENUTO DEL PLAYER ===== */
+      
+      .player-content {
+        display: flex;
+        /* 🎯 FLEX: Per cover e controlli */
+        
+        background-color: var(--foreground-color);
+        /* 🎨 SFONDO: Grigio-blu */
+        
+        width: 430px;
+        /* 📏 LARGHEZZA: Poco meno del container */
+        
+        height: 200px;
+        /* 📏 ALTEZZA: Per contenere tutto */
+        
+        column-gap: 13px;
+        /* 🌉 SPAZIO: Tra cover e controlli */
+        
+        align-items: center;
+        /* 📐 ALLINEA: Verticalmente */
+        
+        justify-content: center;
+        /* ⚖️ CENTRA: Orizzontalmente */
+      }
+      
+      /* 🖼️ ===== ALBUM ART ===== */
+      
+      #player-album-art {
+        background-color: var(--secondary-color);
+        /* ⚪ SFONDO: Bianco di base */
+        
+        border: 6px solid var(--background-color);
+        /* 🖼️ CORNICE: 6px blu scuro */
+      }
+      
+      #player-album-art img {
+        width: 150px;
+        /* 📏 LARGHEZZA: Quadrato 150x150 */
+        
+        display: block;
+        /* 📦 BLOCK: Rimuove spazi inline */
+      }
+      
+      /* 📟 ===== DISPLAY DEL PLAYER ===== */
+      
+      .player-display {
+        display: flex;
+        /* 🎯 FLEX: Per organizzare info */
+        
+        flex-direction: column;
+        /* 📦 COLONNA: Info sopra, controlli sotto */
+        
+        row-gap: 20px;
+        /* 🌉 SPAZIO: Tra info e controlli */
+        
+        padding: 14px;
+        /* 🏠 PADDING: Respiro interno */
+        
+        background-color: var(--background-color);
+        /* 🎨 SFONDO: Blu scurissimo */
+        
+        height: 153px;
+        /* 📏 ALTEZZA: Specifica */
+        
+        width: 226px;
+        /* 📏 LARGHEZZA: Per contenere tutto */
+      }
+      
+      /* 🎤 ===== INFO CANZONE ===== */
+      
+      .player-display-song-artist {
+        height: 80px;
+        /* 📏 ALTEZZA: Spazio per titolo e artista */
+      }
+      
+      /* 🎮 ===== BOTTONI DEL PLAYER ===== */
+      
+      .player-buttons svg {
+        fill: var(--primary-color);
+        /* 🎨 COLORE SVG: Grigio chiaro di default */
+      }
+      
+      .playing > svg {
+        fill: var(--highlight-color);
+        /* 🟡 COLORE ATTIVO: Giallo quando in riproduzione */
+      }
+      
+      .player-buttons {
+        display: flex;
+        /* 🎯 FLEX: Bottoni in fila */
+        
+        justify-content: space-around;
+        /* ⚖️ SPAZIO UNIFORME: Tra i bottoni */
+      }
+      
+      /* 🔘 ===== STILE BOTTONI ===== */
+      
+      button {
+        background: transparent;
+        /* 🚫 NO SFONDO: Trasparente */
+        
+        border: none;
+        /* 🚫 NO BORDO: Pulito */
+        
+        color: var(--primary-color);
+        /* 🔤 COLORE: Grigio chiaro */
+        
+        cursor: pointer;
+        /* 👆 CURSORE: Manina al passaggio */
+        
+        font-size: var(--root-font-size);
+        /* 📏 DIMENSIONE: 16px standard */
+        
+        outline-color: var(--highlight-color);
+        /* 🟡 OUTLINE: Giallo per focus */
+        
+        text-align: center;
+        /* ⚖️ TESTO: Centrato */
+      }
+      
+      /* 🎵 ===== CANZONI NELLA PLAYLIST ===== */
+      
+      .playlist-song {
+        outline-color: var(--highlight-color);
+        /* 🟡 OUTLINE: Giallo per focus keyboard */
+      }
+      
+      .playlist li:not(:last-child) {
+        border-bottom: 1px solid var(--background-color);
+        /* 📏 BORDO: Separa le canzoni */
+        /* :not(:last-child) = tutti tranne l'ultimo */
+      }
+      
+      /* 🎯 ===== STATI FOCUS ===== */
+      
+      button:focus,
+      .playlist-song:focus {
+        outline-style: dashed;
+        /* 🔲 STILE: Tratteggiato */
+        
+        outline-width: 2px;
+        /* 📏 SPESSORE: 2px visibile */
+      }
+      
+      /* 📋 ===== PLAYLIST CONTAINER ===== */
+      
+      .playlist {
+        height: auto;
+        /* 📏 ALTEZZA: Si adatta al contenuto */
+        
+        padding: 10px;
+        /* 🏠 PADDING: Respiro interno */
+        
+        display: flex;
+        /* 🎯 FLEX: Layout moderno */
+        
+        flex-direction: column;
+        /* 📦 COLONNA: Elementi verticali */
+        
+        align-items: center;
+        /* ⚖️ CENTRA: Orizzontalmente */
+        
+        row-gap: 10px;
+        /* 🌉 SPAZIO: Tra gli elementi */
+      }
+      
+      /* 📜 ===== LISTA CANZONI ===== */
+      
+      #playlist-songs {
+        width: 430px;
+        /* 📏 LARGHEZZA: Come il player content */
+        
+        height: 100%;
+        /* 📏 ALTEZZA: Tutto lo spazio disponibile */
+        
+        background-color: var(--foreground-color);
+        /* 🎨 SFONDO: Grigio-blu */
+        
+        display: flex;
+        /* 🎯 FLEX: Per le canzoni */
+        
+        flex-direction: column;
+        /* 📦 COLONNA: Canzoni una sotto l'altra */
+        
+        row-gap: 8px;
+        /* 🌉 SPAZIO: Tra le canzoni */
+        
+        padding: 8px 9px;
+        /* 🏠 PADDING: Asimmetrico per design */
+        
+        visibility: visible;
+        /* 👁️ VISIBILITÀ: Esplicitamente visibile */
+        
+        justify-content: start;
+        /* ⬆️ ALLINEA: Dall'alto */
+        
+        list-style: none;
+        /* 🚫 NO PALLINI: Lista pulita */
+      }
+      
+      /* 🎵 ===== SINGOLA CANZONE ===== */
+      
+      .playlist-song {
+        display: flex;
+        /* 🎯 FLEX: Per info e bottoni */
+        
+        height: 55px;
+        /* 📏 ALTEZZA: Fissa per uniformità */
+        
+        justify-content: space-between;
+        /* ⚖️ SPAZIO: Info a sinistra, delete a destra */
+        
+        align-items: center;
+        /* 📐 ALLINEA: Verticalmente */
+        
+        padding: 5px;
+        /* 🏠 PADDING: Piccolo respiro */
+      }
+      
+      /* 🎯 ===== CANZONE CORRENTE ===== */
+      
+      [aria-current="true"] {
+        background-color: var(--background-color);
+        /* 🎨 SFONDO: Blu scuro per evidenziare */
+      }
+      
+      [aria-current="true"] p {
+        color: var(--highlight-color);
+        /* 🟡 TESTO: Giallo per la canzone attiva */
+      }
+      
+      /* 📝 ===== INFO CANZONE NELLA PLAYLIST ===== */
+      
+      .playlist-song-info {
+        height: 100%;
+        /* 📏 ALTEZZA: Tutta disponibile */
+        
+        display: flex;
+        /* 🎯 FLEX: Per allineare info */
+        
+        flex-direction: row;
+        /* ➡️ RIGA: Info in orizzontale */
+        
+        align-items: center;
+        /* 📐 ALLINEA: Verticalmente */
+        
+        justify-content: space-around;
+        /* ⚖️ SPAZIO: Distribuito uniformemente */
+        
+        column-gap: 7px;
+        /* 🌉 SPAZIO: Tra le info */
+        
+        padding: 5px 0;
+        /* 🏠 PADDING: Solo verticale */
+        
+        font-family: var(--font-family);
+        /* 🔤 FONT: Lato per leggibilità */
+      }
+      
+      /* 🎤 ===== TITOLO E ARTISTA NEL PLAYER ===== */
+      
+      #player-song-title,
+      #player-song-artist {
+        margin: 0;
+        /* 🚫 NO MARGINI: Reset default */
+      }
+      
+      #player-song-artist {
+        color: var(--highlight-color);
+        /* 🟡 COLORE: Giallo per l'artista */
+        
+        font-size: 0.75rem;
+        /* 📏 DIMENSIONE: 0.75 × 16px = 12px */
+      }
+      
+      #player-song-title {
+        font-size: 1.125rem;
+        /* 📏 DIMENSIONE: 1.125 × 16px = 18px */
+      }
+      
+      /* 📋 ===== ELEMENTI PLAYLIST ===== */
+      
+      .playlist-song-title {
+        font-size: 0.85rem;
+        /* 📏 DIMENSIONE: 0.85 × 16px = 13.6px */
+        
+        width: 241px;
+        /* 📏 LARGHEZZA: Fissa per allineamento */
+        
+        text-align: left;
+        /* ⬅️ ALLINEA: A sinistra */
+      }
+      
+      .playlist-song-artist {
+        font-size: 0.725rem;
+        /* 📏 DIMENSIONE: 0.725 × 16px = 11.6px */
+        
+        width: 80px;
+        /* 📏 LARGHEZZA: Più stretta */
+      }
+      
+      .playlist-song-duration {
+        font-size: 0.725rem;
+        /* 📏 DIMENSIONE: Come l'artista */
+        
+        margin: auto;
+        /* ⚖️ MARGINI: Auto per centrare */
+        
+        font-family: var(--font-headline);
+        /* 💻 FONT: Monospace per i numeri */
+        
+        width: 30px;
+        /* 📏 LARGHEZZA: Per mm:ss */
+      }
+      
+      /* 🗑️ ===== BOTTONE DELETE ===== */
+      
+      .playlist-song-delete {
+        padding: 0;
+        /* 🚫 NO PADDING: Bottone compatto */
+        
+        width: 20px;
+        height: 20px;
+        /* 📏 DIMENSIONI: Quadrato 20x20 */
+      }
+      
+      .playlist-song-delete,
+      .playlist-song-delete {
+        fill: var(--foreground-color);
+        /* 🎨 COLORE SVG: Grigio-blu */
+        /* ⚠️ Selettore duplicato! */
+      }
+      
+      /* 🗑️ ===== HOVER SUL DELETE ===== */
+      
+      .playlist-song-delete:hover circle,
+      .playlist-song-delete:focus circle {
+        fill: #ff0000;
+        /* 🔴 ROSSO: Per indicare pericolo/elimina */
+      }
+      
+      /* 📱 ===== MEDIA QUERY MOBILE ===== */
+      
+      @media (max-width: 700px) {
+        /* 📱 MOBILE: Sotto i 700px */
+        
+        .player,
+        .playlist {
+          width: 300px;
+          /* 📏 LARGHEZZA RIDOTTA: Da 450px a 300px */
+        }
+      
+        .player {
+          height: 340px;
+          /* 📏 ALTEZZA AUMENTATA: Per layout verticale */
+        }
+      
+        #playlist-songs {
+          height: 280px;
+          /* 📏 ALTEZZA FISSA: Per scroll */
+          
+          padding: 5px 6px;
+          /* 🏠 PADDING: Ridotto */
+          
+          overflow-y: scroll;
+          /* 📜 SCROLL VERTICALE: Quando serve */
+          
+          overflow-x: hidden;
+          /* 🚫 NO SCROLL ORIZZONTALE: Mai */
+          
+          scrollbar-color: var(--background-color) var(--secondary-color);
+          /* 🎨 COLORI SCROLLBAR: Per Firefox */
+          
+          scrollbar-width: thin;
+          /* 📏 SCROLLBAR SOTTILE: Per Firefox */
+        }
+      
+        /* 📜 ===== SCROLLBAR WEBKIT (Chrome/Safari) ===== */
+        
+        #playlist-songs::-webkit-scrollbar {
+          width: 5px;
+          /* 📏 LARGHEZZA: Scrollbar sottile */
+        }
+      
+        #playlist-songs::-webkit-scrollbar-track {
+          background: var(--background-color);
+          /* 🎨 SFONDO TRACK: Blu scuro */
+        }
+      
+        #playlist-songs::-webkit-scrollbar-thumb {
+          background: var(--secondary-color);
+          /* 🎨 THUMB: Bianco per contrasto */
+        }
+      
+        /* 📏 ===== DIMENSIONI TESTI MOBILE ===== */
+        
+        h1 {
+          font-size: 0.813rem;
+          /* 📏 PIÙ PICCOLO: 0.813 × 16px = 13px */
+        }
+      
+        h2 {
+          font-size: 0.75rem;
+          /* 📏 PIÙ PICCOLO: 0.75 × 16px = 12px */
+        }
+      
+        /* 📐 ===== LARGHEZZE MOBILE ===== */
+        
+        .player-bar,
+        .playlist-bar,
+        .player-content,
+        #playlist-songs {
+          width: 280px;
+          /* 📏 LARGHEZZA: Uniforme per tutti */
+        }
+      
+        .playlist-song {
+          justify-content: space-between;
+          /* ⚖️ SPAZIO: Massimizza lo spazio */
+        }
+      
+        .playlist-song-title {
+          width: 140px;
+          /* 📏 RIDOTTA: Da 241px a 140px */
+        }
+      
+        .playlist-song-artist {
+          width: 40px;
+          /* 📏 RIDOTTA: Da 80px a 40px */
+        }
+      
+        .playlist-song-duration > button {
+          padding: 0;
+          /* 🚫 NO PADDING: Spazio prezioso! */
+        }
+      
+        /* 🎵 ===== PLAYER CONTENT MOBILE ===== */
+        
+        .player-content {
+          display: inline;
+          /* 📦 INLINE: Cambia completamente! */
+          
+          position: relative;
+          /* 📍 RELATIVO: Per posizionare i figli */
+          
+          justify-items: center;
+          /* ⚖️ CENTRA: Gli elementi (non standard) */
+          
+          height: 100%;
+          /* 📏 ALTEZZA: Tutto lo spazio */
+        }
+      
+        /* 🖼️ ===== ALBUM ART MOBILE ===== */
+        
+        #player-album-art {
+          z-index: -100;
+          /* 📚 LIVELLO: Sotto tutto! */
+          
+          height: 280px;
+          /* 📏 ALTEZZA: Molto più grande */
+          
+          box-shadow: none;
+          /* 🚫 NO OMBRA: Pulito */
+          
+          background: #000;
+          /* ⚫ SFONDO: Nero per contrasto */
+        }
+      
+        #player-album-art img {
+          width: 100%;
+          /* 📏 LARGHEZZA: Riempi il contenitore */
+          
+          opacity: 0.6;
+          /* 👻 TRASPARENZA: 60% per overlay effect */
+        }
+      
+        .player-display-song-artist {
+          padding: 0 10px;
+          /* ↔️ PADDING: Solo laterale */
+        }
+      
+        .player-display-song-artist > p {
+          white-space: pre-wrap;
+          /* 📝 TESTO: Mantiene spazi e va a capo */
+        }
+      
+        /* 📟 ===== DISPLAY OVERLAY MOBILE ===== */
+        
+        .player-display {
+          position: absolute;
+          /* 🎯 ASSOLUTO: Sovrapposto all'immagine! */
+          
+          width: 100%;
+          /* 📏 LARGHEZZA: Tutto il contenitore */
+          
+          z-index: 1000;
+          /* 📚 LIVELLO: Sopra l'immagine */
+          
+          background-color: transparent;
+          /* 🚫 TRASPARENTE: Vedi l'immagine sotto */
+          
+          top: 0;
+          /* 📍 POSIZIONE: Dall'alto */
+          
+          height: 280px;
+          /* 📏 ALTEZZA: Come l'immagine */
+          
+          justify-content: space-between;
+          /* ⚖️ SPAZIO: Info sopra, controlli sotto */
+          
+          text-align: center;
+          /* ⚖️ TESTO: Tutto centrato */
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- 🎵 ===== IL MUSIC PLAYER PRENDE VITA! ===== -->
+    
+    <div class="container">
+      <!-- 📦 CONTAINER: Il wrapper principale che contiene tutto -->
+      <!-- Usa flexbox per impilare player e playlist verticalmente -->
+      
+      <div class="player">
+        <!-- 🎧 PLAYER: Il lettore musicale vero e proprio -->
+        <!-- Contiene: barra superiore, contenuto (cover + controlli) -->
+        
+        <div class="player-bar">
+          <!-- 🎯 BARRA SUPERIORE: Stile retrò con logo freeCodeCamp -->
+          
+          <div class="parallel-lines">
+            <!-- 📊 LINEE DECORATIVE SINISTRA: Stile cassetta audio! -->
+            <div></div>
+            <!-- 📏 LINEA 1: Solo un div vuoto stilizzato con CSS -->
+            <div></div>
+            <!-- 📏 LINEA 2: Crea l'effetto vintage -->
+          </div>
+          
+          <h1 class="fcc-title">freeCodeCamp</h1>
+          <!-- 🏫 LOGO: Il brand del progetto educativo -->
+          <!-- Font monospace per look tech -->
+          
+          <div class="parallel-lines">
+            <!-- 📊 LINEE DECORATIVE DESTRA: Simmetriche -->
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+        
+        <div class="player-content">
+          <!-- 🎼 CONTENUTO PRINCIPALE: Cover album + display info -->
+          
+          <div id="player-album-art">
+            <!-- 🖼️ CONTENITORE IMMAGINE: Per la cover -->
+            <img
+              src="https://cdn.freecodecamp.org/curriculum/js-music-player/quincy-larson-album-art.jpg"
+              alt="song cover art"
+            />
+            <!-- 📸 COVER: Immagine dell'album di Quincy Larson -->
+            <!-- alt per accessibilità -->
+          </div>
+          
+          <div class="player-display">
+            <!-- 📟 DISPLAY INFO: Mostra info canzone e controlli -->
+            
+            <div class="player-display-song-artist">
+              <!-- 🎤 CONTENITORE INFO: Per titolo e artista -->
+              <p id="player-song-title"></p>
+              <!-- 🎵 TITOLO: Vuoto, popolato via JS -->
+              <p id="player-song-artist"></p>
+              <!-- 🎤 ARTISTA: Anche questo popolato via JS -->
+            </div>
+            
+            <div class="player-buttons">
+              <!-- 🎮 CONTROLLI PLAYBACK: I nostri pulsanti -->
+              
+              <button id="previous" class="previous" aria-label="Previous">
+                <!-- ⏮️ PRECEDENTE: Torna alla canzone precedente -->
+                <svg
+                  width="24"
+                  height="19"
+                  viewBox="0 0 24 19"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <!-- 🎨 SVG PATH: Disegna triangolo + rettangolo -->
+                  <path d="M23.2248 0L7.03964 9.5L23.2248 19L23.2248 0Z" />
+                  <!-- 🔺 TRIANGOLO: Punta verso sinistra -->
+                  <rect
+                    width="4.63633"
+                    height="18.5453"
+                    transform="matrix(-1 0 0 1 4.63633 0)"
+                  />
+                  <!-- ⏸️ BARRA: A sinistra del triangolo -->
+                </svg>
+              </button>
+              
+              <button id="play" class="play" aria-label="Play">
+                <!-- ▶️ PLAY: Avvia la riproduzione -->
+                <svg
+                  width="17"
+                  height="19"
+                  viewBox="0 0 17 19"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M0 0L16.1852 9.5L1.88952e-07 19L0 0Z" />
+                  <!-- 🔺 TRIANGOLO PLAY: Classica forma triangolare -->
+                </svg>
+              </button>
+              
+              <button id="pause" class="pause" aria-label="Pause">
+                <!-- ⏸️ PAUSE: Mette in pausa -->
+                <svg
+                  width="17"
+                  height="19"
+                  viewBox="0 0 17 19"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M0 6.54013e-07H4.75V19H0V6.54013e-07Z" />
+                  <!-- ⏸️ BARRA 1: Prima barra verticale -->
+                  <path d="M11.4 0H16.15V19H11.4V0Z" />
+                  <!-- ⏸️ BARRA 2: Seconda barra verticale -->
+                </svg>
+              </button>
+              
+              <button id="next" class="next" aria-label="Next">
+                <!-- ⏭️ NEXT: Prossima canzone -->
+                <svg
+                  width="24"
+                  height="19"
+                  viewBox="0 0 24 19"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M0 0L16.1852 9.5L1.88952e-07 19L0 0Z" />
+                  <!-- 🔺 TRIANGOLO: Punta verso destra -->
+                  <rect x="18.5885" width="4.63633" height="18.5453" />
+                  <!-- ⏸️ BARRA: A destra del triangolo -->
+                </svg>
+              </button>
+              
+              <button id="shuffle" class="shuffle" aria-label="Shuffle">
+                <!-- 🔀 SHUFFLE: Riproduzione casuale -->
+                <svg
+                  width="17"
+                  height="14"
+                  viewBox="0 0 17 14"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M12.2127 0L17 2.9219L12.0759 5.60686L12.1321 3.30594C11.9081 3.30997 11.7043 3.3165 11.528 3.326C11.3777 3.3341 11.2523 3.34411 11.1542 3.35578C11.1053 3.3616 11.0661 3.36749 11.036 3.37309C11.0211 3.37587 11.0095 3.37835 11.001 3.38041C10.9967 3.38143 10.9936 3.38227 10.9913 3.38289C10.989 3.38352 10.988 3.38385 10.9881 3.38382C10.9266 3.40381 10.7572 3.5014 10.4637 3.73265C10.1895 3.94866 9.85452 4.24234 9.47614 4.59282C8.81462 5.20556 8.03912 5.97461 7.25609 6.76752C8.03912 7.56043 8.81462 8.32948 9.47614 8.94223C9.85452 9.29271 10.1895 9.58639 10.4637 9.80239C10.7572 10.0336 10.9266 10.1312 10.9881 10.1512C10.988 10.1512 10.989 10.1515 10.9913 10.1522C10.9936 10.1528 10.9967 10.1536 11.001 10.1546C11.0095 10.1567 11.0211 10.1592 11.036 10.162C11.0661 10.1676 11.1053 10.1734 11.1542 10.1793C11.2523 10.1909 11.3777 10.2009 11.528 10.209C11.7043 10.2185 11.9081 10.2251 12.1321 10.2291L12.0759 7.92819L17 10.6131L12.2127 13.535L12.1558 11.2011C11.9071 11.197 11.677 11.1899 11.4757 11.1791C11.175 11.1629 10.8757 11.1361 10.6878 11.0751C10.4405 10.9947 10.1465 10.7892 9.86244 10.5654C9.55904 10.3263 9.20251 10.0129 8.81601 9.6549C8.14192 9.03051 7.35822 8.2533 6.57518 7.46052C6.2731 7.76927 5.9736 8.07675 5.68453 8.37353C5.24051 8.8294 4.82109 9.26001 4.45467 9.63114C4.10458 9.98574 3.79502 10.2941 3.54834 10.5285C3.42516 10.6455 3.31437 10.7473 3.22005 10.8285C3.13287 10.9035 3.03686 10.9812 2.94938 11.0324C2.46156 11.3178 1.79381 11.3751 1.32395 11.3812C1.07514 11.3845 0.852462 11.3732 0.692065 11.3611C0.611577 11.3551 0.546037 11.3488 0.499864 11.344C0.476761 11.3415 0.458455 11.3394 0.445496 11.3379L0.43012 11.336L0.425557 11.3355L0.423542 11.3352C0.423448 11.3352 0.423143 11.3352 0.485767 10.8535L0.423542 11.3352C0.157529 11.3006 -0.0304782 11.0569 0.00410824 10.7909C0.0386807 10.525 0.282182 10.3374 0.548069 10.3718C0.548087 10.3718 0.548051 10.3718 0.548069 10.3718L0.549944 10.372L0.559616 10.3732C0.568682 10.3743 0.582871 10.3759 0.60165 10.3779C0.639243 10.3818 0.695017 10.3872 0.764728 10.3924C0.90473 10.4029 1.09799 10.4127 1.31133 10.4099C1.76571 10.404 2.20705 10.3412 2.4587 10.194C2.45847 10.1941 2.4583 10.1942 2.4587 10.194C2.46075 10.1926 2.47161 10.1855 2.49271 10.1693C2.51674 10.1508 2.54777 10.1254 2.58634 10.0922C2.66358 10.0258 2.7615 9.93612 2.87917 9.82431C3.11419 9.60097 3.41488 9.30164 3.76339 8.94864C4.1317 8.57559 4.54478 8.15147 4.98424 7.70025C5.27761 7.39904 5.58273 7.08575 5.89415 6.76752C5.58272 6.44928 5.27759 6.13598 4.98421 5.83476C4.54476 5.38355 4.1317 4.95944 3.76339 4.5864C3.41488 4.2334 3.11419 3.93407 2.87917 3.71074C2.7615 3.59892 2.66358 3.50929 2.58634 3.44281C2.54777 3.40961 2.51674 3.38425 2.49271 3.36577C2.4716 3.34954 2.46099 3.34258 2.45894 3.34123C2.45868 3.34108 2.45853 3.34096 2.45894 3.34123C2.2073 3.19405 1.76572 3.13106 1.31133 3.12515C1.09799 3.12238 0.90473 3.13211 0.764728 3.14261C0.695017 3.14784 0.639243 3.15321 0.60165 3.15717C0.582871 3.15915 0.568682 3.16077 0.559616 3.16184L0.549944 3.16301L0.548391 3.1632C0.282436 3.1977 0.0386882 3.01013 0.00410824 2.74417C-0.0304782 2.47816 0.15713 2.23447 0.423143 2.19989L0.485767 2.68154C0.423143 2.19989 0.423048 2.1999 0.423143 2.19989L0.425557 2.19958L0.43012 2.199L0.445496 2.19714C0.458455 2.19561 0.476761 2.19352 0.499864 2.19109C0.546037 2.18622 0.611577 2.17995 0.692065 2.17391C0.852462 2.16188 1.07514 2.15058 1.32395 2.15381C1.79381 2.15992 2.46156 2.21726 2.94938 2.50267C3.03686 2.55385 3.13287 2.63152 3.22005 2.70655C3.31437 2.78773 3.42516 2.8895 3.54834 3.00655C3.79502 3.24097 4.10458 3.54931 4.45467 3.9039C4.82109 4.27504 5.24052 4.70565 5.68455 5.16153C5.97361 5.4583 6.2731 5.76578 6.57518 6.07452C7.35822 5.28174 8.14192 4.50454 8.81601 3.88014C9.20251 3.52214 9.55904 3.20872 9.86244 2.96964C10.1465 2.74581 10.4405 2.54035 10.6878 2.45997C10.8757 2.39892 11.175 2.37219 11.4757 2.35598C11.677 2.34514 11.9071 2.33807 12.1558 2.33396L12.2127 0Z"
+                  />
+                  <!-- 🔀 PATH COMPLESSO: Disegna le frecce incrociate dello shuffle -->
+                  <!-- È il path SVG più complesso di tutti! -->
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="playlist">
+        <!-- 📋 PLAYLIST: La lista delle canzoni disponibili -->
+        
+        <div class="playlist-bar">
+          <!-- 🎯 BARRA PLAYLIST: Header della playlist -->
+          
+          <div class="parallel-lines">
+            <!-- 📊 LINEE SINISTRA: Decorative -->
+            <div></div>
+            <div></div>
+          </div>
+          
+          <h2 class="playlist-title" id="playlist">Playlist</h2>
+          <!-- 📋 TITOLO: "Playlist" con font monospace -->
+          
+          <div class="parallel-lines">
+            <!-- 📊 LINEE DESTRA: Simmetriche -->
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+        
+        <ul id="playlist-songs"></ul>
+        <!-- 📜 LISTA CANZONI: Vuota! Sarà popolata via JavaScript -->
+        <!-- È qui che la magia di JS inserirà tutte le canzoni -->
+      </div>
+    </div>
+    
+    <script>
+      // 🎮 ===== IL CERVELLO DEL MUSIC PLAYER: JavaScript! =====
+      
+      // 📍 ===== SELEZIONE ELEMENTI DOM =====
+      const playlistSongs = document.getElementById("playlist-songs");
+      // 📜 PLAYLIST UL: Dove inseriremo le canzoni
+      
+      const playButton = document.getElementById("play");
+      // ▶️ BOTTONE PLAY: Per avviare la riproduzione
+      
+      const pauseButton = document.getElementById("pause");
+      // ⏸️ BOTTONE PAUSE: Per mettere in pausa
+      
+      const nextButton = document.getElementById("next");
+      // ⏭️ BOTTONE NEXT: Prossima canzone
+      
+      const previousButton = document.getElementById("previous");
+      // ⏮️ BOTTONE PREVIOUS: Canzone precedente
+      
+      const shuffleButton = document.getElementById("shuffle");
+      // 🔀 BOTTONE SHUFFLE: Mischia la playlist
+      
+      // 🎵 ===== DATABASE DELLE CANZONI =====
+      const allSongs = [
+        {
+          id: 0,
+          title: "Scratching The Surface",
+          artist: "Quincy Larson",
+          duration: "4:25",
+          src: "https://cdn.freecodecamp.org/curriculum/js-music-player/scratching-the-surface.mp3",
+        },
+        // 🎵 CANZONE 1: Oggetto con tutte le proprietà
+        // id = identificativo univoco per gestione
+        // title = titolo da mostrare
+        // artist = nome dell'artista
+        // duration = durata formattata mm:ss
+        // src = URL del file MP3
+        
+        {
+          id: 1,
+          title: "Can't Stay Down",
+          artist: "Quincy Larson",
+          duration: "4:15",
+          src: "https://cdn.freecodecamp.org/curriculum/js-music-player/can't-stay-down.mp3",
+        },
+        // 🎵 CANZONE 2: Notare l'apostrofo nell'URL!
+        
+        {
+          id: 2,
+          title: "Still Learning",
+          artist: "Quincy Larson",
+          duration: "3:51",
+          src: "https://cdn.freecodecamp.org/curriculum/js-music-player/still-learning.mp3",
+        },
+        
+        {
+          id: 3,
+          title: "Cruising for a Musing",
+          artist: "Quincy Larson",
+          duration: "3:34",
+          src: "https://cdn.freecodecamp.org/curriculum/js-music-player/cruising-for-a-musing.mp3",
+        },
+        
+        {
+          id: 4,
+          title: "Never Not Favored",
+          artist: "Quincy Larson",
+          duration: "3:35",
+          src: "https://cdn.freecodecamp.org/curriculum/js-music-player/never-not-favored.mp3",
+        },
+        
+        {
+          id: 5,
+          title: "From the Ground Up",
+          artist: "Quincy Larson",
+          duration: "3:12",
+          src: "https://cdn.freecodecamp.org/curriculum/js-music-player/from-the-ground-up.mp3",
+        },
+        
+        {
+          id: 6,
+          title: "Walking on Air",
+          artist: "Quincy Larson",
+          duration: "3:25",
+          src: "https://cdn.freecodecamp.org/curriculum/js-music-player/walking-on-air.mp3",
+        },
+        
+        {
+          id: 7,
+          title: "Can't Stop Me. Can't Even Slow Me Down.",
+          artist: "Quincy Larson",
+          duration: "3:52",
+          src: "https://cdn.freecodecamp.org/curriculum/js-music-player/cant-stop-me-cant-even-slow-me-down.mp3",
+        },
+        // 🎵 CANZONE 8: Titolo lungo con punti!
+        
+        {
+          id: 8,
+          title: "The Surest Way Out is Through",
+          artist: "Quincy Larson",
+          duration: "3:10",
+          src: "https://cdn.freecodecamp.org/curriculum/js-music-player/the-surest-way-out-is-through.mp3",
+        },
+        
+        {
+          id: 9,
+          title: "Chasing That Feeling",
+          artist: "Quincy Larson",
+          duration: "2:43",
+          src: "https://cdn.freecodecamp.org/curriculum/js-music-player/chasing-that-feeling.mp3",
+        },
+        // 🎵 ULTIMA CANZONE: La più corta (2:43)
+      ];
+      
+      // 🔊 ===== OGGETTO AUDIO HTML5 =====
+      const audio = new Audio();
+      // 🎧 AUDIO API: Crea un elemento audio invisibile
+      // new Audio() = costruttore per creare un player audio
+      // Non ha bisogno di essere nel DOM per funzionare!
+      
+      // 👤 ===== STATO DELL'UTENTE =====
+      let userData = {
+        songs: [...allSongs],
+        // 📚 COPIA ARRAY: Spread operator copia tutti gli elementi
+        // [...array] = crea nuovo array con stessi elementi
+        // Così possiamo modificare senza toccare l'originale
+        
+        currentSong: null,
+        // 🎵 CANZONE CORRENTE: null = nessuna selezionata
+        // Terrà l'oggetto della canzone in riproduzione
+        
+        songCurrentTime: 0,
+        // ⏱️ TEMPO SALVATO: Per riprendere da dove si era
+        // In secondi, salvato quando si mette in pausa
+      };
+      
+      // 🎵 ===== FUNZIONE PLAY SONG =====
+      const playSong = (id) => {
+        // 🎯 PARAMETRO: id della canzone da riprodurre
+        
+        const song = userData?.songs.find((song) => song.id === id);
+        // 🔍 FIND: Cerca la canzone con questo ID
+        // ?. = optional chaining: se userData non esiste, non crasha
+        // find() = ritorna il primo elemento che soddisfa la condizione
+        // (song) => song.id === id = funzione che testa ogni canzone
+        
+        audio.src = song.src;
+        // 🔗 CARICA MP3: Imposta l'URL del file audio
+        
+        audio.title = song.title;
+        // 📝 TITOLO: Per accessibilità e metadata
+      
+        if (userData?.currentSong === null || userData?.currentSong.id !== song.id) {
+          // 🆕 NUOVA CANZONE? Controlla se è diversa
+          audio.currentTime = 0;
+          // ⏱️ RESET: Parti dall'inizio
+        } else {
+          audio.currentTime = userData?.songCurrentTime;
+          // ⏱️ RIPRENDI: Dal punto salvato
+        }
+        
+        userData.currentSong = song;
+        // 💾 SALVA: Aggiorna la canzone corrente nello stato
+        
+        playButton.classList.add("playing");
+        // 🎨 CLASSE CSS: Per cambiare colore del bottone
+        // classList.add() = aggiunge classe senza rimuovere altre
+      
+        highlightCurrentSong();
+        // 🎨 EVIDENZIA: Nella playlist
+        
+        setPlayerDisplay();
+        // 📟 AGGIORNA: Titolo e artista nel display
+        
+        setPlayButtonAccessibleText();
+        // ♿ ACCESSIBILITÀ: Aggiorna aria-label
+        
+        audio.play();
+        // ▶️ PLAY: Finalmente, inizia la riproduzione!
+        // L'API Audio si occupa di tutto il resto
+      };
+      
+      // ⏸️ ===== FUNZIONE PAUSE =====
+      const pauseSong = () => {
+        // 🚫 NESSUN PARAMETRO: Pausa sempre la corrente
+        
+        userData.songCurrentTime = audio.currentTime;
+        // 💾 SALVA POSIZIONE: currentTime = secondi dall'inizio
+        // Così possiamo riprendere da qui dopo
+        
+        playButton.classList.remove("playing");
+        // 🎨 RIMUOVI CLASSE: Torna al colore normale
+        
+        audio.pause();
+        // ⏸️ PAUSA: L'API ferma la riproduzione
+      };
+      
+      // ⏭️ ===== FUNZIONE NEXT SONG =====
+      const playNextSong = () => {
+        if (userData?.currentSong === null) {
+          // 🔍 NESSUNA CANZONE? Parti dalla prima
+          playSong(userData?.songs[0].id);
+          // ▶️ PRIMA: Indice 0 dell'array
+        } else {
+          const currentSongIndex = getCurrentSongIndex();
+          // 📍 INDICE: Trova posizione nell'array
+          
+          const nextSong = userData?.songs[currentSongIndex + 1];
+          // ➕ PROSSIMA: Indice + 1
+          // ⚠️ Potrebbe essere undefined se siamo all'ultima!
+      
+          playSong(nextSong.id);
+          // ▶️ RIPRODUCI: La prossima canzone
+        }
+      };
+      
+      // ⏮️ ===== FUNZIONE PREVIOUS SONG =====
+      const playPreviousSong = () => {
+         if (userData?.currentSong === null) return;
+         // 🚫 NESSUNA CANZONE? Esci subito
+         // return = termina la funzione qui
+         
+         else {
+          const currentSongIndex = getCurrentSongIndex();
+          // 📍 INDICE: Posizione corrente
+          
+          const previousSong = userData?.songs[currentSongIndex - 1];
+          // ➖ PRECEDENTE: Indice - 1
+          // ⚠️ Potrebbe essere undefined se siamo alla prima!
+      
+          playSong(previousSong.id);
+          // ▶️ RIPRODUCI: La canzone precedente
+         }
+      };
+      
+      // 🔀 ===== FUNZIONE SHUFFLE =====
+      const shuffle = () => {
+        userData?.songs.sort(() => Math.random() - 0.5);
+        // 🎲 ALGORITMO FISHER-YATES SEMPLIFICATO:
+        // sort() = riordina l'array
+        // () => Math.random() - 0.5 = funzione comparatore
+        // Math.random() = numero tra 0 e 1
+        // - 0.5 = risultato tra -0.5 e +0.5
+        // Risultato negativo = a prima di b
+        // Risultato positivo = b prima di a
+        // È come lanciare una moneta per ogni confronto!
+        
+        userData.currentSong = null;
+        // 🔄 RESET CANZONE: Nessuna selezionata
+        
+        userData.songCurrentTime = 0;
+        // ⏱️ RESET TEMPO: Ricomincia da capo
+      
+        renderSongs(userData?.songs);
+        // 🎨 RI-RENDERIZZA: Mostra il nuovo ordine
+        
+        pauseSong();
+        // ⏸️ PAUSA: Ferma la riproduzione
+        
+        setPlayerDisplay();
+        // 📟 PULISCI DISPLAY: Nessuna canzone
+        
+        setPlayButtonAccessibleText();
+        // ♿ AGGIORNA ARIA: Per screen reader
+      };
+      
+      // 🗑️ ===== FUNZIONE DELETE SONG =====
+      const deleteSong = (id) => {
+        // 🎯 PARAMETRO: ID della canzone da eliminare
+        
+        if (userData?.currentSong?.id === id) {
+          // 🎵 STAI ELIMINANDO QUELLA IN RIPRODUZIONE?
+          userData.currentSong = null;
+          userData.songCurrentTime = 0;
+          // 🔄 RESET: Tutto a zero
+      
+          pauseSong();
+          // ⏸️ FERMA: La riproduzione
+          
+          setPlayerDisplay();
+          // 📟 PULISCI: Il display
+        }
+      
+        userData.songs = userData?.songs.filter((song) => song.id !== id);
+        // 🗑️ FILTER: Crea nuovo array SENZA la canzone
+        // filter() = tiene solo elementi che ritornano true
+        // song.id !== id = true per tutte tranne quella da eliminare
+        // È come setacciare e tenere solo quelle buone!
+        
+        renderSongs(userData?.songs); 
+        // 🎨 RI-RENDERIZZA: Aggiorna la lista
+        
+        highlightCurrentSong(); 
+        // 🎨 EVIDENZIA: Se c'è ancora una current
+        
+        setPlayButtonAccessibleText(); 
+        // ♿ AGGIORNA: Aria label
+      };
+      
+      // 📟 ===== FUNZIONE SET PLAYER DISPLAY =====
+      const setPlayerDisplay = () => {
+        const playingSong = document.getElementById("player-song-title");
+        const songArtist = document.getElementById("player-song-artist");
+        // 📍 ELEMENTI: Prendi riferimenti al titolo e artista
+        
+        const currentTitle = userData?.currentSong?.title;
+        const currentArtist = userData?.currentSong?.artist;
+        // 📝 VALORI: Estrai da currentSong (se esiste)
+        // ?. = optional chaining evita errori se null
+      
+        playingSong.textContent = currentTitle ? currentTitle : "";
+        songArtist.textContent = currentArtist ? currentArtist : "";
+        // 📝 AGGIORNA TESTO: Operatore ternario
+        // condizione ? valore_se_vero : valore_se_falso
+        // Se non c'è titolo/artista, stringa vuota
+      };
+      
+      // 🎨 ===== FUNZIONE HIGHLIGHT CURRENT SONG =====
+      const highlightCurrentSong = () => {
+        const playlistSongElements = document.querySelectorAll(".playlist-song");
+        // 📋 TUTTE LE CANZONI: NodeList di elementi
+        // querySelectorAll = trova TUTTI gli elementi con quella classe
+        
+        const songToHighlight = document.getElementById(
+          `song-${userData?.currentSong?.id}`
+        );
+        // 🎯 CANZONE DA EVIDENZIARE: Usa template literal
+        // `song-${id}` = costruisce l'ID dinamicamente
+      
+        playlistSongElements.forEach((songEl) => {
+          songEl.removeAttribute("aria-current");
+        });
+        // 🔄 PULISCI: Rimuovi aria-current da tutte
+        // forEach = esegui funzione per ogni elemento
+        // removeAttribute = rimuove completamente l'attributo
+      
+        if (songToHighlight) songToHighlight.setAttribute("aria-current", "true");
+        // 🎨 EVIDENZIA: Solo quella corrente
+        // setAttribute = imposta/aggiunge attributo
+        // aria-current="true" = per accessibilità E styling CSS
+      };
+      
+      // 🎨 ===== RENDER SONGS: La Magia del Template! =====
+      const renderSongs = (array) => {
+        // 🎯 PARAMETRO: Array di canzoni da visualizzare
+        
+        const songsHTML = array
+          .map((song)=> {
+            // 🔄 MAP: Trasforma ogni canzone in HTML
+            // map() = crea nuovo array trasformando ogni elemento
+            
+            return `
+            <li id="song-${song.id}" class="playlist-song">
+            <!-- 🎵 ELEMENTO LISTA: ID univoco per ogni canzone -->
+            
+            <button class="playlist-song-info" onclick="playSong(${song.id})">
+                <!-- 🔘 BOTTONE INFO: Cliccabile per riprodurre -->
+                <!-- onclick = gestore evento inline (non best practice) -->
+                
+                <span class="playlist-song-title">${song.title}</span>
+                <!-- 🎵 TITOLO: Interpolato dal template literal -->
+                
+                <span class="playlist-song-artist">${song.artist}</span>
+                <!-- 🎤 ARTISTA: Sempre Quincy in questo caso -->
+                
+                <span class="playlist-song-duration">${song.duration}</span>
+                <!-- ⏱️ DURATA: Formato mm:ss -->
+            </button>
+            
+            <button onclick="deleteSong(${song.id})" class="playlist-song-delete" aria-label="Delete ${song.title}">
+                <!-- 🗑️ BOTTONE DELETE: Per rimuovere dalla playlist -->
+                <!-- aria-label dinamico per accessibilità -->
+                
+                <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="8" cy="8" r="8" fill="#4d4d62"/>
+                    <!-- ⭕ CERCHIO SFONDO: Grigio scuro -->
+                    
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M5.32587 5.18571C5.7107 4.90301 6.28333 4.94814 6.60485 5.28651L8 6.75478L9.39515 5.28651C9.71667 4.94814 10.2893 4.90301 10.6741 5.18571C11.059 5.4684 11.1103 5.97188 10.7888 6.31026L9.1832 7.99999L10.7888 9.68974C11.1103 10.0281 11.059 10.5316 10.6741 10.8143C10.2893 11.097 9.71667 11.0519 9.39515 10.7135L8 9.24521L6.60485 10.7135C6.28333 11.0519 5.7107 11.097 5.32587 10.8143C4.94102 10.5316 4.88969 10.0281 5.21121 9.68974L6.8168 7.99999L5.21122 6.31026C4.8897 5.97188 4.94102 5.4684 5.32587 5.18571Z" fill="white"/>
+                    <!-- ✖️ X BIANCA: Path complesso per la X -->
+                </svg>
+              </button>
+            </li>
+            `;
+          })
+          .join("");
+          // 🔗 JOIN: Unisce tutti i pezzi HTML
+          // join("") = concatena senza separatori
+          // Array di stringhe → Una stringa unica
+      
+        playlistSongs.innerHTML = songsHTML;
+        // 📝 INSERISCI HTML: Nel contenitore
+        // innerHTML = sostituisce tutto il contenuto HTML
+        // ⚠️ Attenzione a XSS con dati non fidati!
+      
+        if (userData?.songs.length === 0) {
+          // 📭 PLAYLIST VUOTA? Mostra reset
+          
+          const resetButton = document.createElement("button");
+          // 🔧 CREA ELEMENTO: Modo programmatico
+          // createElement = crea elemento DOM
+          
+          const resetText = document.createTextNode("Reset Playlist");
+          // 📝 CREA TESTO: Nodo di testo puro
+          // createTextNode = testo sicuro, no HTML
+      
+          resetButton.id = "reset";
+          // 🆔 IMPOSTA ID: Per styling/selezione
+          
+          resetButton.ariaLabel = "Reset playlist";
+          // ♿ ACCESSIBILITÀ: Descrizione per screen reader
+          
+          resetButton.appendChild(resetText);
+          // 🔗 AGGIUNGI TESTO: Al bottone
+          // appendChild = aggiunge come figlio
+          
+          playlistSongs.appendChild(resetButton);
+          // 🔗 AGGIUNGI BOTTONE: Alla playlist
+      
+          resetButton.addEventListener("click", () => {
+            // 🎧 EVENT LISTENER: Ascolta il click
+            // addEventListener = modo moderno per eventi
+            
+            userData.songs = [...allSongs];
+            // 🔄 RIPRISTINA: Ricopia tutte le canzoni
+            // Spread operator crea nuova copia
+      
+            renderSongs(sortSongs()); 
+            // 🎨 RI-RENDERIZZA: Con ordine alfabetico
+            
+            setPlayButtonAccessibleText();
+            // ♿ AGGIORNA ARIA: Label del play
+            
+            resetButton.remove();
+            // 🗑️ RIMUOVI: Il bottone stesso
+            // remove() = rimuove elemento dal DOM
+          });
+        };
+      };
+      
+      // ♿ ===== SET PLAY BUTTON ACCESSIBLE TEXT =====
+      const setPlayButtonAccessibleText = () => {
+        const song = userData?.currentSong || userData?.songs[0];
+        // 🎵 CANZONE: Corrente O prima della lista
+        // || = operatore OR: se la prima è falsy, usa la seconda
+      
+        playButton.setAttribute(
+          "aria-label",
+          song?.title ? `Play ${song.title}` : "Play"
+        );
+        // ♿ ARIA-LABEL: Testo per screen reader
+        // Template literal per label dinamico
+        // Se c'è titolo: "Play [titolo]"
+        // Altrimenti: solo "Play"
+      };
+      
+      // 📍 ===== GET CURRENT SONG INDEX =====
+      const getCurrentSongIndex = () => userData?.songs.indexOf(userData?.currentSong);
+      // 🔍 TROVA INDICE: indexOf cerca nell'array
+      // Ritorna la posizione (0-based) o -1 se non trova
+      // Arrow function one-liner!
+      
+      // 🎧 ===== EVENT LISTENER: PLAY BUTTON =====
+      playButton.addEventListener("click", () => {
+        // 🖱️ CLICK SUL PLAY: Cosa fare?
+        
+        if (userData?.currentSong === null) {
+          playSong(userData?.songs[0].id);
+          // ▶️ PRIMA VOLTA: Parti dalla prima canzone
+        } else {
+          playSong(userData?.currentSong.id);
+          // ▶️ RIPRENDI: La canzone corrente
+        }
+      });
+      
+      // ⏸️ ===== EVENT LISTENER: PAUSE BUTTON =====
+      pauseButton.addEventListener("click", pauseSong);
+      // 🖱️ CLICK PAUSE: Chiama direttamente la funzione
+      // Non serve arrow function se non ci sono parametri
+      
+      // ⏭️ ===== EVENT LISTENER: NEXT BUTTON =====
+      nextButton.addEventListener("click", playNextSong);
+      // 🖱️ CLICK NEXT: Prossima canzone
+      
+      // ⏮️ ===== EVENT LISTENER: PREVIOUS BUTTON =====
+      previousButton.addEventListener("click", playPreviousSong);
+      // 🖱️ CLICK PREVIOUS: Canzone precedente
+      
+      // 🔀 ===== EVENT LISTENER: SHUFFLE BUTTON =====
+      shuffleButton.addEventListener("click", shuffle);
+      // 🖱️ CLICK SHUFFLE: Mischia tutto!
+      
+      // 🔚 ===== EVENT LISTENER: AUDIO ENDED =====
+      audio.addEventListener("ended", () => {
+        // 🎵 FINE CANZONE: L'evento "ended" si attiva
+        // Quando l'audio finisce naturalmente
+        
+        const currentSongIndex = getCurrentSongIndex();
+        // 📍 INDICE: Dove siamo nella playlist
+        
+        const nextSongExists = userData?.songs[currentSongIndex + 1] !== undefined;
+        // ❓ ESISTE PROSSIMA? Controlla se non è undefined
+        // !== undefined è più esplicito di un semplice truthy check
+      
+        if (nextSongExists) {
+          playNextSong();
+          // ⏭️ AUTOMATICO: Passa alla prossima
+        } else {
+          // 🛑 FINE PLAYLIST: Cosa fare?
+          userData.currentSong = null;
+          userData.songCurrentTime = 0;
+          // 🔄 RESET STATO: Nessuna canzone, tempo zero
+          
+          pauseSong();
+          // ⏸️ FERMA: Anche se già finita
+          
+          setPlayerDisplay();
+          // 📟 PULISCI: Display vuoto
+          
+          highlightCurrentSong();
+          // 🎨 RIMUOVI: Evidenziazione
+          
+          setPlayButtonAccessibleText();
+          // ♿ AGGIORNA: Aria label
+        }
+      });
+      
+      // 📊 ===== SORT SONGS: Ordine Alfabetico =====
+      const sortSongs = () => {
+        userData?.songs.sort((a,b) => {
+          // 🔤 SORT: Riordina l'array in-place
+          // Funzione comparatore con due parametri
+          
+          if (a.title < b.title) {
+            return -1;
+            // 📈 A PRIMA DI B: Titolo A viene prima alfabeticamente
+          }
+      
+          if (a.title > b.title) {
+            return 1;
+            // 📉 B PRIMA DI A: Titolo B viene prima
+          }
+      
+          return 0;
+          // 🟰 UGUALI: Mantieni ordine attuale
+        });
+        // COME FUNZIONA SORT:
+        // -1 = a viene prima di b
+        // 1 = b viene prima di a
+        // 0 = sono equivalenti
+        // JavaScript confronta stringhe lessicograficamente
+      
+        return userData?.songs;
+        // 📤 RITORNA: L'array ordinato
+        // sort() modifica l'array originale E lo ritorna
+      };
+      
+      // 🚀 ===== INIZIALIZZAZIONE APP =====
+      renderSongs(sortSongs());
+      // 🎨 RENDERIZZA INIZIALE: Mostra canzoni ordinate
+      // sortSongs() ordina E ritorna l'array
+      // renderSongs() crea l'HTML e lo inserisce
+      
+      setPlayButtonAccessibleText();
+      // ♿ IMPOSTA ARIA: "Play Scratching The Surface"
+      // Importante per accessibilità fin dall'inizio
+    </script>
+  </body>
+</html>
+
+<!-- 🎯 ===== RIASSUNTO DEL MUSIC PLAYER ===== -->
+<!-- 
+🎵 ARCHITETTURA COMPLETA:
+│
+├── 🎨 HTML STRUCTURE
+│   ├── 🎧 Player Section
+│   │   ├── Player Bar (logo + decorazioni)
+│   │   └── Player Content
+│   │       ├── Album Art (cover)
+│   │       └── Player Display
+│   │           ├── Song Info (title + artist)
+│   │           └── Control Buttons (5 bottoni)
+│   └── 📋 Playlist Section
+│       ├── Playlist Bar (header)
+│       └── Songs List (popolata via JS)
+│
+├── 🎨 CSS STYLING
+│   ├── 📐 CSS Variables (:root)
+│   ├── 🔄 Reset Styles (* selector)
+│   ├── 📦 Layout (Flexbox everywhere!)
+│   ├── 🎨 Component Styles
+│   └── 📱 Media Query (@media max-width: 700px)
+│
+└── 🧙 JAVASCRIPT LOGIC
+    ├── 📍 DOM Elements Selection
+    ├── 🎵 Songs Database (array of objects)
+    ├── 🔊 Audio API Instance
+    ├── 👤 User State Management
+    ├── 🎮 Playback Functions
+    │   ├── playSong(id)
+    │   ├── pauseSong()
+    │   ├── playNextSong()
+    │   ├── playPreviousSong()
+    │   └── shuffle()
+    ├── 🎨 UI Functions
+    │   ├── renderSongs(array)
+    │   ├── setPlayerDisplay()
+    │   ├── highlightCurrentSong()
+    │   └── setPlayButtonAccessibleText()
+    ├── 🗑️ Utility Functions
+    │   ├── deleteSong(id)
+    │   ├── sortSongs()
+    │   └── getCurrentSongIndex()
+    └── 🎧 Event Listeners
+        ├── Button clicks
+        └── Audio ended event
+
+🧰 TECNOLOGIE E CONCETTI:
+├── 📚 ES6+ Features
+│   ├── Arrow Functions
+│   ├── Template Literals
+│   ├── Spread Operator
+│   ├── Optional Chaining
+│   └── Const/Let
+├── 🎯 DOM Manipulation
+│   ├── getElementById
+│   ├── querySelectorAll
+│   ├── innerHTML
+│   ├── createElement
+│   └── appendChild
+├── 📊 Array Methods
+│   ├── map()
+│   ├── filter()
+│   ├── find()
+│   ├── sort()
+│   └── indexOf()
+├── 🎧 Audio API
+│   ├── new Audio()
+│   ├── play()
+│   ├── pause()
+│   └── currentTime
+└── ♿ Accessibility
+    ├── aria-label
+    ├── aria-current
+    └── Semantic HTML
+
+È un esempio perfetto di vanilla JavaScript moderno! 🎧✨
+-->
