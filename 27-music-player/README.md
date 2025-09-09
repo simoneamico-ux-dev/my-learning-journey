@@ -55,6 +55,7 @@ I believe it was CSS that gave me this mindset: defining all common properties i
 - `.indexOf()` to find positions in array
 
 - `.join("")` to concatenate array elements into a single string
+
 **String Methods & Template Literals:**
 - Complex template literals for HTML generation
 
