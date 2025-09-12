@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<!-- 🎯 DICHIARAZIONE HTML5: "Benvenuti nel futuro del design Apple!" -->
+<!-- È come entrare in un Apple Store fatto di codice e vetro liquido! 🍎✨ -->
+
+<html lang="en">
+<!-- 🌍 CONTENITORE PRINCIPALE: Il nostro laboratorio di effetti visivi -->
+<!-- lang="en" = inglese, la lingua dell'innovazione digitale! 💫 -->
+
+<head>
+    <!-- 🧠 IL CENTRO DI DESIGN: Dove creiamo l'effetto Liquid Glass -->
+    <!-- È come il laboratorio segreto di Jony Ive alla Apple! -->
+    
+    <meta charset="UTF-8" />
+    <!-- 📝 CARATTERI UNIVERSALI: UTF-8 per supportare tutti i simboli -->
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 📱 RESPONSIVE DESIGN: "Adattati come vetro liquido a ogni schermo!" -->
+    <!-- Il Liquid Glass si adatta dinamicamente, proprio come il nostro viewport -->
+    
+    <!-- 🔤 ===== IMPORTAZIONE FONT GOOGLE ===== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- 🔌 PRECONNESSIONE: Prepara la connessione ai server Google -->
+    <!-- È come chiamare il ristorante prima di arrivare per velocizzare il servizio! -->
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- 🎨 FONT POPPINS + WORK SANS: Due font moderni per il nostro design -->
+    <!-- Poppins: tutti i pesi da 100 a 900, normale e italico -->
+    <!-- Work Sans: font variabile (100..900) = tecnologia moderna! -->
+    <!-- display=swap: mostra il testo subito con font di sistema, poi swappa -->
+    
+    <style>
+      /* 🎨 ===== IL SISTEMA DI DESIGN LIQUID GLASS ===== */
+      
+      :root {
+        /* 🌈 ===== VARIABILI UNIVERSALI: Per Ogni Stato ===== */
+        
+        /* 🖼️ IMMAGINI HOVER: L'effetto quando passi sopra */
+        --background-button-hover: url("https://github.com/user-attachments/assets/d1126873-ad30-4742-a1e2-d050088f0af9");
+        /* 🔄 HOVER UNIVERSALE: Stesso per tutti gli stati */
+        /* Un effetto Liquid Glass più intenso */
+        
+        /* 🎨 COLORI E TIPOGRAFIA BASE */
+        --color-text-primary: #fff;
+        /* ⚪ BIANCO PURO: Per contrasto sul vetro colorato */
+        
+        --font-style: normal;
+        /* 📝 STILE NORMALE: Non italico */
+        
+        --title-letter-spacing: -0.56px;
+        /* 🔤 SPAZIATURA NEGATIVA: Lettere più vicine per modernità */
+        /* Come il design Apple: tight e pulito */
+        
+        --font-family-primary: "Poppins", sans-serif;
+        /* 🔤 FONT PRINCIPALE: Poppins per titoli e UI */
+        
+        --font-family-secondary: "Work Sans", sans-serif;
+        /* 🔤 FONT SECONDARIO: Work Sans per input e risultati */
+        
+        /* 📏 DIMENSIONI TESTO */
+        --font-size-title: 39.17px;
+        /* 📰 TITOLO GRANDE: Quasi 40px, presenza dominante */
+        
+        --font-size-button: 22.38px;
+        /* 🔘 BOTTONE: Dimensione media per leggibilità */
+        
+        --font-weight-primary: 700;
+        /* 💪 GRASSETTO: Per titoli importanti */
+        
+        --font-size-description: 16.79px;
+        /* 📝 DESCRIZIONE: Testo leggibile ma non invadente */
+        
+        --font-weight-secondary: 400;
+        /* 🏃 PESO NORMALE: Per testi secondari */
+        
+        /* 📐 DIMENSIONI ELEMENTI */
+        --size-card-width: 481px;
+        --size-card-height: 512px;
+        /* 📦 CARD PRINCIPALE: Il nostro "vetro liquido" principale */
+        /* Proporzioni quasi quadrate ma leggermente verticali */
+        
+        --size-card-border-radius: 46px;
+        /* 🔄 ANGOLI SUPER MORBIDI: 46px = molto Apple-style */
+        /* Il Liquid Glass ha bordi molto arrotondati */
+        
+        --size-button-width: 243px;
+        --size-button-height: 73px;
+        /* 🔘 BOTTONE: Proporzioni auree per touch-friendly */
+        
+        --size-button-border-radius: 50px;
+        /* 🔄 BOTTONE PILLOLA: Super arrotondato */
+        
+        /* 📏 SPAZIATURE VERTICALI */
+        --space-above-title: 55.86px;
+        /* ⬆️ SOPRA IL TITOLO: Respiro generoso */
+        
+        --space-above-description: 33.43px;
+        /* ⬆️ SOPRA LA DESCRIZIONE: Spazio medio */
+        
+        --space-above-button: 35.74px;
+        /* ⬆️ SOPRA IL BOTTONE: Bilanciato */
+        
+        --space-below-button: 55.86px;
+        /* ⬇️ SOTTO IL BOTTONE: Simmetrico con il titolo */
+    
+        /* 🎨 ===== STATO DEFAULT: Viola Base ===== */
+        --background-page-default: url("https://github.com/user-attachments/assets/1a1259f0-0b84-478b-a26f-460d2228203d");
+        /* 🌌 SFONDO DEFAULT: Un gradiente viola e giallo */
+        /* Il Liquid Glass riflette e rifrange questi colori */
+        
+        --background-card-default: url("https://github.com/user-attachments/assets/99a6c549-5d45-4a36-8354-1c8039c4f7cb");
+        /* 🔮 CARD DEFAULT: Vetro liquido viola con effetti ottici */
+        /* Creato in Figma con glass effect e valori personalizzati */
+        
+        --background-button-default: url("https://github.com/user-attachments/assets/3b636ec0-524b-40ae-8dbc-a872ebbb49a4");
+        /* 🔘 BOTTONE DEFAULT: Coordina con la card */
+        
+        /* 📝 STILI INPUT */
+        --input-border-width: 1.5px;
+        /* 📏 BORDO SOTTILE: Solo una linea delicata */
+        
+        --input-border-color-default: rgba(255, 255, 255, 0.60);
+        /* ⚪ BORDO BIANCO 60%: Semi-trasparente come vetro */
+        
+        --color-placeholder-text-focus:  rgba(255, 255, 255, 0.30);
+        /* ⚪ PLACEHOLDER FOCUS: Ancora più trasparente (30%) */
+        
+        --input-border-color-focus: #fff;
+        /* ⚪ BORDO FOCUS: Bianco pieno per evidenziare */
+        
+        --font-size-input: 20px;
+        /* 📝 DIMENSIONE INPUT: Leggibile e moderna */
+        
+        --size-input-width: 340px;
+        --size-input-height: 30px;
+        /* 📏 DIMENSIONI INPUT: Proporzionate alla card */
+        
+        --space-above-input: 89.97px;
+        /* ⬆️ SPAZIO SOPRA INPUT: Quasi 90px, molto arioso */
+        
+        --padding-text-input: 8px;
+        /* 🏠 PADDING INPUT: Spazio interno per il testo */
+    
+        /* 📊 ===== STILI RISULTATO ===== */
+        --font-size-result: 30.78px;
+        /* 📏 RISULTATO GRANDE: Per impatto visivo */
+        
+        --top-result: 78px;
+        /* ⬆️ POSIZIONE RISULTATO: Dal top della card */
+    
+        /* ✅ ===== STATO PALINDROMO: Giallo Positivo ===== */
+        --background-page-palindrome: url("https://github.com/user-attachments/assets/9ac63aa1-47ba-41f1-b006-7aba6de92e95");
+        /* 🌟 SFONDO PALINDROMO: Gradiente viola e soprattutto giallo luminoso */
+        /* Il successo ha colori caldi! */
+        
+        --background-card-palindrome: url("https://github.com/user-attachments/assets/9662ce58-c14a-4212-ab5d-2ae226c9ae85");
+        /* 💛 CARD PALINDROMO: Liquid Glass giallo */
+        /* Effetti di rifrazione diversi per il giallo */
+        
+        --background-button-palindrome: url("https://github.com/user-attachments/assets/77d3bd71-77f1-48aa-9e39-718d601c0239");
+        /* 🔘 BOTTONE PALINDROMO: Coordinato giallo */
+    
+        /* ❌ ===== STATO NON PALINDROMO: Variante Negativa ===== */
+        --background-page-not-palindrome: url("https://github.com/user-attachments/assets/ed4bba81-e535-43a9-958b-af6d0a0d4964");
+        /* 🔮 SFONDO NON PALINDROMO: Gradiente con viola più presente */
+        
+        --background-card-not-palindrome: url("https://github.com/user-attachments/assets/e9db924c-83b1-45db-a9ef-5fe17db3b56a");
+        /* 💜 CARD NON PALINDROMO: Liquid Glass viola intenso */
+        
+        --background-button-not-palindrome: url("https://github.com/user-attachments/assets/989f36b1-383c-4a3b-b1c7-472d7aa38d05");
+        /* 🔘 BOTTONE NON PALINDROMO: Tono coordinato */
+      }
+    
+      /* 🔄 ===== RESET GLOBALE ===== */
+      * {
+        margin: 0;
+        padding: 0;
+        /* 🚫 AZZERA TUTTO: Partiamo da zero */
+        
+        box-sizing: border-box;
+        /* 📦 BORDER-BOX: Include padding e bordi nelle dimensioni */
+        /* Fondamentale per calcoli precisi con il Liquid Glass */
+      }
+    
+      /* 🎨 ===== STILI BODY E HTML ===== */
+      
+      body {
+        margin: 0;
+        padding: 0;
+        /* 🚫 DOPPIA SICUREZZA: Niente margini */
+        
+        transition: background-image 1s ease-in-out;
+        /* 🎭 TRANSIZIONE SFONDO: 1 secondo fluido */
+        /* ease-in-out = accelera e decelera come vetro liquido che scorre */
+      }
+    
+      html {
+        font-style: normal;
+        /* 📝 STILE NORMALE: Base per tutto */
+        
+        line-height: normal;
+        /* 📏 INTERLINEA NORMALE: Default del browser */
+        
+        background-image: var(--background-page-default);
+        /* 🌌 SFONDO INIZIALE: Stato default viola */
+        
+        background-size: cover;
+        /* 📏 COPRI TUTTO: L'immagine riempie lo schermo */
+        
+        background-repeat: no-repeat;
+        /* 🚫 NO RIPETIZIONE: Una sola immagine */
+        
+        background-size: cover;
+        /* ⚠️ DUPLICATO: Probabilmente un refuso */
+        
+        background-position: center;
+        /* 📍 CENTRATA: Il centro dell'effetto Liquid Glass */
+        
+        background-attachment: fixed;
+        /* 🔒 SFONDO FISSO: Non scrolla, effetto parallasse */
+        /* Il Liquid Glass sembra "galleggiare" sopra */
+      }
+    
+      /* 📝 ===== TIPOGRAFIA ===== */
+      
+      .title, .description, #check-btn {
+        color: var(--color-text-primary);
+        /* ⚪ TESTO BIANCO: Per tutti gli elementi principali */
+        
+        font-family: var(--font-family-primary);
+        /* 🔤 POPPINS: Font principale */
+        
+        font-style: var(--font-style);
+        /* 📝 STILE: Normale (non italico) */
+      }
+    
+      .description, .placeholder, #check-btn, #result {
+        font-weight: var(--font-weight-secondary);
+        /* 🏃 PESO 400: Normal weight per leggibilità */
+      }
+    
+      .title {
+        font-size: var(--font-size-title);
+        /* 📏 39.17px: Titolo dominante */
+        
+        font-weight: var(--font-weight-primary);
+        /* 💪 700: Grassetto per impatto */
+        
+        letter-spacing: -0.56px;
+        /* 🔤 SPAZIATURA NEGATIVA: Stile Apple tight */
+        
+        margin-top: var(--space-above-title);
+        /* ⬆️ 55.86px: Respiro sopra */
+      }
+    
+      .description {
+        font-size: var(--font-size-description);
+        /* 📏 16.79px: Leggibile ma non invadente */
+        
+        margin-top: var(--space-above-description);
+        /* ⬆️ 33.43px: Spazio dal titolo */
+      }
+    
+      .placeholder, #result {
+        font-family: var(--font-family-secondary);
+        /* 🔤 WORK SANS: Font secondario per input */
+      }
+    
+      .placeholder {
+        color: var(--color-placeholder-default);
+        /* ⚠️ VARIABILE NON DEFINITA: Probabilmente un bug */
+        
+        font-family: var(--font-family-secondary);
+        /* 🔤 WORK SANS: Ripetuto */
+        
+        font-size: var(--font-size-input);
+        /* 📏 20px: Dimensione input */
+      }
+    
+      #result {
+        color: var(--color-text-primary);
+        /* ⚪ BIANCO: Per il risultato */
+        
+        font-size: var(--font-size-result);
+        /* 📏 30.78px: Grande per impatto */
+        
+        top: var(--top-result);
+        /* ⬆️ 78px: Posizione dall'alto */
+        
+        left: 0;
+        /* ⬅️ TUTTO A SINISTRA: Per width 100% */
+        
+        width: 100%;
+        height: 100%;
+        /* 📏 PIENO SCHERMO: Copre tutta la card */
+        
+        display: flex;
+        /* 🎯 FLEXBOX: Per centratura */
+        
+        justify-content: center;
+        align-items: center;
+        /* ⚖️ CENTRATURA PERFETTA: Orizzontale e verticale */
+        
+        position: absolute;
+        /* 🎯 POSIZIONE ASSOLUTA: Sovrapposto alla card */
+        
+        pointer-events: none;
+        /* 🚫 NO CLICK: Il risultato non intercetta i click */
+        /* È come un ologramma: lo vedi ma non lo tocchi */
+        
+        z-index: 10;
+        /* 📚 LIVELLO 10: Sopra tutto il resto */
+      }
+    
+      /* 📝 ===== CONTAINER INPUT ===== */
+      
+      .input-container {
+        margin-top: var(--space-above-input);
+        /* ⬆️ 89.97px: Grande spazio sopra */
+        
+        position: relative;
+        /* 📍 RIFERIMENTO: Per posizionare elementi figli */
+        
+        width: var(--size-input-width);
+        height: var(--size-input-height);
+        /* 📏 340x30px: Dimensioni input container */
+      }
+    
+      #text-input {
+        outline: 0;
+        /* 🚫 NO OUTLINE: Rimuove il bordo di focus default */
+        
+        padding: var(--padding-text-input);
+        /* 🏠 8px: Spazio interno */
+        
+        width: 100%;
+        /* 📏 LARGHEZZA PIENA: Del container */
+        
+        border: none;
+        /* 🚫 NO BORDO: Solo border-bottom */
+        
+        background: transparent;
+        /* 👻 TRASPARENTE: Per vedere il Liquid Glass sotto */
+        
+        color: var(--color-text-primary);
+        /* ⚪ TESTO BIANCO: Contrasto sul vetro */
+        
+        font-family: "Work Sans";
+        /* 🔤 FONT: Diretto senza variabile */
+        
+        font-size: var(--font-size-input);
+        /* 📏 20px: Dimensione testo */
+        
+        border-bottom: var(--input-border-width) solid var(--input-border-color-default);
+        /* 📏 BORDO BOTTOM: 1.5px bianco 60% */
+        /* Solo una linea sottile come nei design Apple */
+        
+        text-align: center;
+        /* ⚖️ TESTO CENTRATO: Per eleganza */
+        
+        transition: width 0.2s ease;
+        /* 🎭 TRANSIZIONE: Ma width non cambia mai... */
+      }
+    
+      #text-input::placeholder {
+        color: var(--color-placeholder-default);
+        /* ⚠️ VARIABILE NON DEFINITA: Bug probabile */
+        /* Dovrebbe essere un grigio chiaro */
+      }
+    
+      #text-input:focus {
+        border-bottom-color: var(--input-border-color-focus);
+        /* ⚪ BORDO BIANCO PIENO: Al focus */
+        
+        transition: border-bottom 0.3s ease;
+        /* 🎭 TRANSIZIONE: 0.3s per il cambio colore */
+        /* ⚠️ Proprietà errata: dovrebbe essere border-bottom-color */
+      }
+    
+      /* 🎨 ===== LA CARD LIQUID GLASS ===== */
+      
+      .card {
+        width: var(--size-card-width);
+        height: var(--size-card-height);
+        /* 📏 481x512px: Le dimensioni del nostro vetro */
+        
+        border-radius: var(--size-card-border-radius);
+        /* 🔄 46px: Super arrotondato stile Apple */
+        
+        background-image: var(--background-card-default);
+        /* 🔮 LIQUID GLASS DEFAULT: L'immagine creata in Figma */
+        /* Con effetti di rifrazione, riflessione e dispersione */
+        
+        position: absolute;
+        /* 🎯 POSIZIONE ASSOLUTA: Per centratura */
+        
+        top: 50%;
+        left: 50%;
+        /* 📍 50/50: Al centro dello schermo */
+        
+        transform: translate(-50%, -50%);
+        /* 🎯 CENTRATURA PERFETTA: Sposta indietro del 50% */
+        /* È il trucco CSS per centrare perfettamente */
+        
+        display: flex;
+        flex-direction: column;
+        /* 🎯 FLEX VERTICALE: Elementi uno sotto l'altro */
+        
+        justify-content: center;
+        align-items: center;
+        /* ⚖️ CENTRATURA: Tutto al centro */
+        
+        text-align: center;
+        /* 📝 TESTO CENTRATO: Per completezza */
+      }
+    
+      /* 🔘 ===== IL BOTTONE MIRROR ===== */
+      
+      #check-btn {
+        font-size: var(--font-size-button);
+        /* 📏 22.38px: Dimensione testo bottone */
+        
+        display: flex;
+        /* 🎯 FLEX: Ripetuto sotto... */
+        
+        margin-top: var(--space-above-button);
+        /* ⬆️ 35.74px: Spazio sopra */
+        
+        margin-bottom: var(--space-below-button);
+        /* ⬇️ 55.86px: Spazio sotto */
+        
+        display: flex;
+        /* ⚠️ DUPLICATO: Display flex ripetuto */
+        
+        width: var(--size-button-width);
+        height: var(--size-button-height);
+        /* 📏 243x73px: Bottone grande e touch-friendly */
+        
+        padding: 14px;
+        /* 🏠 PADDING: Spazio interno */
+        
+        justify-content: center;
+        align-items: center;
+        /* ⚖️ CENTRATURA: Testo al centro */
+        
+        gap: 14px;
+        /* 🌉 GAP: Se ci fossero più elementi (non usato) */
+        
+        border-radius: var(--size-card-border-radius);
+        /* 🔄 46px: Stesso radius della card! */
+        /* ⚠️ Dovrebbe usare --size-button-border-radius (50px) */
+        
+        background-image: var(--background-button-default);
+        /* 🔘 LIQUID GLASS BUTTON: Coordinato con la card */
+        
+        border: none;
+        /* 🚫 NO BORDO: Il Liquid Glass non ne ha bisogno */
+        
+        transition: background-image 0.5s ease, transform 0.25s ease;
+        /* 🎭 DOPPIA TRANSIZIONE: */
+        /* background-image: 0.5s per cambio stato */
+        /* transform: 0.25s per effetti hover */
+      }
+    
+      #check-btn:hover {
+        background-image: var(--background-button-hover);
+        /* 🔄 HOVER: Liquid Glass più intenso */
+        
+        cursor: pointer;
+        /* 👆 MANINA: Indica cliccabilità */
+        
+        transform: scale(1.02);
+        /* 🔍 ZOOM LEGGERO: 2% più grande */
+        /* Il vetro liquido sembra "gonfiarsi" */
+      }
+    
+      #check-btn:active {
+        transform: scale(0.95);
+        /* 🔍 PRESSIONE: 95% della dimensione */
+        /* Come premere su vetro liquido! */
+      }
+    
+      /* 🙈 ===== STATI NASCOSTI ===== */
+      
+      .hidden-input {
+        visibility: hidden;
+        /* 👻 INVISIBILE: Ma occupa ancora spazio */
+        
+        position: absolute;
+        /* 🎯 POSIZIONE ASSOLUTA: Per sovrapposizione */
+        
+        top: 0;
+        left: 0;
+        /* 📍 ANGOLO: Top-left */
+        
+        width: 100%;
+        /* 📏 LARGHEZZA PIENA: Copre tutto */
+      }
+    
+      .hidden {
+        display: none;
+        /* 🚫 COMPLETAMENTE NASCOSTO: Non occupa spazio */
+      }
+    
+      /* 🎨 ===== CLASSI PER STATI DIVERSI ===== */
+      
+      /* 🌟 STATO PALINDROMO (GIALLO) */
+      html.palindrome-background {
+        background-image: var(--background-page-palindrome);
+        /* 🌟 SFONDO GIALLO: Successo! */
+      }
+    
+      /* 💜 STATO NON PALINDROMO */
+      html.not-palindrome-background {
+        background-image: var(--background-page-not-palindrome);
+        /* 🔮 SFONDO VIOLA SCURO: Non è palindromo */
+      }
+    
+      .card.palindrome-card {
+        background-image: var(--background-card-palindrome);
+        /* 💛 CARD GIALLA: Liquid Glass dorato */
+      }
+    
+      .card.not-palindrome-card {
+        background-image: var(--background-card-not-palindrome);
+        /* 💜 CARD VIOLA: Liquid Glass viola intenso */
+      }
+    
+      #check-btn.palindrome-button {
+        background-image: var(--background-button-palindrome);
+        /* 🟡 BOTTONE GIALLO: Coordinato */
+      }
+    
+      #check-btn.not-palindrome-button {
+        background-image: var(--background-button-not-palindrome);
+        /* 🟣 BOTTONE VIOLA: Coordinato */
+      }
+    
+      /* 🎯 ===== EFFETTO FOCUS PLACEHOLDER ===== */
+      
+      #text-input:focus::placeholder {
+        color: var(--color-placeholder-text-focus);
+        /* ⚪ PLACEHOLDER PIÙ TRASPARENTE: 30% al focus */
+        /* Si "dissolve" quando scrivi */
+        
+        transition: color 0.25s ease-out;
+        /* 🎭 TRANSIZIONE: Dissolvenza morbida */
+      }
+    
+      /* 📱 ===== MEDIA QUERY MOBILE ===== */
+      
+      @media (max-width: 768px) {
+        /* 📱 TABLET E MOBILE: Tutto si ridimensiona */
+        
+        :root {
+          /* 🔄 OVERRIDE COMPLETO: Tutte le variabili mobile */
+          
+          /* 🖼️ IMMAGINI MOBILE: Versioni ottimizzate */
+          --background-button-hover: url("https://github.com/user-attachments/assets/518957aa-ca39-4456-bd8e-d69fd2497ae0");
+          /* 🔄 HOVER MOBILE */
+          
+          /* 🎨 COLORI: Rimangono uguali */
+          --color-text-primary: #fff;
+          --font-style: normal;
+          --title-letter-spacing: -0.56px;
+          --font-family-primary: "Poppins", sans-serif;
+          --font-family-secondary: "Work Sans", sans-serif;
+          
+          /* 📏 RIDIMENSIONAMENTO FONT */
+          --font-size-title: 28px;
+          /* 📉 DA 39px A 28px: Più compatto */
+          
+          --font-size-button: 16px;
+          /* 📉 DA 22px A 16px: Proporzionato */
+          
+          --font-weight-primary: 700;
+          /* 💪 GRASSETTO: Rimane uguale */
+          
+          --font-size-description: 12px;
+          /* 📉 DA 16px A 12px: Più piccolo */
+          
+          --font-weight-secondary: 400;
+          /* 🏃 NORMALE: Rimane uguale */
+          
+          /* 📐 RIDIMENSIONAMENTO ELEMENTI */
+          --size-card-width: 344px;
+          --size-card-height: 366px;
+          /* 📉 CARD PIÙ PICCOLA: Da 481x512 a 344x366 */
+          
+          --size-card-border-radius: 32px;
+          /* 📉 RADIUS: Da 46px a 32px */
+          
+          --size-button-width: 174px;
+          --size-button-height: 52px;
+          /* 📉 BOTTONE: Da 243x73 a 174x52 */
+          
+          --size-button-border-radius: 36px;
+          /* 📉 RADIUS BOTTONE: Da 50px a 36px */
+          
+          /* 📏 SPAZIATURE RIDOTTE */
+          --space-above-title: 34px;
+          /* 📉 DA 55px A 34px */
+          
+          --space-above-description: 24px;
+          /* 📉 DA 33px A 24px */
+          
+          --space-above-button: 25px;
+          /* 📉 DA 35px A 25px */
+          
+          --space-below-button: 39px;
+          /* 📉 DA 55px A 39px */
+    
+          /* 🎨 IMMAGINI STATO DEFAULT MOBILE */
+          --background-page-default: url("https://github.com/user-attachments/assets/950ca8ae-6e4d-4598-bd38-15989d782771");
+          --background-card-default: url("https://github.com/user-attachments/assets/076efb6d-4a7c-46e2-85b7-81606216149b");
+          --background-button-default: url("https://github.com/user-attachments/assets/33f4a4cd-86c5-42da-be16-6292ec264251");
+          /* 🔮 LIQUID GLASS MOBILE: Versioni ottimizzate per mobile */
+          
+          /* 📝 INPUT MOBILE */
+          --input-border-width: 1.5px;
+          /* 📏 STESSO BORDO: Non cambia */
+          
+          --input-border-color-default: rgba(255, 255, 255, 0.60);
+          --color-placeholder-text-focus:  rgba(255, 255, 255, 0.30);
+          --input-border-color-focus: #fff;
+          /* 🎨 STESSI COLORI: Coerenza visiva */
+          
+          --font-size-input: 14px;
+          /* 📉 DA 20px A 14px: Input più piccolo */
+          
+          --size-input-width: 240px;
+          --size-input-height: 42px;
+          /* 📏 INPUT: 240x42px invece di 340x30px */
+          /* Più alto ma più stretto */
+          
+          --space-above-input: 64px;
+          /* 📉 DA 89px A 64px: Meno spazio */
+          
+          --padding-text-input: 6px;
+          /* 📉 DA 8px A 6px: Padding ridotto */
+    
+          /* 📊 RISULTATO MOBILE */
+          --font-size-result: 22px;
+          /* 📉 DA 30px A 22px: Risultato più piccolo */
+          
+          --top-result: 50px;
+          /* 📉 DA 78px A 50px: Più in alto */
+    
+          /* 🌟 IMMAGINI PALINDROMO MOBILE */
+          --background-page-palindrome: url("https://github.com/user-attachments/assets/1b3257a4-eb5a-4245-9c50-2bd43d5f9926");
+          --background-card-palindrome: url("https://github.com/user-attachments/assets/df01223b-9bae-4707-869b-b188b1ac191c");
+          --background-button-palindrome: url("https://github.com/user-attachments/assets/2a4e62bd-e766-4fcb-a771-eecbf2d5d713");
+          /* 💛 LIQUID GLASS GIALLO MOBILE: Ottimizzato */
+    
+          /* 💜 IMMAGINI NON PALINDROMO MOBILE */
+          --background-page-not-palindrome: url("https://github.com/user-attachments/assets/318b9e76-1290-448d-b6cd-242103a60163");
+          --background-card-not-palindrome: url("https://github.com/user-attachments/assets/e6b2e38e-a467-4b18-bba6-31c783b1896b");
+          --background-button-not-palindrome: url("https://github.com/user-attachments/assets/e6edc35e-a909-4cc0-8241-ee83b1ec35b7");
+          /* 🟣 LIQUID GLASS VIOLA MOBILE: Ottimizzato */
+        }
+      }
+    </style>
+    
+    <!-- 🚀 ===== PRELOAD DELLE IMMAGINI ===== -->
+    <link rel="preload" as="image" href="https://github.com/user-attachments/assets/1a1259f0-0b84-478b-a26f-460d2228203d">
+    <link rel="preload" as="image" href="https://github.com/user-attachments/assets/99a6c549-5d45-4a36-8354-1c8039c4f7cb">
+    <link rel="preload" as="image" href="https://github.com/user-attachments/assets/d1126873-ad30-4742-a1e2-d050088f0af9">
+    <!-- ... (tutti gli altri preload) ... -->
+    <!-- 🖼️ PRELOAD: Carica tutte le immagini in anticipo! -->
+    <!-- as="image" = dice al browser che sono immagini -->
+    <!-- Migliora performance caricando tutto subito -->
+    <!-- Il Liquid Glass non deve aspettare al cambio stato -->
+</head>
+
+<body>
+    <!-- 🎨 ===== IL PALINDROME CHECKER PRENDE VITA ===== -->
+    
+    <div class="card">
+        <!-- 🔮 LA CARD LIQUID GLASS: Il nostro contenitore magico -->
+        
+        <div class="title">Is it a Mirror Word?</div>
+        <!-- 📰 TITOLO: "È una parola specchio?" -->
+        <!-- Mirror = specchio, perfetto per palindromi! -->
+        
+        <div class="description">A palindrome reads the same forward and<br>backward, like a perfect mirror reflection,<br>ignoring punctuation, case, and spacing</div>
+        <!-- 📝 DESCRIZIONE: Spiega cos'è un palindromo -->
+        <!-- <br> per andare a capo nei punti giusti -->
+        
+        <div class="input-container">
+            <!-- 📦 CONTENITORE INPUT: Per styling -->
+            
+            <input type="text" placeholder="Enter text to check its reflection" id="text-input">
+            <!-- 📝 INPUT: Dove l'utente scrive -->
+            <!-- placeholder = testo suggerimento -->
+            <!-- id per JavaScript -->
+        </div>
+        
+        <div class="button-container">
+            <!-- 📦 CONTENITORE BOTTONE: Per layout -->
+            
+            <button id="check-btn">Mirror</button>
+            <!-- 🔘 BOTTONE MIRROR: L'azione principale -->
+            <!-- Testo cambia in "Clear" dopo il check -->
+        </div>
+        
+        <div id="result" class="hidden"></div>
+        <!-- 📊 RISULTATO: Inizialmente nascosto -->
+        <!-- Si sovrappone a tutto quando appare -->
+    </div>
+    
+    <script>
+      /* 🎯 ===== JAVASCRIPT: La Logica del Palindrome Checker ===== */
+      
+      // 🔍 SELEZIONE ELEMENTI DOM
+      const textInput = document.getElementById("text-input");
+      // 📝 INPUT: Dove l'utente scrive
+      
+      const checkBtn = document.getElementById("check-btn");
+      // 🔘 BOTTONE: Per controllare o pulire
+      
+      const result = document.getElementById("result");
+      // 📊 RISULTATO: Div per mostrare il risultato
+      
+      const card = document.querySelector(".card");
+      // 🔮 CARD: Per cambiare il suo Liquid Glass
+      
+      const htmlElement = document.documentElement;
+      // 🌍 HTML: L'elemento root per cambiare sfondo
+      // documentElement = <html> tag
+      
+      let lastValue = "";
+      // 💾 ULTIMO VALORE: Memorizza l'ultimo testo controllato
+      // let = può cambiare (diverso da const)
+      
+      
+      // 🔍 ===== FUNZIONE CHECK PALINDROME =====
+      const checkPalindrome = () => {
+          // 🎯 ARROW FUNCTION: Sintassi moderna ES6
+          
+          const userValue = textInput.value;
+          // 📝 VALORE UTENTE: Quello che ha scritto
+          
+          lastValue = userValue;
+          // 💾 SALVA: Per confronto futuro
+      
+          if (userValue === "") {
+              // 🚫 CONTROLLO VUOTO: Se non c'è testo
+              
+              alert("Please input a value");
+              // ⚠️ ALERT: Messaggio di avviso
+              // (non molto Apple-style, ma funziona!)
+              
+              return;
+              // 🛑 STOP: Esce dalla funzione
+          }
+      
+          const cleanInput = userValue.toLowerCase().replace(/[^a-z0-9]/g, "");
+          // 🧹 PULIZIA INPUT: Il cuore dell'algoritmo!
+          
+          // 1. toLowerCase(): tutto minuscolo
+          // 2. replace(/[^a-z0-9]/g, ""): rimuove tutto tranne lettere e numeri
+          //    - / / = delimitatori regex
+          //    - [^a-z0-9] = NOT (^) lettere (a-z) o numeri (0-9)
+          //    - g = global (tutte le occorrenze)
+          //    - "" = sostituisci con stringa vuota (rimuovi)
+          
+          // ESEMPIO: "A man, a plan, a canal: Panama!"
+          // diventa: "amanaplanacanalpanama"
+      
+          const reverseText = cleanInput.split("").reverse().join("");
+          // 🔄 INVERSIONE: Altro pezzo di magia!
+          
+          // 1. split(""): trasforma stringa in array di caratteri
+          //    "hello" → ["h", "e", "l", "l", "o"]
+          // 2. reverse(): inverte l'array
+          //    ["h", "e", "l", "l", "o"] → ["o", "l", "l", "e", "h"]
+          // 3. join(""): riunisce in stringa
+          //    ["o", "l", "l", "e", "h"] → "olleh"
+      
+          textInput.classList.add("hidden-input");
+          // 👻 NASCONDI INPUT: Con visibility hidden
+          
+          result.classList.remove("hidden");
+          // 👁️ MOSTRA RISULTATO: Rimuove display none
+          
+      
+          if (cleanInput === reverseText) {
+              // ✅ È PALINDROMO: Testo uguale al suo contrario!
+              
+              result.textContent = `${userValue} is a palindrome`;
+              // 📝 MESSAGGIO: Con il testo originale (non pulito)
+              // Template literal con backtick ``
+              
+              htmlElement.classList.add("palindrome-background");
+              // 🌟 SFONDO GIALLO: Classe per successo
+              
+              card.classList.add("palindrome-card");
+              // 💛 CARD GIALLA: Liquid Glass dorato
+              
+              checkBtn.classList.add("palindrome-button");
+              // 🟡 BOTTONE GIALLO: Coordinato
+              
+              checkBtn.textContent = "Clear";
+              // 🔄 CAMBIA TESTO: Da "Mirror" a "Clear"
+              
+          } else {
+              // ❌ NON È PALINDROMO: Testo diverso dal contrario
+              
+              result.textContent = `${userValue} is not a palindrome`;
+              // 📝 MESSAGGIO NEGATIVO: Non è palindromo
+              
+              checkBtn.textContent = "Clear";
+              // 🔄 CAMBIA TESTO: Anche qui diventa "Clear"
+              
+              htmlElement.classList.add("not-palindrome-background");
+              // 💜 SFONDO VIOLA: Classe per non-palindromo
+              
+              card.classList.add("not-palindrome-card");
+              // 🟣 CARD VIOLA: Liquid Glass viola
+              
+              checkBtn.classList.add("not-palindrome-button");
+              // 🟣 BOTTONE VIOLA: Tutto coordinato
+          }
+      };
+      
+      // 🔄 ===== FUNZIONE RESET INTERFACE =====
+      const resetInterface = () => {
+          // 🧹 PULIZIA TOTALE: Torna allo stato iniziale
+          
+          textInput.value = "";
+          // 📝 SVUOTA INPUT: Stringa vuota
+          
+          textInput.classList.remove("hidden-input");
+          // 👁️ MOSTRA INPUT: Torna visibile
+          
+          result.textContent = "";
+          // 📊 SVUOTA RISULTATO: Nessun testo
+          
+          result.classList.add("hidden");
+          // 👻 NASCONDI RISULTATO: Display none
+          
+          htmlElement.classList.remove("palindrome-background", "not-palindrome-background");
+          // 🎨 RIMUOVI SFONDI: Entrambe le classi
+          // Può rimuovere multiple classi in una volta!
+          
+          card.classList.remove("palindrome-card", "not-palindrome-card");
+          // 🔮 RESET CARD: Torna al Liquid Glass default
+          
+          checkBtn.classList.remove("palindrome-button", "not-palindrome-button")
+          // 🔘 RESET BOTTONE: Torna viola default
+          // ⚠️ Manca il punto e virgola!
+          
+          checkBtn.textContent = "Mirror";
+          // 📝 TESTO ORIGINALE: Torna "Mirror"
+          
+          lastValue = "";
+          // 💾 RESET MEMORIA: Dimentica l'ultimo valore
+      }
+      
+      // 🎯 ===== EVENT LISTENER DEL BOTTONE =====
+      checkBtn.addEventListener("click", () => {
+          // 🖱️ CLICK LISTENER: Quando clicchi il bottone
+          
+          if (checkBtn.textContent === "Clear" && (textInput.value === lastValue || textInput.value === "")) {
+              // 🔍 LOGICA COMPLESSA: Quando resettare?
+              
+              // 1. Il bottone dice "Clear" (non "Mirror")
+              // AND (&&)
+              // 2. L'input è uguale all'ultimo valore controllato
+              //    OR (||)
+              //    L'input è vuoto
+              
+              // Questo previene reset accidentali se l'utente
+              // ha scritto qualcosa di nuovo!
+              
+              resetInterface();
+              // 🧹 RESET: Pulisci tutto
+              
+          } else {
+              // 🔍 ALTRIMENTI: Controlla palindromo
+              
+              checkPalindrome();
+              // 🎯 CHECK: Verifica se è palindromo
+          }
+      })
+      // ⚠️ Anche qui manca il punto e virgola finale!
+    </script>
+</body>
+</html>
+
+<!-- 🎯 ===== RIASSUNTO DEL LIQUID GLASS PALINDROME CHECKER ===== -->
+<!-- 
+🔮 ARCHITETTURA LIQUID GLASS:
+│
+├── 🧠 HEAD
+│   ├── 🔤 Google Fonts (Poppins + Work Sans)
+│   ├── 🎨 CSS con:
+│   │   ├── 📚 Sistema variabili per 3 stati
+│   │   ├── 🔮 Immagini Liquid Glass da Figma
+│   │   ├── 🎭 Transizioni fluide tra stati
+│   │   └── 📱 Media query con set completo mobile
+│   └── 🚀 20 preload per performance
+│
+└── 🎨 BODY
+    ├── 🔮 Card Liquid Glass
+    │   ├── 📰 Titolo "Mirror Word"
+    │   ├── 📝 Descrizione palindromo
+    │   ├── 📝 Input trasparente
+    │   ├── 🔘 Bottone "Mirror/Clear"
+    │   └── 📊 Risultato overlay
+    └── 🎯 JavaScript
+        ├── 🔍 Algoritmo palindromo
+        ├── 🎨 Cambio stati visivi
+        └── 🧹 Sistema reset intelligente
+
+🌈 STATI LIQUID GLASS:
+├── 🔮 DEFAULT: Viola base
+├── 🌟 PALINDROMO: Giallo successo
+└── 💜 NON PALINDROMO: Viola intenso
+
+💡 TECNICHE AVANZATE:
+├── 🔮 Liquid Glass effect con immagini Figma
+├── 🎨 3 stati completi (sfondo + card + bottone)
+├── 📱 Versioni mobile ottimizzate
+├── 🧹 Regex per pulizia input
+└── 🎯 Logica reset intelligente
+
+È come avere iOS 26 nel browser! 🍎✨
+-->
