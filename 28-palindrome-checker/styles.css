@@ -1,0 +1,301 @@
+:root {
+
+    /* Every Page */
+    --background-button-hover: url("https://github.com/user-attachments/assets/d1126873-ad30-4742-a1e2-d050088f0af9");
+    --color-text-primary: #fff;
+    --font-style: normal;
+    --title-letter-spacing: -0.56px;
+    --font-family-primary: "Poppins", sans-serif;
+    --font-family-secondary: "Work Sans", sans-serif;
+    --font-size-title: 39.17px;
+    --font-size-button: 22.38px;
+    --font-weight-primary: 700;
+    --font-size-description: 16.79px;
+    --font-weight-secondary: 400;
+    --size-card-width: 481px;
+    --size-card-height: 512px;
+    --size-card-border-radius: 46px;
+    --size-button-width: 243px;
+    --size-button-height: 73px;
+    --size-button-border-radius: 50px;
+    --space-above-title: 55.86px;
+    --space-above-description: 33.43px;
+    --space-above-button: 35.74px;
+    --space-below-button: 55.86px;
+
+    /* Default Page */
+    --background-page-default: url("https://github.com/user-attachments/assets/1a1259f0-0b84-478b-a26f-460d2228203d");
+    --background-card-default: url("https://github.com/user-attachments/assets/99a6c549-5d45-4a36-8354-1c8039c4f7cb");
+    --background-button-default: url("https://github.com/user-attachments/assets/3b636ec0-524b-40ae-8dbc-a872ebbb49a4");
+    --input-border-width: 1.5px;
+    --input-border-color-default: rgba(255, 255, 255, 0.60);
+    --color-placeholder-text-focus:  rgba(255, 255, 255, 0.30);
+    --input-border-color-focus: #fff;
+    --font-size-input: 20px;
+    --size-input-width: 340px;
+    --size-input-height: 30px;
+    --space-above-input: 89.97px;
+    --padding-text-input: 8px;
+
+    /* Palindrome Checked Page AND Palindrome Not Match Page*/
+    --font-size-result: 30.78px;
+    --top-result: 78px;
+
+    /* Palindrome Checked Page */
+    --background-page-palindrome: url("https://github.com/user-attachments/assets/9ac63aa1-47ba-41f1-b006-7aba6de92e95");
+    --background-card-palindrome: url("https://github.com/user-attachments/assets/9662ce58-c14a-4212-ab5d-2ae226c9ae85");
+    --background-button-palindrome: url("https://github.com/user-attachments/assets/77d3bd71-77f1-48aa-9e39-718d601c0239");
+
+    /* Palindrome Not Match Page */
+    --background-page-not-palindrome: url("https://github.com/user-attachments/assets/ed4bba81-e535-43a9-958b-af6d0a0d4964");
+    --background-card-not-palindrome: url("https://github.com/user-attachments/assets/e9db924c-83b1-45db-a9ef-5fe17db3b56a");
+    --background-button-not-palindrome: url("https://github.com/user-attachments/assets/989f36b1-383c-4a3b-b1c7-472d7aa38d05");
+
+}
+
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* TEXT */
+
+body {
+    margin: 0;
+    padding: 0;
+    transition: background-image 1s ease-in-out;
+}
+
+html {
+    font-style: normal;
+    line-height: normal;
+    background-image: var(--background-page-default);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.title, .description, #check-btn {
+    color: var(--color-text-primary);
+    font-family: var(--font-family-primary);
+    font-style: var(--font-style);
+}
+
+.description, .placeholder, #check-btn, #result {
+    font-weight: var(--font-weight-secondary);
+}
+
+.title {
+    font-size: var(--font-size-title);
+    font-weight: var(--font-weight-primary);
+    letter-spacing: -0.56px;
+    margin-top: var(--space-above-title);
+}
+
+.description {
+    font-size: var(--font-size-description);
+    margin-top: var(--space-above-description);
+}
+
+.placeholder, #result {
+    font-family: var(--font-family-secondary);
+}
+
+.placeholder {
+    color: var(--color-placeholder-default);
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-input);
+}
+
+#result {
+    color: var(--color-text-primary);
+    font-size: var(--font-size-result);
+    top: var(--top-result);
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    pointer-events: none;
+    z-index: 10;
+}
+
+
+.input-container {
+    margin-top: var(--space-above-input);
+    position: relative;
+    width: var(--size-input-width);
+    height: var(--size-input-height);
+}
+
+#text-input {
+    outline: 0;
+    padding: var(--padding-text-input);
+    width: 100%;
+    border: none;
+    background: transparent;
+    color: var(--color-text-primary);
+    font-family: "Work Sans";
+    font-size: var(--font-size-input);
+    border-bottom: var(--input-border-width) solid var(--input-border-color-default);
+    text-align: center;
+    transition: width 0.2s ease;
+}
+
+#text-input::placeholder {
+    color: var(--color-placeholder-default);
+}
+
+#text-input:focus {
+    border-bottom-color: var(--input-border-color-focus);;
+    transition: border-bottom 0.3s ease;
+}
+
+/* BOX */
+
+.card {
+    width: var(--size-card-width);
+    height: var(--size-card-height);
+    border-radius: var(--size-card-border-radius);
+    background-image: var(--background-card-default);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#check-btn {
+    font-size: var(--font-size-button);
+    display: flex;
+    margin-top: var(--space-above-button);
+    margin-bottom: var(--space-below-button);
+    display: flex;
+    width: var(--size-button-width);
+    height: var(--size-button-height);
+    padding: 14px;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    border-radius: var(--size-card-border-radius);
+    background-image: var(--background-button-default);
+    border: none;
+    transition: background-image 0.5s ease, transform 0.25s ease;
+}
+
+#check-btn:hover {
+    background-image: var(--background-button-hover);
+    cursor: pointer;
+    transform: scale(1.02);
+    
+}
+
+#check-btn:active {
+    transform: scale(0.95);
+}
+
+.hidden-input {
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.hidden {
+    display: none;
+}
+
+html.palindrome-background {
+    background-image: var(--background-page-palindrome);
+}
+
+html.not-palindrome-background {
+    background-image: var(--background-page-not-palindrome);
+}
+
+.card.palindrome-card {
+    background-image: var(--background-card-palindrome);
+}
+
+.card.not-palindrome-card {
+    background-image: var(--background-card-not-palindrome);
+}
+
+#check-btn.palindrome-button {
+    background-image: var(--background-button-palindrome);
+}
+
+#check-btn.not-palindrome-button {
+    background-image: var(--background-button-not-palindrome);
+}
+
+#text-input:focus::placeholder {
+    color: var(--color-placeholder-text-focus);
+    transition: color 0.25s ease-out;
+}
+
+@media (max-width: 768px) {
+    :root {
+    /* Every Page */
+    --background-button-hover: url("https://github.com/user-attachments/assets/518957aa-ca39-4456-bd8e-d69fd2497ae0");
+    --color-text-primary: #fff;
+    --font-style: normal;
+    --title-letter-spacing: -0.56px;
+    --font-family-primary: "Poppins", sans-serif;
+    --font-family-secondary: "Work Sans", sans-serif;
+    --font-size-title: 28px;
+    --font-size-button: 16px;
+    --font-weight-primary: 700;
+    --font-size-description: 12px;
+    --font-weight-secondary: 400;
+    --size-card-width: 344px;
+    --size-card-height: 366px;
+    --size-card-border-radius: 32px;
+    --size-button-width: 174px;
+    --size-button-height: 52px;
+    --size-button-border-radius: 36px;
+    --space-above-title: 34px;
+    --space-above-description: 24px;
+    --space-above-button: 25px;
+    --space-below-button: 39px;
+
+    /* Default Page */
+    --background-page-default: url("https://github.com/user-attachments/assets/950ca8ae-6e4d-4598-bd38-15989d782771");
+    --background-card-default: url("https://github.com/user-attachments/assets/076efb6d-4a7c-46e2-85b7-81606216149b");
+    --background-button-default: url("https://github.com/user-attachments/assets/33f4a4cd-86c5-42da-be16-6292ec264251");
+    --input-border-width: 1.5px;
+    --input-border-color-default: rgba(255, 255, 255, 0.60);
+    --color-placeholder-text-focus:  rgba(255, 255, 255, 0.30);
+    --input-border-color-focus: #fff;
+    --font-size-input: 14px;
+    --size-input-width: 240px;
+    --size-input-height: 42px;
+    --space-above-input: 64px;
+    --padding-text-input: 6px;
+
+    /* Palindrome Checked Page AND Palindrome Not Match Page*/
+    --font-size-result: 22px;
+    --top-result: 50px;
+
+    /* Palindrome Checked Page */
+    --background-page-palindrome: url("https://github.com/user-attachments/assets/1b3257a4-eb5a-4245-9c50-2bd43d5f9926");
+    --background-card-palindrome: url("https://github.com/user-attachments/assets/df01223b-9bae-4707-869b-b188b1ac191c");
+    --background-button-palindrome: url("https://github.com/user-attachments/assets/2a4e62bd-e766-4fcb-a771-eecbf2d5d713");
+
+    /* Palindrome Not Match Page */
+    --background-page-not-palindrome: url("https://github.com/user-attachments/assets/318b9e76-1290-448d-b6cd-242103a60163");
+    --background-card-not-palindrome: url("https://github.com/user-attachments/assets/e6b2e38e-a467-4b18-bba6-31c783b1896b");
+    --background-button-not-palindrome: url("https://github.com/user-attachments/assets/e6edc35e-a909-4cc0-8241-ee83b1ec35b7");
+    }
+}
