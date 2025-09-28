@@ -1,4 +1,4 @@
-# JavaScript Vademecum - Edizione Completa 📚
+# JavaScript Vademecum
 
 ## Parte I - Fondamenti e Tipi di Dati
 
@@ -77,17 +77,26 @@ Sempre, come prima scelta. Questo è un cambio di mentalità importante: parti s
 
 Perché? Perché rende il tuo codice più prevedibile. Quando vedi `const`, sai che quella variabile punterà sempre alla stessa cosa. È una promessa che fai a chi leggerà il codice (incluso il te stesso del futuro): "Questa cosa non cambierà riferimento, puoi fidarti."
 
-Ideale per:
-- **Elementi del DOM**: Una volta selezionato un elemento, sarà sempre quello
-- **Configurazioni**: Impostazioni che rimangono fisse durante l'esecuzione
-- **Funzioni**: Le funzioni stesse sono valori che assegni a variabili
-- **Moduli importati**: Le librerie che importi non cambiano riferimento
-
 #### var – Il Vecchio Modo (Da Evitare)
 
 `var` è il modo in cui si dichiaravano le variabili prima di `let` e `const`. Ha un comportamento meno prevedibile (il function scope invece del block scope) che può portare a bug difficili da scovare. 
 
 Immagina `var` come una vecchia serratura che a volte si apre da sola, o come un contenitore che magicamente appare in posti dove non te l'aspetti. Ha questo strano comportamento chiamato "hoisting" dove JavaScript la "solleva" all'inizio della funzione, anche se l'hai dichiarata più in basso. È come se il tuo codice venisse riorganizzato a tua insaputa!
+
+```javascript
+// Quello che scrivi
+function test() {
+    console.log(x); // undefined (non errore!)
+    var x = 5;
+}
+
+// Quello che JavaScript vede (hoisting)
+function test() {
+    var x; // Dichiarazione "sollevata"
+    console.log(x); // undefined
+    x = 5;
+}
+```
 
 Evitalo nei progetti moderni. Se vedi `var` in codice vecchio, considera di refactorarlo. È come vedere ancora Windows XP in un ufficio nel 2025 - funziona, ma perché rischiare?
 
@@ -102,6 +111,7 @@ Questi due valori rappresentano il "nulla", ma con significati profondamente div
 ```javascript
 let canzoneCorrente = null; // "Non c'è nessuna canzone in riproduzione, e lo so"
 let prossimoOspite = null; // "Non c'è un prossimo ospite programmato"
+let currentTask = null; // "Nessun task selezionato per l'editing"
 ```
 
 **undefined**: È l'assenza accidentale o lo stato di "non ancora definito". È il valore di default di una variabile che è stata dichiarata ma a cui non è ancora stato assegnato un valore. JavaScript lo mette lì automaticamente, come a dire "Boh, non so cosa metterci."
@@ -131,14 +141,32 @@ I backtick sono la scelta migliore per creare stringhe. Permettono l'interpolazi
 const nome = "Mario";
 const eta = 25;
 const presentazione = `Mi chiamo ${nome} e ho ${eta} anni.`;
-```
 
-Ma perché sono così potenti? Perché trasformano la stringa da un blocco monolitico a qualcosa di dinamico e vivo. È come la differenza tra una fotografia e un video: i template literals possono cambiare, adattarsi, reagire. Puoi persino inserire intere espressioni JavaScript dentro `${}` - JavaScript le calcola e poi inserisce il risultato nella stringa.
-
-```javascript
+// Puoi anche eseguire calcoli dentro ${}
 const prezzo = 100;
 const messaggio = `Il totale è €${prezzo * 1.22} (IVA inclusa)`;
 ```
+
+Ma perché sono così potenti? Perché trasformano la stringa da un blocco monolitico a qualcosa di dinamico e vivo. È come la differenza tra una fotografia e un video: i template literals possono cambiare, adattarsi, reagire.
+
+**Caratteri di Escape - I Caratteri Speciali**
+
+A volte devi inserire caratteri speciali nel testo. Il backslash `\` è il tuo passepartout - dice al computer "il prossimo carattere è speciale".
+
+```javascript
+const negozio = "Sono nel \"Store\"";      // Virgolette dentro virgolette
+const righe = "Prima riga\nSeconda riga";  // \n = A capo (new line)
+const colonne = "Nome\tCognome\tEtà";      // \t = Tab per allineare
+const percorso = "C:\\Users\\Documents";   // \\ = Backslash letterale
+
+// Altri caratteri di escape comuni:
+const apostrofo = 'L\'apostrofo';          // \' = Apostrofo in stringa con apici
+const unicode = "\u2764";                  // \u = Carattere Unicode (❤)
+const ritorno = "Riga1\rSovrascritta";     // \r = Ritorno carrello
+const backspace = "Test\b\b\b\b";          // \b = Cancella carattere precedente
+```
+
+È come quando fai le "virgolette con le dita" mentre parli - il backslash è il gesto che dice "attenzione, questo è letterale, non un comando!"
 
 **Metodi Utili (La Cassetta degli Attrezzi per Testi)**
 
@@ -146,10 +174,30 @@ Ogni stringa in JavaScript è segretamente un oggetto con decine di metodi nasco
 
 ```javascript
 const testo = "JavaScript è potente";
+
+// Proprietà e metodi di base
 testo.length;           // 20 - Non è un metodo ma una proprietà!
 testo.toUpperCase();    // "JAVASCRIPT È POTENTE"
+testo.toLowerCase();    // "javascript è potente"
+
+// Ricerca
 testo.includes("potente"); // true - Cerca una sottostringa
-testo.slice(0, 10);     // "JavaScript" - Taglia un pezzo
+testo.indexOf("Script");   // 4 - Dove inizia (-1 se non trova)
+testo.startsWith("Java"); // true
+testo.endsWith("nte");    // true
+
+// Estrazione
+testo.slice(0, 10);     // "JavaScript" - Dal carattere 0 al 10
+testo.substring(0, 10); // "JavaScript" - Simile a slice
+testo.substr(0, 10);    // "JavaScript" - DEPRECATO, evita!
+
+// Pulizia e sostituzione
+"  spazi ovunque  ".trim();     // "spazi ovunque"
+testo.replace("potente", "fantastico"); // Sostituisce la prima occorrenza
+testo.replaceAll("e", "3");     // Sostituisce tutte le occorrenze
+
+// Ripetizione
+"Na".repeat(4) + " Batman!";    // "NaNaNaNa Batman!"
 ```
 
 **Il Metodo .split() - L'Affettatrice di Stringhe**
@@ -157,441 +205,507 @@ testo.slice(0, 10);     // "JavaScript" - Taglia un pezzo
 `.split()` è come un coltello magico che taglia una stringa nei punti che decidi tu. Ma la magia vera è che trasforma una stringa in un array - passa da un blocco unico a una lista di pezzi manipolabili singolarmente.
 
 ```javascript
-"Ciao mondo felice".split(' '); // ['Ciao', 'mondo', 'felice']
-"2025-01-15".split('-');        // ['2025', '01', '15']
+"Ciao mondo felice".split(' ');    // ['Ciao', 'mondo', 'felice']
+"2025-01-15".split('-');           // ['2025', '01', '15']
+"hello".split("");                 // ["h", "e", "l", "l", "o"] - Ogni lettera!
+"test".split();                    // ["test"] - Senza separatore, mette tutto in array
+
+// Casi avanzati
+"uno,,tre".split(",");             // ["uno", "", "tre"] - Mantiene vuoti
+"ciao mondo".split(" ", 1);        // ["ciao"] - Limite al numero di split
 ```
 
-Il separatore che scegli è come decidere dove tagliare una torta: puoi tagliare ad ogni spazio (per ottenere le parole), ad ogni virgola (per dati CSV), o persino ad ogni lettera (passando una stringa vuota). E se non passi nessun separatore? La stringa intera diventa l'unico elemento di un array - utile quando vuoi uniformare il tipo di dato.
+Il separatore che scegli è come decidere dove tagliare una torta. E se non passi nessun separatore? La stringa intera diventa l'unico elemento di un array - utile quando vuoi uniformare il tipo di dato.
 
 #### Numeri (Number) - I Valori Matematici 🔢
 
 I numeri in JavaScript sono ingannevolmente semplici. Non c'è distinzione tra interi e decimali - tutto è un `Number`. Ma questa semplicità nasconde alcune stranezze: JavaScript usa il formato IEEE 754 per i numeri, il che significa che a volte `0.1 + 0.2` non fa esattamente `0.3` (fa `0.30000000000000004`). È come se JavaScript facesse i conti con una calcolatrice che ha troppe cifre decimali e a volte si confonde.
 
-**Math - La Calcolatrice Scientifica** 
+```javascript
+// Tipi di numeri
+const intero = 42;
+const decimale = 3.14;
+const negativo = -273.15;
+const esponenziale = 5.2e3;  // 5200 (notazione scientifica)
+const binario = 0b1010;      // 10 in binario
+const ottale = 0o12;         // 10 in ottale
+const esadecimale = 0xFF;    // 255 in esadecimale
+
+// Valori speciali
+const infinito = Infinity;
+const menoInfinito = -Infinity;
+const nonNumero = NaN;  // Not a Number
+
+// Controlli
+Number.isInteger(5.0);    // true - È intero anche se ha .0
+Number.isFinite(100);     // true - È un numero finito
+Number.isNaN(NaN);        // true - È NaN
+```
+
+**Math - La Calcolatrice Scientifica Integrata**
 
 L'oggetto `Math` è come avere una calcolatrice scientifica sempre a disposizione, ma integrata nel linguaggio. Non devi crearlo o importarlo - è sempre lì, pronto all'uso.
 
 ```javascript
-Math.random();     // Un numero tra 0 e 0.999... - Il dado infinito
+// Arrotondamenti
 Math.floor(4.9);   // 4 - Taglia via i decimali, sempre verso il basso
 Math.ceil(4.1);    // 5 - Arrotonda sempre verso l'alto
 Math.round(4.5);   // 5 - Arrotonda al più vicino
-Math.max(1,5,3);   // 5 - Trova il più grande
+Math.trunc(4.9);   // 4 - Taglia i decimali senza arrotondare
+
+// Operazioni base
+Math.abs(-10);     // 10 - Valore assoluto
+Math.pow(2, 3);    // 8 - Potenza (2^3), come 2**3
+Math.sqrt(16);     // 4 - Radice quadrata
+Math.cbrt(8);      // 2 - Radice cubica
+
+// Min e Max
+Math.max(1, 5, 3); // 5 - Il più grande
+Math.min(1, 5, 3); // 1 - Il più piccolo
+// Con array: usa spread
+const numeri = [1, 5, 3];
+Math.max(...numeri); // 5
+
+// Trigonometria (radianti!)
+Math.sin(Math.PI / 2);  // 1
+Math.cos(0);            // 1
+Math.tan(Math.PI / 4);  // ~1
+
+// Costanti utili
+Math.PI;       // 3.141592653589793
+Math.E;        // 2.718281828459045 (numero di Eulero)
+Math.LN2;      // Logaritmo naturale di 2
+Math.SQRT2;    // Radice quadrata di 2
 ```
 
-Il trucco con `Math.random()` è capire che restituisce un numero tra 0 (incluso) e 1 (escluso). Per ottenere numeri casuali in un range specifico, devi fare un po' di matematica:
+**Math.random() - Il Generatore di Casualità**
+
+`Math.random()` genera un numero pseudo-casuale tra 0 (incluso) e 1 (escluso). È come lanciare un dado con infinite facce microscopiche.
 
 ```javascript
-// Numero casuale tra 1 e 10
+// Base: numero tra 0 e 0.999...
+Math.random(); // es: 0.7394728492836
+
+// Numero tra 0 e 10 (escluso)
+Math.random() * 10;
+
+// Intero tra 0 e 9
+Math.floor(Math.random() * 10);
+
+// Intero tra 1 e 10 (incluso)
 Math.floor(Math.random() * 10) + 1;
+
+// Formula generale: intero tra min e max (inclusi)
+function randomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// Booleano casuale (50/50)
+Math.random() < 0.5;
+
+// Elemento casuale da array
+const colori = ["rosso", "verde", "blu"];
+const coloreCasuale = colori[Math.floor(Math.random() * colori.length)];
 ```
+
+**parseInt() - L'Estrattore di Interi**
+
+`parseInt()` è come un buttafuori molto specifico che estrae solo numeri interi da una stringa. Legge da sinistra a destra e si ferma appena trova qualcosa che non è un numero.
+
+```javascript
+parseInt("123");          // 123 - Stringa pulita
+parseInt("42istheanswer"); // 42 - Si ferma alla prima lettera
+parseInt("3.14");         // 3 - Ignora i decimali
+parseInt("age42");        // NaN - Non inizia con un numero
+parseInt("2e3");          // 2 - Si ferma alla 'e'
+parseInt("   5  ");       // 5 - Ignora gli spazi
+
+// Con base specificata (radix) - molto importante!
+parseInt("1010", 2);      // 10 - Interpreta come binario
+parseInt("FF", 16);       // 255 - Interpreta come esadecimale
+parseInt("077", 8);       // 63 - Interpreta come ottale
+
+// parseFloat per decimali
+parseFloat("3.14");       // 3.14
+parseFloat("3.14.15");    // 3.14 - Si ferma al secondo punto
+```
+
+La logica di `parseInt` è rigida ma prevedibile: "Inizio a leggere. Se il primo carattere è un numero o un segno +/-, continuo. Appena vedo qualcosa che non è una cifra valida per la base specificata, mi fermo e restituisco quello che ho raccolto."
 
 #### Date - Il Calendario e l'Orologio 📅
 
-Le date in JavaScript sono oggetti complessi che rappresentano un momento preciso nel tempo. Ma attenzione: sono piene di trabocchetti storici e decisioni di design discutibili.
+Le date in JavaScript sono oggetti complessi che rappresentano un momento preciso nel tempo, misurato in millisecondi dal 1 gennaio 1970 00:00:00 UTC (l'Unix Epoch). Sono piene di trabocchetti storici e decisioni di design discutibili che risalgono ai primi giorni di JavaScript.
 
 ```javascript
-const currentDate = new Date();
+// Creare date
+const ora = new Date();                    // Data e ora correnti
+const compleanno = new Date(2025, 0, 15);  // 15 gennaio 2025 (mese 0!)
+const precisa = new Date(2025, 0, 15, 14, 30, 0); // Con ora
+const daStringa = new Date("2025-01-15");  // Da stringa ISO
+const daTimestamp = new Date(1234567890000); // Da millisecondi
 ```
-
-Quel `new` è importante - sta creando un'istanza di un oggetto. È come chiedere a JavaScript: "Costruiscimi un orologio che segna questo preciso momento." Senza `new`, `Date()` restituisce solo una stringa, non un oggetto manipolabile.
 
 **I Metodi Tricky delle Date**
 
+JavaScript ha alcune scelte... particolari per le date. Preparati a delle sorprese!
+
 ```javascript
-const date = new Date();
-date.getMonth();     // 0-11 (Gennaio è 0! Il trabocchetto più famoso)
-date.getDay();       // 0-6 (Domenica è 0! Un altro trabocchetto)
-date.getDate();      // 1-31 (Finalmente normale!)
-date.getFullYear();  // 2025 (Usa sempre questo, mai getYear())
+const date = new Date(2025, 0, 15, 14, 30, 45);
+
+// GET methods - leggere valori
+date.getFullYear();   // 2025 - Anno (usa sempre questo!)
+date.getMonth();      // 0 - Gennaio (0-11, IL TRABOCCHETTO!)
+date.getDate();       // 15 - Giorno del mese (1-31)
+date.getDay();        // 3 - Mercoledì (0=Dom, 6=Sab)
+date.getHours();      // 14 - Ore (0-23)
+date.getMinutes();    // 30 - Minuti
+date.getSeconds();    // 45 - Secondi
+date.getMilliseconds(); // 0 - Millisecondi
+
+// SET methods - modificare valori
+date.setFullYear(2026);
+date.setMonth(11);    // Dicembre (ricorda: 0-11!)
+date.setDate(25);     // Puoi mettere anche 32 e passa al mese dopo!
+
+// Conversioni utili
+date.toString();      // "Wed Jan 15 2025 14:30:45 GMT+0100 (CET)"
+date.toISOString();   // "2025-01-15T13:30:45.000Z" (sempre UTC!)
+date.toLocaleDateString('it-IT'); // "15/01/2025"
+date.toLocaleTimeString('it-IT'); // "14:30:45"
 ```
 
-Perché `getMonth()` parte da 0? È una decisione storica ereditata da linguaggi più vecchi. Gli sviluppatori JavaScript del 1995 pensavano che sarebbe stato più facile usare i mesi come indici di array. Spoiler: non lo è. È fonte di bug infiniti. Ricordati sempre di aggiungere 1!
+Perché `getMonth()` parte da 0? È una decisione storica ereditata dal linguaggio C. Gli sviluppatori pensavano sarebbe stato comodo per usare i mesi come indici di array. Spoiler: non lo è! È fonte di bug infiniti.
+
+```javascript
+// Il trabocchetto classico
+const natale = new Date(2025, 12, 25); // SBAGLIATO! Questo è gennaio 2026!
+const nataleCorretto = new Date(2025, 11, 25); // Dicembre = 11
+```
 
 **Date.now() - Il Cronometro Universale**
 
-`Date.now()` è geniale nella sua semplicità. Non crea oggetti, non alloca memoria, restituisce solo un numero: i millisecondi dal 1 gennaio 1970 (l'Unix Epoch - il "Big Bang" del tempo informatico).
+`Date.now()` è geniale nella sua semplicità. Non crea oggetti, non alloca memoria, restituisce solo un numero: i millisecondi dal 1 gennaio 1970.
 
 ```javascript
 const timestamp = Date.now(); // es: 1757897460000
+
+// ID unici basati sul tempo
+const uniqueId = `task-${Date.now()}`;
+
+// Misurare performance
+const start = Date.now();
+// ... codice da misurare ...
+const end = Date.now();
+console.log(`Operazione durata: ${end - start}ms`);
+
+// Timer e scadenze
+const scadenzaInUnOra = Date.now() + (60 * 60 * 1000);
+
+// Confrontare date facilmente
+const scadenza = new Date("2025-12-31");
+if (Date.now() > scadenza.getTime()) {
+    console.log("Scaduto!");
+}
 ```
 
-Perché è così utile? Perché i numeri sono facilissimi da confrontare, sottrarre, ordinare. È come tradurre il tempo in un linguaggio che i computer adorano: la matematica pura.
+#### Booleani (Boolean) - Il Sistema Binario della Logica ✅❌
 
-Usi pratici che cambiano la vita:
-- **ID unici**: Due chiamate a `Date.now()` non daranno MAI lo stesso numero (a meno che non avvengano nello stesso millisecondo)
-- **Performance tracking**: Sottrai due timestamp e hai la durata esatta
-- **Ordinamento cronologico**: Ordina per timestamp e hai l'ordine temporale
+I booleani sono i bit filosofici di JavaScript. Solo due valori: `true` o `false`. Ma non lasciarti ingannare dalla loro semplicità - sono il cuore di ogni decisione che il tuo programma prende. Sono come gli interruttori della luce: acceso o spento, sì o no, procedi o fermati.
 
-#### Booleani (Boolean) - Vero o Falso ✅❌
+```javascript
+const vero = true;
+const falso = false;
 
-I booleani sono i bit filosofici di JavaScript. Solo due valori: `true` o `false`. Ma non lasciarti ingannare dalla loro semplicità - sono il cuore di ogni decisione che il tuo programma prende.
+// Nascono spesso da confronti
+const maggiorenne = eta >= 18;
+const isAdmin = ruolo === "admin";
+const isEmpty = array.length === 0;
+```
 
-**Truthy vs Falsy - La Zona Grigia** 
+**Truthy vs Falsy - La Zona Grigia della Verità**
 
 JavaScript ha questa caratteristica affascinante e a volte frustrante: in un contesto booleano, OGNI valore viene "costretto" a diventare true o false. È come se JavaScript avesse degli occhiali speciali che vedono tutto in bianco e nero.
 
-**I Sei Cavalieri del Falsy** (memorizzali!):
-1. `false` - L'ovvio
-2. `0` - Lo zero numerico
-3. `""` - La stringa vuota
-4. `null` - Il vuoto intenzionale
-5. `undefined` - Il vuoto accidentale
-6. `NaN` - Not a Number (il risultato di operazioni matematiche impossibili)
+**I Sei Cavalieri del Falsy** (memorizzali a memoria!):
 
-Tutto il resto è truthy! Anche cose che potresti non aspettarti:
-- `"0"` - È una stringa, quindi truthy!
-- `"false"` - È una stringa, quindi truthy!
-- `[]` - Array vuoto ma è un oggetto, quindi truthy!
-- `{}` - Oggetto vuoto ma esiste, quindi truthy!
-- `-1` - Non è zero, quindi truthy!
+```javascript
+// I SOLI 6 valori falsy in JavaScript:
+Boolean(false);      // false - L'ovvio
+Boolean(0);         // false - Zero numerico  
+Boolean("");        // false - Stringa vuota
+Boolean(null);      // false - Vuoto intenzionale
+Boolean(undefined); // false - Vuoto accidentale
+Boolean(NaN);       // false - Not a Number
 
-Questo comportamento è una spada a doppio taglio. Ti permette di scrivere codice conciso, ma può anche portare a bug subdoli se non stai attento.
+// TUTTO il resto è truthy! Anche cose controintuitive:
+Boolean("0");       // true - È una stringa con contenuto!
+Boolean("false");   // true - È una stringa con testo!
+Boolean([]);        // true - Array vuoto ma è un oggetto!
+Boolean({});        // true - Oggetto vuoto ma esiste!
+Boolean(-1);        // true - Non è zero!
+Boolean(" ");       // true - Stringa con spazio!
+```
+
+Questo comportamento ti permette di scrivere codice incredibilmente conciso:
+
+```javascript
+// Controllo verboso
+if (username !== "" && username !== null && username !== undefined) {
+    console.log(`Benvenuto ${username}`);
+}
+
+// Controllo elegante sfruttando truthy/falsy
+if (username) {
+    console.log(`Benvenuto ${username}`);
+}
+
+// Con operatore NOT per verificare falsy
+if (!username) {
+    alert("Per favore inserisci un username");
+}
+
+// Double NOT per convertire in booleano
+const hasUsername = !!username; // true o false
+```
 
 #### Array (Array) - Le Liste Ordinate 🗂️
 
 Gli array sono le collezioni ordinate di JavaScript. Ma pensarli solo come "liste" è limitante. Sono più come treni con vagoni: ogni vagone (elemento) ha un numero (indice), puoi aggiungere o rimuovere vagoni, riordinarli, o trasformare l'intero treno in qualcosa di completamente diverso.
 
-Gli array in JavaScript sono dinamici - possono crescere e rimpicciolirsi a piacimento. Non devi dichiarare una dimensione fissa come in altri linguaggi. È come avere una valigia magica che si espande per contenere tutto quello che ci metti dentro.
-
-**Metodi di Modifica - I Distruttori**
-
-Questi metodi modificano l'array originale. Sono come operazioni chirurgiche: cambiano permanentemente il paziente.
-
-**Il Metodo .reverse() - Il Capovolgitore**
-
-`.reverse()` è brutalmente semplice: prende il primo elemento e lo scambia con l'ultimo, il secondo con il penultimo, e così via. Ma attenzione - modifica l'array originale!
-
 ```javascript
-const lettere = ['a', 'b', 'c'];
-lettere.reverse(); // lettere è ora ['c', 'b', 'a']
+// Creazione array
+const vuoto = [];
+const numeri = [1, 2, 3, 4, 5];
+const misto = ["testo", 42, true, null, {nome: "Mario"}];
+const matrice = [[1,2], [3,4], [5,6]]; // Array di array
+
+// Accesso elementi (indice parte da 0!)
+const frutti = ["mela", "pera", "banana"];
+console.log(frutti[0]);     // "mela" - primo elemento
+console.log(frutti[2]);     // "banana" - terzo elemento
+console.log(frutti[10]);    // undefined - non esiste
+console.log(frutti.length); // 3 - numero di elementi
 ```
 
-È come prendere una pila di piatti e capovolgerla: quello che era sopra ora è sotto. Il problema è che non puoi "annullare" l'operazione - l'ordine originale è perso per sempre (a meno che tu non l'abbia salvato prima).
+**Array.from() - Il Trasformatore Universale**
 
-La soluzione moderna? Usa `.toReversed()` (ES2023) che crea una copia invertita, o il pattern dello spread: `[...array].reverse()`.
-
-**Il Metodo .sort() - L'Ordinatore Caotico**
-
-`.sort()` ha una personalità complessa. Senza parametri, ordina tutto come se fosse testo, il che porta a risultati assurdi con i numeri:
+`Array.from()` converte strutture "simili ad array" in veri array. È come trasformare una collana di perle in perle singole che puoi riorganizzare liberamente.
 
 ```javascript
-[1, 10, 2, 21].sort(); // [1, 10, 2, 21] - What?!
+// Da stringa a array di caratteri
+const lettere = Array.from("Ciao");  // ["C", "i", "a", "o"]
+
+// Da NodeList a Array (FONDAMENTALE per il DOM!)
+const paragrafi = document.querySelectorAll("p"); // NodeList (non è un vero array!)
+const arrayParagrafi = Array.from(paragrafi);     // Ora è un vero array!
+
+// Con funzione di trasformazione
+const raddoppiati = Array.from([1, 2, 3], x => x * 2); // [2, 4, 6]
+
+// Creare array di lunghezza specifica
+const cinqueZeri = Array.from({length: 5}, () => 0);        // [0, 0, 0, 0, 0]
+const countdown = Array.from({length: 10}, (_, i) => 10 - i); // [10, 9, 8, ..., 1]
+
+// Da Set a Array
+const set = new Set([1, 2, 2, 3]);
+const arrayDaSet = Array.from(set); // [1, 2, 3] - duplicati rimossi!
 ```
 
-Perché? Perché converte tutto in stringhe e le ordina alfabeticamente! "10" viene prima di "2" alfabeticamente, proprio come "apple" viene prima di "banana".
+**Metodi di Modifica (Distruttivi) - Cambiano l'Array Originale**
 
-La soluzione è dargli una funzione di confronto - le sue "istruzioni" su come ordinare:
+Questi metodi sono come operazioni chirurgiche: modificano permanentemente il paziente (l'array originale).
 
 ```javascript
-// Per numeri
+const frutti = ["mela", "pera"];
+
+// AGGIUNGERE/RIMUOVERE DALLA FINE
+frutti.push("banana");      // Aggiunge alla fine, ritorna nuova length: 3
+frutti.pop();               // Rimuove e ritorna ultimo: "banana"
+
+// AGGIUNGERE/RIMUOVERE DALL'INIZIO  
+frutti.unshift("kiwi");     // Aggiunge all'inizio, ritorna nuova length
+frutti.shift();             // Rimuove e ritorna primo: "kiwi"
+
+// INVERSIONE
+frutti.reverse();           // Inverte l'ordine (modifica originale!)
+// frutti è ora ["pera", "mela"]
+
+// ORDINAMENTO
+frutti.sort();              // Ordina alfabeticamente (modifica originale!)
+// Attenzione con i numeri!
+[1, 10, 2, 21].sort();     // [1, 10, 2, 21] - ordina come stringhe!
+// Soluzione: fornire comparatore
 [1, 10, 2, 21].sort((a, b) => a - b); // [1, 2, 10, 21]
-
-// La logica: se a - b è negativo, a viene prima
-// Se è positivo, b viene prima
-// Se è zero, sono uguali
 ```
 
-**Il Metodo .splice() - Il Coltellino Svizzero**
+**Il Metodo .splice() - Il Coltellino Svizzero degli Array**
 
-`.splice()` è il metodo più versatile e potente per modificare array. Può fare tre cose: rimuovere, aggiungere, e sostituire elementi. È come avere forbici, colla e bianchetto in un unico strumento.
+`.splice()` può fare tre cose: rimuovere, aggiungere e sostituire elementi. È il metodo più versatile ma anche il più complesso.
 
 ```javascript
-const frutti = ['mela', 'pera', 'banana', 'kiwi'];
+const lettere = ['a', 'b', 'c', 'd', 'e'];
 
-// Rimuovi 2 elementi a partire dall'indice 1
-frutti.splice(1, 2); // frutti è ora ['mela', 'kiwi']
+// splice(indiceInizio, quantiDaRimuovere, ...elementiDaAggiungere)
 
-// Aggiungi senza rimuovere
-frutti.splice(1, 0, 'arancia'); // ['mela', 'arancia', 'kiwi']
+// 1. RIMUOVERE
+const rimosse = lettere.splice(1, 2); 
+// lettere: ['a', 'd', 'e']
+// rimosse: ['b', 'c']
 
-// Sostituisci
-frutti.splice(0, 1, 'mango'); // ['mango', 'arancia', 'kiwi']
+// 2. AGGIUNGERE (senza rimuovere)
+lettere.splice(1, 0, 'x', 'y');
+// lettere: ['a', 'x', 'y', 'd', 'e']
+
+// 3. SOSTITUIRE
+lettere.splice(2, 1, 'z');
+// lettere: ['a', 'x', 'z', 'd', 'e']
+// Sostituisce 'y' con 'z'
+
+// Trucco: rimuovere da indice fino alla fine
+const array = [1, 2, 3, 4, 5];
+array.splice(2); // Rimuove tutto da indice 2
+// array: [1, 2]
 ```
 
-Il bello di `.splice()` è che restituisce gli elementi rimossi in un array. È come se ti dicesse: "Ecco cosa ho tagliato via, nel caso ti servisse."
+**Metodi di Lettura (Non Distruttivi) - Creano Nuovi Array**
 
-**Metodi di Lettura - I Non-Distruttivi**
-
-Questi metodi sono più gentili: guardano l'array, ne creano uno nuovo basato su quello che vedono, ma non toccano l'originale. Sono come fare una fotocopia invece di scrivere sull'originale.
-
-**Il Metodo .filter() - Il Setaccio Selettivo**
-
-`.filter()` è come un buttafuori all'ingresso di un club esclusivo. Ogni elemento deve superare un test per entrare nel nuovo array.
+Questi metodi sono più gentili: guardano l'array, creano qualcosa di nuovo, ma non toccano l'originale.
 
 ```javascript
 const numeri = [1, 2, 3, 4, 5];
-const pari = numeri.filter(n => n % 2 === 0); // [2, 4]
-// numeri è ancora [1, 2, 3, 4, 5]
+
+// FILTER - Il setaccio selettivo
+const pari = numeri.filter(n => n % 2 === 0); 
+// pari: [2, 4]
+// numeri ancora: [1, 2, 3, 4, 5]
+
+const maggioriDi2 = numeri.filter(n => n > 2); // [3, 4, 5]
+
+// Con oggetti
+const utenti = [
+    {nome: "Mario", eta: 25},
+    {nome: "Luigi", eta: 17},
+    {nome: "Peach", eta: 20}
+];
+const maggiorenni = utenti.filter(u => u.eta >= 18);
+
+// MAP - Il trasformatore
+const doppi = numeri.map(n => n * 2);         // [2, 4, 6, 8, 10]
+const quadrati = numeri.map(n => n ** 2);     // [1, 4, 9, 16, 25]
+
+// Map per creare HTML
+const nomi = ["Mario", "Luigi", "Peach"];
+const html = nomi.map(nome => `<li>${nome}</li>`).join("");
+// "<li>Mario</li><li>Luigi</li><li>Peach</li>"
+
+// FIND - Il detective
+const primo = numeri.find(n => n > 3);        // 4 (primo che matcha)
+const nessuno = numeri.find(n => n > 10);     // undefined
+
+// FINDINDEX - La posizione
+const indice = numeri.findIndex(n => n > 3);  // 3 (indice di 4)
+const nonTrovato = numeri.findIndex(n => n > 10); // -1
+
+// JOIN - L'incollatore
+["2025", "01", "15"].join("-");               // "2025-01-15"
+["Hello", "World"].join(" ");                 // "Hello World"
+[1, 2, 3].join("");                          // "123"
+
+// SLICE - Il tagliatore (crea copia!)
+const parte = numeri.slice(1, 3);             // [2, 3] (da indice 1 a 3 escluso)
+const ultimi = numeri.slice(-2);              // [4, 5] (ultimi 2)
+const copia = numeri.slice();                 // [1, 2, 3, 4, 5] (copia completa)
+
+// INCLUDES - Il verificatore
+numeri.includes(3);                           // true
+numeri.includes(10);                          // false
+
+// INDEXOF - Il cercatore di posizione
+numeri.indexOf(3);                            // 2 (posizione)
+numeri.indexOf(10);                           // -1 (non trovato)
 ```
 
-La funzione che passi a filter deve restituire `true` o `false`. È una domanda binaria: "Questo elemento può passare?" Se sì, entra nel nuovo array. Se no, viene lasciato fuori.
+**Spread Operator (...) - L'Esplosore di Array**
 
-**Il Metodo .map() - La Fabbrica di Trasformazione**
-
-`.map()` è il trasformatore universale. Prende ogni elemento e lo trasforma in qualcos'altro, creando un nuovo array con i risultati.
+I tre puntini sono magia pura. "Esplodono" un array nei suoi elementi individuali.
 
 ```javascript
-const prezzi = [100, 200, 300];
-const prezziScontati = prezzi.map(p => p * 0.8); // [80, 160, 240]
-```
-
-La differenza chiave con `.forEach()`? `.map()` RESTITUISCE un nuovo array, `.forEach()` no. `.map()` è per trasformare, `.forEach()` è per fare effetti collaterali (come console.log o modificare qualcosa esterno).
-
-**Il Metodo .join() - L'Incollatore**
-
-`.join()` è l'opposto di `.split()`. Se `.split()` taglia una stringa in pezzi per farne un array, `.join()` prende i pezzi di un array e li incolla insieme in una stringa.
-
-```javascript
-['2025', '01', '15'].join('-');  // "2025-01-15"
-['Hello', 'World'].join(' ');    // "Hello World"
-[1, 2, 3].join('');              // "123" - Nessun separatore!
-```
-
-Ma perché è così importante nel contesto di `.map()`? Perché quando usi `.map()` per generare HTML, ottieni un array di stringhe HTML. Il browser non sa come mostrare un array - sa solo mostrare stringhe. Senza `.join('')`, JavaScript convertirebbe l'array in stringa aggiungendo virgole tra gli elementi!
-
-```javascript
-// Senza join: virgole indesiderate nell'HTML
-const html = items.map(item => `<li>${item}</li>`);
-// Se items è ['a','b'], html diventa "<li>a</li>,<li>b</li>" nel DOM
-
-// Con join: HTML pulito
-const html = items.map(item => `<li>${item}</li>`).join('');
-// Ora è "<li>a</li><li>b</li>" - perfetto!
-```
-
-**Spread Operator (...) - Lo "Spacchettatore"** 
-
-I tre puntini sono magia pura. Prendono un array e lo "esplodono" nei suoi elementi individuali. È come aprire una scatola di cioccolatini e spargerli sul tavolo.
-
-```javascript
+// UNIRE ARRAY
 const arr1 = [1, 2];
 const arr2 = [3, 4];
-const unione = [...arr1, ...arr2]; // [1, 2, 3, 4]
+const uniti = [...arr1, ...arr2];  // [1, 2, 3, 4]
+const conExtra = [...arr1, 99, ...arr2]; // [1, 2, 99, 3, 4]
 
-// Clonare un array (shallow copy)
-const copia = [...arr1]; // [1, 2]
-```
+// COPIARE ARRAY (shallow copy)
+const originale = [1, 2, 3];
+const copia = [...originale];
+copia.push(4); // originale resta [1, 2, 3]
 
-Ma lo spread fa più che unire array. Ti permette di trasformare array in argomenti di funzione:
-
-```javascript
+// CONVERTIRE IN ARGOMENTI
 const numeri = [5, 2, 8, 1];
-Math.max(...numeri); // 8 - Come scrivere Math.max(5, 2, 8, 1)
+Math.max(...numeri);  // 8 - Come scrivere Math.max(5, 2, 8, 1)
+
+// TRICKS UTILI
+// Rimuovere duplicati
+const conDuplicati = [1, 2, 2, 3, 3, 3];
+const unici = [...new Set(conDuplicati)]; // [1, 2, 3]
+
+// Convertire string in array
+const caratteri = [..."Ciao"]; // ["C", "i", "a", "o"]
 ```
 
 #### Oggetti (Object) - I Contenitori Strutturati 📇
 
-Gli oggetti sono il cuore di JavaScript. Tutto in JavaScript è un oggetto o si comporta come tale. Ma a livello pratico, gli oggetti sono contenitori di coppie chiave-valore, come un dizionario o una rubrica telefonica.
+Gli oggetti sono il cuore di JavaScript. Tutto in JavaScript è un oggetto o si comporta come tale. Ma a livello pratico, gli oggetti sono contenitori di coppie chiave-valore, come un dizionario o una rubrica telefonica dove ogni informazione ha un'etichetta.
 
 ```javascript
+// Creazione oggetti
+const vuoto = {};
 const persona = { 
     nome: "Mario", 
     eta: 30,
-    saluta: function() { return "Ciao!" }
+    citta: "Roma",
+    saluta: function() { 
+        return `Ciao, sono ${this.nome}`; 
+    }
+};
+
+// Oggetti annidati (nested)
+const azienda = {
+    nome: "Tech Corp",
+    sede: {
+        via: "Via Roma 1",
+        citta: "Milano",
+        coordinate: { lat: 45.464, lng: 9.189 }
+    },
+    dipendenti: [
+        { nome: "Mario", ruolo: "CEO" },
+        { nome: "Luigi", ruolo: "CTO" }
+    ]
 };
 ```
 
-**Accesso ai Dati - Due Strade**
-
-La notazione a punto è elegante e diretta:
-```javascript
-persona.nome; // "Mario"
-```
-
-La notazione a parentesi quadre è più flessibile:
-```javascript
-persona["nome"]; // "Mario"
-const proprieta = "eta";
-persona[proprieta]; // 30 - Puoi usare variabili!
-```
-
-Quando usare quale? Usa il punto quando conosci il nome della proprietà. Usa le parentesi quando il nome è dinamico o contiene caratteri speciali.
-
-**La Struttura delle Tue Applicazioni** 
-
-Il 90% del codice JavaScript moderno lavora con array di oggetti. È il formato naturale per rappresentare collezioni di entità simili:
+**Accesso ai Dati - Due Strade, Due Filosofie**
 
 ```javascript
-const utenti = [
-    { id: 1, nome: "Alice", ruolo: "admin" },
-    { id: 2, nome: "Bob", ruolo: "user" },
-    { id: 3, nome: "Charlie", ruolo: "user" }
-];
+const user = { nome: "Alice", "data-nascita": "1990-01-01" };
+
+// NOTAZIONE A PUNTO (preferita quando possibile)
+user.nome;         // "Alice"
+user.nome = "Bob"; // Modifica
+
+// NOTAZIONE A PARENTESI (per casi speciali)
+user["data-nascita"];        // Chiavi con caratteri speciali
+user["no" + "me"];          // Chiavi dinamiche
+const prop = "nome";
+user[prop];                  // Accesso con variabile
+
+// Accesso sicuro con optional chaining (?.)
+const via = azienda.sede?.indirizzo?.via; // undefined invece di errore
 ```
 
-Questa struttura è così comune perché rispecchia come pensiamo: abbiamo una lista (array) di cose (oggetti) con proprietà (chiavi) e valori. È come un foglio Excel trasformato in codice.
-
-### 3. Operatori - Gli Strumenti del Programmatore 🔧
-
-Gli operatori sono i simboli che ti permettono di eseguire operazioni, confrontare valori e combinare logica. Ma sono più che semplici simboli - sono il linguaggio con cui esprimi la logica del tuo programma.
-
-#### Operatori di Assegnazione e Confronto - Il Cuore della Logica
-
-La distinzione tra `=` e `===` è fondamentale. È la differenza tra dire e chiedere, tra affermare e domandare.
-
-**= (Assegnazione) - "Riceve"**
-
-Il singolo uguale è un'azione, un comando. Non sta chiedendo se due cose sono uguali - sta RENDENDO una cosa uguale all'altra.
-
-```javascript
-let x = 5; // x RICEVE 5, non "x è uguale a 5?"
-```
-
-C'è un flusso direzionale qui: il valore a destra fluisce verso la variabile a sinistra. È come versare acqua in un bicchiere - l'acqua (valore) va nel bicchiere (variabile), mai il contrario.
-
-Le forme abbreviate sono scorciatoie per operazioni comuni:
-```javascript
-x += 3;  // Invece di x = x + 3
-x *= 2;  // Invece di x = x * 2
-count++; // Invece di count = count + 1
-```
-
-**=== (Confronto Stretto) - "È Identico a?"**
-
-Il triplo uguale è una domanda. Controlla se due valori sono identici sia nel valore che nel tipo. È il detective più rigoroso di JavaScript.
-
-```javascript
-5 === 5;      // true - Stesso valore, stesso tipo
-5 === "5";    // false - Stesso valore, tipo diverso!
-```
-
-Perché non usare `==` (doppio uguale)? Perché `==` fa "type coercion" - cerca di convertire i tipi per farli combaciare. Questo porta a risultati assurdi:
-
-```javascript
-"5" == 5;        // true (converte la stringa in numero)
-0 == false;      // true (converte false in 0)
-"" == false;     // true (entrambi sono falsy)
-null == undefined; // true (caso speciale)
-```
-
-Il doppio uguale è come un matchmaker disperato che cerca di far funzionare relazioni impossibili. Il triplo uguale è onesto: "Sono identici o no?"
-
-#### Operatori Logici - Combinare le Condizioni
-
-Gli operatori logici sono i mattoncini con cui costruisci logiche complesse. Sono le congiunzioni del linguaggio di programmazione.
-
-**&& (AND) - "E anche"**
-
-L'operatore AND è esigente: TUTTE le condizioni devono essere vere.
-
-```javascript
-const puoNoleggiareAuto = haPatente && eta >= 21 && haCartaCredito;
-```
-
-Ma c'è un trucco: `&&` non restituisce sempre `true` o `false`. Restituisce il primo valore falsy che trova, o l'ultimo valore se sono tutti truthy:
-
-```javascript
-const risultato = "ciao" && 5 && true; // true (l'ultimo)
-const risultato2 = "ciao" && 0 && true; // 0 (il primo falsy)
-```
-
-Questo comportamento permette pattern eleganti:
-```javascript
-// Esegui funzione solo se esiste
-oggetto && oggetto.metodo && oggetto.metodo();
-```
-
-**|| (OR) - "Oppure"**
-
-L'operatore OR è generoso: basta che UNA condizione sia vera.
-
-```javascript
-const puoEntrare = èMembro || haInvito || èVIP;
-```
-
-Come `&&`, anche `||` ha un comportamento speciale: restituisce il primo valore truthy che trova, o l'ultimo valore se sono tutti falsy:
-
-```javascript
-const nome = inputUtente || nomeDatabase || "Ospite";
-// Usa il primo valore "vero" che trova
-```
-
-Questo è il pattern del "default fallback" - cascata di opzioni dalla più specifica alla più generica.
-
-**! (NOT) - "Non"**
-
-Il NOT è il ribelle: inverte qualsiasi valore booleano.
-
-```javascript
-const èMinorenne = !èMaggiorenne;
-const listaVuota = !array.length; // Se length è 0 (falsy), diventa true
-```
-
-Il doppio NOT (`!!`) è un trucco per convertire qualsiasi valore in booleano:
-```javascript
-!!"ciao";  // true (stringa non vuota è truthy)
-!!0;       // false (0 è falsy)
-!!null;    // false (null è falsy)
-```
-
-#### Operatori Speciali - I Superpoteri di ES6+
-
-Questi operatori moderni risolvono problemi comuni in modi eleganti. Sono come upgrade al linguaggio che lo rendono più sicuro e espressivo.
-
-**Optional Chaining (?.) - La Rete di Sicurezza**
-
-Prima di `?.`, accedere a proprietà annidate era pericoloso:
-
-```javascript
-// Il vecchio modo pericoloso
-const via = user.address.street; // CRASH se address non esiste!
-
-// Il vecchio modo sicuro ma verboso
-const via = user && user.address && user.address.street;
-
-// Il nuovo modo elegante
-const via = user?.address?.street; // undefined se qualcosa manca
-```
-
-L'optional chaining è come avere un esploratore cauto: ad ogni passo controlla se il terreno è solido prima di procedere. Se trova il vuoto, si ferma e torna indietro con `undefined` invece di crashare.
-
-Funziona anche con metodi e array:
-```javascript
-const risultato = oggetto?.metodo?.(); // Chiama il metodo solo se esiste
-const primo = array?.[0]; // Accede all'elemento solo se array esiste
-```
-
-**Nullish Coalescing (??) - Il Default Intelligente**
-
-L'operatore `??` è nato per risolvere un problema specifico di `||`. Con `||`, valori come `0` o `""` vengono considerati falsy e sostituiti, anche quando sono valori validi:
-
-```javascript
-// Problema con ||
-const quantita = 0;
-const finale = quantita || 10; // 10 - Ma volevo 0!
-
-// Soluzione con ??
-const finale = quantita ?? 10; // 0 - Perfetto!
-```
-
-`??` controlla solo `null` e `undefined`. È come dire: "Usa questo valore a meno che non sia VERAMENTE mancante, non solo falsy."
-
-**Operatore Ternario - La Scelta Rapida**
-
-Il ternario è un if-else compressa in una singola espressione. È elegante per scelte semplici:
-
-```javascript
-const messaggio = eta >= 18 ? "Benvenuto" : "Accesso negato";
-```
-
-Ma la sua vera forza è che PRODUCE un valore, quindi puoi usarlo ovunque:
-```javascript
-// In JSX/React
-<div className={isActive ? "active" : "inactive"}>
-
-// In oggetti
-const user = {
-    name: "Mario",
-    role: isAdmin ? "admin" : "user"
-};
-
-// In return
-return successo ? datiSalvati : null;
-```
-
-Non abusarne! Per logiche complesse, un if-else tradizionale è più leggibile. Il ternario brilla per scelte binarie semplici.
-
+<br>
+<br>
 <br>
 <br>
 <br>
@@ -599,404 +713,236 @@ Non abusarne! Per logiche complesse, un if-else tradizionale è più leggibile. 
 
 ## Parte II - Input/Output e Strutture di Controllo
 
-### 4. Output - Comunicare con l'Esterno 📢
+### 4. Output e Commenti 📢💭
 
-L'output è il modo in cui il tuo programma comunica. Ma è più di semplice "stampa" - è il sistema nervoso del debugging, la voce del tuo programma, il modo in cui rendi visibile l'invisibile.
-
-#### console - La Tua Cabina di Pilotaggio per il Debug
-
-L'oggetto `console` è molto più di `console.log()`. È un intero toolkit di debugging, ognuno con uno scopo specifico.
-
-**console.log() - Il Diario di Bordo**
-
-`console.log()` è il tuo amico più fedele nel debugging. Ma non è solo per stampare - è per capire il flusso del tuo programma, per vedere cosa succede davvero dietro le quinte.
+#### console - La Cabina di Controllo
 
 ```javascript
-console.log("Checkpoint 1: Entrato nella funzione");
-console.log("Valore ricevuto:", valore);
-console.log({ nome, eta }); // Trucco: mostra sia nomi che valori!
+console.log("Messaggio normale");
+console.error("Errore critico!");     // Rosso
+console.warn("Attenzione!");          // Giallo
+console.info("Info utile");           // Info icon
+console.table(arrayDiOggetti);        // Tabella formattata
+console.group("Gruppo");              // Inizia gruppo
+console.groupEnd();                   // Fine gruppo
+console.time("timer");                // Inizia timer
+console.timeEnd("timer");             // Ferma e mostra tempo
+console.count("click");               // Conta chiamate
 ```
 
-Il trucco delle parentesi graffe è geniale: invece di scrivere `console.log("nome:", nome, "eta:", eta)`, puoi semplicemente wrappare le variabili in un oggetto. JavaScript mostrerà automaticamente i nomi come chiavi.
+#### Commenti - La Documentazione del Codice
 
-**Log Specializzati - Comunicazione Visiva**
-
-I browser moderni colorano diversamente questi log per aiutarti a distinguerli nel mare di output:
+I commenti sono post-it nel tuo codice. Servono a te futuro e ai tuoi colleghi per capire cosa fa il codice e perché.
 
 ```javascript
-console.warn("⚠️ Attenzione: API key mancante");  // Giallo
-console.error("❌ Errore critico: Database non raggiungibile"); // Rosso
-console.info("ℹ️ Server avviato sulla porta 3000"); // Blu (in alcuni browser)
+// Commento singola linea - per note brevi
+
+/* 
+   Commento multi-linea
+   Per spiegazioni più lunghe
+   o disabilitare temporaneamente codice
+*/
+
+/**
+ * JSDoc - Documentazione formale
+ * @param {number} prezzo - Il prezzo base
+ * @param {number} sconto - Percentuale di sconto
+ * @returns {number} Prezzo scontato
+ */
+function applicaSconto(prezzo, sconto) {
+    return prezzo * (1 - sconto / 100);
+}
+
+// Tag speciali per organizzare il lavoro:
+// TODO: Implementare validazione email
+// FIXME: Non gestisce numeri negativi  
+// NOTE: L'API richiede formato ISO per le date
+// HACK: Timeout per aspettare animazione CSS (400ms)
+// DEPRECATED: Usare nuovoMetodo() dalla v2.0
 ```
 
-Usali semanticamente! Non usare `console.error()` per semplici messaggi. È come gridare "al lupo" - perdi credibilità e rendi più difficile trovare i veri problemi.
-
-**console.table() - Il Visualizzatore di Dati**
-
-Questo è un superpotere sottovalutato. Trasforma array e oggetti in tabelle interattive:
+**Best Practices per Commenti:**
+- Spiega il "perché", non il "cosa"
+- Mantienili aggiornati con il codice
+- Non commentare l'ovvio
+- Usa commenti per spiegare logiche complesse
 
 ```javascript
-const users = [
-    { name: "Alice", age: 28, role: "admin" },
-    { name: "Bob", age: 32, role: "user" }
-];
-console.table(users);
+// CATTIVO: Commento ovvio
+let count = 0;  // Imposta count a 0
+
+// BUONO: Spiega il perché
+let count = 0;  // Contatore tentativi falliti (max 3 prima del blocco account)
 ```
-
-Nella console apparirà una vera tabella con colonne e righe, ordinabile cliccando sulle intestazioni. È fantastico per debugging di dati complessi - molto più leggibile di un wall of text.
-
-**Altri Metodi Utili**
-
-```javascript
-console.time("operazione");
-// ... codice da misurare ...
-console.timeEnd("operazione"); // Stampa: "operazione: 123.45ms"
-
-console.count("click"); // Conta quante volte viene chiamato
-console.count("click"); // "click: 2"
-
-console.group("Dettagli Utente");
-console.log("Nome:", nome);
-console.log("Email:", email);
-console.groupEnd(); // Raggruppa i log in una sezione collassabile
-```
-
-#### alert() - Il Messaggio Urgente che Blocca Tutto
-
-`alert()` è il residuo di un'era più semplice del web. È come suonare un allarme antincendio per dire che il pranzo è pronto - funziona, ma è eccessivo.
-
-```javascript
-alert("Attenzione!"); // Blocca TUTTO finché l'utente non clicca OK
-```
-
-**Perché evitarlo?**
-1. **Blocca l'intera pagina**: L'utente non può fare nient'altro
-2. **Non è stilizzabile**: Sempre uguale, sempre brutto
-3. **Esperienza utente terribile**: È invasivo e fastidioso
-4. **Non professionale**: Nessuna app moderna usa alert()
-
-Usa invece: modal custom, notifiche toast, o messaggi inline. L'unico uso accettabile oggi è per debugging velocissimo e temporaneo quando `console.log()` non basta.
 
 ### 5. Controllo del Flusso - Le Decisioni del Programma 🚦
 
-Il controllo del flusso è ciò che trasforma il tuo codice da una lista di istruzioni a un programma intelligente che prende decisioni. È la differenza tra una ricetta e uno chef.
-
-#### if / else - Il Bivio Classico
-
-`if / else` è la struttura decisionale fondamentale. Ma non pensarla solo come "se questo, fai quello" - è il modo in cui modelli la logica del mondo reale nel codice.
+#### if/else - Il Bivio Classico
 
 ```javascript
-if (piove) {
-    prendiOmbrello();
-} else if (freddoModerato) {
-    prendiGiacca();
-} else if (moltoFreddo) {
-    prendiCappotto();
+const eta = 20;
+
+if (eta < 18) {
+    console.log("Minorenne");
+} else if (eta >= 18 && eta < 65) {
+    console.log("Adulto");
 } else {
-    esciCosi();
-}
-```
-
-La catena di `else if` è valutata in ordine - appena una condizione è vera, le altre vengono ignorate. È come scendere una scala: ti fermi al primo gradino che trovi.
-
-**Best Practice**: Ordina le condizioni dalla più specifica alla più generale. Se metti la condizione più generale prima, le altre non verranno mai raggiunte:
-
-```javascript
-// SBAGLIATO
-if (temperatura < 30) {
-    console.log("Non fa caldo");
-} else if (temperatura < 0) {
-    console.log("Fa freddo"); // Mai raggiunto!
+    console.log("Senior");
 }
 
-// GIUSTO
-if (temperatura < 0) {
-    console.log("Fa freddo");
-} else if (temperatura < 30) {
-    console.log("Non fa caldo");
-}
+// Operatore ternario - versione compatta
+const status = eta >= 18 ? "Maggiorenne" : "Minorenne";
 ```
 
 #### switch - Il Centralino Telefonico
 
-`switch` brilla quando devi confrontare una singola variabile con molti valori possibili. È più leggibile di una lunga catena di if-else per questi casi.
-
 ```javascript
-switch (giorno) {
-    case 'lunedi':
-        console.log("Inizio settimana");
-        break;
-    
-    case 'venerdi':
-        console.log("TGIF!");
-        break;
-    
-    case 'sabato':
-    case 'domenica':
-        console.log("Weekend!"); // Stesso codice per entrambi
+const azione = "salva";
+
+switch (azione) {
+    case "salva":
+        salvaDati();
+        break;  // IMPORTANTE: ferma l'esecuzione
+        
+    case "carica":
+        caricaDati();
         break;
         
-    default:
-        console.log("Metà settimana");
-}
-```
-
-**Il Trabocchetto del Fall-through**
-
-Senza `break`, l'esecuzione "cade" nel caso successivo. A volte è utile (come sopra per sabato/domenica), ma spesso è un bug:
-
-```javascript
-switch (voto) {
-    case 10:
-        console.log("Eccellente!");
-        // Manca break!
-    case 9:
-        console.log("Ottimo!"); // Eseguito anche per 10!
+    case "elimina":
+    case "cancella":  // Due case insieme
+        eliminaDati();
         break;
-}
-```
-
-È come una cascata d'acqua: senza dighe (`break`), l'acqua continua a scendere.
-
-**Il default - La Rete di Sicurezza**
-
-`default` è il tuo piano B, il "in tutti gli altri casi". È come il servizio clienti di un call center - se nessun reparto specifico può aiutarti, vieni trasferito lì.
-
-```javascript
-switch (comando) {
-    case 'salva':
-        salvaFile();
-        break;
-    case 'apri':
-        apriFile();
-        break;
-    default:
-        console.error(`Comando sconosciuto: ${comando}`);
-        mostraAiuto();
-}
-```
-
-Includere sempre `default` è una best practice, anche solo per loggare che hai ricevuto un valore inaspettato. È debugging preventivo.
-
-#### Operatore Ternario - Il Bivio Compatto
-
-Il ternario non è solo un if-else compresso - è un'ESPRESSIONE che produce un valore. Questa distinzione è fondamentale.
-
-```javascript
-// Statement (if-else) - Esegue codice
-if (successo) {
-    messaggio = "Completato!";
-} else {
-    messaggio = "Errore!";
-}
-
-// Expression (ternario) - Produce un valore
-const messaggio = successo ? "Completato!" : "Errore!";
-```
-
-Il ternario può andare dove if-else non può:
-```javascript
-// In una template literal
-console.log(`Stato: ${isOnline ? "🟢 Online" : "🔴 Offline"}`);
-
-// Come argomento di funzione
-inviaEmail(utente, isPriority ? "urgente" : "normale");
-
-// In un return
-return userRole === 'admin' ? <AdminPanel /> : <UserPanel />;
-```
-
-Ma attenzione ai ternari annidati - diventano illeggibili velocemente:
-```javascript
-// NO! Difficile da leggere
-const prezzo = isMembro ? (isPremium ? 0 : 5) : 10;
-
-// SÌ! Usa if-else per logiche complesse
-let prezzo;
-if (isMembro) {
-    prezzo = isPremium ? 0 : 5;
-} else {
-    prezzo = 10;
+        
+    default:  // Come "else"
+        console.log("Azione sconosciuta");
 }
 ```
 
 #### Pattern "Return Early" - La Guardia all'Ingresso
 
-Questo pattern trasforma il tuo codice da una piramide di if-else annidati a una serie lineare di controlli. È eleganza pura.
-
 ```javascript
-// Il vecchio modo - Pyramid of Doom
-function processaOrdine(ordine) {
-    if (ordine) {
-        if (ordine.items) {
-            if (ordine.items.length > 0) {
-                if (ordine.payment) {
-                    // Finalmente la logica vera!
-                    return elaboraOrdine(ordine);
-                } else {
-                    return "Pagamento mancante";
-                }
-            } else {
-                return "Carrello vuoto";
-            }
-        } else {
-            return "Items mancanti";
-        }
-    } else {
-        return "Ordine non valido";
+function processaPagamento(carta, importo) {
+    // Controlli di validazione - esci subito se qualcosa non va
+    if (!carta) {
+        return { successo: false, errore: "Carta mancante" };
     }
-}
-
-// Il nuovo modo - Guard Clauses
-function processaOrdine(ordine) {
-    if (!ordine) return "Ordine non valido";
-    if (!ordine.items) return "Items mancanti";
-    if (ordine.items.length === 0) return "Carrello vuoto";
-    if (!ordine.payment) return "Pagamento mancante";
     
-    // Logica principale non annidata!
-    return elaboraOrdine(ordine);
+    if (carta.scaduta) {
+        return { successo: false, errore: "Carta scaduta" };
+    }
+    
+    if (importo <= 0) {
+        return { successo: false, errore: "Importo non valido" };
+    }
+    
+    // Se arriviamo qui, tutto è valido
+    elaboraPagamento();
+    return { successo: true };
 }
 ```
-
-Il return early è come un buttafuori che controlla i documenti: chi non è in regola viene allontanato subito, solo chi passa tutti i controlli entra nella festa (la logica principale).
 
 ### 6. Cicli - Le Ripetizioni Automatizzate 🔄
 
-I cicli sono il modo in cui insegni al computer a fare lavori ripetitivi. È l'automazione nel suo senso più puro.
-
-#### for - Il Contatore Preciso
-
-Il ciclo `for` è il coltellino svizzero dei cicli. Ti dà controllo totale su inizializzazione, condizione e incremento.
+#### for - Il Ciclo Contatore
 
 ```javascript
 for (let i = 0; i < 5; i++) {
-    console.log(`Iterazione numero ${i}`);
+    console.log(`Iterazione ${i}`);
 }
 ```
 
-Analizziamo le tre parti:
-1. `let i = 0` - Inizializzazione: Succede UNA volta all'inizio
-2. `i < 5` - Condizione: Controllata prima di OGNI iterazione
-3. `i++` - Incremento: Eseguito alla FINE di ogni iterazione
-
-È come impostare una sveglia: decidi quando iniziare, quando fermarti, e quanto aspettare tra un beep e l'altro.
-
-**Variazioni Creative**
+#### while - Il Ciclo Condizionale
 
 ```javascript
-// Contare all'indietro
-for (let i = 10; i >= 0; i--) {
-    console.log(`Conto alla rovescia: ${i}`);
-}
-
-// Saltare numeri
-for (let i = 0; i <= 100; i += 10) {
-    console.log(`${i}%`); // 0%, 10%, 20%...
-}
-
-// Loop infinito (attenzione!)
-for (;;) {
-    // Deve avere un break interno o crasherà!
+let tentativi = 0;
+while (tentativi < 3) {
+    console.log(`Tentativo ${tentativi + 1}`);
+    tentativi++;
 }
 ```
 
-#### forEach - L'Iteratore Elegante
+#### do...while - Il Ciclo Garantito
 
-`forEach` è il modo moderno e dichiarativo di iterare su array. Non ti preoccupi di indici o lunghezze - solo di cosa fare con ogni elemento.
-
-```javascript
-const colori = ['rosso', 'verde', 'blu'];
-
-// Il vecchio modo
-for (let i = 0; i < colori.length; i++) {
-    console.log(colori[i]);
-}
-
-// Il nuovo modo
-colori.forEach(colore => {
-    console.log(colore);
-});
-
-// Con indice se serve
-colori.forEach((colore, indice) => {
-    console.log(`${indice}: ${colore}`);
-});
-```
-
-Ma attenzione: `forEach` ha limitazioni:
-- Non puoi usare `break` o `continue`
-- Non puoi `return` un valore dall'intero loop
-- È sincrono (problemi con async/await)
-
-Se hai bisogno di queste features, usa `for...of` o un ciclo tradizionale.
-
-#### break e continue - I Controllori del Traffico
-
-`break` e `continue` ti danno controllo fine sul flusso del ciclo.
-
-**break - L'Uscita di Emergenza**
+Esegue almeno una volta, poi controlla. Come assaggiare il cibo prima di decidere se aggiungere sale.
 
 ```javascript
-// Cerca e fermati appena trovi
-for (const user of users) {
-    if (user.name === "Admin") {
-        console.log("Admin trovato!");
-        break; // Stop, non cercare oltre
-    }
-}
-```
+let scelta;
+do {
+    scelta = prompt("Vuoi continuare? (s/n)");
+} while (scelta !== "n" && scelta !== "N");
 
-`break` è efficienza pura - perché continuare a cercare quando hai già trovato?
-
-**continue - Il Saltatore**
-
-```javascript
-// Processa solo elementi validi
-for (const item of items) {
-    if (!item.isValid) {
-        continue; // Salta al prossimo
-    }
+// Utile per menu che devono apparire almeno una volta
+let opzione;
+do {
+    console.log("1. Nuovo");
+    console.log("2. Apri");
+    console.log("3. Esci");
+    opzione = prompt("Scegli:");
     
-    // Codice complesso qui
-    processaItem(item);
-}
+    switch(opzione) {
+        case "1": nuovo(); break;
+        case "2": apri(); break;
+    }
+} while (opzione !== "3");
 ```
 
-`continue` mantiene il codice pulito evitando annidamento. Invece di wrappare tutto in un if, salti semplicemente gli elementi non interessanti.
+#### for...of - Il Ciclo per Collezioni
 
-#### for vs Metodi Array - La Grande Decisione
-
-Questa è una delle domande più importanti nel JavaScript moderno.
-
-**Quando Usare for:**
-- **Performance critica**: Su milioni di elementi, for è più veloce
-- **Controllo del flusso**: Serve break, continue, o return
-- **Async sequenziale**: await dentro il loop
-- **Iterazioni complesse**: Incrementi non standard, loop inversi
-
-**Quando Usare Metodi Array:**
-- **Trasformazioni**: .map() per creare nuovi array
-- **Filtraggi**: .filter() per selezionare elementi
-- **Ricerche**: .find() per trovare un elemento
-- **Aggregazioni**: .reduce() per calcoli cumulativi
+Itera direttamente sugli elementi, senza indici. Come esaminare ogni oggetto in una scatola uno alla volta.
 
 ```javascript
-// for - Controllo totale
-for (let i = 0; i < items.length; i++) {
-    if (await checkItem(items[i])) {
-        break; // Posso fermarmi
-    }
+const carrello = ["mele", "pane", "latte"];
+
+// for...of per array
+for (const prodotto of carrello) {
+    console.log(`Comprare: ${prodotto}`);
 }
 
-// Metodi array - Eleganza dichiarativa
-const doubled = numbers.map(n => n * 2);
-const adults = people.filter(p => p.age >= 18);
-const total = prices.reduce((sum, price) => sum + price, 0);
+// Funziona anche con stringhe!
+for (const lettera of "Ciao") {
+    console.log(lettera);  // C, i, a, o
+}
+
+// Con Map e Set
+const mappa = new Map([["chiave1", "valore1"], ["chiave2", "valore2"]]);
+for (const [chiave, valore] of mappa) {
+    console.log(`${chiave}: ${valore}`);
+}
+
+// Differenza con for...in (che itera sulle chiavi)
+const obj = {a: 1, b: 2};
+for (const key in obj) {
+    console.log(key);  // "a", "b" - le chiavi
+}
 ```
 
-Non è questione di "vecchio vs nuovo" - è questione di usare lo strumento giusto per il lavoro giusto.
+#### forEach - L'Iteratore di Array
 
+```javascript
+const frutti = ["mela", "pera", "banana"];
+
+frutti.forEach((frutto, indice) => {
+    console.log(`${indice}: ${frutto}`);
+});
+```
+
+#### Controllo del Flusso nei Cicli
+
+```javascript
+// break - Ferma tutto e esci
+for (let i = 0; i < 10; i++) {
+    if (i === 5) break;
+    console.log(i);  // 0, 1, 2, 3, 4
+}
+
+// continue - Salta al prossimo giro
+for (let i = 0; i < 10; i++) {
+    if (i % 2 === 0) continue;  // Salta i pari
+    console.log(i);  // 1, 3, 5, 7, 9
+}
+```
+<br>
+<br>
 <br>
 <br>
 <br>
@@ -1006,371 +952,123 @@ Non è questione di "vecchio vs nuovo" - è questione di usare lo strumento gius
 
 ### 7. Funzioni - Le Ricette Riutilizzabili del Codice 🧩
 
-Le funzioni sono il cuore della programmazione. Ma sono più di semplici "contenitori di codice riutilizzabile" - sono il modo in cui organizzi il pensiero, modularizzi la complessità, e crei astrazioni.
+Le funzioni sono i mattoni fondamentali di un programma ben organizzato. Sono come delle ricette: definisci una serie di passaggi una sola volta e poi puoi "cucinare" quel risultato ogni volta che vuoi.
 
-#### Arrow Functions (=>) - La Sintassi Moderna e Concisa
-
-Le arrow functions non sono solo una sintassi più corta - rappresentano un cambio di paradigma nel modo di pensare alle funzioni.
+#### Dichiarazione Classica vs Arrow Functions
 
 ```javascript
-// Evoluzione della sintassi
-function tradizionale(x) { return x * 2; }
-const arrow = (x) => { return x * 2; };
-const concisa = x => x * 2;  // La forma finale
-```
+// Funzione classica
+function saluta(nome) {
+    return `Ciao, ${nome}!`;
+}
 
-Ma perché questa evoluzione? Perché JavaScript si sta muovendo verso un paradigma più funzionale, dove le funzioni sono valori di prima classe che passi in giro come qualsiasi altro dato.
+// Arrow function
+const saluta = (nome) => `Ciao, ${nome}!`;
 
-**Il Binding di `this`**
-
-La differenza più profonda tra arrow functions e funzioni tradizionali è come gestiscono `this`. Le arrow functions non hanno un proprio `this` - lo "ereditano" dal contesto circostante.
-
-```javascript
-const oggetto = {
-    nome: "Mario",
-    
-    // Funzione tradizionale - this è dinamico
-    salutaTrad: function() {
-        setTimeout(function() {
-            console.log(this.nome); // undefined! this è window
-        }, 1000);
-    },
-    
-    // Arrow function - this è lessicale
-    salutaArrow: function() {
-        setTimeout(() => {
-            console.log(this.nome); // "Mario"! this è oggetto
-        }, 1000);
-    }
+// Con più righe
+const calcola = (a, b) => {
+    const somma = a + b;
+    return somma * 2;
 };
 ```
 
-Questo comportamento rende le arrow functions perfette per callbacks e handlers, dove vuoi mantenere il contesto.
-
-**Return Implicito - La Bellezza della Concisione**
-
-Il return implicito non è solo per risparmiare caratteri - cambia il modo in cui pensi al codice:
+#### Parametri di Default
 
 ```javascript
-// Pensa alla funzione come una trasformazione diretta
-const doppio = x => x * 2;
-const èAdulto = persona => persona.eta >= 18;
-const getNome = utente => utente.nome;
+function saluta(nome = "Ospite", orario = "giorno") {
+    return `Buon${orario}, ${nome}!`;
+}
 
-// Per oggetti, le parentesi tonde sono cruciali!
-const creaUtente = (nome, eta) => ({ nome, eta });
-// Senza parentesi, {} vengono interpretate come corpo della funzione
+saluta();                    // "Buongiorno, Ospite!"
+saluta("Mario", "asera");    // "Buonasera, Mario!"
 ```
 
-Il return implicito ti forza a pensare in termini di trasformazioni pure - input → output, senza effetti collaterali nel mezzo.
-
-#### Parametri di Default - I Valori di Riserva
-
-I parametri di default sono più di una comodità - sono documentazione viva del comportamento atteso della funzione.
+#### Destrutturazione nei Parametri
 
 ```javascript
-function creaConnessione(
-    host = 'localhost',
-    porta = 3000,
-    ssl = false,
-    timeout = 5000
-) {
-    // I default comunicano le aspettative
+// Senza destrutturazione
+function presentaPersona(persona) {
+    return `${persona.nome} ha ${persona.eta} anni`;
 }
 
-// Chiamate più espressive
-creaConnessione(); // Usa tutti i default
-creaConnessione('example.com'); // Override solo host
-creaConnessione('example.com', 443, true); // Server production
-```
-
-I default raccontano una storia: "Questi sono i valori sensati per la maggior parte dei casi." È API design incorporato nella firma della funzione.
-
-**Default Complessi**
-
-I default possono essere espressioni, anche chiamate a funzioni:
-
-```javascript
-function log(messaggio, timestamp = Date.now()) {
-    console.log(`[${timestamp}] ${messaggio}`);
+// Con destrutturazione - più pulito!
+function presentaPersona({ nome, eta }) {
+    return `${nome} ha ${eta} anni`;
 }
 
-function processa(dati, config = creaConfigDefault()) {
-    // Config viene creato fresh ogni volta se non fornito
-}
-```
-
-#### Destrutturazione nei Parametri - L'Unpacking Intelligente
-
-La destrutturazione nei parametri è rivoluzionaria per la leggibilità:
-
-```javascript
-// Senza destrutturazione - opaco
-function creaMessaggio(utente) {
-    return `Benvenuto ${utente.nome} (${utente.email})`;
-}
-
-// Con destrutturazione - autodocumentante
-function creaMessaggio({ nome, email }) {
-    return `Benvenuto ${nome} (${email})`;
-}
-```
-
-La firma della funzione ora dichiara esattamente quali proprietà si aspetta. È impossibile passare l'oggetto sbagliato senza accorgersene.
-
-**Destrutturazione con Default**
-
-Puoi combinare destrutturazione e valori di default per API super-robuste:
-
-```javascript
+// Con default values
 function configuraPlayer({
     volume = 0.5,
     autoplay = false,
     quality = 'auto'
 } = {}) {  // = {} rende l'intero parametro opzionale!
-    // Funzione robusta con defaults granulari
-}
-
-// Tutti questi funzionano
-configuraPlayer();
-configuraPlayer({});
-configuraPlayer({ volume: 0.8 });
-configuraPlayer({ autoplay: true, quality: 'hd' });
-```
-
-#### Destrutturazione Annidata - Navigare le Gerarchie
-
-Per oggetti complessi, la destrutturazione può seguire la struttura:
-
-```javascript
-const datiComplessi = {
-    utente: {
-        profilo: {
-            nome: "Alice",
-            contatti: {
-                email: "alice@example.com",
-                telefono: "123-456"
-            }
-        },
-        settings: {
-            tema: "dark",
-            notifiche: true
-        }
-    }
-};
-
-// Estrazione chirurgica
-const { 
-    utente: { 
-        profilo: { 
-            nome,
-            contatti: { email }
-        },
-        settings: { tema }
-    }
-} = datiComplessi;
-
-console.log(nome, email, tema); // "Alice", "alice@example.com", "dark"
-```
-
-Ma attenzione: la destrutturazione profonda può diventare illeggibile. A volte è meglio fare più passaggi:
-
-```javascript
-const { profilo, settings } = datiComplessi.utente;
-const { nome, contatti } = profilo;
-const { email } = contatti;
-```
-
-#### Funzioni Come Mattoncini LEGO - Composizione
-
-La vera potenza delle funzioni emerge quando iniziano a collaborare:
-
-```javascript
-// Funzioni piccole e focalizzate
-const validaEmail = email => email.includes('@');
-const normalizzaEmail = email => email.toLowerCase().trim();
-const hashEmail = email => btoa(email); // Semplice encoding
-
-// Composizione
-const processaEmail = email => {
-    const normalizzata = normalizzaEmail(email);
-    if (!validaEmail(normalizzata)) {
-        throw new Error('Email non valida');
-    }
-    return hashEmail(normalizzata);
-};
-```
-
-Ogni funzione fa UNA cosa bene. La composizione crea comportamenti complessi da parti semplici.
-
-**Pipeline di Trasformazioni**
-
-```javascript
-const pipeline = [
-    trimmare,
-    lowercase,
-    rimuoviSpeciali,
-    capitalizzaPrima
-];
-
-const processaTesto = testo => 
-    pipeline.reduce((risultato, fn) => fn(risultato), testo);
-```
-
-### 8. Scope e il Modello Mentale dell'Interazione
-
-Lo scope è uno dei concetti più importanti e fraintesi di JavaScript. Non è solo "dove vive una variabile" - è come JavaScript organizza e isola il codice.
-
-#### Il Modello Mentale: "Edificio → Appartamento → Stanza"
-
-Questo modello mentale è fondamentale per evitare il 90% degli errori di riferimento.
-
-```javascript
-// CORRETTO: Dal generale al particolare
-document.querySelector('#player');  // Edificio → Stanza
-audio.currentTime = 0;              // Edificio → Proprietà
-button.classList.add('active');     // Edificio → Appartamento → Azione
-
-// SBAGLIATO: Partire dal particolare
-currentTime.audio = 0;              // ??? Non ha senso
-classList.add(button, 'active');    // Stai cercando classList nel vuoto
-```
-
-Il punto `.` si legge sempre come "che appartiene a" o "che si trova dentro". È una gerarchia rigida - non puoi saltare livelli o invertire l'ordine.
-
-#### La Keyword `this` - Il Camaleonte del Contesto
-
-`this` è probabilmente la feature più confusa di JavaScript perché il suo valore cambia in base a COME una funzione viene chiamata, non dove è definita.
-
-**In un Metodo di Oggetto**
-```javascript
-const player = {
-    nome: "MusicPlayer",
-    play: function() {
-        console.log(this.nome); // "MusicPlayer" - this è l'oggetto
-    }
-};
-player.play();
-```
-
-**In un Event Handler HTML**
-```html
-<button onclick="handleClick(this)">Click</button>
-```
-Qui `this` è l'elemento HTML che ha scatenato l'evento. È come se il button dicesse "Sono io che ti sto chiamando!"
-
-**In un Event Listener**
-```javascript
-button.addEventListener('click', function() {
-    console.log(this); // Il button - this è l'elemento
-});
-
-// Ma con arrow function...
-button.addEventListener('click', () => {
-    console.log(this); // window o undefined - this è ereditato!
-});
-```
-
-Le arrow functions non hanno un proprio `this` - lo prendono dal contesto circostante. È sia un vantaggio che un pericolo.
-
-**Il Pattern `deleteTask(this)`**
-
-Quando passi `this` come argomento, stai passando un riferimento all'elemento:
-
-```javascript
-function deleteTask(buttonElement) {
-    // buttonElement è il pulsante specifico cliccato
-    const taskElement = buttonElement.closest('.task');
-    const taskId = taskElement.dataset.id;
-    // ... elimina il task
+    // Configurazione robusta
 }
 ```
 
-È elegante perché ogni pulsante "sa" chi è e può passare questa informazione alla funzione.
+### 8. Scope - La Visibilità delle Variabili 👁️
 
-#### onclick HTML vs addEventListener - Due Filosofie
+Lo scope determina dove una variabile è accessibile. È come le stanze di una casa - ciò che è in una stanza non è sempre visibile dalle altre.
 
-**onclick in HTML - L'Approccio Diretto**
-
-```html
-<button onclick="saluta()">Click</button>
-```
-
-Vantaggi:
-- Immediato e visibile nell'HTML
-- Facile per prototipazione
-- `this` riferisce automaticamente all'elemento
-
-Svantaggi:
-- Mischia presentazione e logica
-- Solo un handler per evento
-- Inquina il global scope
-- Difficile da testare
-
-**addEventListener - L'Approccio Professionale**
+#### Global Scope vs Local Scope
 
 ```javascript
-button.addEventListener('click', (e) => {
-    // Logica separata, testabile, multipla
-});
-```
+// SCOPE GLOBALE - Visibile ovunque
+let punteggioGlobale = 0;
 
-Vantaggi:
-- Separazione completa delle responsabilità
-- Handlers multipli possibili
-- Accesso completo all'event object
-- Facile da rimuovere con removeEventListener
-
-È come la differenza tra scrivere note sui muri (onclick) e usare un sistema di post-it organizzato (addEventListener).
-
-#### Scope: Le Bolle di Visibilità
-
-JavaScript ha diversi livelli di scope, ognuno con le sue regole.
-
-**Global Scope - La Piazza Pubblica**
-
-```javascript
-const APP_NAME = "MyApp";  // Visibile ovunque
-
-function ovunque() {
-    console.log(APP_NAME); // Accessibile
+function gioca() {
+    // SCOPE LOCALE - Solo qui dentro
+    let punteggioRound = 100;
+    punteggioGlobale += punteggioRound;  // Posso accedere al globale
 }
+
+console.log(punteggioGlobale);  // OK
+// console.log(punteggioRound);  // Errore! Non visibile
 ```
 
-Il global scope è pericoloso perché tutto può modificarlo. È come lasciare le chiavi di casa sotto lo zerbino - comodo ma rischioso.
+#### Scope Chain - La Catena di Visibilità
 
-**Function Scope - La Stanza Privata**
+JavaScript cerca le variabili partendo dallo scope corrente e salendo verso l'esterno, come cercare le chiavi prima in tasca, poi nella borsa, poi in casa.
 
 ```javascript
-function castello() {
-    const segreto = "tesoro nascosto";
+const messaggio = "Globale";
+
+function esterna() {
+    const messaggio = "Esterna";  // Shadowing del globale
     
-    function stanzaInterna() {
-        console.log(segreto); // Accessibile dalla stanza interna
+    function interna() {
+        const messaggio = "Interna";  // Shadowing di nuovo
+        console.log(messaggio);  // "Interna" - trova la più vicina
     }
     
-    return stanzaInterna;
+    interna();
+    console.log(messaggio);  // "Esterna"
 }
 
-const esplora = castello();
-esplora(); // "tesoro nascosto" - Closure!
-console.log(segreto); // ERRORE - Non accessibile dall'esterno
+esterna();
+console.log(messaggio);  // "Globale"
 ```
 
-Le funzioni creano "closure" - mantengono accesso alle variabili del loro scope di nascita anche dopo che la funzione esterna è terminata. È magia? No, è come portarsi dietro una valigia con le cose della stanza dove sei nato.
+**Concetto chiave**: JavaScript cerca sempre la variabile più vicina risalendo gli scope. È come cercare qualcosa partendo dalla stanza in cui sei, poi nel corridoio, poi in casa, poi nel quartiere.
 
-**Block Scope - La Bolla Temporanea**
+#### Block Scope con let e const
 
 ```javascript
-{
-    let temporaneo = "esisto solo qui";
-    const ancheIo = "stesso destino";
+if (true) {
+    let segreta = "Solo qui dentro";
+    const ancheQuesta = "Invisibile fuori";
 }
-console.log(temporaneo); // ERRORE - Non esiste più
+// console.log(segreta);  // Errore!
+
+// Nei cicli ogni iterazione ha il suo scope
+for (let i = 0; i < 3; i++) {
+    let temporanea = i * 2;
+    // i e temporanea esistono solo qui
+}
 ```
 
-Con `let` e `const`, ogni coppia di `{}` crea una nuova bolla di scope. È come una stanza che appare e scompare - quello che succede nella stanza, resta nella stanza.
-
+<br>
+<br>
 <br>
 <br>
 <br>
@@ -1380,843 +1078,2855 @@ Con `let` e `const`, ogni coppia di `{}` crea una nuova bolla di scope. È come 
 
 ### 9. DOM Manipulation - Il Ponte con il Browser 🌉
 
-Il DOM è dove JavaScript incontra HTML. Ma non è solo "modificare la pagina" - è creare esperienze dinamiche, reagire agli utenti, costruire interfacce vive.
+Il DOM è la rappresentazione del tuo HTML come un albero di oggetti. Manipolare il DOM è come ridecorare una stanza.
 
-#### Selezione di Elementi - Trovare i Tuoi Bersagli
-
-La selezione è il primo passo di ogni manipolazione DOM. È come avere un GPS per navigare nella struttura della pagina.
-
-**querySelector - Il Cercatore Universale**
+#### Selezione di Elementi
 
 ```javascript
-// Qualsiasi selettore CSS funziona!
-document.querySelector('#id');           // Per ID
-document.querySelector('.classe');        // Prima con questa classe
-document.querySelector('div > p');       // Primo p figlio diretto di div
-document.querySelector('[data-role="admin"]'); // Attributi custom
-```
+// querySelector - Usa selettori CSS
+const titolo = document.querySelector("#titolo");
+const primaCard = document.querySelector(".card");
+const bottoniAttivi = document.querySelectorAll(".btn.active");
 
-`querySelector` usa la potenza dei selettori CSS. Se sai CSS, sai già come selezionare elementi. È unificazione brillante.
+// getElementById - Il più veloce per ID
+const header = document.getElementById("header");
+// Non serve il # perché cerca solo per ID!
 
-**querySelectorAll - Il Raccoglitore**
+// querySelectorAll - Trova tutti
+const tuttiIParagrafi = document.querySelectorAll("p");
 
-```javascript
-const tuttiIBottoni = document.querySelectorAll('button');
-// Restituisce una NodeList (non un Array!)
-
-// Per usare metodi array
-const array = Array.from(tuttiIBottoni);
+// Convertire NodeList in Array
+const arrayBottoni = Array.from(document.querySelectorAll("button"));
 // O con spread
-const array2 = [...tuttiIBottoni];
+const arrayCards = [...document.querySelectorAll(".card")];
 ```
 
-NodeList vs Array è una distinzione sottile ma importante. NodeList ha `forEach`, ma non `map`, `filter`, etc. È come avere una cassetta degli attrezzi con solo alcuni strumenti.
-
-#### Modifica del Contenuto - Trasformare il DOM
-
-**textContent vs innerHTML - Sicurezza vs Potenza**
+#### Modifica del Contenuto
 
 ```javascript
-// textContent - Sempre sicuro
-elemento.textContent = userInput; // Anche se contiene "<script>", è solo testo
+const elemento = document.querySelector("#messaggio");
 
-// innerHTML - Potente ma pericoloso
-elemento.innerHTML = userInput; // Se contiene "<script>", VIENE ESEGUITO!
+// textContent - Testo sicuro (per input utente)
+elemento.textContent = "Testo sicuro, tags HTML vengono mostrati come testo";
+
+// innerHTML - HTML potente (solo per contenuto trusted!)
+elemento.innerHTML = "<strong>Testo</strong> formattato";
+// PERICOLO: può eseguire script se usi input utente!
+
+// innerText - Testo visibile rispettando CSS
+elemento.innerText = "Solo testo visibile";
+// Non mostra testo nascosto con display:none
+
+// insertAdjacentHTML - Inserimento preciso
+elemento.insertAdjacentHTML('beforebegin', '<p>Prima</p>');
+elemento.insertAdjacentHTML('afterbegin', '<span>Inizio interno</span>');
+elemento.insertAdjacentHTML('beforeend', '<span>Fine interno</span>');
+elemento.insertAdjacentHTML('afterend', '<p>Dopo</p>');
 ```
 
-La regola d'oro: usa `textContent` per dati utente, `innerHTML` solo per HTML che controlli tu al 100%. È la differenza tra aprire una lettera con i guanti e aprirla a mani nude.
-
-**Il Pattern di Creazione in 3 Fasi**
-
-Questo pattern è fondamentale per creare elementi dinamicamente in modo sicuro e manutenibile:
+#### Modifica degli Stili
 
 ```javascript
-// 1. CREA (in memoria, non visibile)
-const card = document.createElement('div');
+const box = document.querySelector(".box");
 
-// 2. CONFIGURA (ancora in memoria)
-card.className = 'user-card';
-card.dataset.userId = user.id;
+// style.property - Stili inline diretti
+box.style.backgroundColor = "blue";  // Nota: camelCase!
+box.style.width = "200px";
+box.style.display = "none";  // Nasconde l'elemento
+box.style.border = "2px solid red";
 
-const title = document.createElement('h3');
-title.textContent = user.name;
+// Stili multipli con Object.assign
+Object.assign(box.style, {
+    color: "white",
+    padding: "20px",
+    borderRadius: "10px",
+    boxShadow: "0 2px 10px rgba(0,0,0,0.3)"
+});
 
-const bio = document.createElement('p');
-bio.textContent = user.bio;
-
-card.appendChild(title);
-card.appendChild(bio);
-
-// 3. AGGIUNGI (ora diventa visibile)
-container.appendChild(card);
+// classList - Gestione classi CSS (più pulito!)
+box.classList.add("active", "highlighted");
+box.classList.remove("hidden");
+box.classList.toggle("expanded");  // Alterna
+box.classList.contains("selected"); // Verifica
+box.classList.replace("old", "new"); // Sostituisce
 ```
-
-Perché in 3 fasi? Perché modificare elementi già nel DOM causa "reflow" e "repaint" - operazioni costose. Costruendo in memoria, il browser fa un solo aggiornamento finale. È come costruire una casa prefabbricata e poi posizionarla, invece di costruirla mattone per mattone sul posto.
-
-#### classList - Il Gestore Elegante degli Stili
-
-`classList` è una delle API più belle del DOM moderno:
-
-```javascript
-elemento.classList.add('active', 'highlighted');    // Aggiungi multiple
-elemento.classList.remove('hidden');                // Rimuovi
-elemento.classList.toggle('expanded');              // Inverti
-elemento.classList.contains('selected');            // Controlla
-elemento.classList.replace('old', 'new');          // Sostituisci
-```
-
-**Il Potere di toggle()**
-
-`toggle()` è magia pura per interfacce interattive:
-
-```javascript
-// Senza toggle - verboso
-if (menu.classList.contains('open')) {
-    menu.classList.remove('open');
-} else {
-    menu.classList.add('open');
-}
-
-// Con toggle - elegante
-menu.classList.toggle('open');
-
-// Toggle con condizione
-menu.classList.toggle('open', shouldBeOpen);
-```
-
-È come avere un interruttore automatico - non devi sapere lo stato attuale, solo invertirlo.
 
 ### 10. Eventi - Ascoltare e Reagire ⚡
 
-Gli eventi sono il sistema nervoso della tua applicazione. Ogni click, movimento, pressione di tasto è un segnale che puoi intercettare e a cui puoi reagire.
+Gli eventi sono il sistema nervoso della tua applicazione. Ogni click, movimento, pressione di tasto è un segnale che puoi intercettare.
 
-#### L'Oggetto Event - Il Dossier Completo
-
-Quando un evento accade, il browser crea un oggetto ricchissimo di informazioni:
+#### onclick vs addEventListener - Due Filosofie
 
 ```javascript
-button.addEventListener('click', (e) => {
+const bottone = document.querySelector("#mio-bottone");
+
+// onclick - Semplice ma limitato
+bottone.onclick = function() {
+    console.log("Cliccato!");
+};
+// Problema: puoi avere solo UN gestore per evento
+bottone.onclick = altrafunzione; // Sovrascrive il precedente!
+
+// addEventListener - Professionale e flessibile
+bottone.addEventListener("click", function() {
+    console.log("Primo gestore");
+});
+
+bottone.addEventListener("click", function() {
+    console.log("Secondo gestore");
+});
+// Entrambi vengono eseguiti!
+
+// Rimuovere un listener specifico
+function gestoreClick() {
+    console.log("Click gestito");
+}
+
+bottone.addEventListener("click", gestoreClick);
+// Più tardi...
+bottone.removeEventListener("click", gestoreClick);
+```
+
+**Confronto diretto:**
+
+| Caratteristica | onclick | addEventListener |
+|---------------|---------|-------------------|
+| Gestori multipli | No (solo uno) | Sì (illimitati) |
+| Controllo evento | Limitato | Completo (capturing, bubbling) |
+| Rimozione | Difficile | Facile con removeEventListener |
+| Best practice | Per demo rapide | Sempre in produzione |
+
+#### L'Oggetto Event
+
+```javascript
+bottone.addEventListener("click", function(e) {
     // Informazioni sull'elemento
     e.target;              // Elemento che ha originato l'evento
-    e.currentTarget;       // Elemento con il listener (può essere diverso!)
+    e.currentTarget;       // Elemento con il listener
     
-    // Controllo del comportamento
+    // Controllo comportamento
     e.preventDefault();    // Blocca azione default
     e.stopPropagation();  // Ferma il bubbling
     
-    // Informazioni sul mouse
+    // Informazioni mouse
     e.clientX / e.clientY; // Posizione nella viewport
     e.pageX / e.pageY;     // Posizione nella pagina
     
     // Tasti modificatori
     e.ctrlKey;            // Ctrl premuto?
     e.shiftKey;           // Shift premuto?
-    e.altKey;             // Alt premuto?
 });
 ```
-
-**target vs currentTarget - La Distinzione Cruciale**
-
-```javascript
-<div id="container">
-    <button>Click me</button>
-</div>
-
-container.addEventListener('click', (e) => {
-    console.log(e.target);        // <button> - chi ha originato
-    console.log(e.currentTarget); // <div> - chi sta ascoltando
-});
-```
-
-Questa distinzione è fondamentale per l'event delegation. `target` è il vero colpevole, `currentTarget` è chi sta indagando.
-
-#### Eventi Speciali e le Loro Particolarità
-
-**L'Evento "change" - Il Confermatore**
-
-`change` è diverso da `input`. Si attiva solo quando il cambiamento è "confermato":
-
-```javascript
-// input - Ad ogni singolo carattere digitato
-textField.addEventListener('input', (e) => {
-    console.log('Digitando:', e.target.value);
-});
-
-// change - Solo quando esci dal campo (blur) dopo aver modificato
-textField.addEventListener('change', (e) => {
-    console.log('Modifica confermata:', e.target.value);
-});
-```
-
-Per `<select>`, `change` si attiva appena selezioni un'opzione. Per checkbox e radio, appena clicchi. È l'evento del "ho finito di modificare".
 
 #### Event Delegation - L'Ascoltatore Intelligente
 
-Event delegation sfrutta il "bubbling" - gli eventi risalgono dal target verso l'alto dell'albero DOM:
+Invece di mettere listener su ogni elemento, mettilo sul genitore:
 
 ```javascript
-// Invece di 100 listener su 100 bottoni...
-document.querySelector('#container').addEventListener('click', (e) => {
-    // Un solo listener che gestisce tutti
-    if (e.target.matches('.delete-btn')) {
-        const item = e.target.closest('.item');
-        item.remove();
-    }
-    
-    if (e.target.matches('.edit-btn')) {
-        const item = e.target.closest('.item');
-        editItem(item);
+// INEFFICIENTE: Un listener per ogni bottone
+document.querySelectorAll(".btn").forEach(btn => {
+    btn.addEventListener("click", gestisciClick);
+});
+
+// EFFICIENTE: Un solo listener sul contenitore
+document.querySelector("#container").addEventListener("click", function(e) {
+    // Controlla se il click viene da un bottone
+    if (e.target.classList.contains("btn")) {
+        console.log("Bottone cliccato:", e.target.textContent);
+        
+        // Puoi anche navigare il DOM
+        const card = e.target.closest(".card");
+        const id = e.target.dataset.id;
     }
 });
 ```
 
 Vantaggi enormi:
-1. **Performance**: Un listener invece di cento
-2. **Dinamicità**: Funziona anche per elementi aggiunti dopo
-3. **Memoria**: Meno listener = meno memoria usata
+- Funziona anche per elementi aggiunti dopo
+- Usa meno memoria
+- Più facile da gestire
 
-È come avere un solo receptionist invece di una guardia per ogni porta.
-
-#### Debug con console.log(e.target.value)
-
-Questo pattern è il tuo migliore amico nel debugging di form:
+#### Eventi Speciali
 
 ```javascript
-input.addEventListener('input', (e) => {
-    console.log(e.target.value); // Vedi in real-time cosa digita l'utente
-    
-    // Debug più ricco
-    console.log({
-        value: e.target.value,
-        length: e.target.value.length,
-        type: e.target.type,
-        valid: e.target.validity.valid
-    });
+// change - Quando il valore cambia E l'utente ha finito
+input.addEventListener("change", (e) => {
+    console.log("Valore confermato:", e.target.value);
+});
+
+// input - Ad ogni modifica
+input.addEventListener("input", (e) => {
+    console.log("Digitando:", e.target.value);
+});
+
+// submit - Form inviato
+form.addEventListener("submit", (e) => {
+    e.preventDefault(); // Impedisce refresh pagina
+    // Gestisci i dati
+});
+
+// DOMContentLoaded - DOM pronto
+document.addEventListener("DOMContentLoaded", () => {
+    // Il DOM è caricato, puoi manipolarlo
 });
 ```
 
-È come avere una telecamera puntata sull'input - vedi tutto quello che succede in tempo reale.
+### 11. Dialog e Modali 🪟
 
-### 11. Dialog e Modali - Le Finestre Moderne 🪟
-
-L'elemento `<dialog>` è una delle aggiunte più utili all'HTML moderno. Non è solo un div che appare - è un cittadino di prima classe del browser con superpoteri incorporati.
-
-#### showModal() vs show() - Due Mondi Diversi
+L'elemento `<dialog>` è una soluzione nativa moderna per creare modali.
 
 ```javascript
-const dialog = document.querySelector('dialog');
+const dialog = document.querySelector("dialog");
+
+// showModal() - Modale vero (consigliato)
+dialog.showModal();
+// - Blocca interazione con la pagina
+// - Crea backdrop automatico
+// - Focus trap automatico
+// - Esc chiude
 
 // show() - Dialogo non-modale
 dialog.show();
-// - La pagina dietro è ancora interagibile
+// - Pagina ancora interagibile
 // - Nessun backdrop
-// - Il focus non è intrappolato
-// - Esc non funziona di default
+// - Nessun focus trap
 
-// showModal() - Dialogo modale vero
-dialog.showModal();
-// - La pagina diventa inerte (non interagibile)
-// - ::backdrop automatico e stilizzabile
-// - Focus trap automatico
-// - Esc chiude automaticamente
-```
-
-La differenza è filosofica: `show()` è una notifica gentile, `showModal()` è una richiesta di attenzione totale.
-
-**Stilizzare il ::backdrop**
-
-```css
-dialog::backdrop {
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(3px);
-}
-```
-
-Il backdrop non è un elemento DOM normale - è uno pseudo-elemento. Non puoi selezionarlo con JavaScript, ma puoi stilizzarlo con CSS. È come l'ombra di Peter Pan - sempre attaccata ma con vita propria.
-
-#### close() e il Pattern returnValue
-
-`close()` può comunicare il "perché" della chiusura:
-
-```javascript
-// Nei pulsanti
-saveBtn.addEventListener('click', () => {
-    dialog.close('save');
-});
-
-cancelBtn.addEventListener('click', () => {
-    dialog.close('cancel');
-});
+// close() - Chiude il dialogo
+dialog.close();
+dialog.close("valore"); // Con returnValue
 
 // Ascoltare la chiusura
-dialog.addEventListener('close', () => {
-    if (dialog.returnValue === 'save') {
-        saveData();
-    } else if (dialog.returnValue === 'cancel') {
-        restoreOriginalState();
-    } else {
-        // Chiuso con Esc o altro metodo
-        console.log('Chiusura senza azione');
-    }
+dialog.addEventListener("close", () => {
+    console.log("Chiuso con:", dialog.returnValue);
 });
 ```
 
-È comunicazione elegante: il dialogo non solo si chiude, ma lascia un messaggio.
-
-#### Form con method="dialog" - Magia HTML
-
-Questa feature è poco conosciuta ma potentissima:
-
-```html
-<dialog>
-    <form method="dialog">
-        <input type="text" name="username">
-        <button value="cancel">Annulla</button>
-        <button value="confirm">Conferma</button>
-    </form>
-</dialog>
-```
-
-Con `method="dialog"`:
-- Il form NON viene inviato al server
-- Il dialog si chiude automaticamente
-- Il `value` del button diventa `returnValue`
-- Nessun JavaScript necessario!
-
-È HTML che fa il lavoro pesante - progressive enhancement al suo meglio.
-
+<br>
+<br>
 <br>
 <br>
 <br>
 <br>
 
-## Parte V - Pattern e API Specifiche
+## Parte V - Pattern e Best Practices 🎯
 
-### 12. Array Methods Avanzati 🔄
+### Pattern di Accumulo
 
-I metodi avanzati degli array sono dove JavaScript brilla davvero. Trasformano operazioni complesse in dichiarazioni eleganti.
-
-#### .filter() - Il Bouncer Selettivo
-
-`.filter()` crea un nuovo array con solo gli elementi che superano un test. Ma è più di un semplice "setaccio" - è un modo di pensare ai dati.
+L'accumulo è come riempire un secchio goccia a goccia - ogni iterazione aggiunge qualcosa al risultato.
 
 ```javascript
-const prodotti = [
-    { nome: "Laptop", prezzo: 1000, disponibile: true },
-    { nome: "Mouse", prezzo: 20, disponibile: false },
-    { nome: "Tastiera", prezzo: 80, disponibile: true }
-];
+// Somma numerica
+function calcolaTotale(prezzi) {
+    let totale = 0;  // Il secchio vuoto
+    for (const prezzo of prezzi) {
+        totale += prezzo;  // Aggiungi ogni prezzo
+    }
+    return totale;
+}
 
-// Filter semplice
-const disponibili = prodotti.filter(p => p.disponibile);
+// Costruzione di stringa
+function creaLista(elementi) {
+    let html = "<ul>";  // Inizio
+    for (const elemento of elementi) {
+        html += `<li>${elemento}</li>`;  // Accumula
+    }
+    html += "</ul>";  // Chiudi
+    return html;
+}
 
-// Filter complesso
-const offerte = prodotti.filter(p => 
-    p.disponibile && 
-    p.prezzo < 100 && 
-    p.nome.length > 5
-);
+// Filtraggio in nuovo array
+function filtraPositivi(numeri) {
+    const positivi = [];  // Array vuoto
+    for (const num of numeri) {
+        if (num > 0) {
+            positivi.push(num);  // Accumula solo positivi
+        }
+    }
+    return positivi;
+}
+```
 
-// Filter con funzione esterna per leggibilità
-const èOffertaValida = (prodotto) => {
-    const scontato = prodotto.prezzo * 0.8;
-    return scontato < 50 && prodotto.disponibile;
+### Flag Booleane - Gli Interruttori
+
+Le flag sono interruttori che controllano il comportamento del programma.
+
+```javascript
+let debugMode = false;
+let isLoading = false;
+let hasError = false;
+
+function eseguiOperazione() {
+    isLoading = true;
+    
+    try {
+        // Operazione...
+        if (debugMode) {
+            console.log("Operazione completata");
+        }
+    } catch (error) {
+        hasError = true;
+        console.error("Errore:", error);
+    } finally {
+        isLoading = false;
+    }
+}
+```
+
+### Variabili di Stato
+
+Le variabili di stato tengono traccia di "dove siamo" nel programma.
+
+```javascript
+// Stati di un form
+let formState = "editing";  // "editing", "submitting", "submitted", "error"
+
+function gestisciForm() {
+    switch(formState) {
+        case "editing":
+            abilitaCampi();
+            break;
+        case "submitting":
+            mostraSpinner();
+            disabilitaCampi();
+            break;
+        case "submitted":
+            mostraSuccesso();
+            break;
+        case "error":
+            mostraErrore();
+            break;
+    }
+}
+```
+
+### Configuration Objects Pattern
+
+Centralizzare le configurazioni rende il codice più manutenibile:
+
+```javascript
+const CONFIG = {
+    API_URL: "https://api.example.com",
+    MAX_RETRIES: 3,
+    TIMEOUT: 5000,
+    ITEMS_PER_PAGE: 20,
+    COLORS: {
+        primary: "#007bff",
+        success: "#28a745",
+        danger: "#dc3545"
+    },
+    MESSAGES: {
+        error: "Si è verificato un errore",
+        success: "Operazione completata",
+        loading: "Caricamento in corso..."
+    }
 };
 
-const superOfferte = prodotti.filter(èOffertaValida);
+// Uso nel codice
+async function fetchData(endpoint) {
+    const url = `${CONFIG.API_URL}/${endpoint}`;
+    
+    try {
+        const response = await fetch(url, {
+            timeout: CONFIG.TIMEOUT
+        });
+        return response.json();
+    } catch (error) {
+        console.error(CONFIG.MESSAGES.error);
+    }
+}
 ```
 
-Il bello di `filter` è che è "puro" - non modifica l'array originale. Puoi concatenare filters senza paura:
+### Gestione Errori con try-catch
+
+Prevedi cosa può andare storto e gestiscilo con grazia:
 
 ```javascript
-const risultato = utenti
-    .filter(u => u.attivo)
-    .filter(u => u.eta >= 18)
-    .filter(u => u.verificato);
-// Ogni filter restringe progressivamente
+// Try-catch base
+function parseJSON(jsonString) {
+    try {
+        // Codice che potrebbe fallire
+        const data = JSON.parse(jsonString);
+        return data;
+    } catch (error) {
+        // Gestisci l'errore
+        console.error("JSON non valido:", error.message);
+        return null;
+    } finally {
+        // Eseguito sempre (opzionale)
+        console.log("Parsing completato");
+    }
+}
+
+// Con async/await
+async function fetchUserData(userId) {
+    try {
+        const response = await fetch(`/api/users/${userId}`);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        return data;
+        
+    } catch (error) {
+        console.error("Errore nel recupero dati:", error);
+        // Ritorna dati di fallback
+        return { id: userId, name: "Utente sconosciuto", error: true };
+    }
+}
 ```
 
-#### .map() - Il Trasformatore Universale
+### Best Practices - Naming Convention
 
-`.map()` è probabilmente il metodo più potente degli array. Non filtra, trasforma:
+I nomi dovrebbero raccontare una storia:
 
 ```javascript
-// Trasformazione semplice
-const prezziIVA = prezzi.map(p => p * 1.22);
+// NAMING CONVENTION STANDARD
 
-// Trasformazione di oggetti
-const cards = utenti.map(utente => ({
-    id: utente.id,
-    displayName: `${utente.nome} ${utente.cognome}`,
-    avatar: utente.foto || '/default-avatar.png',
-    isVIP: utente.purchases > 100
-}));
+// Costanti globali: UPPER_SNAKE_CASE
+const MAX_ATTEMPTS = 3;
+const API_KEY = "abc123";
+const DEFAULT_TIMEOUT = 5000;
 
-// Map per generare HTML
-const html = prodotti.map(p => `
-    <div class="product" data-id="${p.id}">
-        <h3>${p.nome}</h3>
-        <p>€${p.prezzo}</p>
-    </div>
-`).join(''); // Ricorda join per evitare virgole!
+// Variabili e funzioni: camelCase
+let userName = "Mario";
+let isActive = true;
+function calculateTotal() {}
+function getUserById(id) {}
+
+// Classi e costruttori: PascalCase
+class UserAccount {}
+class ShoppingCart {}
+function Person(name) {} // Costruttore
+
+// Booleani: come domande che iniziano con is/has/can
+let isVisible = true;
+let hasPermission = false;
+let canEdit = true;
+
+// Funzioni: verbi che descrivono l'azione
+function fetchData() {}
+function calculateSum() {}
+function validateEmail() {}
+function renderComponent() {}
+
+// Array: nomi plurali
+const users = [];
+const products = [];
+const selectedItems = [];
+
+// Oggetti: nomi singolari descrittivi
+const user = {};
+const product = {};
+const configuration = {};
 ```
 
-**Map con Destrutturazione - Eleganza Pura**
+### Testing Incrementale
+
+Testa mentre costruisci, come assaggiare mentre cucini:
 
 ```javascript
-// Senza destrutturazione - ripetitivo
-const nomi = utenti.map(utente => {
-    return `${utente.firstName} ${utente.lastName}`;
-});
-
-// Con destrutturazione - pulito
-const nomi = utenti.map(({ firstName, lastName }) => 
-    `${firstName} ${lastName}`
-);
-
-// Destrutturazione con rename
-const display = utenti.map(({ 
-    firstName: nome, 
-    lastName: cognome,
-    age: eta 
-}) => `${nome} ${cognome}, ${eta} anni`);
+function processOrder(order) {
+    console.log("1. Ordine ricevuto:", order);
+    
+    if (!order.items || order.items.length === 0) {
+        console.log("2. Ordine vuoto");
+        return null;
+    }
+    
+    let total = 0;
+    for (const item of order.items) {
+        console.log(`3. Processo: ${item.name} - €${item.price}`);
+        total += item.price * item.quantity;
+    }
+    
+    console.log("4. Totale finale:", total);
+    return total;
+}
 ```
 
-#### .find() e .findIndex() - I Detective
+### Separazione delle Responsabilità
 
-`.find()` restituisce il primo elemento che matcha, `.findIndex()` la sua posizione:
+Ogni funzione dovrebbe fare una cosa sola e farla bene:
 
 ```javascript
-const users = [
-    { id: 1, name: "Alice", role: "admin" },
-    { id: 2, name: "Bob", role: "user" },
-    { id: 3, name: "Charlie", role: "user" }
+// CATTIVO: Fa troppe cose
+function processUserData(userData) {
+    // Valida, salva, invia email, aggiorna UI...
+    if (!userData.email) return false;
+    database.save(userData);
+    sendEmail(userData.email);
+    updateUI(userData);
+}
+
+// BUONO: Responsabilità separate
+function validateUser(userData) {
+    return userData.email && userData.email.includes("@");
+}
+
+function saveUser(userData) {
+    return database.save(userData);
+}
+
+function notifyUser(email) {
+    return sendEmail(email);
+}
+
+function processUser(userData) {
+    if (!validateUser(userData)) {
+        return { success: false, error: "Validazione fallita" };
+    }
+    
+    const saved = saveUser(userData);
+    if (saved) {
+        notifyUser(userData.email);
+        updateUI(userData);
+    }
+    
+    return { success: true };
+}
+```
+
+### Evoluzione del Codice - Dal Semplice al Sofisticato
+
+#### Da Hardcoded a Dinamico
+
+```javascript
+// EVOLUZIONE 1: Completamente hardcoded
+console.log("Benvenuto Mario!");
+console.log("Hai 25 anni");
+
+// EVOLUZIONE 2: Con variabili
+const nome = "Mario";
+const eta = 25;
+console.log(`Benvenuto ${nome}!`);
+console.log(`Hai ${eta} anni`);
+
+// EVOLUZIONE 3: Con input utente
+const nome = prompt("Come ti chiami?");
+const eta = prompt("Quanti anni hai?");
+console.log(`Benvenuto ${nome}! Hai ${eta} anni`);
+
+// EVOLUZIONE 4: Con oggetto e funzione
+function presentaUtente(utente) {
+    return `Benvenuto ${utente.nome}! Hai ${utente.eta} anni`;
+}
+
+const utente = {
+    nome: document.querySelector("#nome").value,
+    eta: parseInt(document.querySelector("#eta").value)
+};
+
+document.querySelector("#output").innerText = presentaUtente(utente);
+```
+
+#### Da Ripetitivo a DRY (Don't Repeat Yourself)
+
+```javascript
+// CODICE RIPETITIVO
+let prezzo1 = 100;
+let sconto1 = 20;
+let finale1 = prezzo1 - (prezzo1 * sconto1 / 100);
+
+let prezzo2 = 200;
+let sconto2 = 15;
+let finale2 = prezzo2 - (prezzo2 * sconto2 / 100);
+
+// CODICE DRY
+function applicaSconto(prezzo, percentuale) {
+    return prezzo - (prezzo * percentuale / 100);
+}
+
+const prodotti = [
+    { nome: "Scarpe", prezzo: 100, sconto: 20 },
+    { nome: "Borsa", prezzo: 200, sconto: 15 }
 ];
 
-// find - Ottieni l'oggetto
-const admin = users.find(u => u.role === "admin");
-// { id: 1, name: "Alice", role: "admin" }
-
-// findIndex - Ottieni la posizione
-const adminIndex = users.findIndex(u => u.role === "admin");
-// 0
-
-// Pattern comune: trova e aggiorna
-const index = users.findIndex(u => u.id === 2);
-if (index !== -1) {
-    users[index].name = "Roberto";
-}
-```
-
-**Il -1 di findIndex**
-
-`findIndex` restituisce -1 quando non trova nulla. È una convenzione storica di JavaScript (ereditata da indexOf). Sempre controlla per -1:
-
-```javascript
-const index = array.findIndex(condition);
-if (index !== -1) {
-    // Trovato!
-} else {
-    // Non trovato
-}
-
-// O usa find se non ti serve l'indice
-const item = array.find(condition);
-if (item) {
-    // Trovato!
-}
-```
-
-#### .sort() - L'Ordinatore Mutante
-
-`.sort()` è potente ma pericoloso - modifica l'array originale!
-
-```javascript
-// ATTENZIONE: Modifica l'originale!
-const numeri = [3, 1, 2];
-numeri.sort(); // numeri è ora [1, 2, 3]
-
-// Per preservare l'originale
-const ordinati = [...numeri].sort();
-// O in ES2023
-const ordinati = numeri.toSorted();
-```
-
-**La Funzione di Confronto**
-
-La funzione di confronto deve restituire:
-- Negativo se a viene prima di b
-- Positivo se b viene prima di a  
-- Zero se sono equivalenti
-
-```javascript
-// Numeri crescenti
-arr.sort((a, b) => a - b);
-
-// Numeri decrescenti
-arr.sort((a, b) => b - a);
-
-// Oggetti per proprietà numerica
-utenti.sort((a, b) => a.age - b.age);
-
-// Stringhe (localizzate!)
-nomi.sort((a, b) => a.localeCompare(b, 'it-IT'));
-
-// Ordinamento complesso
-prodotti.sort((a, b) => {
-    // Prima per disponibilità
-    if (a.disponibile !== b.disponibile) {
-        return a.disponibile ? -1 : 1;
-    }
-    // Poi per prezzo
-    return a.prezzo - b.prezzo;
+prodotti.forEach(prodotto => {
+    const finale = applicaSconto(prodotto.prezzo, prodotto.sconto);
+    console.log(`${prodotto.nome}: €${finale}`);
 });
 ```
 
-#### .reduce() - L'Aggregatore Supremo
-
-`.reduce()` è il metodo più potente ma meno compreso. Può fare tutto quello che fanno gli altri metodi e molto di più:
+#### Da Procedurale a Event-Driven
 
 ```javascript
-// Somma classica
-const totale = numeri.reduce((acc, n) => acc + n, 0);
+// PROCEDURALE: Esegue subito in sequenza
+const nome = prompt("Nome?");
+const eta = prompt("Età?");
+alert(`Ciao ${nome}, hai ${eta} anni`);
 
-// Costruire un oggetto
-const byId = utenti.reduce((acc, utente) => {
-    acc[utente.id] = utente;
-    return acc;
-}, {});
-
-// Implementare map con reduce
-const doubled = numeri.reduce((acc, n) => {
-    acc.push(n * 2);
-    return acc;
-}, []);
-
-// Implementare filter con reduce
-const pari = numeri.reduce((acc, n) => {
-    if (n % 2 === 0) acc.push(n);
-    return acc;
-}, []);
-
-// Statistiche complesse
-const stats = numeri.reduce((acc, n) => {
-    acc.sum += n;
-    acc.count++;
-    acc.min = Math.min(acc.min, n);
-    acc.max = Math.max(acc.max, n);
-    return acc;
-}, { sum: 0, count: 0, min: Infinity, max: -Infinity });
-
-stats.avg = stats.sum / stats.count;
+// EVENT-DRIVEN: Aspetta l'utente
+document.querySelector("#form").addEventListener("submit", function(e) {
+    e.preventDefault();
+    
+    const nome = document.querySelector("#nome").value;
+    const eta = document.querySelector("#eta").value;
+    
+    document.querySelector("#risultato").innerText = 
+        `Ciao ${nome}, hai ${eta} anni`;
+});
 ```
 
-### 13. Pattern Pratici di Sviluppo
-
-I pattern sono soluzioni ripetibili a problemi comuni. Sono la saggezza accumulata della community.
-
-#### null come Stato Iniziale Intenzionale
-
-`null` comunica intenzione:
+#### Da Globale a Modulare
 
 ```javascript
-// Stati di un player musicale
-let currentSong = null;  // "Nessuna canzone selezionata"
-let nextSong = null;     // "Nessuna canzone in coda"
-let audioContext = null; // "Audio non ancora inizializzato"
+// TUTTO GLOBALE (problematico)
+let punteggio = 0;
+let vite = 3;
+function aumentaPunteggio() { punteggio += 10; }
+function perdiVita() { vite--; }
 
-function playSong(song) {
-    if (currentSong === null) {
-        // Prima canzone
-        initializePlayer();
+// MODULARE (migliore)
+const Game = {
+    stato: {
+        punteggio: 0,
+        vite: 3
+    },
+    
+    aumentaPunteggio(punti = 10) {
+        this.stato.punteggio += punti;
+        this.aggiornaUI();
+    },
+    
+    perdiVita() {
+        this.stato.vite--;
+        if (this.stato.vite <= 0) {
+            this.gameOver();
+        }
+        this.aggiornaUI();
+    },
+    
+    aggiornaUI() {
+        document.querySelector("#punteggio").innerText = this.stato.punteggio;
+        document.querySelector("#vite").innerText = this.stato.vite;
+    },
+    
+    reset() {
+        this.stato.punteggio = 0;
+        this.stato.vite = 3;
+        this.aggiornaUI();
     }
-    currentSong = song;
+};
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+## Parte VI - Persistenza dei Dati e Storage 💾
+
+### localStorage - La Memoria a Lungo Termine del Browser
+
+Il localStorage è la memoria permanente del tuo sito web nel browser. È come avere un piccolo database personale per ogni utente che visita il tuo sito. I dati sopravvivono anche quando l'utente chiude il browser, spegne il computer, e torna dopo settimane. Ma c'è una regola d'oro che non puoi mai dimenticare: **localStorage parla solo "stringhese"** - può memorizzare esclusivamente stringhe di testo.
+
+#### Il Problema Fondamentale: Il Muro delle Stringhe
+
+JavaScript è un linguaggio ricco di strutture dati complesse: oggetti con proprietà, array di elementi, booleani, numeri. Il localStorage invece è come un vecchio archivio che accetta solo fogli di carta con testo scritto sopra. Non puoi infilarci direttamente un oggetto tridimensionale - devi prima "appiattirlo" in qualcosa di piatto come un foglio.
+
+```javascript
+// Questo è quello che vorresti fare (ma non funziona!)
+const utente = {
+    nome: "Alice",
+    livello: 12,
+    isPremium: true,
+    inventario: ["spada", "pozione", "mappa"]
+};
+
+// ERRORE COMUNE: Salvare direttamente
+localStorage.setItem('utente', utente);
+// Cosa viene salvato? La stringa "[object Object]" 😱
+// Hai perso TUTTO! Nome, livello, inventario... tutto diventato quella stringa inutile
+
+const tasks = [
+    { id: 1, testo: "Comprare il latte", fatto: false },
+    { id: 2, testo: "Studiare JavaScript", fatto: true }
+];
+
+localStorage.setItem('tasks', tasks);
+// Salvato: "[object Object],[object Object]" 
+// Di nuovo, informazioni completamente perse!
+```
+
+È come provare a spedire un pacco attraverso un fax - il fax accetta solo carta, non oggetti tridimensionali!
+
+#### JSON - Il Traduttore Universale dei Dati
+
+JSON (JavaScript Object Notation) è il ponte magico tra il mondo ricco di JavaScript e il mondo piatto delle stringhe. Pensa a JSON come a un esperto di origami: sa come prendere una struttura complessa e "piegarla" in un foglio di carta (stringa), e poi sa come "riaprirla" perfettamente nella sua forma originale.
+
+**JSON.stringify() - Lo Smontatore/Appiattitore**
+
+`JSON.stringify()` prende i tuoi dati JavaScript e li trasforma in una stringa di testo che descrive perfettamente la struttura. È come fare una foto dettagliata di un mobile IKEA smontato - ogni pezzo è documentato e numerato.
+
+```javascript
+const impostazioni = {
+    tema: 'dark',
+    notifiche: true,
+    volume: 80,
+    suoni: {
+        click: true,
+        notifica: false
+    }
+};
+
+// La magia dello "smontaggio"
+const stringaJSON = JSON.stringify(impostazioni);
+console.log(stringaJSON);
+// '{"tema":"dark","notifiche":true,"volume":80,"suoni":{"click":true,"notifica":false}}'
+
+// Ora è una stringa! Puoi salvarla
+localStorage.setItem('settings', stringaJSON);
+
+// JSON.stringify ha anche parametri opzionali utili
+const bello = JSON.stringify(impostazioni, null, 2);
+// Risultato indentato e leggibile:
+// {
+//   "tema": "dark",
+//   "notifiche": true,
+//   ...
+// }
+```
+
+**JSON.parse() - Il Rimontatore/Ricostruttore**
+
+`JSON.parse()` è l'operazione inversa: prende una stringa JSON e la ricostruisce nell'oggetto JavaScript originale. È come seguire le istruzioni IKEA al contrario per rimontare il mobile.
+
+```javascript
+// Recupera la stringa dal localStorage
+const stringaSalvata = localStorage.getItem('settings');
+console.log(typeof stringaSalvata); // "string" - è ancora solo testo!
+
+// La magia del "rimontaggio"
+const impostazioniRecuperate = JSON.parse(stringaSalvata);
+console.log(typeof impostazioniRecuperate); // "object" - è tornato un oggetto!
+
+// Ora puoi usarlo normalmente
+if (impostazioniRecuperate.tema === 'dark') {
+    document.body.classList.add('dark-mode');
 }
 
-function stopPlayer() {
-    currentSong = null; // Esplicitamente fermo
-    // Non undefined - quella sarebbe ambiguità
+impostazioniRecuperate.volume = 90; // Puoi modificarlo
+console.log(impostazioniRecuperate.suoni.click); // true - tutto è stato preservato!
+```
+
+#### Il Ciclo di Vita Completo dei Dati
+
+Vediamo il processo completo, dall'inizio alla fine, come fosse il ciclo di vita di un documento importante:
+
+```javascript
+// FASE 1: CREAZIONE - Hai i tuoi dati JavaScript
+const todoList = [
+    { id: 1, testo: "Imparare localStorage", completato: true },
+    { id: 2, testo: "Creare un'app", completato: false },
+    { id: 3, testo: "Conquistare il mondo", completato: false }
+];
+
+// FASE 2: SERIALIZZAZIONE - Trasformi in stringa
+const todoListStringa = JSON.stringify(todoList);
+// Ora è: '[{"id":1,"testo":"Imparare localStorage","completato":true},...]'
+
+// FASE 3: SALVATAGGIO - Metti nel localStorage
+localStorage.setItem('todos', todoListStringa);
+// I dati ora sono salvati nel browser dell'utente!
+
+// ... L'utente chiude il browser, spegne il PC, va a dormire ...
+// ... Il giorno dopo riapre il tuo sito ...
+
+// FASE 4: RECUPERO - Leggi dal localStorage
+const todoListRecuperata = localStorage.getItem('todos');
+// È ancora una stringa!
+
+// FASE 5: DESERIALIZZAZIONE - Ritrasformi in oggetto
+const todoListRicostruita = JSON.parse(todoListRecuperata);
+// È tornata un array di oggetti JavaScript!
+
+// FASE 6: USO - Lavori con i dati come sempre
+todoListRicostruita.forEach(todo => {
+    console.log(`${todo.testo}: ${todo.completato ? '✓' : '○'}`);
+});
+```
+
+#### Gestire il Primo Avvio - Il Pattern Robusto
+
+Il problema più comune è gestire il caso in cui non ci sono ancora dati salvati (primo avvio dell'app). Se provi a fare `JSON.parse(null)`, JavaScript genera un errore. Devi essere preparato!
+
+```javascript
+// PATTERN 1: Controllo Esplicito
+function caricaDatiDalStorage() {
+    const datiSalvati = localStorage.getItem('dati');
+    
+    if (datiSalvati !== null) {
+        // Esistono dati salvati, parsali
+        try {
+            return JSON.parse(datiSalvati);
+        } catch (error) {
+            // I dati erano corrotti
+            console.error('Dati corrotti, uso default');
+            return [];
+        }
+    } else {
+        // Primo avvio, non ci sono dati
+        return [];
+    }
+}
+
+// PATTERN 2: Operatore OR (più conciso)
+const taskData = JSON.parse(localStorage.getItem("data")) || [];
+// Come funziona:
+// 1. getItem("data") ritorna stringa o null
+// 2. Se stringa: JSON.parse la trasforma in oggetto/array
+// 3. Se null: JSON.parse(null) ritorna null
+// 4. L'operatore || vede null (falsy) e usa []
+
+// PATTERN 3: Try-Catch Completo (più robusto)
+function loadSafeData(key, defaultValue = []) {
+    try {
+        const item = localStorage.getItem(key);
+        return item ? JSON.parse(item) : defaultValue;
+    } catch (error) {
+        console.error(`Errore caricamento ${key}:`, error);
+        return defaultValue;
+    }
+}
+
+// PATTERN 4: Funzione Helper Riutilizzabile
+const Storage = {
+    get(key, defaultValue = null) {
+        try {
+            const item = localStorage.getItem(key);
+            return item ? JSON.parse(item) : defaultValue;
+        } catch {
+            return defaultValue;
+        }
+    },
+    
+    set(key, value) {
+        try {
+            localStorage.setItem(key, JSON.stringify(value));
+            return true;
+        } catch {
+            return false;
+        }
+    },
+    
+    remove(key) {
+        localStorage.removeItem(key);
+    },
+    
+    clear() {
+        localStorage.clear();
+    }
+};
+
+// Uso semplificato
+const userData = Storage.get('user', { nome: 'Ospite' });
+Storage.set('user', { nome: 'Mario', punti: 100 });
+```
+
+#### Ispezionare il localStorage nei DevTools - La Finestra Segreta
+
+Gli strumenti per sviluppatori del browser ti permettono di vedere dentro il localStorage come se avessi i raggi X. È fondamentale per il debugging!
+
+**Come Accedere (in tutti i browser moderni):**
+
+1. **Apri i DevTools**: F12 (o Cmd+Opt+I su Mac)
+2. **Trova la sezione Storage**:
+   - **Chrome/Edge**: Tab "Application" → Storage → Local Storage
+   - **Firefox**: Tab "Storage" → Local Storage
+   - **Safari**: Tab "Storage" → Local Storage
+
+**L'Interfaccia del localStorage:**
+
+Vedrai una tabella con due colonne principali:
+- **Key (Chiave)**: Il nome che hai dato al dato
+- **Value (Valore)**: Il contenuto (sempre come stringa)
+
+```javascript
+// Nel tuo codice
+localStorage.setItem('user', JSON.stringify({nome: 'Mario', level: 5}));
+
+// Nei DevTools vedrai:
+// Key: "user"
+// Value: "{\"nome\":\"Mario\",\"level\":5}"
+```
+
+**Cosa Puoi Fare nei DevTools:**
+
+1. **Verificare**: Controlla se i dati sono salvati correttamente
+2. **Modificare**: Doppio click su un valore per editarlo al volo
+3. **Eliminare**: Seleziona una riga e premi Canc
+4. **Svuotare Tutto**: Click sul cestino per fare clear totale
+5. **Filtrare**: Usa la barra di ricerca per trovare chiavi specifiche
+
+È come avere un pannello di controllo segreto per la memoria del tuo sito!
+
+#### I Limiti del localStorage - Le Regole del Gioco
+
+Il localStorage ha delle limitazioni importanti che devi conoscere:
+
+```javascript
+// LIMITE 1: Solo Stringhe
+localStorage.setItem('numero', 42);
+typeof localStorage.getItem('numero'); // "string" - è diventato "42"!
+
+// LIMITE 2: Spazio Limitato (circa 5-10 MB)
+try {
+    const datiBigData = new Array(1000000).fill('dati enormi');
+    localStorage.setItem('big', JSON.stringify(datiBigData));
+} catch (e) {
+    console.error('Quota exceeded!'); // Spazio esaurito
+}
+
+// LIMITE 3: Sincrono (blocca il browser)
+// Non fare questo con dati enormi!
+const milleOggetti = new Array(1000).fill({...oggettoComplesso});
+localStorage.setItem('huge', JSON.stringify(milleOggetti)); // Freeze!
+
+// LIMITE 4: Solo stesso dominio
+// localStorage di esempio.com non può leggere quello di altro.com
+
+// LIMITE 5: Non per dati sensibili!
+// NON fare questo:
+localStorage.setItem('password', 'supersegreta123'); // NO!
+localStorage.setItem('cartaCredito', '1234-5678-9012-3456'); // NO!
+```
+
+#### Best Practices e Pattern Avanzati
+
+```javascript
+// 1. VERSIONAMENTO - Gestisci cambiamenti di struttura
+const STORAGE_VERSION = 'v2';
+
+function migrateData() {
+    const version = localStorage.getItem('version');
+    if (version !== STORAGE_VERSION) {
+        // Migra vecchi dati alla nuova struttura
+        const oldData = localStorage.getItem('data');
+        if (oldData) {
+            // Trasforma vecchia struttura in nuova
+            const migrated = migrateFromV1(JSON.parse(oldData));
+            localStorage.setItem('data', JSON.stringify(migrated));
+        }
+        localStorage.setItem('version', STORAGE_VERSION);
+    }
+}
+
+// 2. EXPIRATION - Dati con scadenza
+function setWithExpiry(key, value, ttl) {
+    const now = new Date();
+    const item = {
+        value: value,
+        expiry: now.getTime() + ttl
+    };
+    localStorage.setItem(key, JSON.stringify(item));
+}
+
+function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key);
+    if (!itemStr) return null;
+    
+    const item = JSON.parse(itemStr);
+    const now = new Date();
+    
+    if (now.getTime() > item.expiry) {
+        localStorage.removeItem(key);
+        return null;
+    }
+    return item.value;
+}
+
+// 3. COMPRESSIONE - Per dati grandi
+// Usa librerie come lz-string per comprimere
+// const compressed = LZString.compress(JSON.stringify(bigData));
+// localStorage.setItem('compressed', compressed);
+
+// 4. NAMESPACE - Evita collisioni
+const APP_PREFIX = 'myapp_';
+
+function saveAppData(key, value) {
+    localStorage.setItem(APP_PREFIX + key, JSON.stringify(value));
+}
+
+function getAppData(key) {
+    return JSON.parse(localStorage.getItem(APP_PREFIX + key) || 'null');
 }
 ```
 
-#### Pattern "Cerca e Usa"
+#### I Comandamenti del localStorage 📜
 
-Questo pattern è ovunque nel codice reale:
+1. **Salverai solo stringhe** - Usa sempre `JSON.stringify()`
+2. **Parserai con cautela** - Controlla `null` prima di `JSON.parse()`
+3. **Non salverai dati sensibili** - È facilmente ispezionabile
+4. **Gestirai gli errori** - `JSON.parse()` può fallire su stringhe malformate
+5. **Rispetterai i limiti** - Circa 5-10 MB di spazio
+6. **Pulirai quando necessario** - `removeItem()` o `clear()`
+7. **Testerai nei DevTools** - Ispeziona sempre i dati salvati
+8. **Fornirai valori default** - Per il primo avvio
+9. **Versionerai se necessario** - Per future migrazioni
+10. **Userai namespace** - Per evitare conflitti
+
+Il localStorage è uno strumento potentissimo per creare applicazioni web che "ricordano" l'utente. Padroneggiare il ciclo JSON.stringify → setItem → getItem → JSON.parse è una competenza fondamentale per ogni sviluppatore web moderno!
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+## Parte VII - Pattern Avanzati e Algoritmi 🎯
+
+### Regex - Il Linguaggio dei Pattern 🔍
+
+Le espressioni regolari (regex) sono come metal detector super sofisticati per il testo. Mentre un metal detector normale trova solo metallo, una regex può trovare qualsiasi pattern tu possa descrivere: email, numeri di telefono, date, codici fiscali, o anche pattern personalizzati che inventi tu. Immagina di dover trovare tutti i numeri di telefono in un documento di 1000 pagine - manualmente ci metteresti giorni, una regex lo fa in millisecondi!
+
+#### Anatomia di una Regex
+
+Una regex è racchiusa tra due slash `/pattern/`, come una formula matematica tra parentesi. Ma questi slash sono più che semplici delimitatori - sono il confine tra il mondo normale di JavaScript e il mondo magico dei pattern.
 
 ```javascript
-function updateUserRole(userId, newRole) {
-    // 1. CERCA
-    const user = users.find(u => u.id === userId);
-    
-    // 2. VALIDA (Guard clause)
-    if (!user) {
-        console.error(`User ${userId} not found`);
-        return false;
+// Regex letterale (più comune)
+const regex = /ciao/;
+
+// Costruttore RegExp (quando il pattern è dinamico)
+const parola = "ciao";
+const regexDinamica = new RegExp(parola);
+
+// Test base: c'è o non c'è?
+const testo = "ciao mondo";
+console.log(regex.test(testo));    // true - trova "ciao"
+console.log(testo.match(regex));   // ["ciao"] - restituisce il match
+console.log(testo.search(regex));  // 0 - posizione del primo match
+```
+
+Ma la vera potenza inizia quando usi caratteri speciali...
+
+#### Caratteri Speciali - I Superpoteri delle Regex
+
+Alcuni caratteri nelle regex hanno significati speciali, come simboli magici in un incantesimo. Questi sono i tuoi strumenti principali:
+
+```javascript
+// . (punto) = Qualsiasi carattere singolo
+/c.ao/.test("ciao");  // true
+/c.ao/.test("c9ao");  // true
+/c.ao/.test("c ao");  // true
+/c.ao/.test("cao");   // false - manca un carattere
+
+// ^ = Inizio stringa
+/^ciao/.test("ciao mondo");  // true
+/^ciao/.test("oh ciao");     // false - non inizia con ciao
+
+// $ = Fine stringa
+/mondo$/.test("ciao mondo"); // true
+/mondo$/.test("mondo ciao"); // false - non finisce con mondo
+
+// | = OR logico
+/cane|gatto/.test("ho un cane");  // true
+/cane|gatto/.test("ho un gatto"); // true
+/cane|gatto/.test("ho un topo");  // false
+```
+
+#### Character Classes [] - Il Club Esclusivo
+
+Le parentesi quadre creano un "club" di caratteri - il pattern matcha se trova UNO QUALSIASI dei membri del club.
+
+```javascript
+// Set di caratteri
+/[aeiou]/.test("ciao");     // true - trova 'i'
+/c[aeiou]ao/.test("ciao");  // true - 'i' è nel set
+
+// Range con il trattino
+/[a-z]/.test("hello");      // true - lettere minuscole
+/[A-Z]/.test("Hello");      // true - trova 'H'
+/[0-9]/.test("anno2025");   // true - trova '2'
+/[a-zA-Z0-9]/.test("Test1"); // true - alfanumerico
+
+// Negazione con ^ (dentro le quadre significa "NON")
+/[^aeiou]/.test("xyz");     // true - consonanti
+/[^0-9]/.test("123");       // false - solo numeri
+```
+
+**Trucco importante**: Dentro le `[]`, molti caratteri speciali perdono il loro potere!
+
+```javascript
+// Fuori dalle [], questi caratteri sono speciali
+/a.b/.test("a.b");     // false - . significa "qualsiasi carattere"
+/a\.b/.test("a.b");    // true - \. escape per punto letterale
+
+// Dentro [], sono letterali automaticamente!
+/[.]/.test(".");       // true - punto letterale
+/[.?*+]/.test("?");    // true - tutti letterali dentro []
+```
+
+#### Classi Predefinite - Le Scorciatoie
+
+JavaScript offre delle "macro" per i pattern più comuni. Sono come abbreviazioni che tutti conoscono:
+
+```javascript
+// \d = digit (cifra 0-9)
+/\d/.test("anno2025");           // true
+/\d{4}/.test("2025");            // true - esattamente 4 cifre
+"ho 25 anni e peso 70kg".match(/\d+/g); // ["25", "70"]
+
+// \D = NON cifra (opposto di \d)
+/\D/.test("abc");                // true
+/^\D+$/.test("solo-lettere");    // true - nessuna cifra
+
+// \w = word character (lettere, numeri, _)
+/\w/.test("hello_123");          // true
+/^\w+$/.test("user_name");       // true - username valido
+/^\w+$/.test("user-name");       // false - il trattino non è \w
+
+// \W = NON word character
+/\W/.test("hello world");        // true - lo spazio
+
+// \s = spazio bianco (space, tab, newline)
+/\s/.test("hello world");        // true
+/\s+/.test("   ");               // true - uno o più spazi
+const pulizia = str => str.replace(/\s+/g, ' '); // Normalizza spazi
+
+// \S = NON spazio
+/\S/.test("   ");                // false - solo spazi
+/\S/.test(" a ");                // true - c'è 'a'
+
+// \b = word boundary (confine di parola)
+/\bcat\b/.test("the cat sat");   // true - 'cat' come parola intera
+/\bcat\b/.test("category");      // false - 'cat' è parte di 'category'
+/\bthe\b/.test("thematic");      // false
+```
+
+#### Quantificatori - Quante Volte?
+
+I quantificatori specificano quante volte un elemento deve ripetersi. Sono come dire "voglio 3 di questi" invece di "voglio questo, questo e questo".
+
+```javascript
+// ? = zero o uno (opzionale)
+/colou?r/.test("color");      // true - americana
+/colou?r/.test("colour");     // true - britannica
+/https?:/.test("http:");      // true - s opzionale
+
+// + = uno o più (almeno uno)
+/\d+/.test("123");           // true - una o più cifre
+/\s+/.test("   ");           // true - uno o più spazi
+/ab+c/.test("abbbbc");       // true - una o più 'b'
+
+// * = zero o più (può non esserci)
+/ab*c/.test("ac");           // true - zero 'b'
+/ab*c/.test("abbbbc");       // true - molte 'b'
+/\d*/.test("");              // true - zero cifre è ok!
+
+// {n} = esattamente n volte
+/\d{4}/.test("2025");        // true - esattamente 4 cifre
+/\d{4}/.test("25");          // false - ne servono 4
+
+// {n,m} = da n a m volte
+/\d{2,4}/.test("25");        // true - 2 cifre ok
+/\d{2,4}/.test("2025");      // true - 4 cifre ok
+/\d{2,4}/.test("12345");     // true - matcha "1234"
+
+// {n,} = almeno n volte
+/\d{3,}/.test("12");         // false - servono almeno 3
+/\d{3,}/.test("123456");     // true - 3 o più
+```
+
+#### Escape - Quando il Speciale Diventa Normale
+
+Il backslash `\` è il tuo "disattivatore" di poteri speciali. Se vuoi cercare letteralmente un carattere che ha significato speciale, devi "escaparlo".
+
+```javascript
+// Caratteri che necessitano escape: . * + ? ^ $ { } ( ) [ ] \ |
+
+// Cercare un punto letterale
+/\./.test("3.14");              // true
+/\$\d+\.\d{2}/.test("$19.99");  // true - prezzo
+
+// Cercare parentesi
+/\(.*\)/.test("(contenuto)");    // true
+
+// Cercare backslash (doppio escape!)
+/\\/.test("C:\\Users");          // true
+
+// In una stringa devi fare doppio escape
+const pattern = "\\d+\\.\\d+";   // Per ottenere \d+\.\d+
+const regex = new RegExp(pattern);
+```
+
+#### Flags - I Modificatori Globali
+
+Le flag sono come interruttori che cambiano il comportamento della regex. Si mettono dopo lo slash finale:
+
+```javascript
+// g = global (trova TUTTI i match, non solo il primo)
+"ciao ciao".match(/ciao/);       // ["ciao"] - solo il primo
+"ciao ciao".match(/ciao/g);      // ["ciao", "ciao"] - tutti
+
+// i = case insensitive (ignora maiuscole/minuscole)
+/javascript/i.test("JavaScript"); // true
+/CIAO/i.test("ciao");            // true
+
+// m = multiline (^ e $ matchano inizio/fine di ogni riga)
+const testo = `prima riga
+seconda riga
+terza riga`;
+testo.match(/^.*$/gm);           // ["prima riga", "seconda riga", "terza riga"]
+
+// s = dotAll (il . matcha anche newline)
+/.*/s.test("riga1\nriga2");      // true - . include \n
+
+// Combinare flag
+/ciao/gi  // Global + case insensitive
+/^test/gm // Global + multiline
+```
+
+#### Pattern del Mondo Reale - Le Regex Utili
+
+Ecco pattern che userai davvero nei tuoi progetti:
+
+```javascript
+// EMAIL (semplificata ma efficace)
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+emailRegex.test("user@example.com");  // true
+emailRegex.test("invalid@");          // false
+
+// TELEFONO ITALIANO
+const telRegex = /^(\+39\s?)?3\d{2}\s?\d{6,7}$/;
+telRegex.test("+39 333 1234567");     // true
+telRegex.test("333 1234567");         // true
+
+// CODICE FISCALE ITALIANO
+const cfRegex = /^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$/i;
+
+// URL
+const urlRegex = /^(https?:\/\/)?([\w.-]+)\.([a-z]{2,})(\/.*)?$/i;
+
+// PASSWORD FORTE (min 8 char, maiuscola, minuscola, numero)
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*?&]{8,}$/;
+
+// DATA ITALIANA (GG/MM/AAAA)
+const dataRegex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
+
+// RIMUOVI CARATTERI SPECIALI (sanitizzazione)
+function pulisciInput(str) {
+    return str.replace(/[^a-zA-Z0-9\s-]/g, '');
+}
+
+// ESTRAI NUMERI DA TESTO
+const testo = "Ho comprato 3 mele e 2 pere per €5.50";
+const numeri = testo.match(/\d+\.?\d*/g); // ["3", "2", "5.50"]
+
+// RIMUOVI HTML TAGS
+const testoSenzaHTML = htmlString.replace(/<[^>]*>/g, '');
+
+// CAPITALIZZA PRIME LETTERE
+const capitalizza = str => str.replace(/\b\w/g, l => l.toUpperCase());
+capitalizza("ciao mondo"); // "Ciao Mondo"
+
+// TROVA PAROLE DUPLICATE
+const trovaDuplicati = str => {
+    const regex = /\b(\w+)\s+\1\b/gi;
+    return str.match(regex);
+};
+trovaDuplicati("il il gatto sul sul tetto"); // ["il il", "sul sul"]
+```
+
+#### Lookahead e Lookbehind - Gli Occhi del Futuro
+
+Questi sono pattern avanzati che "guardano avanti" o "indietro" senza consumare caratteri:
+
+```javascript
+// Lookahead positivo (?=...)
+/\d+(?=€)/.exec("costa 50€")[0];  // "50" - numero seguito da €
+
+// Lookahead negativo (?!...)
+/\d+(?!€)/.exec("50 mele")[0];    // "50" - numero NON seguito da €
+
+// Lookbehind positivo (?<=...)
+/(?<=€)\d+/.exec("€50")[0];       // "50" - numero preceduto da €
+
+// Lookbehind negativo (?<!...)
+/(?<!€)\d+/.exec("50 mele")[0];   // "50" - numero NON preceduto da €
+```
+
+### Call Stack e Ricorsione - La Torre di Piatti 📚
+
+Il Call Stack è il "taccuino" di JavaScript dove tiene traccia di quale funzione sta eseguendo e quali sono in attesa. È fondamentale capirlo per comprendere come JavaScript esegue il codice, specialmente con la ricorsione.
+
+#### Il Modello Mentale: La Pila di Piatti
+
+Immagina di lavare i piatti. Hai una pila dove metti i piatti sporchi:
+- Quando arriva un piatto sporco, lo metti **sopra** la pila (push)
+- Quando lavi un piatto, prendi quello **in cima** (pop)
+- Non puoi prendere un piatto dal mezzo senza far cadere quelli sopra
+
+Questo si chiama LIFO (Last In, First Out) - l'ultimo arrivato è il primo a uscire. È esattamente come funziona il Call Stack di JavaScript!
+
+```javascript
+// Simuliamo visivamente il Call Stack
+function prima() {
+    console.log("Inizio prima");
+    seconda();
+    console.log("Fine prima");
+}
+
+function seconda() {
+    console.log("Inizio seconda");
+    terza();
+    console.log("Fine seconda");
+}
+
+function terza() {
+    console.log("Eseguo terza");
+}
+
+prima();
+
+// Output:
+// Inizio prima
+// Inizio seconda
+// Eseguo terza
+// Fine seconda
+// Fine prima
+
+// Il Call Stack evolve così:
+// []                    - Vuoto
+// [prima]               - Entra prima
+// [prima, seconda]      - Entra seconda
+// [prima, seconda, terza] - Entra terza
+// [prima, seconda]     - Esce terza
+// [prima]               - Esce seconda
+// []                    - Esce prima
+```
+
+#### Visualizzare il Call Stack
+
+Creiamo un "mock" Call Stack per vedere cosa succede:
+
+```javascript
+// Call Stack visuale
+const callStack = [];
+
+function mostraStack() {
+    console.log("Stack:", [...callStack]);
+}
+
+function a() {
+    callStack.push("a()");
+    mostraStack(); // ["a()"]
+    b();
+    callStack.pop();
+}
+
+function b() {
+    callStack.push("b()");
+    mostraStack(); // ["a()", "b()"]
+    c();
+    callStack.pop();
+}
+
+function c() {
+    callStack.push("c()");
+    mostraStack(); // ["a()", "b()", "c()"]
+    callStack.pop();
+}
+
+a();
+```
+
+Ma il vero potere del Call Stack si vede con la ricorsione...
+
+#### Ricorsione - La Funzione che Chiama Se Stessa
+
+La ricorsione è quando una funzione risolve un problema chiamando se stessa con una versione "più piccola" del problema. È come le matrioske russe - ogni bambola contiene una versione più piccola di se stessa.
+
+**Anatomia di una Funzione Ricorsiva:**
+
+```javascript
+function ricorsiva(input) {
+    // 1. CASO BASE - La condizione di STOP
+    if (condizioneFinale) {
+        return risultatoFinale;
     }
     
-    // 3. USA
-    const oldRole = user.role;
-    user.role = newRole;
+    // 2. CASO RICORSIVO - Chiama se stessa con input modificato
+    return ricorsiva(inputPiùPiccolo);
+}
+```
+
+**Esempio Classico: Fattoriale**
+
+Il fattoriale di n (n!) è n × (n-1) × (n-2) × ... × 1
+
+```javascript
+// Versione iterativa (con loop)
+function fattorialeIterativo(n) {
+    let risultato = 1;
+    for (let i = n; i > 0; i--) {
+        risultato *= i;
+    }
+    return risultato;
+}
+
+// Versione ricorsiva (elegante!)
+function fattoriale(n) {
+    // CASO BASE: 0! = 1 e 1! = 1
+    if (n <= 1) return 1;
     
-    // 4. SIDE EFFECTS
-    logRoleChange(userId, oldRole, newRole);
-    updateUI();
+    // CASO RICORSIVO: n! = n × (n-1)!
+    return n * fattoriale(n - 1);
+}
+
+// Come funziona fattoriale(4):
+// fattoriale(4) = 4 * fattoriale(3)
+// fattoriale(3) = 3 * fattoriale(2)
+// fattoriale(2) = 2 * fattoriale(1)
+// fattoriale(1) = 1 (caso base!)
+// Ora risale:
+// fattoriale(2) = 2 * 1 = 2
+// fattoriale(3) = 3 * 2 = 6
+// fattoriale(4) = 4 * 6 = 24
+```
+
+#### Conversione Decimale a Binario - Ricorsione in Azione
+
+Convertiamo un numero decimale in binario usando la ricorsione:
+
+```javascript
+// ALGORITMO:
+// 1. Dividi per 2 e prendi il resto (0 o 1)
+// 2. Continua con il quoziente
+// 3. I resti in ordine inverso sono il binario
+
+function decimalToBinary(num) {
+    // CASO BASE: 0 e 1 sono già binari
+    if (num === 0 || num === 1) {
+        return String(num);
+    }
+    
+    // CASO RICORSIVO
+    // Quoziente per la prossima chiamata, resto per questo bit
+    const quoziente = Math.floor(num / 2);
+    const resto = num % 2;
+    
+    // La magia: concatena il risultato ricorsivo con il resto
+    return decimalToBinary(quoziente) + resto;
+}
+
+// Tracciamo decimalToBinary(5):
+// decimalToBinary(5)
+//   → decimalToBinary(2) + 1
+//     → decimalToBinary(1) + 0
+//       → "1" (caso base)
+//     → "1" + 0 = "10"
+//   → "10" + 1 = "101"
+
+console.log(decimalToBinary(5));  // "101"
+console.log(decimalToBinary(10)); // "1010"
+```
+
+#### Ricorsione con Memorizzazione - Ottimizzazione
+
+La ricorsione può essere inefficiente se ricalcola gli stessi valori. La memorizzazione (memoization) salva i risultati già calcolati:
+
+```javascript
+// Fibonacci senza memorizzazione (LENTO!)
+function fibLento(n) {
+    if (n <= 1) return n;
+    return fibLento(n - 1) + fibLento(n - 2);
+}
+
+// Fibonacci con memorizzazione (VELOCE!)
+const fibMemo = (function() {
+    const cache = {};
+    
+    return function fib(n) {
+        // Già calcolato?
+        if (n in cache) return cache[n];
+        
+        // Caso base
+        if (n <= 1) return n;
+        
+        // Calcola e memorizza
+        cache[n] = fib(n - 1) + fib(n - 2);
+        return cache[n];
+    };
+})();
+
+console.time("Lento");
+fibLento(40);      // ~2 secondi
+console.timeEnd("Lento");
+
+console.time("Veloce");
+fibMemo(40);       // ~0.01 secondi!
+console.timeEnd("Veloce");
+```
+
+### setTimeout e Animazioni - Il Controllo del Tempo ⏰
+
+`setTimeout` è il modo di JavaScript per dire "fai questo, ma tra un po'". Non è un timer che blocca tutto - è più come impostare una sveglia che suonerà mentre continui a fare altro.
+
+#### setTimeout - La Sveglia Asincrona
+
+```javascript
+// Sintassi base
+setTimeout(funzione, millisecondi);
+
+// Esempio semplice
+console.log("1. Inizio");
+setTimeout(() => {
+    console.log("2. Dopo 1 secondo");
+}, 1000);
+console.log("3. Continuo subito");
+
+// Output:
+// 1. Inizio
+// 3. Continuo subito
+// 2. Dopo 1 secondo (dopo 1s)
+```
+
+Il punto fondamentale: JavaScript NON si ferma ad aspettare! Imposta il timer e continua immediatamente.
+
+#### setTimeout con Parametri e Cancellazione
+
+```javascript
+// Passare parametri alla funzione
+function saluta(nome, titolo) {
+    console.log(`Ciao ${titolo} ${nome}`);
+}
+
+setTimeout(saluta, 2000, "Mario", "Signor");
+// Dopo 2 secondi: "Ciao Signor Mario"
+
+// Cancellare un timeout
+const timerId = setTimeout(() => {
+    console.log("Non mi vedrai mai!");
+}, 5000);
+
+// Cambi idea e cancelli
+clearTimeout(timerId);
+
+// Timeout condizionale
+let conferma = false;
+
+const bomber = setTimeout(() => {
+    if (!conferma) {
+        console.log("Timeout scaduto!");
+    }
+}, 3000);
+
+// Se l'utente conferma prima...
+document.querySelector("#confirm").onclick = () => {
+    conferma = true;
+    clearTimeout(bomber);
+    console.log("Confermato in tempo!");
+};
+```
+
+#### Animazioni con setTimeout Ricorsivo
+
+Combinare setTimeout con ricorsione crea animazioni fluide e controllabili:
+
+```javascript
+// Animazione base: muovi un elemento
+function anima(posizione = 0) {
+    const elemento = document.querySelector("#box");
+    
+    // Aggiorna posizione
+    elemento.style.left = posizione + "px";
+    
+    // Continua fino a destinazione
+    if (posizione < 300) {
+        // Richiama se stessa dopo un frame
+        setTimeout(() => anima(posizione + 2), 16); // ~60 FPS
+    } else {
+        console.log("Animazione completata!");
+    }
+}
+
+anima(); // Avvia l'animazione
+```
+
+#### Animazione del Call Stack - Visualizzazione Temporizzata
+
+Ecco un esempio complesso che mostra come animare la visualizzazione del Call Stack:
+
+```javascript
+const animationContainer = document.querySelector("#animation");
+
+// Dati per ogni "frame" dell'animazione
+const animationData = [
+    {
+        inputVal: 5,
+        addElDelay: 1000,      // Quando aggiungere l'elemento
+        msg: 'decimalToBinary(5) returns "10" + 1',
+        showMsgDelay: 5000,    // Quando mostrare il messaggio
+        removeElDelay: 10000   // Quando rimuovere l'elemento
+    },
+    {
+        inputVal: 2,
+        addElDelay: 1500,
+        msg: 'decimalToBinary(2) returns "1" + 0',
+        showMsgDelay: 4000,
+        removeElDelay: 9000
+    },
+    {
+        inputVal: 1,
+        addElDelay: 2000,
+        msg: 'decimalToBinary(1) returns "1" (base case)',
+        showMsgDelay: 3000,
+        removeElDelay: 8000
+    }
+];
+
+function showAnimation() {
+    // Pianifica ogni evento dell'animazione
+    animationData.forEach(frame => {
+        // Step 1: Aggiungi elemento al DOM
+        setTimeout(() => {
+            const div = document.createElement("div");
+            div.id = `frame-${frame.inputVal}`;
+            div.className = "stack-frame";
+            div.textContent = `decimalToBinary(${frame.inputVal})`;
+            animationContainer.appendChild(div);
+        }, frame.addElDelay);
+        
+        // Step 2: Aggiorna con risultato
+        setTimeout(() => {
+            const div = document.getElementById(`frame-${frame.inputVal}`);
+            div.textContent = frame.msg;
+            div.classList.add("resolved");
+        }, frame.showMsgDelay);
+        
+        // Step 3: Rimuovi (pop dallo stack)
+        setTimeout(() => {
+            const div = document.getElementById(`frame-${frame.inputVal}`);
+            div.classList.add("popping");
+            setTimeout(() => div.remove(), 300); // Dopo animazione CSS
+        }, frame.removeElDelay);
+    });
+    
+    // Mostra risultato finale
+    setTimeout(() => {
+        animationContainer.innerHTML = `
+            <div class="result">
+                Risultato: decimalToBinary(5) = "101"
+            </div>
+        `;
+    }, 11000);
+}
+```
+
+#### setTimeout vs setInterval - Due Filosofie
+
+```javascript
+// setInterval - Ripete ogni X millisecondi
+const intervalId = setInterval(() => {
+    console.log("Ogni secondo");
+}, 1000);
+
+// Fermalo dopo 5 secondi
+setTimeout(() => clearInterval(intervalId), 5000);
+
+// PROBLEMA di setInterval: può accumularsi!
+let count = 0;
+setInterval(() => {
+    // Se questa operazione dura più di 1 secondo...
+    heavyOperation(); // 1.5 secondi
+    count++;
+}, 1000);
+// Le chiamate si accumulano!
+
+// SOLUZIONE: setTimeout ricorsivo
+function intervalloSicuro() {
+    heavyOperation();
+    
+    // Prossima chiamata DOPO che questa finisce
+    setTimeout(intervalloSicuro, 1000);
+}
+intervalloSicuro();
+```
+
+#### Pattern di Animazione Moderni
+
+```javascript
+// 1. EASE-IN-OUT Animation
+function animaConEasing(durata = 1000) {
+    const inizio = Date.now();
+    const elemento = document.querySelector("#elemento");
+    const distanza = 300;
+    
+    function frame() {
+        const elapsed = Date.now() - inizio;
+        const progress = Math.min(elapsed / durata, 1);
+        
+        // Easing function (ease-in-out)
+        const eased = progress < 0.5
+            ? 2 * progress * progress
+            : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+        
+        elemento.style.left = (eased * distanza) + "px";
+        
+        if (progress < 1) {
+            setTimeout(frame, 16);
+        }
+    }
+    
+    frame();
+}
+
+// 2. PROMISE-BASED Animation
+function animaPromise(elemento, proprieta, valore, durata) {
+    return new Promise(resolve => {
+        const inizio = Date.now();
+        const valoreIniziale = parseFloat(
+            getComputedStyle(elemento)[proprieta]
+        );
+        
+        function frame() {
+            const elapsed = Date.now() - inizio;
+            const progress = Math.min(elapsed / durata, 1);
+            
+            const current = valoreIniziale + 
+                (valore - valoreIniziale) * progress;
+            elemento.style[proprieta] = current + "px";
+            
+            if (progress < 1) {
+                setTimeout(frame, 16);
+            } else {
+                resolve();
+            }
+        }
+        
+        frame();
+    });
+}
+
+// Uso con async/await
+async function sequenzaAnimazioni() {
+    const box = document.querySelector("#box");
+    
+    await animaPromise(box, "left", 200, 1000);
+    await animaPromise(box, "top", 100, 500);
+    await animaPromise(box, "left", 0, 1000);
+    await animaPromise(box, "top", 0, 500);
+    
+    console.log("Sequenza completata!");
+}
+
+// 3. DEBOUNCE Pattern (ritarda fino a che l'utente smette)
+function debounce(func, delay) {
+    let timeoutId;
+    
+    return function(...args) {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => func.apply(this, args), delay);
+    };
+}
+
+// Uso: cerca solo quando l'utente smette di digitare
+const searchInput = document.querySelector("#search");
+const debouncedSearch = debounce((query) => {
+    console.log("Cerco:", query);
+    // Fai chiamata API
+}, 500);
+
+searchInput.addEventListener("input", (e) => {
+    debouncedSearch(e.target.value);
+});
+
+// 4. THROTTLE Pattern (limita frequenza)
+function throttle(func, limit) {
+    let inThrottle;
+    
+    return function(...args) {
+        if (!inThrottle) {
+            func.apply(this, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    };
+}
+
+// Uso: gestisci scroll ma non troppo spesso
+const handleScroll = throttle(() => {
+    console.log("Scrolling...");
+}, 100); // Max ogni 100ms
+
+window.addEventListener("scroll", handleScroll);
+```
+
+### Algoritmi Pratici - Le Ricette del Codice 🧮
+
+Gli algoritmi sono le ricette step-by-step per risolvere problemi. Vediamo alcuni algoritmi fondamentali implementati in JavaScript.
+
+#### Algoritmo di Conversione Decimale → Binario
+
+Convertiamo un numero decimale in binario usando l'algoritmo classico della divisione successiva:
+
+```javascript
+// VERSIONE DIDATTICA - Con tracciamento
+function decimalToBinaryVerbose(input) {
+    console.log(`Conversione di ${input} in binario:`);
+    
+    const steps = [];
+    let numero = input;
+    
+    if (numero === 0) return "0";
+    
+    while (numero > 0) {
+        const quoziente = Math.floor(numero / 2);
+        const resto = numero % 2;
+        
+        steps.push({
+            numero,
+            divisione: `${numero} ÷ 2 = ${quoziente}`,
+            resto,
+            bit: resto
+        });
+        
+        console.log(`${numero} ÷ 2 = ${quoziente}, resto ${resto}`);
+        numero = quoziente;
+    }
+    
+    // I bit in ordine inverso formano il binario
+    const binario = steps.map(s => s.bit).reverse().join("");
+    console.log(`Binario: ${binario}`);
+    
+    return binario;
+}
+
+// VERSIONE OTTIMIZZATA - Concisa ed efficiente
+function decimalToBinary(input) {
+    if (input === 0) return "0";
+    
+    let binary = "";
+    while (input > 0) {
+        binary = (input % 2) + binary; // Prepend invece di append
+        input = Math.floor(input / 2);
+    }
+    return binary;
+}
+
+// VERSIONE RICORSIVA - Elegante
+function decimalToBinaryRecursive(num) {
+    if (num <= 1) return String(num);
+    return decimalToBinaryRecursive(Math.floor(num / 2)) + (num % 2);
+}
+
+// Test
+console.log(decimalToBinary(10));  // "1010"
+console.log(decimalToBinary(255)); // "11111111"
+```
+
+#### Algoritmi di Ordinamento
+
+**Bubble Sort - Il Più Semplice (ma Inefficiente)**
+
+```javascript
+function bubbleSort(arr) {
+    const array = [...arr]; // Copia per non modificare originale
+    const n = array.length;
+    
+    for (let i = 0; i < n - 1; i++) {
+        let swapped = false;
+        
+        for (let j = 0; j < n - i - 1; j++) {
+            if (array[j] > array[j + 1]) {
+                // Swap
+                [array[j], array[j + 1]] = [array[j + 1], array[j]];
+                swapped = true;
+            }
+        }
+        
+        // Ottimizzazione: se non ci sono swap, è ordinato
+        if (!swapped) break;
+    }
+    
+    return array;
+}
+
+console.log(bubbleSort([64, 34, 25, 12, 22, 11, 90]));
+// [11, 12, 22, 25, 34, 64, 90]
+```
+
+**Quick Sort - Veloce ed Elegante**
+
+```javascript
+function quickSort(arr) {
+    if (arr.length <= 1) return arr;
+    
+    const pivot = arr[Math.floor(arr.length / 2)];
+    const left = arr.filter(x => x < pivot);
+    const middle = arr.filter(x => x === pivot);
+    const right = arr.filter(x => x > pivot);
+    
+    return [...quickSort(left), ...middle, ...quickSort(right)];
+}
+
+console.log(quickSort([3, 6, 8, 10, 1, 2, 1]));
+// [1, 1, 2, 3, 6, 8, 10]
+```
+
+#### Algoritmi di Ricerca
+
+**Binary Search - Ricerca Binaria (Array Ordinato)**
+
+```javascript
+function binarySearch(arr, target) {
+    let left = 0;
+    let right = arr.length - 1;
+    
+    while (left <= right) {
+        const mid = Math.floor((left + right) / 2);
+        
+        if (arr[mid] === target) {
+            return mid; // Trovato!
+        }
+        
+        if (arr[mid] < target) {
+            left = mid + 1; // Cerca nella metà destra
+        } else {
+            right = mid - 1; // Cerca nella metà sinistra
+        }
+    }
+    
+    return -1; // Non trovato
+}
+
+const sorted = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19];
+console.log(binarySearch(sorted, 7));  // 3 (indice)
+console.log(binarySearch(sorted, 6));  // -1 (non trovato)
+```
+
+#### Algoritmi su Stringhe
+
+**Palindromo - Verifica se una Stringa è Palindroma**
+
+```javascript
+function isPalindrome(str) {
+    // Pulisci la stringa
+    const cleaned = str.toLowerCase().replace(/[^a-z0-9]/g, '');
+    
+    // Metodo 1: Confronta con reverse
+    return cleaned === cleaned.split('').reverse().join('');
+}
+
+// Metodo 2: Due puntatori
+function isPalindromeTwoPointers(str) {
+    const cleaned = str.toLowerCase().replace(/[^a-z0-9]/g, '');
+    let left = 0;
+    let right = cleaned.length - 1;
+    
+    while (left < right) {
+        if (cleaned[left] !== cleaned[right]) {
+            return false;
+        }
+        left++;
+        right--;
+    }
     
     return true;
 }
+
+console.log(isPalindrome("A man, a plan, a canal: Panama")); // true
+console.log(isPalindrome("race a car")); // false
 ```
 
-Il pattern è: Cerca → Valida → Usa → Effetti. Sempre in quest'ordine.
-
-#### Object.freeze() e i Livelli di Protezione
-
-JavaScript offre protezione granulare per oggetti:
+**Anagrammi - Verifica se Due Stringhe sono Anagrammi**
 
 ```javascript
-// Caso d'uso: Configuration API
-const config = {
-    apiUrl: 'https://api.example.com',
-    timeout: 5000,
-    retries: 3
-};
-
-// Livello 1: No nuove proprietà
-Object.preventExtensions(config);
-config.newProp = 'test'; // Silenziosamente ignorato
-config.timeout = 10000;  // ✓ Funziona
-
-// Livello 2: Struttura fissa
-Object.seal(config);
-delete config.timeout;   // ✗ Non funziona
-config.timeout = 10000;  // ✓ Ancora modificabile
-
-// Livello 3: Immutabile
-Object.freeze(config);
-config.timeout = 10000;  // ✗ Completamente congelato
-```
-
-**Deep Freeze - Congelare in Profondità**
-
-`Object.freeze()` è superficiale. Per oggetti annidati:
-
-```javascript
-function deepFreeze(obj) {
-    Object.freeze(obj);
-    
-    Object.values(obj).forEach(value => {
-        if (typeof value === 'object' && value !== null) {
-            deepFreeze(value);
-        }
-    });
-    
-    return obj;
+function areAnagrams(str1, str2) {
+    // Pulisci e ordina
+    const clean = s => s.toLowerCase().replace(/[^a-z]/g, '').split('').sort().join('');
+    return clean(str1) === clean(str2);
 }
 
-const config = deepFreeze({
-    api: {
-        url: 'https://api.example.com',
-        endpoints: {
-            users: '/users',
-            posts: '/posts'
-        }
+// Metodo con conteggio caratteri
+function areAnagramsCount(str1, str2) {
+    const clean = s => s.toLowerCase().replace(/[^a-z]/g, '');
+    const s1 = clean(str1);
+    const s2 = clean(str2);
+    
+    if (s1.length !== s2.length) return false;
+    
+    const count = {};
+    
+    for (const char of s1) {
+        count[char] = (count[char] || 0) + 1;
     }
-});
-// Ora TUTTO è immutabile
+    
+    for (const char of s2) {
+        if (!count[char]) return false;
+        count[char]--;
+    }
+    
+    return true;
+}
+
+console.log(areAnagrams("listen", "silent")); // true
+console.log(areAnagrams("hello", "world"));   // false
 ```
 
-### 14. Audio API - Controllo Totale del Suono 🎵
+#### Algoritmi Numerici
 
-L'Audio API è più di un semplice player - è controllo totale sulla riproduzione audio.
+**Numeri Primi - Verifica e Generazione**
 
 ```javascript
-class MusicPlayer {
-    constructor() {
-        this.audio = new Audio();
-        this.playlist = [];
-        this.currentIndex = 0;
-        
-        this.setupEventListeners();
+```javascript
+function isPrime(n) {
+    if (n <= 1) return false;
+    if (n <= 3) return true;
+    if (n % 2 === 0 || n % 3 === 0) return false;
+    
+    // Controlla solo fino alla radice quadrata
+    for (let i = 5; i * i <= n; i += 6) {
+        if (n % i === 0 || n % (i + 2) === 0) {
+            return false;
+        }
     }
     
-    setupEventListeners() {
-        // Canzone finita
-        this.audio.addEventListener('ended', () => {
-            this.playNext();
-        });
-        
-        // Aggiornamento progresso
-        this.audio.addEventListener('timeupdate', () => {
-            this.updateProgressBar();
-        });
-        
-        // Gestione errori
-        this.audio.addEventListener('error', (e) => {
-            console.error('Audio error:', e);
-            this.handlePlaybackError();
-        });
-        
-        // Metadata caricati
-        this.audio.addEventListener('loadedmetadata', () => {
-            console.log('Duration:', this.audio.duration);
-            this.updateDurationDisplay();
-        });
-    }
+    return true;
+}
+
+// Crivello di Eratostene - Genera tutti i primi fino a n
+function sieveOfEratosthenes(max) {
+    const prime = new Array(max + 1).fill(true);
+    prime[0] = prime[1] = false;
     
-    play(source) {
-        this.audio.src = source;
-        
-        // play() restituisce una Promise!
-        this.audio.play()
-            .then(() => console.log('Playback started'))
-            .catch(err => console.error('Playback failed:', err));
-    }
-    
-    seekTo(percentage) {
-        const time = this.audio.duration * (percentage / 100);
-        this.audio.currentTime = time;
-    }
-    
-    setVolume(value) {
-        // value tra 0.0 e 1.0
-        this.audio.volume = Math.max(0, Math.min(1, value));
-    }
-    
-    fadeOut(duration = 1000) {
-        const startVolume = this.audio.volume;
-        const step = startVolume / (duration / 50);
-        
-        const fade = setInterval(() => {
-            if (this.audio.volume > step) {
-                this.audio.volume -= step;
-            } else {
-                this.audio.volume = 0;
-                this.audio.pause();
-                clearInterval(fade);
+    for (let i = 2; i * i <= max; i++) {
+        if (prime[i]) {
+            // Marca tutti i multipli come non primi
+            for (let j = i * i; j <= max; j += i) {
+                prime[j] = false;
             }
-        }, 50);
+        }
     }
+    
+    // Raccoglie i numeri primi
+    const primes = [];
+    for (let i = 2; i <= max; i++) {
+        if (prime[i]) primes.push(i);
+    }
+    
+    return primes;
+}
+
+console.log(sieveOfEratosthenes(30)); 
+// [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+```
+
+**Fibonacci - La Sequenza Aurea**
+
+```javascript
+// Iterativo (efficiente)
+function fibonacciIterative(n) {
+    if (n <= 1) return n;
+    
+    let prev = 0, curr = 1;
+    
+    for (let i = 2; i <= n; i++) {
+        [prev, curr] = [curr, prev + curr];
+    }
+    
+    return curr;
+}
+
+// Generatore di sequenza
+function* fibonacciGenerator() {
+    let [prev, curr] = [0, 1];
+    
+    while (true) {
+        yield prev;
+        [prev, curr] = [curr, prev + curr];
+    }
+}
+
+// Uso del generatore
+const fib = fibonacciGenerator();
+for (let i = 0; i < 10; i++) {
+    console.log(fib.next().value);
+}
+// 0, 1, 1, 2, 3, 5, 8, 13, 21, 34
+```
+
+**Greatest Common Divisor (MCD) - Algoritmo di Euclide**
+
+```javascript
+// Versione iterativa
+function gcd(a, b) {
+    while (b !== 0) {
+        [a, b] = [b, a % b];
+    }
+    return a;
+}
+
+// Versione ricorsiva
+function gcdRecursive(a, b) {
+    return b === 0 ? a : gcdRecursive(b, a % b);
+}
+
+// Least Common Multiple (MCM)
+function lcm(a, b) {
+    return (a * b) / gcd(a, b);
+}
+
+console.log(gcd(48, 18));   // 6
+console.log(lcm(12, 15));   // 60
+```
+
+### Sanitizzazione e Validazione Input 🛡️
+
+La validazione dell'input è la prima linea di difesa contro bug e vulnerabilità. È come il controllo di sicurezza all'aeroporto - meglio essere rigorosi all'ingresso che avere problemi dopo.
+
+#### Validazione Robusta con Pattern Guards
+
+Il pattern "guard clause" significa controllare e uscire subito se qualcosa non va, invece di annidare molti if. È come un buttafuori che controlla i documenti all'ingresso.
+
+```javascript
+// CATTIVO: Piramide dell'inferno
+function processData(data) {
+    if (data) {
+        if (data.isValid) {
+            if (data.value > 0) {
+                // Finalmente fai qualcosa
+                return data.value * 2;
+            }
+        }
+    }
+}
+
+// BUONO: Guard clauses
+function processData(data) {
+    // Esci subito se qualcosa non va
+    if (!data) return null;
+    if (!data.isValid) return null;
+    if (data.value <= 0) return null;
+    
+    // Codice principale pulito
+    return data.value * 2;
 }
 ```
 
-### 15. Date.now() e il Tempo come Numero
-
-`Date.now()` è geniale nella sua semplicità - trasforma il concetto astratto del tempo in un semplice numero.
+#### Validazione di Input Numerici
 
 ```javascript
-// Performance Monitoring
-class PerformanceMonitor {
-    constructor() {
-        this.marks = {};
+function validateNumber(input, options = {}) {
+    const {
+        min = -Infinity,
+        max = Infinity,
+        integer = false,
+        positive = false
+    } = options;
+    
+    // Converti e valida
+    const num = Number(input);
+    
+    // Controlli in sequenza con messaggi specifici
+    if (input === "" || input == null) {
+        return { valid: false, error: "Input richiesto" };
     }
     
-    start(label) {
-        this.marks[label] = Date.now();
+    if (isNaN(num)) {
+        return { valid: false, error: "Deve essere un numero" };
     }
     
-    end(label) {
-        if (!this.marks[label]) {
-            console.warn(`No start mark for ${label}`);
-            return;
-        }
-        
-        const duration = Date.now() - this.marks[label];
-        console.log(`${label}: ${duration}ms`);
-        
-        delete this.marks[label];
-        return duration;
+    if (integer && !Number.isInteger(num)) {
+        return { valid: false, error: "Deve essere un intero" };
     }
+    
+    if (positive && num <= 0) {
+        return { valid: false, error: "Deve essere positivo" };
+    }
+    
+    if (num < min) {
+        return { valid: false, error: `Minimo ${min}` };
+    }
+    
+    if (num > max) {
+        return { valid: false, error: `Massimo ${max}` };
+    }
+    
+    return { valid: true, value: num };
 }
 
 // Uso
-const perf = new PerformanceMonitor();
+const result = validateNumber(userInput, {
+    min: 1,
+    max: 100,
+    integer: true,
+    positive: true
+});
 
-perf.start('data-fetch');
-fetch('/api/data')
-    .then(response => response.json())
-    .then(data => {
-        perf.end('data-fetch'); // "data-fetch: 234ms"
-    });
-```
-
-**Unique ID Generation**
-
-```javascript
-class UniqueIdGenerator {
-    constructor(prefix = 'id') {
-        this.prefix = prefix;
-        this.counter = 0;
-    }
-    
-    generate() {
-        // Combina timestamp con counter per garantire unicità
-        // anche in caso di generazioni multiple nello stesso ms
-        return `${this.prefix}_${Date.now()}_${this.counter++}`;
-    }
-    
-    generateShort() {
-        // Versione più corta usando base36
-        return `${this.prefix}_${Date.now().toString(36)}_${this.counter++}`;
-    }
+if (!result.valid) {
+    alert(result.error);
+} else {
+    processNumber(result.value);
 }
 ```
 
-## Tabella di Riferimento Rapido Completa 📊
+#### Rimozione Caratteri Speciali e Sanitizzazione
+
+La sanitizzazione rimuove o escapa caratteri potenzialmente pericolosi. È come filtrare l'acqua prima di berla.
+
+```javascript
+// Rimuovi caratteri speciali base
+function removeSpecialChars(str) {
+    // Mantiene solo lettere, numeri, spazi e trattini
+    return str
+        .trim()                               // Rimuove spazi iniziali/finali
+        .replace(/[^a-zA-Z0-9\s-]/g, '')    // Solo alfanumerici, spazi, trattini
+        .replace(/\s+/g, ' ');               // Normalizza spazi multipli
+}
+
+// Sanitizzazione per diversi contesti
+const Sanitizer = {
+    // Per ID e chiavi
+    forId(str) {
+        return str
+            .toLowerCase()
+            .replace(/[^a-z0-9-]/g, '')
+            .replace(/-+/g, '-')              // Multipli trattini → uno
+            .replace(/^-|-$/g, '');           // Rimuove trattini iniziali/finali
+    },
+    
+    // Per nomi file
+    forFilename(str) {
+        return str
+            .replace(/[<>:"/\\|?*]/g, '')    // Caratteri illegali Windows/Unix
+            .replace(/\s+/g, '_')             // Spazi → underscore
+            .slice(0, 255);                   // Limite lunghezza
+    },
+    
+    // Per HTML (previeni XSS)
+    forHTML(str) {
+        const div = document.createElement('div');
+        div.textContent = str;                // textContent escapa HTML
+        return div.innerHTML;
+    },
+    
+    // Per URL
+    forURL(str) {
+        return encodeURIComponent(str);
+    },
+    
+    // Per SQL (base - usa sempre prepared statements!)
+    forSQL(str) {
+        return str.replace(/['";\\]/g, '');
+    }
+};
+
+// Esempio: Crea ID sicuro da input utente
+function createSafeId(title) {
+    const sanitized = Sanitizer.forId(title);
+    const timestamp = Date.now();
+    return `${sanitized}-${timestamp}`;
+}
+
+console.log(createSafeId("Hello World!")); // "hello-world-1234567890"
+```
+
+#### Validazione Email e Pattern Comuni
+
+```javascript
+const Validator = {
+    patterns: {
+        email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        phone: /^(\+\d{1,3}[- ]?)?\d{10}$/,
+        url: /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/,
+        creditCard: /^\d{4}[\s-]?\d{4}[\s-]?\d{4}[\s-]?\d{4}$/,
+        postalCode: {
+            IT: /^\d{5}$/,
+            US: /^\d{5}(-\d{4})?$/,
+            UK: /^[A-Z]{1,2}\d{1,2} ?\d[A-Z]{2}$/i
+        }
+    },
+    
+    validate(type, value, country = 'IT') {
+        if (!value) return false;
+        
+        if (type === 'postalCode') {
+            return this.patterns.postalCode[country]?.test(value) || false;
+        }
+        
+        return this.patterns[type]?.test(value) || false;
+    },
+    
+    // Validazione con feedback dettagliato
+    validateWithFeedback(type, value) {
+        const errors = [];
+        
+        if (!value) {
+            errors.push("Campo richiesto");
+            return { valid: false, errors };
+        }
+        
+        switch(type) {
+            case 'email':
+                if (!value.includes('@')) {
+                    errors.push("Manca @");
+                }
+                if (!this.patterns.email.test(value)) {
+                    errors.push("Formato email non valido");
+                }
+                break;
+                
+            case 'password':
+                if (value.length < 8) {
+                    errors.push("Minimo 8 caratteri");
+                }
+                if (!/[A-Z]/.test(value)) {
+                    errors.push("Almeno una maiuscola");
+                }
+                if (!/[a-z]/.test(value)) {
+                    errors.push("Almeno una minuscola");
+                }
+                if (!/\d/.test(value)) {
+                    errors.push("Almeno un numero");
+                }
+                break;
+        }
+        
+        return {
+            valid: errors.length === 0,
+            errors
+        };
+    }
+};
+```
+
+### Pattern di Gestione Stato 🎯
+
+La gestione dello stato è come dirigere un'orchestra - ogni parte deve essere sincronizzata e sapere cosa stanno facendo le altre.
+
+#### Il Pattern "Single Source of Truth"
+
+Mantieni lo stato in un unico posto centralizzato. È come avere un unico libro mastro invece di appunti sparsi ovunque.
+
+```javascript
+// State Manager Centralizzato
+const StateManager = {
+    // Stato privato
+    _state: {
+        user: null,
+        tasks: [],
+        settings: {
+            theme: 'light',
+            notifications: true
+        },
+        ui: {
+            isLoading: false,
+            currentModal: null,
+            errors: []
+        }
+    },
+    
+    // Getter sicuro (ritorna copia per evitare modifiche dirette)
+    getState(path) {
+        if (!path) return { ...this._state };
+        
+        // Accesso nested con path tipo "user.name"
+        const keys = path.split('.');
+        let value = this._state;
+        
+        for (const key of keys) {
+            value = value[key];
+            if (value === undefined) return undefined;
+        }
+        
+        // Ritorna copia se oggetto/array
+        return typeof value === 'object' ? JSON.parse(JSON.stringify(value)) : value;
+    },
+    
+    // Setter con validazione
+    setState(path, value) {
+        const keys = path.split('.');
+        const lastKey = keys.pop();
+        
+        let target = this._state;
+        for (const key of keys) {
+            if (!(key in target)) {
+                target[key] = {};
+            }
+            target = target[key];
+        }
+        
+        const oldValue = target[lastKey];
+        target[lastKey] = value;
+        
+        // Notifica listeners
+        this._notify(path, value, oldValue);
+        
+        // Persisti se necessario
+        this._persist();
+    },
+    
+    // Sistema di sottoscrizione
+    _listeners: {},
+    
+    subscribe(path, callback) {
+        if (!this._listeners[path]) {
+            this._listeners[path] = [];
+        }
+        this._listeners[path].push(callback);
+        
+        // Ritorna funzione per unsubscribe
+        return () => {
+            const index = this._listeners[path].indexOf(callback);
+            if (index > -1) {
+                this._listeners[path].splice(index, 1);
+            }
+        };
+    },
+    
+    _notify(path, newValue, oldValue) {
+        // Notifica listeners specifici
+        if (this._listeners[path]) {
+            this._listeners[path].forEach(cb => cb(newValue, oldValue));
+        }
+        
+        // Notifica listeners generali (con *)
+        if (this._listeners['*']) {
+            this._listeners['*'].forEach(cb => cb(path, newValue, oldValue));
+        }
+    },
+    
+    // Persistenza automatica
+    _persist() {
+        const toPersist = {
+            user: this._state.user,
+            settings: this._state.settings,
+            tasks: this._state.tasks
+        };
+        localStorage.setItem('appState', JSON.stringify(toPersist));
+    },
+    
+    // Carica stato salvato
+    load() {
+        try {
+            const saved = localStorage.getItem('appState');
+            if (saved) {
+                const data = JSON.parse(saved);
+                Object.assign(this._state, data);
+            }
+        } catch (error) {
+            console.error('Errore caricamento stato:', error);
+        }
+    }
+};
+
+// Uso
+StateManager.subscribe('user', (newUser) => {
+    console.log('User cambiato:', newUser);
+    updateUIForUser(newUser);
+});
+
+StateManager.setState('user', { nome: 'Mario', ruolo: 'admin' });
+```
+
+#### Pattern CRUD per Liste
+
+CRUD (Create, Read, Update, Delete) è il pattern fondamentale per gestire collezioni di dati.
+
+```javascript
+class TaskManager {
+    constructor() {
+        this.tasks = this.loadTasks();
+        this.currentEditId = null;
+    }
+    
+    // CREATE
+    addTask(taskData) {
+        const task = {
+            id: this.generateId(),
+            ...taskData,
+            createdAt: new Date().toISOString(),
+            completed: false
+        };
+        
+        this.tasks.push(task);
+        this.save();
+        this.render();
+        
+        return task;
+    }
+    
+    // READ
+    getTask(id) {
+        return this.tasks.find(task => task.id === id);
+    }
+    
+    getAllTasks() {
+        return [...this.tasks]; // Ritorna copia
+    }
+    
+    getFilteredTasks(filter) {
+        switch(filter) {
+            case 'completed':
+                return this.tasks.filter(t => t.completed);
+            case 'pending':
+                return this.tasks.filter(t => !t.completed);
+            case 'today':
+                const today = new Date().toDateString();
+                return this.tasks.filter(t => 
+                    new Date(t.createdAt).toDateString() === today
+                );
+            default:
+                return this.getAllTasks();
+        }
+    }
+    
+    // UPDATE
+    updateTask(id, updates) {
+        const index = this.tasks.findIndex(task => task.id === id);
+        
+        if (index === -1) {
+            console.error(`Task ${id} non trovato`);
+            return false;
+        }
+        
+        // Mantieni dati originali, sovrascrivi con updates
+        this.tasks[index] = {
+            ...this.tasks[index],
+            ...updates,
+            updatedAt: new Date().toISOString()
+        };
+        
+        this.save();
+        this.render();
+        
+        return this.tasks[index];
+    }
+    
+    toggleTask(id) {
+        const task = this.getTask(id);
+        if (task) {
+            this.updateTask(id, { completed: !task.completed });
+        }
+    }
+    
+    // DELETE
+    deleteTask(id) {
+        const index = this.tasks.findIndex(task => task.id === id);
+        
+        if (index === -1) return false;
+        
+        const deleted = this.tasks.splice(index, 1)[0];
+        this.save();
+        this.render();
+        
+        return deleted;
+    }
+    
+    deleteCompleted() {
+        this.tasks = this.tasks.filter(task => !task.completed);
+        this.save();
+        this.render();
+    }
+    
+    // UTILITIES
+    generateId() {
+        return `task-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    }
+    
+    save() {
+        localStorage.setItem('tasks', JSON.stringify(this.tasks));
+    }
+    
+    loadTasks() {
+        try {
+            return JSON.parse(localStorage.getItem('tasks')) || [];
+        } catch {
+            return [];
+        }
+    }
+    
+    // EDIT MODE
+    startEdit(id) {
+        const task = this.getTask(id);
+        if (!task) return;
+        
+        this.currentEditId = id;
+        
+        // Popola form
+        document.querySelector('#task-input').value = task.title;
+        document.querySelector('#task-desc').value = task.description || '';
+        document.querySelector('#submit-btn').textContent = 'Update Task';
+    }
+    
+    cancelEdit() {
+        this.currentEditId = null;
+        this.resetForm();
+    }
+    
+    resetForm() {
+        document.querySelector('#task-form').reset();
+        document.querySelector('#submit-btn').textContent = 'Add Task';
+        this.currentEditId = null;
+    }
+    
+    // RENDERING
+    render() {
+        const container = document.querySelector('#tasks-container');
+        
+        if (this.tasks.length === 0) {
+            container.innerHTML = '<p class="empty">Nessun task</p>';
+            return;
+        }
+        
+        container.innerHTML = this.tasks.map(task => `
+            <div class="task ${task.completed ? 'completed' : ''}" data-id="${task.id}">
+                <input type="checkbox" 
+                       ${task.completed ? 'checked' : ''}
+                       onchange="taskManager.toggleTask('${task.id}')">
+                <div class="task-content">
+                    <h3>${this.escapeHtml(task.title)}</h3>
+                    ${task.description ? `<p>${this.escapeHtml(task.description)}</p>` : ''}
+                    <small>${this.formatDate(task.createdAt)}</small>
+                </div>
+                <div class="task-actions">
+                    <button onclick="taskManager.startEdit('${task.id}')">✏️</button>
+                    <button onclick="taskManager.deleteTask('${task.id}')">🗑️</button>
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+    
+    formatDate(dateString) {
+        return new Date(dateString).toLocaleString('it-IT');
+    }
+}
+
+// Inizializzazione
+const taskManager = new TaskManager();
+taskManager.render();
+```
+
+#### Pattern di Reset e Stato Iniziale
+
+Resettare lo stato in modo pulito è fondamentale per evitare bug sottili.
+
+```javascript
+// Pattern: Stato Iniziale come Funzione
+const createInitialState = () => ({
+    form: {
+        nome: '',
+        email: '',
+        messaggio: ''
+    },
+    ui: {
+        isSubmitting: false,
+        errors: [],
+        successMessage: null
+    },
+    data: []
+});
+
+const FormManager = {
+    state: createInitialState(),
+    
+    reset() {
+        // Non modificare, ricrea!
+        this.state = createInitialState();
+        this.render();
+    },
+    
+    resetPartial(section) {
+        // Reset solo una sezione
+        this.state[section] = createInitialState()[section];
+        this.render();
+    },
+    
+    // Pattern: Backup e Restore
+    backup() {
+        this._backup = JSON.stringify(this.state);
+    },
+    
+    restore() {
+        if (this._backup) {
+            this.state = JSON.parse(this._backup);
+            this.render();
+        }
+    }
+};
+```
+
+## Tabella di Riferimento Rapido Completa
 
 | Categoria | Strumento/Concetto | Analogia/Scopo | Esempio/Sintassi |
 |-----------|-------------------|----------------|------------------|
 | **VARIABILI** |
-| | `const` | Cassaforte: prima scelta | `const user = {}` |
-| | `let` | Lavagna: quando cambia | `let counter = 0` |
-| | `null` vs `undefined` | Intenzionale vs Accidentale | `let x = null` |
+| | `const` | Cassaforte: riferimento immutabile | `const user = {}` |
+| | `let` | Lavagna: valore modificabile | `let counter = 0` |
+| | `var` | Vecchio modo (evitare!) | Hoisting problematico |
+| | `null` vs `undefined` | Vuoto intenzionale vs accidentale | `let x = null` |
 | **TIPI PRIMITIVI** |
-| | String | Testo | `` `Ciao ${nome}` `` |
-| | Number | Matematica | `Math.floor(3.7)` |
-| | Boolean | Interruttore | `true`/`false` |
-| | Date | Calendario | `new Date()` |
-| **OGGETTI E ARRAY** |
-| | Object | Schedario | `{ id: 1 }` |
-| | Array | Lista ordinata | `[1, 2, 3]` |
-| | Spread `...` | Spacchettatore | `[...arr1, ...arr2]` |
-| | Destrutturazione | Estrazione diretta | `const { name } = obj` |
+| | String | Testo con metodi potenti | `` `Hello ${name}` `` |
+| | Escape chars | Caratteri speciali | `\n` `\t` `\"` `\\` |
+| | Number | IEEE 754, interi e decimali | `Math.floor(3.7)` |
+| | Boolean | true/false binario | `true`/`false` |
+| | Truthy/Falsy | 6 valori falsy da ricordare | `false, 0, "", null, undefined, NaN` |
+| **CONVERSIONI** |
+| | `parseInt()` | Estrattore di interi | `parseInt("42px")` → `42` |
+| | `parseFloat()` | Con decimali | `parseFloat("3.14")` → `3.14` |
+| | `Number()` | Conversione stretta | `Number("42")` → `42` |
+| | `String()` | A stringa | `String(42)` → `"42"` |
+| | `Boolean()` | A booleano | `Boolean(1)` → `true` |
+| | `JSON.stringify()` | Oggetto → Stringa JSON | Per localStorage |
+| | `JSON.parse()` | Stringa JSON → Oggetto | Da localStorage |
+| | `Array.from()` | Simil-array → Array vero | NodeList → Array |
 | **OPERATORI** |
-| | `=` | Assegna | `x = 10` |
-| | `===` | Confronta | `if (x === 10)` |
-| | `&&` e `\|\|` | AND e OR | `a && b`, `a \|\| b` |
-| | `?.` | Navigazione sicura | `user?.address?.street` |
-| | `??` | Default intelligente | `value ?? 10` |
-| | Ternario `? :` | If/else rapido | `age >= 18 ? "Ok" : "No"` |
-| **FUNZIONI** |
-| | Arrow `=>` | Ricetta moderna | `const f = () => {}` |
-| | Return implicito | Una riga | `x => x * 2` |
-| | Parametri default | Valori di riserva | `(name = "Guest") => {}` |
-| | Destrutturazione params | Spacchetta argomenti | `({id, name}) => {}` |
+| | Assegnazione `=` | Base | `x = 10` |
+| | Abbreviati | Op + assegnazione | `+=` `-=` `*=` `/=` `%=` |
+| | Incremento | Pre/post | `++x` vs `x++` |
+| | Confronto `===` | Identità stretta | Valore E tipo uguali |
+| | Confronto `==` | Con coercizione (evitare) | Converte tipi |
+| | Logici | AND OR NOT | `&&` `\|\|` `!` |
+| | Short-circuit | Valutazione pigra | Si ferma appena sa risultato |
+| | Optional chaining | Navigazione sicura | `obj?.prop?.method?.()` |
+| | Nullish coalescing | Default per null/undefined | `value ?? default` |
+| | Ternario | If inline | `cond ? true : false` |
 | **CONTROLLO FLUSSO** |
-| | `if`/`else` | Bivio classico | `if (x) {} else {}` |
-| | `switch` | Centralino | `switch(x) { case: }` |
-| | `for`/`forEach` | Ripetizioni | `for(let i=0...)` |
-| | Return early | Guardia ingresso | `if (!x) return` |
-| | `break` | Freno emergenza | `break;` |
-| **DOM** |
-| | `querySelector` | Cercatore | `document.querySelector()` |
-| | `createElement` | Fabbrica elementi | `document.createElement()` |
-| | `.classList` | Gestore stili | `.add()/.remove()/.toggle()` |
-| | `addEventListener` | Ascoltatore | `el.addEventListener()` |
-| | Event object `e` | Rapporto incidente | `(e) => e.target` |
-| **ARRAY METHODS** |
-| | `.filter()` | Setaccio | `arr.filter(x => x > 5)` |
-| | `.map()` | Trasformatore | `arr.map(x => x * 2)` |
-| | `.find()` | Detective | `arr.find(x => x.id === 1)` |
-| | `.findIndex()` | Cercatore posizione | `arr.findIndex(...)` |
-| | `.sort()` | Ordinatore | `arr.sort((a,b) => a-b)` |
-| | `.join()` | Incollatore | `arr.join("-")` |
-| | `.split()` | Affettatrice | `str.split(",")` |
-| | `.reverse()` | Capovolgitore | `arr.reverse()` |
-| | `.splice()` | Coltellino svizzero | `arr.splice(1, 2)` |
+| | `if`/`else if`/`else` | Bivio multiplo | Condizioni in cascata |
+| | `switch` | Centralino | Con `break` e `default` |
+| | Return early | Guard clauses | Valida e esci subito |
+| **CICLI** |
+| | `for` | Contatore preciso | `for(let i=0; i<n; i++)` |
+| | `while` | Condizione generica | `while(condition)` |
+| | `do...while` | Almeno una volta | Controlla dopo |
+| | `for...of` | Itera valori | Array, stringhe, iterabili |
+| | `for...in` | Itera chiavi | Oggetti (evitare per array) |
+| | `forEach` | Metodo array | `.forEach((el, i) => {})` |
+| | `break` | Esci dal ciclo | Ferma tutto |
+| | `continue` | Salta iterazione | Va al prossimo giro |
+| **FUNZIONI** |
+| | Dichiarazione | Classica | `function name() {}` |
+| | Espressione | Assegnata | `const fn = function() {}` |
+| | Arrow `=>` | Moderna concisa | `() => {}` |
+| | Parametri default | Valori fallback | `(x = 0) => {}` |
+| | Rest params | Argomenti variabili | `(...args) => {}` |
+| | Destrutturazione | Estrai proprietà | `({id, name}) => {}` |
+| | Return | Risultato e stop | Termina esecuzione |
+| **SCOPE** |
+| | Global | Ovunque | Fuori da tutto |
+| | Function | Dentro funzione | `var` o parametri |
+| | Block | Dentro `{}` | `let`/`const` |
+| | Scope chain | Ricerca nested | Interno → esterno |
+| | Closure | Accesso a scope padre | Funzioni annidate |
+| **DOM - SELEZIONE** |
+| | `querySelector` | CSS selector | `#id` `.class` `tag` |
+| | `getElementById` | Veloce per ID | Solo ID, no `#` |
+| | `querySelectorAll` | Tutti i match | Restituisce NodeList |
+| | `getElementsBy*` | Live collection | Si aggiorna automatica |
+| **DOM - MODIFICA** |
+| | `textContent` | Testo sicuro | Per input utente |
+| | `innerHTML` | HTML (attenzione!) | Solo contenuto trusted |
+| | `innerText` | Testo visibile | Rispetta CSS |
+| | `insertAdjacentHTML` | Inserimento preciso | 4 posizioni |
+| | `style.property` | Stili inline | `elem.style.color = "red"` |
+| | `classList` | Gestione classi | `.add()` `.remove()` `.toggle()` |
+| **EVENTI** |
+| | `onclick` | Un solo gestore | Semplice ma limitato |
+| | `addEventListener` | Multi gestore | Professionale |
+| | `removeEventListener` | Rimuovi listener | Serve stesso riferimento |
+| | Event object | Info evento | `e.target` `e.preventDefault()` |
+| | Event delegation | Un listener per molti | Sul parent, check target |
+| | Event bubbling | Propaga verso alto | Dal target al document |
+| | Event capturing | Propaga verso basso | Fase discesa (raro) |
+| **OGGETTI** |
+| | Notazione punto | Accesso diretto | `obj.prop` |
+| | Bracket notation | Accesso dinamico | `obj["prop"]` |
+| | `Object.keys()` | Array chiavi | `["key1", "key2"]` |
+| | `Object.values()` | Array valori | `[val1, val2]` |
+| | `Object.entries()` | Array coppie | `[[k,v], [k,v]]` |
+| | `Object.assign()` | Copia/merge | Shallow copy |
+| | `Object.freeze()` | Immutabile totale | No modifiche |
+| | `Object.seal()` | Struttura fissa | Modifica valori ok |
+| **ARRAY - MODIFICA** |
+| | `.push()` | Aggiungi fine | Ritorna length |
+| | `.pop()` | Rimuovi fine | Ritorna elemento |
+| | `.unshift()` | Aggiungi inizio | Ritorna length |
+| | `.shift()` | Rimuovi inizio | Ritorna elemento |
+| | `.splice()` | Swiss knife | Rimuovi/aggiungi ovunque |
+| | `.sort()` | Ordina (modifica!) | Serve comparatore numeri |
+| | `.reverse()` | Inverte (modifica!) | Cambia originale |
+| **ARRAY - NON MODIFICA** |
+| | `.filter()` | Filtra elementi | Nuovo array filtrato |
+| | `.map()` | Trasforma elementi | Nuovo array trasformato |
+| | `.reduce()` | Aggrega a valore | Somme, medie, etc |
+| | `.find()` | Primo che matcha | Elemento o undefined |
+| | `.findIndex()` | Indice primo match | Indice o -1 |
+| | `.includes()` | Contiene valore? | true/false |
+| | `.indexOf()` | Prima posizione | Indice o -1 |
+| | `.slice()` | Copia porzione | Non modifica originale |
+| | `.join()` | Array → stringa | Con separatore |
+| | `.some()` | Almeno uno? | true/false |
+| | `.every()` | Tutti? | true/false |
+| **SPREAD/REST** |
+| | Spread `...` | Espande elementi | `[...arr1, ...arr2]` |
+| | Rest `...` | Raccoglie argomenti | `function(...args)` |
+| | Object spread | Copia oggetti | `{...obj1, ...obj2}` |
+| **STORAGE** |
+| | localStorage | Permanente | Sopravvive refresh |
+| | sessionStorage | Temporaneo | Solo sessione |
+| | `.setItem()` | Salva | Solo stringhe! |
+| | `.getItem()` | Legge | Ritorna stringa o null |
+| | `.removeItem()` | Elimina chiave | Specifica |
+| | `.clear()` | Svuota tutto | Tutte le chiavi |
+| **REGEX** |
+| | `/pattern/` | Definizione | Tra slash |
+| | Flags | Modificatori | `g` `i` `m` `s` |
+| | `.test()` | Verifica match | true/false |
+| | `.match()` | Trova matches | Array o null |
+| | Character class `[]` | Uno di questi | `[aeiou]` |
+| | Quantifiers | Ripetizioni | `+` `*` `?` `{n,m}` |
+| | `\d` `\w` `\s` | Classi predefinite | Digit Word Space |
+| | Escape `\` | Letterale | `\.` per punto |
+| **TIMING** |
+| | `setTimeout()` | Ritarda esecuzione | Non blocca |
+| | `setInterval()` | Ripete periodico | Ogni X ms |
+| | `clearTimeout()` | Cancella timeout | Serve ID |
+| | `clearInterval()` | Ferma interval | Serve ID |
+| | `Date.now()` | Timestamp ms | Dal 1970 |
+| | `performance.now()` | Alta precisione | Per misurazioni |
+| **RICORSIONE** |
+| | Base case | Condizione stop | Previene infinito |
+| | Recursive case | Chiama se stessa | Input più piccolo |
+| | Call stack | Pila chiamate | LIFO |
+| | Stack overflow | Troppa ricorsione | Errore |
+| | Tail recursion | Ottimizzabile | Return diretto |
 | **PATTERN** |
-| | `this` | Biglietto visita | `onclick="f(this)"` |
-| | Object.freeze() | Immutabilità | `Object.freeze(obj)` |
-| | Date.now() | Timestamp | `Date.now()` |
-| | Pattern Cerca-Usa | Find poi usa | `find() + azione` |
-| **MODALI** |
-| | `showModal()` | Apri modale | `dialog.showModal()` |
-| | `close()` | Chiudi dialogo | `dialog.close("value")` |
+| | Guard clauses | Return early | Valida e esci |
+| | Accumulator | Costruisci risultato | Loop con aggregazione |
+| | Flag boolean | Interruttori stato | `isLoading` `hasError` |
+| | State variables | Traccia posizione | Stati form/game |
+| | Config object | Centralizza settings | Un oggetto per tutto |
+| | Single source truth | Stato centralizzato | Un posto solo |
+| | CRUD | Create Read Update Delete | Operazioni base |
+| | DRY | Don't Repeat Yourself | Riusa codice |
+| | Separation concerns | Una funzione = un task | Single responsibility |
+| **ERROR HANDLING** |
+| | `try-catch` | Gestione errori | Previeni crash |
+| | `finally` | Sempre eseguito | Pulizia |
+| | `throw` | Lancia errore | Personalizzato |
+| | Guard pattern | Controlla prima | Previeni errori |
+| **BEST PRACTICES** |
+| | camelCase | Variabili/funzioni | `myVariable` |
+| | PascalCase | Classi/costruttori | `MyClass` |
+| | UPPER_SNAKE | Costanti | `MAX_VALUE` |
+| | Commenti `//` | Singola linea | Note brevi |
+| | Commenti `/* */` | Multi linea | Blocchi |
+| | JSDoc `/** */` | Documentazione | Con `@param` |
+| | TODO FIXME NOTE | Tag organizzazione | Track lavoro |
+| | Semantic naming | Nomi descrittivi | `getUserById` |
+| | Testing incrementale | Console.log strategici | Debug step by step |
+
+---
