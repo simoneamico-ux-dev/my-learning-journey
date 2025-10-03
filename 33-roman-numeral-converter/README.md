@@ -106,7 +106,7 @@ While for input and button the Roboto font that follows modernity, has excellent
 
 ### Reflection
 
-Salvatore Sanfilippo taught me that comments are not a burden, but an art.
+Salvatore Sanfilippo taught me that comments are not a burden, but an art. Every technical choice has a reason, every discarded alternative has its why.
 Documenting this process is not wasting time, after all it led me to pass a certification project on the first attempt for the first time.
 
 ***
@@ -225,7 +225,8 @@ Mentre per input e button il font Roboto che segue modernità, ha ottima leggibi
 
 ### Riflessione
 
-Salvatore Sanfilippo mi ha insegnato che i commenti non sono un peso, ma un'arte. Ogni scelta tecnica ha una ragione, ogni alternativa scartata ha un perché. Documentare questo processo non è perdere tempo, d'altronde mi ha portato a superare per la prima volta un certification project al primo tentativo.
+Salvatore Sanfilippo mi ha insegnato che i commenti non sono un peso, ma un'arte. Ogni scelta tecnica ha una ragione, ogni alternativa scartata ha un perché.
+Documentare questo processo non è perdere tempo, d'altronde mi ha portato a superare per la prima volta un certification project al primo tentativo.
 
 ***
 
