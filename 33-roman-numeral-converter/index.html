@@ -1,0 +1,69 @@
+<!-- DESIGN 
+   ------
+   * This HTML is characterized by:
+   * - importing Roboto Slab and Roboto fonts from Google Fonts.
+   *   I chose these fonts because Roboto Slab has classic shapes
+   *   that evoke ancient Rome,
+   *   Roboto (for input and button) provides modernity, 
+   *   readability and consistency with Material Design 3
+   * - a div structure with exception of the card container, where
+   *   I chose <main> for semantic purposes
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Roman Numeral Converter</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="styles.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+
+        <!-- * freeCodeCamp instructions:
+             * - You should have an input element with an id of "number".
+             * - You should have a button element with an id of "convert-btn".
+             * - You should have a div, span or p element with an id of output. 
+             
+             * I'll create separate divs to allow me in CSS phase to position
+             * each component exactly as in Figma
+             
+             * I must remember to write "number" for type of input to restrict
+             * input to numeric characters, which is more efficient than using 
+             * regex in JavaScript
+             * I did some research and found out that input type="number" uses
+             * browser native validation operating with an underlying C/C++ engine,
+             * while regex is executed by the JavaScript interpreter.
+             * However, I still need to use JavaScript to avoid "e" and ","
+        -->
+        
+        <main id="card-container">
+            <div id="title-container">
+                <h1 id="first-h1">Roman Numeral <span id="second-h1">Converter</span></h1>
+            </div>
+            <div id="output-container">
+                <p id="output"></p>
+            </div>
+
+            <!-- * Adding min/max attributes provides defense in depth. 
+                 * Although this approach is typically used in more complex, 
+                 * cybersecurity scenarios, it provides a fallback in case JavaScript
+                 * rule validation fails or is disabled.
+            -->
+
+            <div id="input-container">
+                <input value="" type="number" name="arabic-number-input" class="number" id="number" placeholder="Enter a Number" min="1" max="3999" autocomplete="off">
+            </div>
+            <div id="convert-btn-container">
+                <button id="convert-btn">Convert</button>
+            </div>
+        </main>
+        
+        <script src="script.js"></script>
+    </body>
+
+</html>
