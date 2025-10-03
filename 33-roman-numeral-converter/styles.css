@@ -1,0 +1,271 @@
+/* DESIGN 
+   ------
+   * The structure I propose is a mix from Component-Based Architecture,
+   * Utility-First Variables and Flat Component Hierarchy, for this reason:
+   * - Component-Based Architecture because I organized it into components (card, 
+   *   title, output, input, button)
+   * - Utility-First Variables because all changes (almost) are centralized
+   *   in :root and organized as atomic terms (--button-width , --input-height).
+   *   This approach made it very quick to create the media query for mobile
+   * - Flat Component Hierarchy because the primary use of ID-based selectors
+   *   predominates
+*/
+
+
+:root {
+
+    /*  * I have an internal conflict:  follow DRY rule or add same property in
+        * all component which avoids the DRY rule? With the first approach I would
+        * guarantee for anyone to understand exactly which property to modify for
+        * each specific element
+    */
+
+
+    /* Background */
+
+    /* * When exporting the background I created in Figma (with Material 3 shapes 
+       * and Android logo), SVG was 56KB, PNG 175KB, and JPEG 441KB. 
+       * PNG is lighter than JPEG because geometric shapes and flat colors compress
+       * better with PNG's lossless algorithm, while JPEG is optimized for photographs
+       * with continuous gradients
+   */
+    --background-image: url("https://github.com/user-attachments/assets/a44f66ec-c760-4df1-8ac4-3afa104c4ebb");
+
+    /* Position */
+    --title-margin-top: 65px;
+    --output-margin-top: 150px;
+    --output-margin-top-alert-1: 134px;
+    --output-margin-top-alert-2: 138px;
+    --input-margin-top: 261px;
+    --button-margin-top: 349px;
+
+    /* Card */
+    --card-color: #13140D;
+    --card-size: 480px; /* perfect square, use it for width and height */
+    --card-border-radius: 28px;
+
+
+    /* title and output*/
+    --title-output-font-family: "Roboto Slab", sans-serif;
+    --title-output-font-color: #FFF;
+
+    /* title */
+    --title-font-size: 28px;
+    --title-font-weight: 400;
+    --title-font-color-secondary: #C7C8B9;
+
+
+    /* output */
+    --output-font-weight: 800;
+    --output-font-size: 48px;
+    --output-font-size-alert-1: 32px;
+    --output-font-size-alert-2: 28px;
+    --output-padding-alert: 0 48px;
+
+
+    /* input and button */
+    --input-button-font-family: "Roboto", sans-serif;
+    
+    /* input */
+    --input-font-weight: 400;
+    --input-font-size: 16px;
+    --input-width: 210px;
+    --input-height: 56px;
+    --input-border-radius: 4px 4px 0 0;
+    --input-box-color: #23241B;
+    --input-border-bottom: 2px solid #444830;
+    --input-border-bottom-active: 2px solid #71774f;
+    --input-font-color: #CED2B3;
+    
+
+    /* button */
+    --button-font-size: 18px;
+    --button-font-weight: 500;
+    --button-font-weight-active: 400;
+    --button-width: 156px;
+    --button-height: 56px;
+    --button-border-radius: 28px;
+    --button-font-color: #2B3400;
+    --button-box-color: #BFCD7F;
+    --button-box-color-hover: #CFDD8B;
+    --button-border-radius-active: 16px;
+}
+
+
+body {
+    background-image: var(--background-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+#card-container {
+    background-color: var(--card-color);
+    width: var(--card-size);
+    height: var(--card-size);
+    border-radius: var(--card-border-radius);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+#title-container {
+    margin-top: var(--title-margin-top);
+    position: absolute;
+}
+
+h1, #output {
+    font-family: var(--title-output-font-family);
+}
+
+#first-h1, #output {
+    color: var(--title-output-font-color);
+}
+
+h1 {
+    margin: 0;
+    font-size: var(--title-font-size);
+    font-weight: var(--title-font-weight);
+}
+
+#second-h1 {
+    color: var(--title-font-color-secondary);
+}
+
+#output-container {
+    position: absolute;
+}
+
+#output {
+    margin: 0;
+    margin-top: var(--output-margin-top);
+    font-weight: var(--output-font-weight);
+    font-size: var(--output-font-size);
+    color: var(--title-output-font-color);
+}
+
+#output.empty {
+    color: var(--title-font-color-secondary);
+}
+
+#output.alert-1, #output.alert-2 {
+    padding: var(--output-padding-alert);
+    color: var(--title-output-font-color);
+}
+
+#output.alert-1 {
+    margin-top: var(--output-margin-top-alert-1);
+    font-size: var(--output-font-size-alert-1);
+}
+
+#output.alert-2 {
+    margin-top: var(--output-margin-top-alert-2);
+    font-size: var(--output-font-size-alert-2);
+}
+
+#input-container {
+    margin-top: var(--input-margin-top);
+    position: absolute;
+}
+
+#number, #convert-btn {
+    font-family: var(--input-button-font-family);
+}
+
+#number {
+    width: var(--input-width);
+    height: var(--input-height);
+    box-sizing: border-box;
+    font-weight: var(--input-font-weight);
+    font-size: var(--input-font-size);
+    text-align: center;
+    color: var(--input-font-color);
+    border-radius: var(--input-border-radius);
+    background-color: var(--input-box-color);
+    border: none;
+    border-bottom: var(--input-border-bottom);
+    outline: none;
+    transition: border-bottom-color 0.15s ease;
+}
+
+#number::placeholder {
+    color: #ced2b36b;
+}
+
+#number:focus {
+    border-bottom: var(--input-border-bottom-active);
+}
+
+
+#convert-btn-container {
+    margin-top: var(--button-margin-top);
+    position: absolute;
+}
+
+#convert-btn {
+    width: var(--button-width);
+    height: var(--button-height);
+    border: none;
+    font-weight: var(--button-font-weight);
+    font-size: var(--button-font-size);
+    color: var(--button-font-color);
+    border-radius: var(--button-border-radius);
+    background-color: var(--button-box-color);
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+#convert-btn:hover {
+    background-color: var(--button-box-color-hover);
+}
+
+#convert-btn:active {
+    border-radius: var(--button-border-radius-active);
+    font-weight: var(--button-font-weight-active);
+}
+
+@media (max-width: 768px) {
+    :root {
+
+    /* Position */
+    --title-margin-top: 51px;
+    --output-margin-top: 117px;
+    --output-margin-top-alert-1: 103px;
+    --output-margin-top-alert-2: 107px;
+    --input-margin-top: 199px;
+    --button-margin-top: 265px;
+
+    /* Card */
+    --card-size: 360px; /* perfect square, use it for width and height */
+    --card-border-radius: 21px;
+
+    /* title */
+    --title-font-size: 20px;
+
+    /* output */
+    --output-font-size: 32px;
+    --output-font-size-alert-1: 24px;
+    --output-font-size-alert-2: 20px;
+    
+    /* input */
+    --input-font-size: 14px;
+    --input-width: 157px;
+    --input-height: 42px;
+    --input-border-radius: 3px 3px 0 0;
+    
+
+    /* button */
+    --button-font-size: 16px;
+    --button-width: 117px;
+    --button-height: 42px;
+    --button-border-radius: 21px;
+    --button-border-radius-active: 9px;
+
+    }
+}
