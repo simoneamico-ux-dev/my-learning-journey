@@ -1,0 +1,809 @@
+<!-- ===== ENGLISH VERSION ===== -->
+
+<!DOCTYPE html>
+<!-- 🎯 HTML5 DECLARATION: "Welcome to the world of anti-spam filters!" -->
+<!-- It's like building a digital detective that recognizes suspicious messages! 🕵️ -->
+
+<html lang="en">
+<!-- 🌍 MAIN CONTAINER: Our spam analysis laboratory -->
+<!-- lang="en" = English, the language of regex and coding! 💻 -->
+
+  <head>
+    <!-- 🧠 THE COMMAND CENTER: Where we program our smart filter -->
+    <!-- It's like the brain of our anti-spam detective! -->
+    
+    <meta charset="UTF-8" />
+    <!-- 📝 UNIVERSAL CHARACTERS: UTF-8 to analyze texts in all languages! 🌐 -->
+    
+    <meta name="viewport" content="width=device-width" />
+    <!-- 📱 RESPONSIVE DESIGN: Adapts to every screen -->
+    <!-- width=device-width = device width, without initial-scale -->
+    
+    <title>Learn Regular Expressions by Building a Spam Filter</title>
+    <!-- 📑 TITLE: Our educational project on regex! -->
+    
+    <style>
+      /* 🎨 ===== UNIVERSAL RESET: Total Cleanup! ===== */
+      
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        /* 📦 BORDER-BOX: Includes padding and borders in dimensions */
+        
+        margin: 0;
+        padding: 0;
+        /* 🚫 ZERO SPACES: Complete reset for total control */
+      }
+      
+      /* 🎨 ===== CSS VARIABLES: The Color Palette ===== */
+      
+      :root {
+        /* 🌑 DARK THEME WITH GOLDEN ACCENTS */
+        
+        --dark-grey: #1b1b32;
+        /* ⚫ DARK GREY: Main background, almost black */
+        
+        --light-grey: #f5f6f7;
+        /* ⚪ LIGHT GREY: For texts, great contrast */
+        
+        --golden-yellow: #fecc4c;
+        /* 🟡 GOLDEN YELLOW: Bright primary color */
+        
+        --yellow: #ffcc4c;
+        /* 💛 PURE YELLOW: Slightly different for gradients */
+        
+        --gold: #feac32;
+        /* 🥇 GOLD: Main button color */
+        
+        --orange: #ffac33;
+        /* 🟠 ORANGE: For gradients and transitions */
+        
+        --dark-orange: #f89808;
+        /* 🔶 DARK ORANGE: For hover effects */
+      }
+      
+      /* 🎨 ===== BODY STYLES ===== */
+      
+      body {
+        background-color: var(--dark-grey);
+        /* 🌑 DARK BACKGROUND: Using the CSS variable */
+        
+        color: var(--light-grey);
+        /* ⚪ LIGHT TEXT: High contrast for readability */
+      }
+      
+      body,
+      #message-input:placeholder-shown {
+        text-align: center;
+        /* ⚖️ CENTERING: Everything centered for elegance */
+        /* :placeholder-shown = when placeholder is visible */
+        /* Multiple selector with comma! */
+      }
+      
+      /* 📝 ===== TEXTAREA ===== */
+      
+      textarea {
+        max-width: 90%;
+        /* 📏 MAXIMUM WIDTH: 90% to not touch edges */
+        /* Natural responsive without media queries! */
+      }
+      
+      /* 📄 ===== MAIN TEXTS ===== */
+      
+      .main-text {
+        margin: 25px 0;
+        /* 🌬️ VERTICAL MARGINS: Breathing room above and below */
+      }
+      
+      .title {
+        font-size: 2.5rem;
+        /* 📏 BIG TITLE: 2.5rem = about 40px */
+        /* rem = relative to root font-size */
+      }
+      
+      .description {
+        margin-top: 15px;
+        /* ⬆️ SPACE ABOVE: Separates from title */
+        
+        font-size: 1.4rem;
+        /* 📏 SUBTITLE: Smaller but readable */
+      }
+      
+      /* 🏷️ ===== LABEL AND INPUT ===== */
+      
+      .message-label {
+        display: block;
+        /* 📦 BLOCK: Goes to new line from input */
+        
+        margin-bottom: 20px;
+        /* ⬇️ SPACE BELOW: Before textarea */
+        
+        font-size: 1.5rem;
+        /* 📏 SIZE: Well visible */
+      }
+      
+      #message-input:placeholder-shown,
+      textarea {
+        font-size: 1.1rem;
+        /* 📝 INPUT TEXT: Slightly larger than normal */
+        /* Two selectors to be sure! */
+      }
+      
+      /* 🔘 ===== BUTTON ===== */
+      
+      .btn {
+        display: block;
+        /* 📦 BLOCK: On its own line */
+        
+        cursor: pointer;
+        /* 👆 POINTER: Indicates it's clickable */
+        
+        width: 200px;
+        /* 📏 FIXED WIDTH: Always 200px */
+        
+        margin: 10px auto;
+        /* ⚖️ CENTERING: auto on sides = centered */
+        
+        color: var(--dark-grey);
+        /* ⚫ DARK TEXT: On light background */
+        
+        background-color: var(--gold);
+        /* 🥇 GOLD BACKGROUND: Base color */
+        
+        background-image: linear-gradient(var(--golden-yellow), var(--orange));
+        /* 🌅 GRADIENT: From golden yellow to orange */
+        /* Subtle 3D effect! */
+        
+        border-color: var(--gold);
+        /* 🔲 BORDER: Same color as background */
+        
+        border-width: 3px;
+        /* 📏 BORDER THICKNESS: Well visible */
+      }
+      
+      .btn:hover {
+        background-image: linear-gradient(var(--yellow), var(--dark-orange));
+        /* 🔥 HOVER: More intense gradient! */
+        /* From yellow to dark orange */
+        /* Immediate visual feedback */
+      }
+      
+      /* 📊 ===== RESULT ===== */
+      
+      #result {
+        font-size: 2rem;
+        /* 📏 LARGE TEXT: For spam/no spam verdict */
+        
+        margin: 20px 0;
+        /* 🌬️ SPACE: Above and below */
+      }
+      
+      /* 🦶 ===== FOOTER ===== */
+      
+      .footer {
+        margin-top: 10px;
+        /* ⬆️ SMALL SPACE: Separates from content */
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- 🕵️ ===== THE ANTI-SPAM FILTER COMES TO LIFE! ===== -->
+    
+    <header class="main-text">
+      <!-- 📰 HEADER: Title and instructions -->
+      
+      <h1 class="title">Is this Spam?</h1>
+      <!-- 🔍 MAIN QUESTION: Direct and clear -->
+      
+      <p class="description">
+        Enter a phrase to check if it would be marked as spam or not.
+      </p>
+      <!-- 📝 INSTRUCTIONS: Explains what to do -->
+    </header>
+
+    <main>
+      <!-- 📄 MAIN CONTENT: The filter interface -->
+      
+      <label class="message-label" for="message-input">Message: </label>
+      <!-- 🏷️ LABEL: Connected to input via for="id" -->
+      
+      <textarea
+        placeholder="Enter message here"
+        value=""
+        type="text"
+        name="message"
+        id="message-input"
+        rows="10"
+        cols="40"
+      ></textarea>
+      <!-- 📝 TEXT AREA: For long messages -->
+      <!-- placeholder = hint text -->
+      <!-- rows="10" = 10 rows height -->
+      <!-- cols="40" = 40 columns width -->
+      <!-- type="text" not needed for textarea but doesn't hurt -->
+      
+      <button class="btn" id="check-message-btn" type="button">
+        Check message
+      </button>
+      <!-- 🔘 BUTTON: type="button" prevents accidental submits -->
+      
+      <p id="result"></p>
+      <!-- 📊 RESULT: Initially empty, filled by JS -->
+    </main>
+
+    <footer class="footer">&copy; freeCodeCamp</footer>
+    <!-- 🦶 FOOTER: Copyright with HTML entity &copy; -->
+    
+    <script>
+      /* 🧠 ===== JAVASCRIPT: The Brain of the Anti-Spam Filter! ===== */
+      
+      const messageInput = document.getElementById("message-input");
+      /* 📝 TEXTAREA REFERENCE: We capture the element where user types */
+      /* document.getElementById() = finds element by ID */
+      /* const = constant, won't change */
+      
+      const result = document.getElementById("result");
+      /* 📊 RESULT REFERENCE: Where we'll show spam/no spam */
+      
+      const checkMessageButton = document.getElementById("check-message-btn");
+      /* 🔘 BUTTON REFERENCE: To attach the event listener */
+      
+      /* 🔍 ===== THE REGEX: Patterns to Search For ===== */
+      /* RegEx = Regular Expression */
+      /* They're patterns to search text intelligently! */
+      
+      const helpRegex = /please help|assist me/i;
+      /* 🆘 HELP REQUESTS: Spam often fakes emergencies */
+      /* /pattern/i = i flag means case-insensitive */
+      /* | = logical OR, finds "please help" OR "assist me" */
+      /* Typical spam: "Please help me transfer money!" */
+      
+      const dollarRegex = /[0-9]+\s*(?:hundred|thousand|million|billion)?\s+dollars/i;
+      /* 💰 MONEY MENTIONS: Complex pattern! */
+      /* [0-9]+ = one or more numbers */
+      /* \s* = zero or more spaces */
+      /* (?:...) = non-capturing group */
+      /* hundred|thousand|million|billion = number scales */
+      /* ? = optional (may or may not be there) */
+      /* \s+ = one or more spaces */
+      /* Finds: "5 million dollars", "100 dollars", "50thousand dollars" */
+      
+      const freeRegex = /(?:^|\s)fr[e3][e3] m[o0]n[e3]y(?:$|\s)/i;
+      /* 🎁 FREE MONEY: With leet speak variants! */
+      /* (?:^|\s) = start of string OR space (word boundary) */
+      /* [e3] = 'e' OR '3' (leet speak) */
+      /* [o0] = 'o' OR '0' (zero) */
+      /* (?:$|\s) = end of string OR space */
+      /* Finds: "free money", "fr33 m0n3y", "FREE MON3Y" */
+      
+      const stockRegex = /(?:^|\s)[s5][t7][o0][c{[(]k [a@4]l[e3]r[t7](?:$|\s)/i;
+      /* 📈 STOCK ALERT: Super leet speak! */
+      /* [s5] = 's' OR '5' */
+      /* [t7] = 't' OR '7' */
+      /* [c{[(] = 'c', '{', '[' or '(' */
+      /* [a@4] = 'a', '@' or '4' */
+      /* Finds: "stock alert", "5t0ck @l3rt", "S7O{K AL3R7" */
+      
+      const dearRegex = /(?:^|\s)d[e3][a@4]r fr[i1|][e3]nd(?:$|\s)/i;
+      /* 👋 DEAR FRIEND: Classic spam beginning */
+      /* [i1|] = 'i', '1' or '|' (pipe) */
+      /* Finds: "dear friend", "d3@r fr|3nd", "DEAR FR1END" */
+      
+      /* 🚫 ===== BLACK LIST: All Spam Patterns ===== */
+      
+      const denyList = [helpRegex, dollarRegex, freeRegex, stockRegex, dearRegex];
+      /* 📋 REGEX ARRAY: All patterns in an array */
+      /* Easier to manage and extend */
+      
+      /* 🔍 ===== SPAM CHECK FUNCTION ===== */
+      
+      const isSpam = (msg) => denyList.some((regex) => regex.test(msg));
+      /* 🧮 ARROW FUNCTION: Modern and concise syntax */
+      /* (msg) => ... is like function(msg) { return ... } */
+      /* .some() = returns true if AT LEAST ONE element satisfies the condition */
+      /* regex.test(msg) = tests if pattern matches the message */
+      /* In practice: "It's spam if ANY pattern is found" */
+      
+      /* 🎯 ===== EVENT LISTENER: The Heart of the App ===== */
+      
+      checkMessageButton.addEventListener("click", () => {
+        /* 🖱️ LISTEN FOR CLICK: When user presses the button */
+        /* Anonymous arrow function as callback */
+        
+        if (messageInput.value === "") {
+          /* ❌ VALIDATION: Check if field is empty */
+          /* .value = the text inside textarea */
+          /* === strict comparison (type and value) */
+          
+          alert("Please enter a message.");
+          /* 🚨 ALERT: Warning popup */
+          /* Old school method but effective */
+          
+          return;
+          /* 🛑 STOP: Exits function, doesn't continue */
+        }
+      
+        result.textContent = isSpam(messageInput.value)
+          ? "Oh no! This looks like a spam message."
+          : "This message does not seem to contain any spam.";
+        /* 🎯 TERNARY OPERATOR: if/else in one line! */
+        /* condition ? if_true : if_false */
+        /* textContent = changes paragraph text */
+        /* If isSpam() returns true → spam message */
+        /* If isSpam() returns false → clean message */
+        
+        messageInput.value = "";
+        /* 🧹 CLEANUP: Empties textarea after check */
+        /* UX touch: ready for next test */
+      });
+    </script>
+  </body>
+</html>
+
+<!-- 🎯 ===== SPAM FILTER SUMMARY ===== -->
+<!-- 
+🕵️ SPAM FILTER ARCHITECTURE:
+│
+├── 🧠 HEAD (setup and styles)
+│   └── 🎨 CSS with:
+│       ├── 🎨 7 color variables (dark theme + gold)
+│       ├── 🌅 Gradients for 3D effects on buttons
+│       ├── 📱 Responsive design with max-width
+│       └── 🎯 Elegant centering
+│
+├── 📄 BODY (interface)
+│   ├── 📰 Header (title + description)
+│   ├── 📝 Main
+│   │   ├── 🏷️ Label
+│   │   ├── 📝 Textarea (10x40)
+│   │   ├── 🔘 Button (with gradient)
+│   │   └── 📊 Result (initially empty)
+│   └── 🦶 Footer (copyright)
+│
+└── 🧠 JAVASCRIPT (the logic)
+    ├── 🔗 3 DOM references
+    ├── 🔍 5 RegEx patterns
+    │   ├── Help requests
+    │   ├── Dollar amounts
+    │   ├── Free money (leet)
+    │   ├── Stock alerts (leet)
+    │   └── Dear friend (leet)
+    ├── 🚫 denyList array
+    ├── 🧮 isSpam() with .some()
+    └── 🖱️ Event listener with validation
+
+🎯 KEY JAVASCRIPT CONCEPTS:
+├── 📦 const vs let
+├── 🔍 Regular Expressions with flags
+├── 📋 Array methods (.some())
+├── ➡️ Arrow functions
+├── 🎯 Ternary operator
+├── 🖱️ Event listeners
+└── 🧹 DOM manipulation
+
+💡 REGEX FEATURES:
+├── | = OR operator
+├── [abc] = character class
+├── + = one or more
+├── * = zero or more
+├── ? = optional
+├── \s = space
+├── (?:) = non-capturing group
+├── ^ and $ = start/end of string
+└── /i = case insensitive
+
+It's like having a digital detective that knows how to recognize spammers' tricks! 🕵️✨
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ===== ITALIAN VERSION ===== -->
+
+<!DOCTYPE html>
+<!-- 🎯 DICHIARAZIONE HTML5: "Benvenuti nel mondo dei filtri anti-spam!" -->
+<!-- È come costruire un detective digitale che riconosce i messaggi sospetti! 🕵️ -->
+
+<html lang="en">
+<!-- 🌍 CONTENITORE PRINCIPALE: Il nostro laboratorio di analisi spam -->
+<!-- lang="en" = inglese, la lingua dei regex e del coding! 💻 -->
+
+  <head>
+    <!-- 🧠 IL CENTRO DI COMANDO: Dove programmiamo il nostro filtro intelligente -->
+    <!-- È come il cervello del nostro detective anti-spam! -->
+    
+    <meta charset="UTF-8" />
+    <!-- 📝 CARATTERI UNIVERSALI: UTF-8 per analizzare testi in tutte le lingue! 🌐 -->
+    
+    <meta name="viewport" content="width=device-width" />
+    <!-- 📱 DESIGN RESPONSIVE: Si adatta a ogni schermo -->
+    <!-- width=device-width = larghezza del dispositivo, senza initial-scale -->
+    
+    <title>Learn Regular Expressions by Building a Spam Filter</title>
+    <!-- 📑 TITOLO: Il nostro progetto educativo sui regex! -->
+    
+    <style>
+      /* 🎨 ===== RESET UNIVERSALE: Pulizia Totale! ===== */
+      
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        /* 📦 BORDER-BOX: Include padding e bordi nelle dimensioni */
+        
+        margin: 0;
+        padding: 0;
+        /* 🚫 ZERO SPAZI: Reset completo per controllo totale */
+      }
+      
+      /* 🎨 ===== VARIABILI CSS: La Palette dei Colori ===== */
+      
+      :root {
+        /* 🌑 TEMA SCURO CON ACCENTI DORATI */
+        
+        --dark-grey: #1b1b32;
+        /* ⚫ GRIGIO SCURO: Sfondo principale, quasi nero */
+        
+        --light-grey: #f5f6f7;
+        /* ⚪ GRIGIO CHIARO: Per i testi, ottimo contrasto */
+        
+        --golden-yellow: #fecc4c;
+        /* 🟡 GIALLO DORATO: Colore primario brillante */
+        
+        --yellow: #ffcc4c;
+        /* 💛 GIALLO PURO: Leggermente diverso per sfumature */
+        
+        --gold: #feac32;
+        /* 🥇 ORO: Colore principale dei bottoni */
+        
+        --orange: #ffac33;
+        /* 🟠 ARANCIONE: Per gradienti e transizioni */
+        
+        --dark-orange: #f89808;
+        /* 🔶 ARANCIONE SCURO: Per effetti hover */
+      }
+      
+      /* 🎨 ===== STILI DEL BODY ===== */
+      
+      body {
+        background-color: var(--dark-grey);
+        /* 🌑 SFONDO SCURO: Usando la variabile CSS */
+        
+        color: var(--light-grey);
+        /* ⚪ TESTO CHIARO: Alto contrasto per leggibilità */
+      }
+      
+      body,
+      #message-input:placeholder-shown {
+        text-align: center;
+        /* ⚖️ CENTRATURA: Tutto centrato per eleganza */
+        /* :placeholder-shown = quando il placeholder è visibile */
+        /* Selettore multiplo con virgola! */
+      }
+      
+      /* 📝 ===== TEXTAREA ===== */
+      
+      textarea {
+        max-width: 90%;
+        /* 📏 LARGHEZZA MASSIMA: 90% per non toccare i bordi */
+        /* Responsive naturale senza media query! */
+      }
+      
+      /* 📄 ===== TESTI PRINCIPALI ===== */
+      
+      .main-text {
+        margin: 25px 0;
+        /* 🌬️ MARGINI VERTICALI: Respiro sopra e sotto */
+      }
+      
+      .title {
+        font-size: 2.5rem;
+        /* 📏 TITOLO GRANDE: 2.5rem = circa 40px */
+        /* rem = relativo al font-size root */
+      }
+      
+      .description {
+        margin-top: 15px;
+        /* ⬆️ SPAZIO SOPRA: Separa dal titolo */
+        
+        font-size: 1.4rem;
+        /* 📏 SOTTOTITOLO: Più piccolo ma leggibile */
+      }
+      
+      /* 🏷️ ===== LABEL E INPUT ===== */
+      
+      .message-label {
+        display: block;
+        /* 📦 BLOCCO: Va a capo rispetto all'input */
+        
+        margin-bottom: 20px;
+        /* ⬇️ SPAZIO SOTTO: Prima della textarea */
+        
+        font-size: 1.5rem;
+        /* 📏 DIMENSIONE: Ben visibile */
+      }
+      
+      #message-input:placeholder-shown,
+      textarea {
+        font-size: 1.1rem;
+        /* 📝 TESTO INPUT: Leggermente più grande del normale */
+        /* Due selettori per essere sicuri! */
+      }
+      
+      /* 🔘 ===== BOTTONE ===== */
+      
+      .btn {
+        display: block;
+        /* 📦 BLOCCO: Su una riga propria */
+        
+        cursor: pointer;
+        /* 👆 MANINA: Indica che è cliccabile */
+        
+        width: 200px;
+        /* 📏 LARGHEZZA FISSA: 200px sempre */
+        
+        margin: 10px auto;
+        /* ⚖️ CENTRATURA: auto ai lati = centrato */
+        
+        color: var(--dark-grey);
+        /* ⚫ TESTO SCURO: Su sfondo chiaro */
+        
+        background-color: var(--gold);
+        /* 🥇 SFONDO ORO: Colore base */
+        
+        background-image: linear-gradient(var(--golden-yellow), var(--orange));
+        /* 🌅 GRADIENTE: Dal giallo dorato all'arancione */
+        /* Effetto 3D sottile! */
+        
+        border-color: var(--gold);
+        /* 🔲 BORDO: Stesso colore dello sfondo */
+        
+        border-width: 3px;
+        /* 📏 SPESSORE BORDO: Ben visibile */
+      }
+      
+      .btn:hover {
+        background-image: linear-gradient(var(--yellow), var(--dark-orange));
+        /* 🔥 HOVER: Gradiente più intenso! */
+        /* Dal giallo all'arancione scuro */
+        /* Feedback visivo immediato */
+      }
+      
+      /* 📊 ===== RISULTATO ===== */
+      
+      #result {
+        font-size: 2rem;
+        /* 📏 TESTO GRANDE: Per il verdetto spam/no spam */
+        
+        margin: 20px 0;
+        /* 🌬️ SPAZIO: Sopra e sotto */
+      }
+      
+      /* 🦶 ===== FOOTER ===== */
+      
+      .footer {
+        margin-top: 10px;
+        /* ⬆️ PICCOLO SPAZIO: Separa dal contenuto */
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- 🕵️ ===== IL FILTRO ANTI-SPAM PRENDE VITA! ===== -->
+    
+    <header class="main-text">
+      <!-- 📰 INTESTAZIONE: Titolo e istruzioni -->
+      
+      <h1 class="title">Is this Spam?</h1>
+      <!-- 🔍 DOMANDA PRINCIPALE: Diretta e chiara -->
+      
+      <p class="description">
+        Enter a phrase to check if it would be marked as spam or not.
+      </p>
+      <!-- 📝 ISTRUZIONI: Spiega cosa fare -->
+    </header>
+
+    <main>
+      <!-- 📄 CONTENUTO PRINCIPALE: L'interfaccia del filtro -->
+      
+      <label class="message-label" for="message-input">Message: </label>
+      <!-- 🏷️ ETICHETTA: Collegata all'input tramite for="id" -->
+      
+      <textarea
+        placeholder="Enter message here"
+        value=""
+        type="text"
+        name="message"
+        id="message-input"
+        rows="10"
+        cols="40"
+      ></textarea>
+      <!-- 📝 AREA TESTO: Per messaggi lunghi -->
+      <!-- placeholder = testo di suggerimento -->
+      <!-- rows="10" = 10 righe di altezza -->
+      <!-- cols="40" = 40 colonne di larghezza -->
+      <!-- type="text" non serve per textarea ma non fa male -->
+      
+      <button class="btn" id="check-message-btn" type="button">
+        Check message
+      </button>
+      <!-- 🔘 BOTTONE: type="button" previene submit accidentali -->
+      
+      <p id="result"></p>
+      <!-- 📊 RISULTATO: Inizialmente vuoto, riempito da JS -->
+    </main>
+
+    <footer class="footer">&copy; freeCodeCamp</footer>
+    <!-- 🦶 FOOTER: Copyright con entity HTML &copy; -->
+    
+    <script>
+      /* 🧠 ===== JAVASCRIPT: Il Cervello del Filtro Anti-Spam! ===== */
+      
+      const messageInput = document.getElementById("message-input");
+      /* 📝 RIFERIMENTO TEXTAREA: Catturiamo l'elemento dove l'utente scrive */
+      /* document.getElementById() = trova elemento per ID */
+      /* const = costante, non cambierà */
+      
+      const result = document.getElementById("result");
+      /* 📊 RIFERIMENTO RISULTATO: Dove mostreremo spam/no spam */
+      
+      const checkMessageButton = document.getElementById("check-message-btn");
+      /* 🔘 RIFERIMENTO BOTTONE: Per attaccare l'event listener */
+      
+      /* 🔍 ===== LE REGEX: I Pattern da Cercare ===== */
+      /* RegEx = Regular Expression = Espressioni Regolari */
+      /* Sono pattern per cercare testo in modo intelligente! */
+      
+      const helpRegex = /please help|assist me/i;
+      /* 🆘 RICHIESTE D'AIUTO: Spam spesso finge emergenze */
+      /* /pattern/i = i flag significa case-insensitive */
+      /* | = OR logico, trova "please help" O "assist me" */
+      /* Spam tipico: "Please help me transfer money!" */
+      
+      const dollarRegex = /[0-9]+\s*(?:hundred|thousand|million|billion)?\s+dollars/i;
+      /* 💰 MENZIONI DI SOLDI: Pattern complesso! */
+      /* [0-9]+ = uno o più numeri */
+      /* \s* = zero o più spazi */
+      /* (?:...) = gruppo non catturante */
+      /* hundred|thousand|million|billion = scale numeriche */
+      /* ? = opzionale (può esserci o no) */
+      /* \s+ = uno o più spazi */
+      /* Trova: "5 million dollars", "100 dollars", "50thousand dollars" */
+      
+      const freeRegex = /(?:^|\s)fr[e3][e3] m[o0]n[e3]y(?:$|\s)/i;
+      /* 🎁 FREE MONEY: Con varianti leet speak! */
+      /* (?:^|\s) = inizio stringa O spazio (word boundary) */
+      /* [e3] = 'e' O '3' (leet speak) */
+      /* [o0] = 'o' O '0' (zero) */
+      /* (?:$|\s) = fine stringa O spazio */
+      /* Trova: "free money", "fr33 m0n3y", "FREE MON3Y" */
+      
+      const stockRegex = /(?:^|\s)[s5][t7][o0][c{[(]k [a@4]l[e3]r[t7](?:$|\s)/i;
+      /* 📈 STOCK ALERT: Super leet speak! */
+      /* [s5] = 's' O '5' */
+      /* [t7] = 't' O '7' */
+      /* [c{[(] = 'c', '{', '[' o '(' */
+      /* [a@4] = 'a', '@' o '4' */
+      /* Trova: "stock alert", "5t0ck @l3rt", "S7O{K AL3R7" */
+      
+      const dearRegex = /(?:^|\s)d[e3][a@4]r fr[i1|][e3]nd(?:$|\s)/i;
+      /* 👋 DEAR FRIEND: Classico inizio spam */
+      /* [i1|] = 'i', '1' o '|' (pipe) */
+      /* Trova: "dear friend", "d3@r fr|3nd", "DEAR FR1END" */
+      
+      /* 🚫 ===== LISTA NERA: Tutti i Pattern Spam ===== */
+      
+      const denyList = [helpRegex, dollarRegex, freeRegex, stockRegex, dearRegex];
+      /* 📋 ARRAY DI REGEX: Tutti i pattern in un array */
+      /* Più facile da gestire e estendere */
+      
+      /* 🔍 ===== FUNZIONE DI CONTROLLO SPAM ===== */
+      
+      const isSpam = (msg) => denyList.some((regex) => regex.test(msg));
+      /* 🧮 ARROW FUNCTION: Sintassi moderna e concisa */
+      /* (msg) => ... è come function(msg) { return ... } */
+      /* .some() = torna true se ALMENO UN elemento soddisfa la condizione */
+      /* regex.test(msg) = testa se il pattern matcha il messaggio */
+      /* In pratica: "È spam se QUALSIASI pattern viene trovato" */
+      
+      /* 🎯 ===== EVENT LISTENER: Il Cuore dell'App ===== */
+      
+      checkMessageButton.addEventListener("click", () => {
+        /* 🖱️ ASCOLTA IL CLICK: Quando l'utente preme il bottone */
+        /* Arrow function anonima come callback */
+        
+        if (messageInput.value === "") {
+          /* ❌ VALIDAZIONE: Controlla se il campo è vuoto */
+          /* .value = il testo dentro la textarea */
+          /* === confronto strict (tipo e valore) */
+          
+          alert("Please enter a message.");
+          /* 🚨 ALERT: Popup di avviso */
+          /* Metodo old school ma efficace */
+          
+          return;
+          /* 🛑 STOP: Esce dalla funzione, non continua */
+        }
+      
+        result.textContent = isSpam(messageInput.value)
+          ? "Oh no! This looks like a spam message."
+          : "This message does not seem to contain any spam.";
+        /* 🎯 OPERATORE TERNARIO: if/else in una riga! */
+        /* condizione ? se_vero : se_falso */
+        /* textContent = cambia il testo del paragrafo */
+        /* Se isSpam() ritorna true → messaggio spam */
+        /* Se isSpam() ritorna false → messaggio pulito */
+        
+        messageInput.value = "";
+        /* 🧹 PULIZIA: Svuota la textarea dopo il check */
+        /* UX touch: ready per il prossimo test */
+      });
+    </script>
+  </body>
+</html>
+
+<!-- 🎯 ===== RIASSUNTO DEL FILTRO ANTI-SPAM ===== -->
+<!-- 
+🕵️ ARCHITETTURA DELLO SPAM FILTER:
+│
+├── 🧠 HEAD (setup e stili)
+│   └── 🎨 CSS con:
+│       ├── 🎨 7 variabili colore (tema dark + gold)
+│       ├── 🌅 Gradienti per effetti 3D sui bottoni
+│       ├── 📱 Design responsive con max-width
+│       └── 🎯 Centratura elegante
+│
+├── 📄 BODY (interfaccia)
+│   ├── 📰 Header (titolo + descrizione)
+│   ├── 📝 Main
+│   │   ├── 🏷️ Label
+│   │   ├── 📝 Textarea (10x40)
+│   │   ├── 🔘 Button (con gradiente)
+│   │   └── 📊 Risultato (inizialmente vuoto)
+│   └── 🦶 Footer (copyright)
+│
+└── 🧠 JAVASCRIPT (la logica)
+    ├── 🔗 3 riferimenti DOM
+    ├── 🔍 5 RegEx patterns
+    │   ├── Help requests
+    │   ├── Dollar amounts
+    │   ├── Free money (leet)
+    │   ├── Stock alerts (leet)
+    │   └── Dear friend (leet)
+    ├── 🚫 denyList array
+    ├── 🧮 isSpam() con .some()
+    └── 🖱️ Event listener con validazione
+
+🎯 CONCETTI JAVASCRIPT CHIAVE:
+├── 📦 const vs let
+├── 🔍 Regular Expressions con flag
+├── 📋 Array methods (.some())
+├── ➡️ Arrow functions
+├── 🎯 Ternary operator
+├── 🖱️ Event listeners
+└── 🧹 DOM manipulation
+
+💡 CARATTERISTICHE DELLE REGEX:
+├── | = OR operator
+├── [abc] = character class
+├── + = uno o più
+├── * = zero o più
+├── ? = opzionale
+├── \s = spazio
+├── (?:) = non-capturing group
+├── ^ e $ = inizio/fine stringa
+└── /i = case insensitive
+
+È come avere un detective digitale che sa riconoscere i trucchi degli spammer! 🕵️✨
+-->
