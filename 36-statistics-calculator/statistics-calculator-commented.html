@@ -1,0 +1,870 @@
+<!-- ===== ENGLISH VERSION ===== -->
+
+<!DOCTYPE html>
+<!-- 🎯 HTML5 DECLARATION: "Welcome to the statistics laboratory!" -->
+<!-- It's like opening the doors of a mathematical calculation center! 📊 -->
+
+<html lang="en">
+<!-- 🌍 MAIN CONTAINER: Our statistical calculator -->
+<!-- lang="en" = English, the language of universal mathematics! 🔢 -->
+
+  <head>
+    <!-- 🧠 THE MATHEMATICAL BRAIN: Where we prepare formulas and styles -->
+    <!-- It's like the blackboard where we write instructions before calculating -->
+    
+    <meta charset="UTF-8" />
+    <!-- 📝 UNIVERSAL CHARACTERS: UTF-8 for all numerical symbols! 🔢 -->
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- 📱 RESPONSIVE DESIGN: "Calculate on any device!" -->
+    <!-- width=device-width = device width -->
+    <!-- initial-scale=1 = initial zoom at 100% -->
+    
+    <title>Statistics Calculator</title>
+    <!-- 📑 TAB TITLE: Simple and descriptive -->
+    
+    <style>
+      /* 🎨 ===== CSS STYLES: The Calculator's Appearance ===== */
+      
+      body {
+        margin: 0;
+        /* 🚫 NO MARGINS: We start from the edges */
+        
+        background-color: rgb(27, 27, 50);
+        /* 🌃 DEEP NIGHT BLUE: rgb(27, 27, 50)
+        An elegant dark blue to reduce visual fatigue */
+        
+        text-align: center;
+        /* ⚖️ EVERYTHING CENTERED: The calculator sits in the center */
+        
+        color: #fff;
+        /* ⚪ WHITE TEXT: Perfect contrast on dark blue */
+      }
+      
+      button {
+        cursor: pointer;
+        /* 👆 HAND: Indicates the button is clickable */
+        
+        background-color: rgb(59, 59, 79);
+        /* 🔵 GRAY BLUE: Lighter than body for distinction */
+        
+        border: 3px solid white;
+        /* 🔲 THICK WHITE BORDER: 3px for visibility */
+        
+        color: white;
+        /* ⚪ WHITE TEXT: Readable on dark button */
+      }
+      
+      input {
+        background-color: rgb(10, 10, 35);
+        /* 🌑 ALMOST BLACK BLUE: Darker than body for depth */
+        
+        color: white;
+        /* ⚪ WHITE TEXT: For readable input */
+        
+        border: 1px solid rgb(59, 59, 79);
+        /* 🔲 THIN BORDER: Same color as button for consistency */
+      }
+      
+      .bold {
+        font-weight: bold;
+        /* 💪 BOLD: To highlight results */
+      }
+    </style>
+  </head>
+  
+  <body>
+    <!-- 📊 ===== THE CALCULATOR COMES TO LIFE ===== -->
+    
+    <h1>Statistics Calculator</h1>
+    <!-- 📊 MAIN TITLE: Large and central -->
+    
+    <p>Enter a list of comma-separated numbers.</p>
+    <!-- 📝 INSTRUCTIONS: Clear and simple for the user -->
+    
+    <form onsubmit="calculate(); return false;">
+      <!-- 📋 INTERACTIVE FORM: The heart of the interface -->
+      <!-- onsubmit="calculate(); return false;" -->
+      <!-- When you submit the form: -->
+      <!-- 1. Calls the calculate() function -->
+      <!-- 2. return false prevents page refresh! -->
+      <!-- It's like saying "do the calculations but stay here!" -->
+      
+      <label for="numbers">Numbers:</label>
+      <!-- 🏷️ LABEL: Associated with input through "for" -->
+      <!-- Improves accessibility and usability -->
+      
+      <input type="text" name="numbers" id="numbers" />
+      <!-- 📝 INPUT FIELD: Where the user enters numbers -->
+      <!-- type="text" = accepts any text -->
+      <!-- id="numbers" = unique identifier for JavaScript -->
+      
+      <button type="submit">Calculate</button>
+      <!-- 🔘 SUBMIT BUTTON: Starts the calculations -->
+      <!-- type="submit" = submits the form when clicked -->
+    </form>
+    
+    <div class="results">
+      <!-- 📊 RESULTS SECTION: Where we show the calculations -->
+      
+      <p>
+        The <dfn>mean</dfn> of a list of numbers is the average, calculated by
+        taking the sum of all numbers and dividing that by the count of numbers.
+        <!-- 📚 MEAN DEFINITION: The <dfn> tag indicates a definition -->
+        <!-- It's semantically correct for technical terms! -->
+      </p>
+      <p class="bold">Mean: <span id="mean"></span></p>
+      <!-- 📊 MEAN RESULT: The span will be filled by JavaScript -->
+      <!-- class="bold" = bold for visibility -->
+      
+      <p>
+        The <dfn>median</dfn> of a list of numbers is the number that appears in
+        the middle of the list, when sorted from least to greatest.
+        <!-- 📚 MEDIAN DEFINITION: The central value -->
+      </p>
+      <p class="bold">Median: <span id="median"></span></p>
+      <!-- 📊 MEDIAN RESULT: Placeholder for the value -->
+      
+      <p>
+        The <dfn>mode</dfn> of a list of numbers is the number that appears most
+        often in the list.
+        <!-- 📚 MODE DEFINITION: The most frequent -->
+      </p>
+      <p class="bold">Mode: <span id="mode"></span></p>
+      <!-- 📊 MODE RESULT: Can be multiple! -->
+      
+      <p>
+        The <dfn>range</dfn> of a list of numbers is the difference between the
+        largest and smallest numbers in the list.
+        <!-- 📚 RANGE DEFINITION: Max - Min -->
+      </p>
+      <p class="bold">Range: <span id="range"></span></p>
+      <!-- 📊 RANGE RESULT: The interval of values -->
+      
+      <p>
+        The <dfn>variance</dfn> of a list of numbers measures how far the values
+        are from the mean, on average.
+        <!-- 📚 VARIANCE DEFINITION: Quadratic dispersion -->
+      </p>
+      <p class="bold">Variance: <span id="variance"></span></p>
+      <!-- 📊 VARIANCE RESULT: Dispersion measure -->
+      
+      <p>
+        The <dfn>standard deviation</dfn> of a list of numbers is the square
+        root of the variance.
+        <!-- 📚 STANDARD DEVIATION DEFINITION: Square root of variance -->
+      </p>
+      <p class="bold">
+        Standard Deviation: <span id="standardDeviation"></span>
+        <!-- 📊 STANDARD DEVIATION RESULT: Normalized dispersion -->
+      </p>
+    </div>
+    
+    <script>
+      /* 🧮 ===== THE MATHEMATICAL ENGINE: JavaScript in Action! ===== */
+      
+      /* 📊 ===== MEAN FUNCTION ===== */
+      const getMean = (array) => array.reduce((acc, el) => acc + el, 0) / array.length;
+      /* 🎯 COMPACT ARROW FUNCTION: One line of pure power!
+         
+         BREAKDOWN:
+         1. (array) => : Takes an array as parameter
+         2. array.reduce() : Method that "reduces" the array to a single value
+         3. (acc, el) => acc + el : For each element, add it to the accumulator
+         4. , 0 : The accumulator starts at 0
+         5. / array.length : Divide the sum by the number of elements
+         
+         EXAMPLE: [2, 4, 6]
+         - Sum: 2 + 4 + 6 = 12
+         - Count: 3 elements
+         - Mean: 12 / 3 = 4
+      */
+
+      /* 📊 ===== MEDIAN FUNCTION ===== */
+      const getMedian = (array) => {
+        const sorted = array.toSorted((a, b) => a - b);
+        /* 🔄 SORTING: toSorted() creates a sorted copy!
+           (a, b) => a - b : Sorts in ascending order
+           - If a - b < 0, a comes before b
+           - If a - b > 0, b comes before a
+           - If a - b = 0, they are equal
+           
+           NOTE: toSorted() is new! Doesn't modify the original array
+        */
+        
+        const median =
+          sorted.length % 2 === 0
+            ? getMean([sorted[sorted.length / 2], sorted[sorted.length / 2 - 1]])
+            : sorted[Math.floor(sorted.length / 2)];
+        /* 🎯 TERNARY OPERATOR: Like a compact if/else!
+           
+           condition ? ifTrue : ifFalse
+           
+           EVEN CASE (e.g.: [1,2,3,4]):
+           - sorted.length % 2 === 0 : true (4 is even)
+           - Takes the two middle elements: index 2 and 1 (values 3 and 2)
+           - Calculates the mean: getMean([3, 2]) = 2.5
+           
+           ODD CASE (e.g.: [1,2,3,4,5]):
+           - sorted.length % 2 === 0 : false (5 is odd)
+           - Math.floor(5 / 2) = 2 (rounds down)
+           - Takes the element at index 2: value 3
+        */
+        
+        return median;
+        /* 📤 RETURNS: The calculated median value */
+      }
+      
+      /* 📊 ===== MODE FUNCTION ===== */
+      const getMode = (array) => {
+        const counts = {};
+        /* 📦 COUNTER OBJECT: {} creates an empty object
+           We'll use properties as counters for each number
+        */
+        
+        array.forEach(el => counts[el] = counts[el] ? counts[el] + 1 : 1);
+        /* 🔄 COUNT FREQUENCIES: For each element in the array
+           
+           TERNARY OPERATOR:
+           counts[el] ? counts[el] + 1 : 1
+           
+           - If counts[el] already exists: increment it by 1
+           - If it doesn't exist (undefined): initialize it to 1
+           
+           EXAMPLE with [1, 2, 2, 3]:
+           - el = 1: counts[1] = undefined ? 1 : 1 → counts = {1: 1}
+           - el = 2: counts[2] = undefined ? 1 : 1 → counts = {1: 1, 2: 1}
+           - el = 2: counts[2] = 1 ? 2 : 1 → counts = {1: 1, 2: 2}
+           - el = 3: counts[3] = undefined ? 1 : 1 → counts = {1: 1, 2: 2, 3: 1}
+        */
+      
+        if (new Set(Object.values(counts)).size === 1) {
+          return null;
+          /* 🔍 CHECK EQUAL FREQUENCIES:
+             
+             1. Object.values(counts) : Extracts all values (the frequencies)
+             2. new Set(...) : Creates a Set (collection without duplicates)
+             3. .size === 1 : If the Set has only 1 element, all frequencies are equal
+             
+             EXAMPLE: If counts = {1: 2, 2: 2, 3: 2}
+             - Object.values = [2, 2, 2]
+             - new Set([2, 2, 2]) = Set{2}
+             - size = 1 → No mode! Returns null
+          */
+        }
+        
+        const highest = Object.keys(counts).sort(
+          (a, b) => counts[b] - counts[a]
+        )[0];
+        /* 🏆 FIND THE HIGHEST FREQUENCY:
+           
+           1. Object.keys(counts) : Array of keys (the numbers)
+           2. .sort((a, b) => counts[b] - counts[a]) : Sort by DESCENDING frequency
+           3. [0] : Takes the first element (highest frequency)
+           
+           EXAMPLE with counts = {1: 1, 2: 3, 3: 2}:
+           - Keys: ["1", "2", "3"]
+           - After sort: ["2", "3", "1"] (sorted by frequency: 3, 2, 1)
+           - highest = "2"
+        */
+        
+        const mode = Object.keys(counts).filter(
+          (el) => counts[el] === counts[highest]
+        );
+        /* 🔍 FILTER ALL VALUES WITH MAXIMUM FREQUENCY:
+           
+           There could be multiple modes!
+           filter() keeps only elements that satisfy the condition
+           
+           EXAMPLE: If two numbers both appear 3 times, they're both modes
+        */
+        
+        return mode.join(", ");
+        /* 📤 RETURNS: The modes joined by commas
+           join(", ") transforms the array into a string: [1, 3] → "1, 3"
+        */
+      }
+      
+      /* 📊 ===== RANGE FUNCTION ===== */
+      const getRange = (array) => {
+        return Math.max(...array) - Math.min(...array);
+        /* 🎯 SPREAD OPERATOR + MATH: Pure elegance!
+           
+           ...array : "Spreads" the array as separate arguments
+           
+           EXAMPLE with [3, 7, 2, 9, 1]:
+           - Math.max(...[3, 7, 2, 9, 1]) → Math.max(3, 7, 2, 9, 1) = 9
+           - Math.min(...[3, 7, 2, 9, 1]) → Math.min(3, 7, 2, 9, 1) = 1
+           - Range = 9 - 1 = 8
+        */
+      }
+      
+      /* 📊 ===== VARIANCE FUNCTION ===== */
+      const getVariance = (array) => {
+        const mean = getMean(array);
+        /* 📊 CALCULATE THE MEAN: Needed for next calculations */
+        
+        const variance = array.reduce((acc, el) => {
+          const difference = el - mean;
+          /* 📐 DIFFERENCE: How much each value deviates from the mean */
+          
+          const squared = difference ** 2;
+          /* ➡️ SQUARED: ** is the exponential operator
+             We square to make all differences positive
+          */
+          
+          return acc + squared;
+          /* ➕ ACCUMULATE: Sum all squared differences */
+        }, 0) / array.length;
+        /* ➗ DIVIDE: By the number of elements (mean of squares) */
+        
+        return variance;
+        /* 📤 RETURNS: The calculated variance
+        
+           MATHEMATICAL FORMULA: σ² = Σ(xi - μ)² / n
+           where μ is the mean and n is the number of elements
+        */
+      }
+      
+      /* 📊 ===== STANDARD DEVIATION FUNCTION ===== */
+      const getStandardDeviation = (array) => {
+        const variance = getVariance(array);
+        /* 📊 USE THE VARIANCE: Calculated by the previous function */
+        
+        const standardDeviation = Math.sqrt(variance);
+        /* 🔢 SQUARE ROOT: Standard deviation is √variance
+           Math.sqrt() calculates the square root
+        */
+        
+        return standardDeviation;
+        /* 📤 RETURNS: σ = √σ² */
+      }
+      
+      /* 🎮 ===== MAIN CALCULATE FUNCTION ===== */
+      const calculate = () => {
+        const value = document.querySelector("#numbers").value;
+        /* 🔍 GET THE VALUE: querySelector finds the element with id="numbers"
+           .value gets the text entered by the user
+        */
+        
+        const array = value.split(/,\s*/g);
+        /* ✂️ SPLIT THE STRING: split() cuts the string into an array */
+               
+        const numbers = array.map(el => Number(el)).filter(el => !isNaN(el));
+        /* 🔄 CONVERT AND FILTER:
+           
+           1. map(el => Number(el)) : Converts each string to a number
+              - "1" → 1, "abc" → NaN
+           
+           2. filter(el => !isNaN(el)) : Keeps only valid numbers
+              - isNaN() = is Not a Number (true for non-numbers)
+              - !isNaN() = NOT isNaN (true for real numbers)
+           
+           RESULT: Only valid numbers in the array!
+        */
+        
+        /* 🧮 CALCULATE ALL STATISTICS */
+        const mean = getMean(numbers);
+        const median = getMedian(numbers);
+        const mode = getMode(numbers);
+        const range = getRange(numbers);
+        const variance = getVariance(numbers);
+        const standardDeviation = getStandardDeviation(numbers);
+      
+        /* 📝 UPDATE THE DOM: Show results on the page */
+        document.querySelector("#mean").textContent = mean;
+        document.querySelector("#median").textContent = median;
+        document.querySelector("#mode").textContent = mode;
+        document.querySelector("#range").textContent = range;
+        document.querySelector("#variance").textContent = variance;
+        document.querySelector("#standardDeviation").textContent = standardDeviation;
+        /* 🎯 querySelector + textContent:
+           - querySelector("#id") : Finds the element with that ID
+           - textContent = value : Inserts the text into the element
+           
+           It's like filling empty fields with calculated results!
+        */
+      }
+    </script>
+  </body>
+</html>
+
+<!-- 🎯 ===== STATISTICS CALCULATOR SUMMARY ===== -->
+<!-- 
+📊 APP ARCHITECTURE:
+│
+├── 🧠 HEAD (setup)
+│   └── 🎨 Minimal but effective CSS
+│       ├── 🌃 Dark theme for the eyes
+│       ├── 🔲 Distinctive white borders
+│       └── 💪 .bold class for results
+│
+├── 📊 BODY (interface)
+│   ├── 📋 Interactive form
+│   └── 📊 Results section with definitions
+│
+└── 🧮 JAVASCRIPT (the brain)
+    ├── 📐 6 pure mathematical functions
+    ├── 🎮 1 controller function (calculate)
+    └── 🔧 Final DOM manipulation
+
+🔧 MODERN JAVASCRIPT TECHNIQUES:
+├── ➡️ Arrow functions everywhere
+├── 🔄 Array methods: reduce, map, filter, forEach
+├── 📦 Object manipulation for counts
+├── 🎯 Ternary operator for compact logic
+├── ... Spread operator for Math.max/min
+├── ** Exponential operator for squares
+└── 🆕 toSorted() for sorted copies
+
+📚 STATISTICAL CONCEPTS:
+├── Mean: Arithmetic average
+├── Median: Central value
+├── Mode: Most frequent value
+├── Range: Max - Min
+├── Variance: Mean of squared differences
+└── Std Dev: Square root of variance
+
+It's like having a statistics lab in the browser! 🧪📊✨
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ===== ITALIAN VERSION ===== -->
+
+<!DOCTYPE html>
+<!-- 🎯 DICHIARAZIONE HTML5: "Benvenuti nel laboratorio di statistica!" -->
+<!-- È come aprire le porte di un centro di calcolo matematico! 📊 -->
+
+<html lang="en">
+<!-- 🌍 CONTENITORE PRINCIPALE: Il nostro calcolatore statistico -->
+<!-- lang="en" = inglese, la lingua della matematica universale! 🔢 -->
+
+  <head>
+    <!-- 🧠 IL CERVELLO MATEMATICO: Dove prepariamo formule e stili -->
+    <!-- È come la lavagna dove scriviamo le istruzioni prima di calcolare -->
+    
+    <meta charset="UTF-8" />
+    <!-- 📝 CARATTERI UNIVERSALI: UTF-8 per tutti i simboli numerici! 🔢 -->
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- 📱 DESIGN RESPONSIVE: "Calcola su ogni dispositivo!" -->
+    <!-- width=device-width = larghezza del dispositivo -->
+    <!-- initial-scale=1 = zoom iniziale al 100% -->
+    
+    <title>Statistics Calculator</title>
+    <!-- 📑 TITOLO DELLA TAB: Semplice e descrittivo -->
+    
+    <style>
+      /* 🎨 ===== STILI CSS: L'Aspetto del Calcolatore ===== */
+      
+      body {
+        margin: 0;
+        /* 🚫 NIENTE MARGINI: Partiamo dai bordi */
+        
+        background-color: rgb(27, 27, 50);
+        /* 🌃 BLU NOTTE PROFONDO: rgb(27, 27, 50)
+        Un blu scuro elegante per ridurre l'affaticamento visivo */
+        
+        text-align: center;
+        /* ⚖️ TUTTO CENTRATO: Il calcolatore sta al centro -->
+        
+        color: #fff;
+        /* ⚪ TESTO BIANCO: Contrasto perfetto sul blu scuro */
+      }
+      
+      button {
+        cursor: pointer;
+        /* 👆 MANINA: Indica che il bottone è cliccabile */
+        
+        background-color: rgb(59, 59, 79);
+        /* 🔵 BLU GRIGIO: Più chiaro del body per distinzione */
+        
+        border: 3px solid white;
+        /* 🔲 BORDO BIANCO SPESSO: 3px per visibilità */
+        
+        color: white;
+        /* ⚪ TESTO BIANCO: Leggibile sul bottone scuro */
+      }
+      
+      input {
+        background-color: rgb(10, 10, 35);
+        /* 🌑 BLU QUASI NERO: Più scuro del body per profondità */
+        
+        color: white;
+        /* ⚪ TESTO BIANCO: Per input leggibile */
+        
+        border: 1px solid rgb(59, 59, 79);
+        /* 🔲 BORDO SOTTILE: Stesso colore del bottone per coerenza */
+      }
+      
+      .bold {
+        font-weight: bold;
+        /* 💪 GRASSETTO: Per evidenziare i risultati */
+      }
+    </style>
+  </head>
+  
+  <body>
+    <!-- 📊 ===== IL CALCOLATORE PRENDE VITA ===== -->
+    
+    <h1>Statistics Calculator</h1>
+    <!-- 📊 TITOLO PRINCIPALE: Grande e centrale -->
+    
+    <p>Enter a list of comma-separated numbers.</p>
+    <!-- 📝 ISTRUZIONI: Chiare e semplici per l'utente -->
+    
+    <form onsubmit="calculate(); return false;">
+      <!-- 📋 FORM INTERATTIVO: Il cuore dell'interfaccia -->
+      <!-- onsubmit="calculate(); return false;" -->
+      <!-- Quando invii il form: -->
+      <!-- 1. Chiama la funzione calculate() -->
+      <!-- 2. return false previene il refresh della pagina! -->
+      <!-- È come dire "fai i calcoli ma resta qui!" -->
+      
+      <label for="numbers">Numbers:</label>
+      <!-- 🏷️ ETICHETTA: Associata all'input tramite "for" -->
+      <!-- Migliora l'accessibilità e l'usabilità -->
+      
+      <input type="text" name="numbers" id="numbers" />
+      <!-- 📝 CAMPO INPUT: Dove l'utente inserisce i numeri -->
+      <!-- type="text" = accetta qualsiasi testo -->
+      <!-- id="numbers" = identificatore univoco per JavaScript -->
+      
+      <button type="submit">Calculate</button>
+      <!-- 🔘 BOTTONE SUBMIT: Avvia i calcoli -->
+      <!-- type="submit" = invia il form quando cliccato -->
+    </form>
+    
+    <div class="results">
+      <!-- 📊 SEZIONE RISULTATI: Dove mostriamo i calcoli -->
+      
+      <p>
+        The <dfn>mean</dfn> of a list of numbers is the average, calculated by
+        taking the sum of all numbers and dividing that by the count of numbers.
+        <!-- 📚 DEFINIZIONE MEAN: Il tag <dfn> indica una definizione -->
+        <!-- È semanticamente corretto per termini tecnici! -->
+      </p>
+      <p class="bold">Mean: <span id="mean"></span></p>
+      <!-- 📊 RISULTATO MEAN: Lo span sarà riempito da JavaScript -->
+      <!-- class="bold" = in grassetto per visibilità -->
+      
+      <p>
+        The <dfn>median</dfn> of a list of numbers is the number that appears in
+        the middle of the list, when sorted from least to greatest.
+        <!-- 📚 DEFINIZIONE MEDIAN: Il valore centrale -->
+      </p>
+      <p class="bold">Median: <span id="median"></span></p>
+      <!-- 📊 RISULTATO MEDIAN: Placeholder per il valore -->
+      
+      <p>
+        The <dfn>mode</dfn> of a list of numbers is the number that appears most
+        often in the list.
+        <!-- 📚 DEFINIZIONE MODE: Il più frequente -->
+      </p>
+      <p class="bold">Mode: <span id="mode"></span></p>
+      <!-- 📊 RISULTATO MODE: Può essere multiplo! -->
+      
+      <p>
+        The <dfn>range</dfn> of a list of numbers is the difference between the
+        largest and smallest numbers in the list.
+        <!-- 📚 DEFINIZIONE RANGE: Max - Min -->
+      </p>
+      <p class="bold">Range: <span id="range"></span></p>
+      <!-- 📊 RISULTATO RANGE: L'intervallo dei valori -->
+      
+      <p>
+        The <dfn>variance</dfn> of a list of numbers measures how far the values
+        are from the mean, on average.
+        <!-- 📚 DEFINIZIONE VARIANCE: Dispersione quadratica -->
+      </p>
+      <p class="bold">Variance: <span id="variance"></span></p>
+      <!-- 📊 RISULTATO VARIANCE: Misura di dispersione -->
+      
+      <p>
+        The <dfn>standard deviation</dfn> of a list of numbers is the square
+        root of the variance.
+        <!-- 📚 DEFINIZIONE STANDARD DEVIATION: Radice della varianza -->
+      </p>
+      <p class="bold">
+        Standard Deviation: <span id="standardDeviation"></span>
+        <!-- 📊 RISULTATO STANDARD DEVIATION: Dispersione normalizzata -->
+      </p>
+    </div>
+    
+    <script>
+      /* 🧮 ===== IL MOTORE MATEMATICO: JavaScript in Azione! ===== */
+      
+      /* 📊 ===== FUNZIONE MEAN (MEDIA) ===== */
+      const getMean = (array) => array.reduce((acc, el) => acc + el, 0) / array.length;
+      /* 🎯 ARROW FUNCTION COMPATTA: Una riga di pura potenza!
+         
+         SCOMPOSIZIONE:
+         1. (array) => : Prende un array come parametro
+         2. array.reduce() : Metodo che "riduce" l'array a un singolo valore
+         3. (acc, el) => acc + el : Per ogni elemento, sommalo all'accumulatore
+         4. , 0 : L'accumulatore parte da 0
+         5. / array.length : Dividi la somma per il numero di elementi
+         
+         ESEMPIO: [2, 4, 6]
+         - Somma: 2 + 4 + 6 = 12
+         - Conteggio: 3 elementi
+         - Media: 12 / 3 = 4
+      */
+
+      /* 📊 ===== FUNZIONE MEDIAN (MEDIANA) ===== */
+      const getMedian = (array) => {
+        const sorted = array.toSorted((a, b) => a - b);
+        /* 🔄 ORDINAMENTO: toSorted() crea una copia ordinata!
+           (a, b) => a - b : Ordina in modo crescente
+           - Se a - b < 0, a viene prima di b
+           - Se a - b > 0, b viene prima di a
+           - Se a - b = 0, sono uguali
+           
+           NOTA: toSorted() è nuovo! Non modifica l'array originale
+        */
+        
+        const median =
+          sorted.length % 2 === 0
+            ? getMean([sorted[sorted.length / 2], sorted[sorted.length / 2 - 1]])
+            : sorted[Math.floor(sorted.length / 2)];
+        /* 🎯 OPERATORE TERNARIO: Come un if/else compatto!
+           
+           condizione ? seVero : seFalso
+           
+           CASO PARI (es: [1,2,3,4]):
+           - sorted.length % 2 === 0 : true (4 è pari)
+           - Prende i due elementi centrali: indice 2 e 1 (valori 3 e 2)
+           - Calcola la media: getMean([3, 2]) = 2.5
+           
+           CASO DISPARI (es: [1,2,3,4,5]):
+           - sorted.length % 2 === 0 : false (5 è dispari)
+           - Math.floor(5 / 2) = 2 (arrotonda per difetto)
+           - Prende l'elemento all'indice 2: valore 3
+        */
+        
+        return median;
+        /* 📤 RITORNA: Il valore mediano calcolato */
+      }
+      
+      /* 📊 ===== FUNZIONE MODE (MODA) ===== */
+      const getMode = (array) => {
+        const counts = {};
+        /* 📦 OGGETTO CONTATORE: {} crea un oggetto vuoto
+           Useremo le proprietà come contatori per ogni numero
+        */
+        
+        array.forEach(el => counts[el] = counts[el] ? counts[el] + 1 : 1);
+        /* 🔄 CONTA LE FREQUENZE: Per ogni elemento nell'array
+           
+           OPERATORE TERNARIO:
+           counts[el] ? counts[el] + 1 : 1
+           
+           - Se counts[el] esiste già: incrementalo di 1
+           - Se non esiste (undefined): inizializzalo a 1
+           
+           ESEMPIO con [1, 2, 2, 3]:
+           - el = 1: counts[1] = undefined ? 1 : 1 → counts = {1: 1}
+           - el = 2: counts[2] = undefined ? 1 : 1 → counts = {1: 1, 2: 1}
+           - el = 2: counts[2] = 1 ? 2 : 1 → counts = {1: 1, 2: 2}
+           - el = 3: counts[3] = undefined ? 1 : 1 → counts = {1: 1, 2: 2, 3: 1}
+        */
+      
+        if (new Set(Object.values(counts)).size === 1) {
+          return null;
+          /* 🔍 CONTROLLO FREQUENZE UGUALI:
+             
+             1. Object.values(counts) : Estrae tutti i valori (le frequenze)
+             2. new Set(...) : Crea un Set (insieme senza duplicati)
+             3. .size === 1 : Se il Set ha solo 1 elemento, tutte le frequenze sono uguali
+             
+             ESEMPIO: Se counts = {1: 2, 2: 2, 3: 2}
+             - Object.values = [2, 2, 2]
+             - new Set([2, 2, 2]) = Set{2}
+             - size = 1 → Nessuna moda! Ritorna null
+          */
+        }
+        
+        const highest = Object.keys(counts).sort(
+          (a, b) => counts[b] - counts[a]
+        )[0];
+        /* 🏆 TROVA LA FREQUENZA PIÙ ALTA:
+           
+           1. Object.keys(counts) : Array delle chiavi (i numeri)
+           2. .sort((a, b) => counts[b] - counts[a]) : Ordina per frequenza DECRESCENTE
+           3. [0] : Prende il primo elemento (frequenza più alta)
+           
+           ESEMPIO con counts = {1: 1, 2: 3, 3: 2}:
+           - Keys: ["1", "2", "3"]
+           - Dopo sort: ["2", "3", "1"] (ordinati per frequenza: 3, 2, 1)
+           - highest = "2"
+        */
+        
+        const mode = Object.keys(counts).filter(
+          (el) => counts[el] === counts[highest]
+        );
+        /* 🔍 FILTRA TUTTI I VALORI CON FREQUENZA MASSIMA:
+           
+           Potrebbero esserci più mode!
+           filter() mantiene solo gli elementi che soddisfano la condizione
+           
+           ESEMPIO: Se due numeri appaiono entrambi 3 volte, sono entrambi mode
+        */
+        
+        return mode.join(", ");
+        /* 📤 RITORNA: I mode uniti da virgole
+           join(", ") trasforma l'array in stringa: [1, 3] → "1, 3"
+        */
+      }
+      
+      /* 📊 ===== FUNZIONE RANGE (INTERVALLO) ===== */
+      const getRange = (array) => {
+        return Math.max(...array) - Math.min(...array);
+        /* 🎯 SPREAD OPERATOR + MATH: Eleganza pura!
+           
+           ...array : "Spalma" l'array come argomenti separati
+           
+           ESEMPIO con [3, 7, 2, 9, 1]:
+           - Math.max(...[3, 7, 2, 9, 1]) → Math.max(3, 7, 2, 9, 1) = 9
+           - Math.min(...[3, 7, 2, 9, 1]) → Math.min(3, 7, 2, 9, 1) = 1
+           - Range = 9 - 1 = 8
+        */
+      }
+      
+      /* 📊 ===== FUNZIONE VARIANCE (VARIANZA) ===== */
+      const getVariance = (array) => {
+        const mean = getMean(array);
+        /* 📊 CALCOLA LA MEDIA: Serve per i prossimi calcoli */
+        
+        const variance = array.reduce((acc, el) => {
+          const difference = el - mean;
+          /* 📐 DIFFERENZA: Quanto ogni valore si discosta dalla media */
+          
+          const squared = difference ** 2;
+          /* ➡️ AL QUADRATO: ** è l'operatore esponenziale
+             Eleviamo al quadrato per rendere positive tutte le differenze
+          */
+          
+          return acc + squared;
+          /* ➕ ACCUMULA: Somma tutti i quadrati delle differenze */
+        }, 0) / array.length;
+        /* ➗ DIVIDI: Per il numero di elementi (media dei quadrati) */
+        
+        return variance;
+        /* 📤 RITORNA: La varianza calcolata
+        
+           FORMULA MATEMATICA: σ² = Σ(xi - μ)² / n
+           dove μ è la media e n è il numero di elementi
+        */
+      }
+      
+      /* 📊 ===== FUNZIONE STANDARD DEVIATION (DEVIAZIONE STANDARD) ===== */
+      const getStandardDeviation = (array) => {
+        const variance = getVariance(array);
+        /* 📊 USA LA VARIANZA: Calcolata dalla funzione precedente */
+        
+        const standardDeviation = Math.sqrt(variance);
+        /* 🔢 RADICE QUADRATA: La deviazione standard è √varianza
+           Math.sqrt() calcola la radice quadrata
+        */
+        
+        return standardDeviation;
+        /* 📤 RITORNA: σ = √σ² */
+      }
+      
+      /* 🎮 ===== FUNZIONE PRINCIPALE CALCULATE ===== */
+      const calculate = () => {
+        const value = document.querySelector("#numbers").value;
+        /* 🔍 PRENDI IL VALORE: querySelector trova l'elemento con id="numbers"
+           .value ottiene il testo inserito dall'utente
+        */
+        
+        const array = value.split(/,\s*/g);
+        /*  ✂️ DIVIDI LA STRINGA: split() taglia la stringa in array */
+               
+        const numbers = array.map(el => Number(el)).filter(el => !isNaN(el));
+        /* 🔄 CONVERTI E FILTRA:
+           
+           1. map(el => Number(el)) : Converte ogni stringa in numero
+              - "1" → 1, "abc" → NaN
+           
+           2. filter(el => !isNaN(el)) : Mantiene solo i numeri validi
+              - isNaN() = is Not a Number (è vero per non-numeri)
+              - !isNaN() = NOT isNaN (è vero per numeri veri)
+           
+           RISULTATO: Solo numeri validi nell'array!
+        */
+        
+        /* 🧮 CALCOLA TUTTE LE STATISTICHE */
+        const mean = getMean(numbers);
+        const median = getMedian(numbers);
+        const mode = getMode(numbers);
+        const range = getRange(numbers);
+        const variance = getVariance(numbers);
+        const standardDeviation = getStandardDeviation(numbers);
+      
+        /* 📝 AGGIORNA IL DOM: Mostra i risultati sulla pagina */
+        document.querySelector("#mean").textContent = mean;
+        document.querySelector("#median").textContent = median;
+        document.querySelector("#mode").textContent = mode;
+        document.querySelector("#range").textContent = range;
+        document.querySelector("#variance").textContent = variance;
+        document.querySelector("#standardDeviation").textContent = standardDeviation;
+        /* 🎯 querySelector + textContent:
+           - querySelector("#id") : Trova l'elemento con quell'ID
+           - textContent = valore : Inserisce il testo nell'elemento
+           
+           È come riempire i campi vuoti con i risultati calcolati!
+        */
+      }
+    </script>
+  </body>
+</html>
+
+<!-- 🎯 ===== RIASSUNTO DEL CALCOLATORE STATISTICO ===== -->
+<!-- 
+📊 ARCHITETTURA DELL'APP:
+│
+├── 🧠 HEAD (setup)
+│   └── 🎨 CSS minimale ma efficace
+│       ├── 🌃 Tema scuro per gli occhi
+│       ├── 🔲 Bordi bianchi distintivi
+│       └── 💪 Classe .bold per risultati
+│
+├── 📊 BODY (interfaccia)
+│   ├── 📋 Form interattivo
+│   └── 📊 Sezione risultati con definizioni
+│
+└── 🧮 JAVASCRIPT (il cervello)
+    ├── 📐 6 funzioni matematiche pure
+    ├── 🎮 1 funzione controller (calculate)
+    └── 🔧 Manipolazione DOM finale
+
+🔧 TECNICHE JAVASCRIPT MODERNE:
+├── ➡️ Arrow functions ovunque
+├── 🔄 Array methods: reduce, map, filter, forEach
+├── 📦 Object manipulation per conteggi
+├── 🎯 Operatore ternario per logica compatta
+├── ... Spread operator per Math.max/min
+├── ** Operatore esponenziale per quadrati
+└── 🆕 toSorted() per copie ordinate
+
+📚 CONCETTI STATISTICI:
+├── Mean: Media aritmetica
+├── Median: Valore centrale
+├── Mode: Valore più frequente
+├── Range: Max - Min
+├── Variance: Media dei quadrati delle differenze
+└── Std Dev: Radice quadrata della varianza
+
+È come avere un laboratorio di statistica nel browser! 🧪📊✨
+-->
