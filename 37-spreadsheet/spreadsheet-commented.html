@@ -1,0 +1,814 @@
+<!-- ===== ENGLISH VERSION ===== -->
+
+<!DOCTYPE html>
+<!-- 🎯 HTML5 DECLARATION: "Welcome to homemade Excel!" -->
+<!-- It's like opening the doors of a digital accounting office! 📊 -->
+
+<html lang="en">
+<!-- 🌍 MAIN CONTAINER: Our web spreadsheet -->
+<!-- lang="en" = English, the universal language of numbers! 💰 -->
+
+  <head>
+    <!-- 🧠 THE MATH BRAIN: Where we prepare the formulas -->
+    <!-- It's like the back of a calculator where the circuits live! -->
+    
+    <meta charset="utf-8" />
+    <!-- 📝 UNIVERSAL CHARACTERS: UTF-8 for numbers and mathematical symbols ∑∏∫ -->
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- 📱 RESPONSIVE DESIGN: "The spreadsheet adapts to every screen!" -->
+    <!-- It's like having a notebook that magically changes size -->
+    
+    <title>Functional Programming Spreadsheet</title>
+    <!-- 📑 TITLE: A spreadsheet that uses functional programming! -->
+    
+    <style>
+      /* 🎨 ===== STYLES FOR OUR EXCEL ===== */
+      
+      #container {
+        display: grid;
+        /* 🎯 CSS GRID: The perfect layout for a spreadsheet! */
+        
+        grid-template-columns: 50px repeat(10, 200px);
+        /* 📏 COLUMNS: First column 50px (for row numbers), then 10 columns of 200px */
+        /* repeat(10, 200px) = repeat "200px" 10 times */
+        /* It's like saying: narrow labels, wide cells for data */
+        
+        grid-template-rows: repeat(11, 30px);
+        /* 📐 ROWS: 11 rows of 30px each */
+        /* First row for letters A-J, then 10 rows for data */
+      }
+      
+      .label {
+        background-color: lightgray;
+        /* 🔘 GRAY BACKGROUND: To distinguish labels */
+        
+        text-align: center;
+        /* ⚖️ CENTERED TEXT: Letters and numbers centered */
+        
+        vertical-align: middle;
+        /* 📐 VERTICAL ALIGNMENT: Center vertically */
+        
+        line-height: 30px;
+        /* 📏 LINE HEIGHT: Trick to vertically center! */
+        /* line-height = row height = centers perfectly */
+      }
+    </style>
+  </head>
+  
+  <body>
+    <!-- 📊 ===== THE SPREADSHEET COMES TO LIFE! ===== -->
+    
+    <div id="container">
+      <!-- 📦 GRID CONTAINER: Everything will be built here dynamically -->
+      <div></div>
+      <!-- 📐 EMPTY DIV: For the top-left corner (above the row numbers) -->
+    </div>
+    
+    <script>
+      /* 🧮 ===== THE MATHEMATICAL ENGINE OF THE SPREADSHEET ===== */
+      
+      const infixToFunction = {
+        "+": (x, y) => x + y,
+        "-": (x, y) => x - y,
+        "*": (x, y) => x * y,
+        "/": (x, y) => x / y,
+      }
+      /* 🔢 OPERATOR DICTIONARY: Maps symbols to mathematical functions */
+      /* It's like having a manual that says: */
+      /* "+" means "add these two numbers" */
+      /* "-" means "subtract the second from the first" */
+      /* Arrow function (x, y) => x + y is like saying "take x and y, return the sum" */
+      
+      const infixEval = (str, regex) => str.replace(regex, (_match, arg1, operator, arg2) => infixToFunction[operator](parseFloat(arg1), parseFloat(arg2)));
+      /* 🎯 EXPRESSION EVALUATOR: Finds math patterns and computes them! */
+      /* str.replace(regex, callback) = find the pattern and replace it */
+      /* _match = the entire match (underscore indicates we don't use it) */
+      /* arg1, operator, arg2 = captured pieces from the regex (e.g. "5", "+", "3") */
+      /* parseFloat() = convert string to decimal number */
+      /* It's like a robot that finds "5+3" and replaces it with "8" */
+      
+      const highPrecedence = str => {
+        const regex = /([\d.]+)([*\\/])([\d.]+)/;
+        /* 📐 REGEX FOR MULTIPLICATION/DIVISION: */
+        /* ([\d.]+) = one or more digits/dots (first number) */
+        /* ([*\\/]) = * or / (operator) */
+        /* ([\d.]+) = second number */
+        /* Finds patterns like "5*3" or "10/2" */
+        
+        const str2 = infixEval(str, regex);
+        /* 🔄 EVALUATE: Apply multiplications and divisions */
+        
+        return str === str2 ? str : highPrecedence(str2);
+        /* 🔁 RECURSION: If nothing changed, we're done! Otherwise, continue */
+        /* It's like saying: "keep doing * and / until none remain" */
+        /* Recursion = the function calls itself */
+      }
+      
+      /* 🧮 ===== BASIC MATH FUNCTIONS ===== */
+      
+      const isEven = num => num % 2 === 0;
+      /* 🔢 IS IT EVEN?: num % 2 = remainder of division by 2 */
+      /* If remainder is 0, the number is even! */
+      /* 4 % 2 = 0 (even), 5 % 2 = 1 (odd) */
+      
+      const sum = nums => nums.reduce((acc, el) => acc + el, 0);
+      /* ➕ SUM: reduce() accumulates all values */
+      /* acc = accumulator (starts at 0) */
+      /* el = current element */
+      /* It's like having a calculator that presses + for every number */
+      
+      const average = nums => sum(nums) / nums.length;
+      /* 📊 AVERAGE: Sum all and divide by how many there are */
+      /* It's the classic arithmetic mean we used in school! */
+      
+      const median = nums => {
+        const sorted = nums.slice().sort((a, b) => a - b);
+        /* 🔄 COPY AND SORT: slice() creates a copy, sort() orders it */
+        /* (a, b) => a - b sorts in ascending order */
+        /* We don't modify the original array! */
+        
+        const length = sorted.length;
+        const middle = length / 2 - 1;
+        /* 📍 FIND THE CENTER: -1 because arrays start at 0 */
+        
+        return isEven(length)
+          ? average([sorted[middle], sorted[middle + 1]])
+          : sorted[Math.ceil(middle)];
+        /* 🎯 MEDIAN: */
+        /* If even: average of the two central values */
+        /* If odd: the central one */
+        /* Math.ceil() = round up */
+      }
+      
+      /* 📚 ===== DICTIONARY OF SPREADSHEET FUNCTIONS ===== */
+      
+      const spreadsheetFunctions = {
+        "" : (nums) => nums,
+        /* 🔄 EMPTY FUNCTION: Returns numbers as they are */
+        
+        sum,
+        /* ➕ SUM: Uses the function defined above */
+        /* Shorthand for sum: sum (instead of sum: sum) */
+        
+        average,
+        /* 📊 AVERAGE: Arithmetic mean */
+        
+        median,
+        /* 📈 MEDIAN: Central value */
+        
+        even: nums => nums.filter(isEven),
+        /* 🔢 ONLY EVENS: filter() keeps only those that pass the test */
+        
+        someeven: nums => nums.some(isEven),
+        /* ❓ AT LEAST ONE EVEN?: some() = true if at least one is even */
+        
+        everyeven: nums => nums.every(isEven),
+        /* ✅ ALL EVEN?: every() = true only if ALL are even */
+        
+        firsttwo: nums => nums.slice(0, 2),
+        /* ✌️ FIRST TWO: slice(0, 2) = from index 0 to 2 (excluded) */
+        
+        lasttwo: nums => nums.slice(-2),
+        /* 🔚 LAST TWO: slice(-2) = the last 2 elements */
+        /* Negative indices start from the end! */
+        
+        has2: nums => nums.includes(2),
+        /* 🔍 CONTAINS 2?: includes() looks for a specific value */
+        
+        increment: nums => nums.map(num => num + 1),
+        /* ➕1️⃣ INCREMENT: map() transforms each element */
+        /* Adds 1 to every number */
+        
+        random: ([x, y]) => Math.floor(Math.random() * y + x),
+        /* 🎲 RANDOM NUMBER: Between x and y */
+        /* [x, y] = destructuring, takes the first two elements */
+        /* Math.random() = number between 0 and 1 */
+        /* Math.floor() = round down */
+        
+        range: nums => range(...nums),
+        /* 🔢 SEQUENCE: Creates a range of numbers */
+        /* ...nums = spread operator, "unpacks" the array */
+        
+        nodupes: nums => [...new Set(nums).values()]
+        /* 🚫 NO DUPLICATES: Set automatically removes duplicates! */
+        /* [...] = spread to convert back to array */
+        /* It's like passing the numbers through a sieve that keeps only one of each */
+      }
+      
+      /* 🎯 ===== FUNCTION APPLICATOR ===== */
+      
+      const applyFunction = str => {
+        const noHigh = highPrecedence(str);
+        /* 🥇 PRIORITIES FIRST: Solve * and / before + and - */
+        
+        const infix = /([\d.]+)([+-])([\d.]+)/;
+        /* 📐 ADDITION/SUBTRACTION REGEX: Pattern for + and - */
+        
+        const str2 = infixEval(noHigh, infix);
+        /* 🔄 EVALUATE: Now solve + and - */
+        
+        const functionCall = /([a-z0-9]*)\(([0-9., ]*)\)(?!.*\()/i;
+        /* 🔍 FUNCTION CALL REGEX: */
+        /* ([a-z0-9]*) = function name (letters/numbers) */
+        /* \( = literal open parenthesis */
+        /* ([0-9., ]*) = arguments (numbers, commas, spaces) */
+        /* \) = closing parenthesis */
+        /* (?!.*\() = negative lookahead: there must not be another ( after */
+        /* i at the end = case insensitive */
+        /* Finds the last nested function to evaluate */
+        
+        const toNumberList = args => args.split(",").map(parseFloat);
+        /* 🔢 CONVERT TO NUMBERS: "1,2,3" becomes [1, 2, 3] */
+        /* split(",") = split on comma */
+        /* map(parseFloat) = convert each piece to a number */
+        
+        const apply = (fn, args) => spreadsheetFunctions[fn.toLowerCase()](toNumberList(args));
+        /* 🎯 APPLY FUNCTION: */
+        /* toLowerCase() = sum, SUM, Sum are all the same */
+        /* Looks up the function in the dictionary and executes it */
+        
+        return str2.replace(functionCall, (match, fn, args) => 
+          spreadsheetFunctions.hasOwnProperty(fn.toLowerCase()) ? apply(fn, args) : match
+        );
+        /* 🔄 REPLACE: If the function exists, compute it; otherwise leave as is */
+        /* hasOwnProperty() = checks if the property exists */
+        /* ? : = ternary operator (inline if) */
+      }
+      
+      /* 🔢 ===== RANGE GENERATORS ===== */
+      
+      const range = (start, end) => Array(end - start + 1).fill(start).map((element, index) => element + index);
+      /* 🔢 CREATE NUMERIC SEQUENCE: From start to end (inclusive) */
+      /* Array(n) = creates an array of n elements */
+      /* fill(start) = fill everything with start */
+      /* map((el, i) => el + i) = transform each element to start + position */
+      /* range(5, 8) = [5, 6, 7, 8] */
+      /* It's like counting on your fingers from start to end! */
+      
+      const charRange = (start, end) => range(start.charCodeAt(0), end.charCodeAt(0)).map(code => String.fromCharCode(code));
+      /* 🔤 CREATE LETTER SEQUENCE: From start to end */
+      /* charCodeAt(0) = ASCII code of the first letter */
+      /* String.fromCharCode() = from ASCII code to letter */
+      /* charRange("A", "D") = ["A", "B", "C", "D"] */
+      /* It's like reciting the alphabet from one letter to another! */
+      
+      /* 🧮 ===== THE HEART: FORMULA EVALUATOR ===== */
+      
+      const evalFormula = (x, cells) => {
+        const idToText = id => cells.find(cell => cell.id === id).value;
+        /* 🔍 FIND CELL VALUE: Look up the cell with that ID and take its value */
+        /* find() = finds the first element that satisfies the condition */
+        
+        const rangeRegex = /([A-J])([1-9][0-9]?):([A-J])([1-9][0-9]?)/gi;
+        /* 📐 RANGE REGEX: A1:B3 */
+        /* ([A-J]) = first letter (A-J) */
+        /* ([1-9][0-9]?) = number 1-99 (? = optional) */
+        /* : = literal colon */
+        /* Same for the second cell */
+        /* gi = global (all matches) + case insensitive */
+        
+        const rangeFromString = (num1, num2) => range(parseInt(num1), parseInt(num2));
+        /* 🔢 NUMBERS FROM STRING: "1" and "3" become [1, 2, 3] */
+        
+        const elemValue = num => character => idToText(character + num);
+        /* 🎯 ELEMENT VALUE: Curried function! */
+        /* First take the number, then the letter, then find the value */
+        /* elemValue(1)("A") = value of cell A1 */
+        /* Currying = a function that returns a function */
+        
+        const addCharacters = character1 => character2 => num => 
+          charRange(character1, character2).map(elemValue(num));
+        /* 🔤 ADD CHARACTERS: Triple curry! */
+        /* addCharacters("A")("C")(1) = values of A1, B1, C1 */
+        /* It's like a chain of function assembly lines */
+        
+        const rangeExpanded = x.replace(rangeRegex, (_match, char1, num1, char2, num2) => 
+          rangeFromString(num1, num2).map(addCharacters(char1)(char2))
+        );
+        /* 🔄 EXPAND RANGE: A1:B2 becomes A1,B1,A2,B2 */
+        /* Transforms ranges into lists of cells */
+        
+        const cellRegex = /[A-J][1-9][0-9]?/gi;
+        /* 📐 SINGLE CELL REGEX: A1, B2, etc. */
+        
+        const cellExpanded = rangeExpanded.replace(cellRegex, match => 
+          idToText(match.toUpperCase())
+        );
+        /* 🔄 REPLACE CELLS: A1 becomes its value */
+        
+        const functionExpanded = applyFunction(cellExpanded);
+        /* 🎯 APPLY FUNCTIONS: Compute sum(), average(), etc. */
+        
+        return functionExpanded === x ? functionExpanded : evalFormula(functionExpanded, cells);
+        /* 🔁 RECURSION: If nothing changed, we're done! */
+        /* Otherwise, keep evaluating */
+        /* It's like peeling an onion layer by layer */
+      }
+      
+      /* 🚀 ===== INITIALIZATION ON LOAD ===== */
+      
+      window.onload = () => {
+        /* 🎬 WHEN THE PAGE IS READY: Build the spreadsheet */
+        
+        const container = document.getElementById("container");
+        /* 📦 GET THE CONTAINER: Where we'll build everything */
+        
+        const createLabel = (name) => {
+          const label = document.createElement("div");
+          /* 🏷️ CREATE LABEL: A div for each letter/number */
+          
+          label.className = "label";
+          /* 🎨 ADD CLASS: For CSS styling */
+          
+          label.textContent = name;
+          /* 📝 INSERT TEXT: The letter or the number */
+          
+          container.appendChild(label);
+          /* 📎 ATTACH TO CONTAINER: Add to the DOM */
+        }
+        
+        const letters = charRange("A", "J");
+        /* 🔤 GENERATE LETTERS: ["A", "B", ..., "J"] */
+        
+        letters.forEach(createLabel);
+        /* 🔄 CREATE COLUMN LABELS: One for each letter */
+        
+        range(1, 99).forEach(number => {
+          /* 🔢 FOR EACH ROW (1-99): */
+          
+          createLabel(number);
+          /* 🏷️ CREATE ROW LABEL: The number on the left */
+          
+          letters.forEach(letter => {
+            /* 🔤 FOR EACH COLUMN: */
+            
+            const input = document.createElement("input");
+            /* 📝 CREATE INPUT CELL: Where the user types */
+            
+            input.type = "text";
+            /* 📝 TEXT TYPE: Can contain numbers or formulas */
+            
+            input.id = letter + number;
+            /* 🆔 UNIQUE ID: "A1", "B2", etc. */
+            
+            input.ariaLabel = letter + number;
+            /* ♿ ACCESSIBILITY: Screen reader will read "A1" */
+            
+            input.onchange = update;
+            /* 🔄 CHANGE EVENT: When the user finishes typing */
+            
+            container.appendChild(input);
+            /* 📎 ADD TO DOM: The cell is ready! */
+          })
+        })
+      }
+      
+      /* 🔄 ===== UPDATE CELLS ===== */
+      
+      const update = event => {
+        const element = event.target;
+        /* 🎯 CHANGED ELEMENT: The cell the user modified */
+        
+        const value = element.value.replace(/\s/g, "");
+        /* 🧹 CLEAN: Remove all whitespace */
+        /* /\s/g = regex for spaces, g = global */
+        
+        if (!value.includes(element.id) && value.startsWith('=')) {
+          /* 🔍 FORMULA CHECK: */
+          /* !value.includes(element.id) = it does not reference itself (no circular!) */
+          /* value.startsWith('=') = it's a formula */
+          
+          element.value = evalFormula(value.slice(1), Array.from(document.getElementById("container").children));
+          /* 🧮 COMPUTE: */
+          /* value.slice(1) = remove the initial = */
+          /* Array.from() = convert HTMLCollection to array */
+          /* .children = all children of the container (labels and inputs) */
+          /* The result replaces the formula in the cell! */
+        }
+      }
+      
+      /* 🎯 ===== HOW OUR EXCEL WORKS ===== */
+      /* 1. The user writes "=sum(A1:A3)" in a cell */
+      /* 2. update() intercepts the change */
+      /* 3. evalFormula() expands A1:A3 into A1,A2,A3 */
+      /* 4. It replaces each cell with its value */
+      /* 5. applyFunction() finds sum() and computes it */
+      /* 6. The result appears in the cell! */
+      /* It's functional programming magic! 🎩✨ */
+    </script>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ===== ITALIAN VERSION ===== -->
+
+<!DOCTYPE html>
+<!-- 🎯 DICHIARAZIONE HTML5: "Benvenuti in Excel fatto in casa!" -->
+<!-- È come aprire le porte di un ufficio contabile digitale! 📊 -->
+
+<html lang="en">
+<!-- 🌍 CONTENITORE PRINCIPALE: Il nostro foglio di calcolo web -->
+<!-- lang="en" = inglese, la lingua universale dei numeri! 💰 -->
+
+  <head>
+    <!-- 🧠 IL CERVELLO MATEMATICO: Dove prepariamo le formule -->
+    <!-- È come il retro di una calcolatrice dove stanno i circuiti! -->
+    
+    <meta charset="utf-8" />
+    <!-- 📝 CARATTERI UNIVERSALI: UTF-8 per numeri e simboli matematici ∑∏∫ -->
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- 📱 DESIGN RESPONSIVE: "Il foglio di calcolo si adatta a ogni schermo!" -->
+    <!-- È come avere un quaderno che cambia dimensione magicamente -->
+    
+    <title>Functional Programming Spreadsheet</title>
+    <!-- 📑 TITOLO: Un foglio di calcolo che usa programmazione funzionale! -->
+    
+    <style>
+      /* 🎨 ===== GLI STILI DEL NOSTRO EXCEL ===== */
+      
+      #container {
+        display: grid;
+        /* 🎯 CSS GRID: Il layout perfetto per un foglio di calcolo! */
+        
+        grid-template-columns: 50px repeat(10, 200px);
+        /* 📏 COLONNE: Prima colonna 50px (per i numeri), poi 10 colonne da 200px */
+        /* repeat(10, 200px) = ripeti "200px" per 10 volte */
+        /* È come dire: etichette strette, celle larghe per i dati */
+        
+        grid-template-rows: repeat(11, 30px);
+        /* 📐 RIGHE: 11 righe da 30px ciascuna */
+        /* Prima riga per le lettere A-J, poi 10 righe per i dati */
+      }
+      
+      .label {
+        background-color: lightgray;
+        /* 🔘 SFONDO GRIGIO: Per distinguere le etichette */
+        
+        text-align: center;
+        /* ⚖️ TESTO CENTRATO: Lettere e numeri al centro */
+        
+        vertical-align: middle;
+        /* 📐 ALLINEAMENTO VERTICALE: Al centro verticalmente */
+        
+        line-height: 30px;
+        /* 📏 ALTEZZA LINEA: Trucco per centrare verticalmente! */
+        /* line-height = altezza della riga = centra perfettamente */
+      }
+    </style>
+  </head>
+  
+  <body>
+    <!-- 📊 ===== IL FOGLIO DI CALCOLO PRENDE VITA! ===== -->
+    
+    <div id="container">
+      <!-- 📦 CONTENITORE GRIGLIA: Qui si costruirà tutto dinamicamente -->
+      <div></div>
+      <!-- 📐 DIV VUOTO: Per l'angolo in alto a sinistra (sopra i numeri di riga) -->
+    </div>
+    
+    <script>
+      /* 🧮 ===== IL MOTORE MATEMATICO DEL FOGLIO DI CALCOLO ===== */
+      
+      const infixToFunction = {
+        "+": (x, y) => x + y,
+        "-": (x, y) => x - y,
+        "*": (x, y) => x * y,
+        "/": (x, y) => x / y,
+      }
+      /* 🔢 DIZIONARIO OPERATORI: Mappa simboli a funzioni matematiche */
+      /* È come avere un manuale che dice: */
+      /* "+" significa "somma questi due numeri" */
+      /* "-" significa "sottrai il secondo dal primo" */
+      /* Arrow function (x, y) => x + y è come dire "prendi x e y, restituisci la somma" */
+      
+      const infixEval = (str, regex) => str.replace(regex, (_match, arg1, operator, arg2) => infixToFunction[operator](parseFloat(arg1), parseFloat(arg2)));
+      /* 🎯 VALUTATORE DI ESPRESSIONI: Trova pattern matematici e li calcola! */
+      /* str.replace(regex, callback) = cerca il pattern e sostituiscilo */
+      /* _match = l'intero match (underscore indica che non lo usiamo) */
+      /* arg1, operator, arg2 = i pezzi catturati dal regex (es: "5", "+", "3") */
+      /* parseFloat() = converti stringa in numero decimale */
+      /* È come un robot che trova "5+3" e lo sostituisce con "8" */
+      
+      const highPrecedence = str => {
+        const regex = /([\d.]+)([*\/])([\d.]+)/;
+        /* 📐 REGEX PER MOLTIPLICAZIONE/DIVISIONE: */
+        /* ([\d.]+) = uno o più numeri/punti decimali (primo numero) */
+        /* ([*\/]) = * oppure / (operatore) */
+        /* ([\d.]+) = secondo numero */
+        /* Trova pattern come "5*3" o "10/2" */
+        
+        const str2 = infixEval(str, regex);
+        /* 🔄 VALUTA: Applica moltiplicazioni e divisioni */
+        
+        return str === str2 ? str : highPrecedence(str2);
+        /* 🔁 RICORSIONE: Se non è cambiato nulla, finito! Altrimenti, continua */
+        /* È come dire: "continua a fare * e / finché ce ne sono" */
+        /* Ricorsione = la funzione chiama se stessa */
+      }
+      
+      /* 🧮 ===== FUNZIONI MATEMATICHE DI BASE ===== */
+      
+      const isEven = num => num % 2 === 0;
+      /* 🔢 È PARI?: num % 2 = resto della divisione per 2 */
+      /* Se il resto è 0, il numero è pari! */
+      /* 4 % 2 = 0 (pari), 5 % 2 = 1 (dispari) */
+      
+      const sum = nums => nums.reduce((acc, el) => acc + el, 0);
+      /* ➕ SOMMA: reduce() accumula tutti i valori */
+      /* acc = accumulatore (parte da 0) */
+      /* el = elemento corrente */
+      /* È come avere una calcolatrice che preme + per ogni numero */
+      
+      const average = nums => sum(nums) / nums.length;
+      /* 📊 MEDIA: Somma tutti e dividi per quanti sono */
+      /* È la classica media aritmetica che usiamo a scuola! */
+      
+      const median = nums => {
+        const sorted = nums.slice().sort((a, b) => a - b);
+        /* 🔄 COPIA E ORDINA: slice() crea una copia, sort() ordina */
+        /* (a, b) => a - b ordina in modo crescente */
+        /* Non modifichiamo l'array originale! */
+        
+        const length = sorted.length;
+        const middle = length / 2 - 1;
+        /* 📍 TROVA IL CENTRO: -1 perché gli array partono da 0 */
+        
+        return isEven(length)
+          ? average([sorted[middle], sorted[middle + 1]])
+          : sorted[Math.ceil(middle)];
+        /* 🎯 MEDIANA: */
+        /* Se pari: media dei due centrali */
+        /* Se dispari: quello al centro */
+        /* Math.ceil() = arrotonda per eccesso */
+      }
+      
+      /* 📚 ===== DIZIONARIO DELLE FUNZIONI DEL FOGLIO DI CALCOLO ===== */
+      
+      const spreadsheetFunctions = {
+        "" : (nums) => nums,
+        /* 🔄 FUNZIONE VUOTA: Restituisce i numeri così come sono */
+        
+        sum,
+        /* ➕ SOMMA: Usa la funzione definita sopra */
+        /* Shorthand per sum: sum (invece di sum: sum) */
+        
+        average,
+        /* 📊 MEDIA: Media aritmetica */
+        
+        median,
+        /* 📈 MEDIANA: Valore centrale */
+        
+        even: nums => nums.filter(isEven),
+        /* 🔢 SOLO PARI: filter() tiene solo quelli che passano il test */
+        
+        someeven: nums => nums.some(isEven),
+        /* ❓ ALMENO UN PARI?: some() = true se almeno uno è pari */
+        
+        everyeven: nums => nums.every(isEven),
+        /* ✅ TUTTI PARI?: every() = true solo se TUTTI sono pari */
+        
+        firsttwo: nums => nums.slice(0, 2),
+        /* ✌️ PRIMI DUE: slice(0, 2) = dall'indice 0 al 2 (escluso) */
+        
+        lasttwo: nums => nums.slice(-2),
+        /* 🔚 ULTIMI DUE: slice(-2) = gli ultimi 2 elementi */
+        /* Indici negativi partono dalla fine! */
+        
+        has2: nums => nums.includes(2),
+        /* 🔍 CONTIENE 2?: includes() cerca un valore specifico */
+        
+        increment: nums => nums.map(num => num + 1),
+        /* ➕1️⃣ INCREMENTA: map() trasforma ogni elemento */
+        /* Aggiunge 1 a ogni numero */
+        
+        random: ([x, y]) => Math.floor(Math.random() * y + x),
+        /* 🎲 NUMERO CASUALE: Tra x e y */
+        /* [x, y] = destructuring, prende i primi due elementi */
+        /* Math.random() = numero tra 0 e 1 */
+        /* Math.floor() = arrotonda per difetto */
+        
+        range: nums => range(...nums),
+        /* 🔢 SEQUENZA: Crea un range di numeri */
+        /* ...nums = spread operator, "spacchetta" l'array */
+        
+        nodupes: nums => [...new Set(nums).values()]
+        /* 🚫 NO DUPLICATI: Set rimuove automaticamente i duplicati! */
+        /* [...] = spread per tornare ad array */
+        /* È come passare i numeri in un setaccio che tiene solo uno di ogni tipo */
+      }
+      
+      /* 🎯 ===== APPLICATORE DI FUNZIONI ===== */
+      
+      const applyFunction = str => {
+        const noHigh = highPrecedence(str);
+        /* 🥇 PRIMA LE PRIORITÀ: Risolvi * e / prima di + e - */
+        
+        const infix = /([\d.]+)([+-])([\d.]+)/;
+        /* 📐 REGEX ADDIZIONE/SOTTRAZIONE: Pattern per + e - */
+        
+        const str2 = infixEval(noHigh, infix);
+        /* 🔄 VALUTA: Ora risolvi + e - */
+        
+        const functionCall = /([a-z0-9]*)\(([0-9., ]*)\)(?!.*\()/i;
+        /* 🔍 REGEX CHIAMATA FUNZIONE: */
+        /* ([a-z0-9]*) = nome funzione (lettere/numeri) */
+        /* \( = parentesi aperta letterale */
+        /* ([0-9., ]*) = argomenti (numeri, virgole, spazi) */
+        /* \) = parentesi chiusa */
+        /* (?!.*\() = negative lookahead: non deve avere altre ( dopo */
+        /* i alla fine = case insensitive */
+        /* Trova l'ultima funzione annidata da valutare */
+        
+        const toNumberList = args => args.split(",").map(parseFloat);
+        /* 🔢 CONVERTI IN NUMERI: "1,2,3" diventa [1, 2, 3] */
+        /* split(",") = dividi sulla virgola */
+        /* map(parseFloat) = converti ogni pezzo in numero */
+        
+        const apply = (fn, args) => spreadsheetFunctions[fn.toLowerCase()](toNumberList(args));
+        /* 🎯 APPLICA FUNZIONE: */
+        /* toLowerCase() = sum, SUM, Sum sono tutti uguali */
+        /* Cerca la funzione nel dizionario e la esegue */
+        
+        return str2.replace(functionCall, (match, fn, args) => 
+          spreadsheetFunctions.hasOwnProperty(fn.toLowerCase()) ? apply(fn, args) : match
+        );
+        /* 🔄 SOSTITUISCI: Se la funzione esiste, calcola; altrimenti lascia com'è */
+        /* hasOwnProperty() = controlla se la proprietà esiste */
+        /* ? : = operatore ternario (if inline) */
+      }
+      
+      /* 🔢 ===== GENERATORI DI RANGE ===== */
+      
+      const range = (start, end) => Array(end - start + 1).fill(start).map((element, index) => element + index);
+      /* 🔢 CREA SEQUENZA NUMERICA: Da start a end (inclusi) */
+      /* Array(n) = crea array di n elementi */
+      /* fill(start) = riempi tutto con start */
+      /* map((el, i) => el + i) = trasforma ogni elemento in start + posizione */
+      /* range(5, 8) = [5, 6, 7, 8] */
+      /* È come contare sulle dita da start a end! */
+      
+      const charRange = (start, end) => range(start.charCodeAt(0), end.charCodeAt(0)).map(code => String.fromCharCode(code));
+      /* 🔤 CREA SEQUENZA DI LETTERE: Da start a end */
+      /* charCodeAt(0) = codice ASCII della prima lettera */
+      /* String.fromCharCode() = da codice ASCII a lettera */
+      /* charRange("A", "D") = ["A", "B", "C", "D"] */
+      /* È come recitare l'alfabeto da una lettera all'altra! */
+      
+      /* 🧮 ===== IL CUORE: VALUTATORE DI FORMULE ===== */
+      
+      const evalFormula = (x, cells) => {
+        const idToText = id => cells.find(cell => cell.id === id).value;
+        /* 🔍 TROVA VALORE CELLA: Cerca la cella con quell'ID e prendi il valore */
+        /* find() = trova il primo elemento che soddisfa la condizione */
+        
+        const rangeRegex = /([A-J])([1-9][0-9]?):([A-J])([1-9][0-9]?)/gi;
+        /* 📐 REGEX PER RANGE: A1:B3 */
+        /* ([A-J]) = prima lettera (A-J) */
+        /* ([1-9][0-9]?) = numero 1-99 (? = opzionale) */
+        /* : = due punti letterali */
+        /* Stessa cosa per la seconda cella */
+        /* gi = global (tutti i match) + case insensitive */
+        
+        const rangeFromString = (num1, num2) => range(parseInt(num1), parseInt(num2));
+        /* 🔢 NUMERI DA STRINGA: "1" e "3" diventano [1, 2, 3] */
+        
+        const elemValue = num => character => idToText(character + num);
+        /* 🎯 VALORE ELEMENTO: Funzione curry! */
+        /* Prima prendi il numero, poi la lettera, poi trova il valore */
+        /* elemValue(1)("A") = valore della cella A1 */
+        /* Currying = funzione che restituisce funzione */
+        
+        const addCharacters = character1 => character2 => num => 
+          charRange(character1, character2).map(elemValue(num));
+        /* 🔤 AGGIUNGI CARATTERI: Triple curry! */
+        /* addCharacters("A")("C")(1) = valori di A1, B1, C1 */
+        /* È come una catena di montaggio di funzioni */
+        
+        const rangeExpanded = x.replace(rangeRegex, (_match, char1, num1, char2, num2) => 
+          rangeFromString(num1, num2).map(addCharacters(char1)(char2))
+        );
+        /* 🔄 ESPANDI RANGE: A1:B2 diventa A1,B1,A2,B2 */
+        /* Trasforma i range in liste di celle */
+        
+        const cellRegex = /[A-J][1-9][0-9]?/gi;
+        /* 📐 REGEX SINGOLA CELLA: A1, B2, ecc. */
+        
+        const cellExpanded = rangeExpanded.replace(cellRegex, match => 
+          idToText(match.toUpperCase())
+        );
+        /* 🔄 SOSTITUISCI CELLE: A1 diventa il suo valore */
+        
+        const functionExpanded = applyFunction(cellExpanded);
+        /* 🎯 APPLICA FUNZIONI: Calcola sum(), average(), ecc. */
+        
+        return functionExpanded === x ? functionExpanded : evalFormula(functionExpanded, cells);
+        /* 🔁 RICORSIONE: Se non è cambiato nulla, finito! */
+        /* Altrimenti, continua a valutare */
+        /* È come sbucciare una cipolla, strato dopo strato */
+      }
+      
+      /* 🚀 ===== INIZIALIZZAZIONE AL CARICAMENTO ===== */
+      
+      window.onload = () => {
+        /* 🎬 QUANDO LA PAGINA È PRONTA: Costruisci il foglio di calcolo */
+        
+        const container = document.getElementById("container");
+        /* 📦 PRENDI IL CONTENITORE: Dove costruiremo tutto */
+        
+        const createLabel = (name) => {
+          const label = document.createElement("div");
+          /* 🏷️ CREA ETICHETTA: Un div per ogni lettera/numero */
+          
+          label.className = "label";
+          /* 🎨 AGGIUNGI CLASSE: Per lo stile CSS */
+          
+          label.textContent = name;
+          /* 📝 INSERISCI TESTO: La lettera o il numero */
+          
+          container.appendChild(label);
+          /* 📎 ATTACCA AL CONTENITORE: Aggiungi al DOM */
+        }
+        
+        const letters = charRange("A", "J");
+        /* 🔤 GENERA LETTERE: ["A", "B", ..., "J"] */
+        
+        letters.forEach(createLabel);
+        /* 🔄 CREA ETICHETTE COLONNE: Una per ogni lettera */
+        
+        range(1, 99).forEach(number => {
+          /* 🔢 PER OGNI RIGA (1-99): */
+          
+          createLabel(number);
+          /* 🏷️ CREA ETICHETTA RIGA: Il numero sulla sinistra */
+          
+          letters.forEach(letter => {
+            /* 🔤 PER OGNI COLONNA: */
+            
+            const input = document.createElement("input");
+            /* 📝 CREA CELLA INPUT: Dove l'utente scrive */
+            
+            input.type = "text";
+            /* 📝 TIPO TESTO: Può contenere numeri o formule */
+            
+            input.id = letter + number;
+            /* 🆔 ID UNIVOCO: "A1", "B2", ecc. */
+            
+            input.ariaLabel = letter + number;
+            /* ♿ ACCESSIBILITÀ: Screen reader legge "A1" */
+            
+            input.onchange = update;
+            /* 🔄 EVENTO CHANGE: Quando l'utente finisce di scrivere */
+            
+            container.appendChild(input);
+            /* 📎 AGGIUNGI AL DOM: La cella è pronta! */
+          })
+        })
+      }
+      
+      /* 🔄 ===== AGGIORNAMENTO CELLE ===== */
+      
+      const update = event => {
+        const element = event.target;
+        /* 🎯 ELEMENTO CAMBIATO: La cella che l'utente ha modificato */
+        
+        const value = element.value.replace(/\s/g, "");
+        /* 🧹 PULISCI: Rimuovi tutti gli spazi */
+        /* /\s/g = regex per spazi, g = tutti */
+        
+        if (!value.includes(element.id) && value.startsWith('=')) {
+          /* 🔍 CONTROLLO FORMULA: */
+          /* !value.includes(element.id) = non riferisce a se stessa (no circolare!) */
+          /* value.startsWith('=') = è una formula */
+          
+          element.value = evalFormula(value.slice(1), Array.from(document.getElementById("container").children));
+          /* 🧮 CALCOLA: */
+          /* value.slice(1) = rimuovi il = iniziale */
+          /* Array.from() = converti HTMLCollection in array */
+          /* .children = tutti i figli del container (etichette e input) */
+          /* Il risultato sostituisce la formula nella cella! */
+        }
+      }
+      
+      /* 🎯 ===== COME FUNZIONA IL NOSTRO EXCEL ===== */
+      /* 1. L'utente scrive "=sum(A1:A3)" in una cella */
+      /* 2. update() intercetta il cambiamento */
+      /* 3. evalFormula() espande A1:A3 in A1,A2,A3 */
+      /* 4. Sostituisce ogni cella col suo valore */
+      /* 5. applyFunction() trova sum() e la calcola */
+      /* 6. Il risultato appare nella cella! */
+      /* È magia della programmazione funzionale! 🎩✨ */
+    </script>
+  </body>
+</html>
