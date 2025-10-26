@@ -1,0 +1,305 @@
+/* DESIGN 
+   ------
+   * I chose to make the mobile version the default, meaning without 
+   * a dedicated media query, unlike the desktop version
+   * The reasons are twofold: 
+   * - mobile traffic has now surpassed desktop traffic 
+   * - mobile devices load only the base CSS without the elaborate 
+   *   device-frame bezel, thus reducing loading time, also considering 
+   *   that mobile users often have slower connections
+*/
+
+
+/* UNIVERSAL (common variables to mobile and desktop) */
+
+:root {
+    /* Font */
+    --font-family: "Inter", Arial, sans-serif;
+    --font-color: #000;
+    --font-weight-primary: 400;
+    --result-font-weight: 450;
+    /* the value above (450) is unusual but it's the right middle ground 
+     * between normal and bold, it's also the closest to the prototype made
+     * in Figma, which indicates 500 but in my opinion overestimates by 50 */
+
+    /* Color */
+    --tribute-font-color: #002B4E;
+    --user-input-placeholder-font-color: #808080;
+    --user-input-color-fill: #FFF;
+    --button-color-fill: #FFF;
+    --button-color-fill-hover: #0369BC;
+    --button-font-color-hover: #fff;
+    --result-valid-font-color: #0369BC;
+    --result-invalid-font-color: #787878;
+
+    /* Animation */
+    --result-animation: slideInFade 0.4s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+
+/* MOBILE (default version) */
+
+:root {
+    /* Background */
+    --background-color: #FFF;
+
+    /* Position*/
+    --tribute-margin-top: 36px;
+    --title-margin-top: 18px;
+    --label-margin-top: 32px;
+    --user-input-margin-top: 26px;
+    --button-group-margin-top: 26px;
+    --result-margin-top-first: 48px;
+    --result-margin-bottom: 32px;
+
+    /* tribute */
+    --tribute-font-size: 16px;
+
+    /* title */
+    --title-font-size: 42px;
+
+    /* label, result*/
+    --label-result-font-size: 24px;
+
+    /* input, button*/
+    --user-input-placeholder-button-font-size: 18px;
+    --user-input-button-border: 2.373px solid #000;
+
+    /* input */
+    --user-input-padding-left-right: 0 12px;
+    --user-input-height: 43.5px;
+    --user-input-border-hover-active: 2.373px solid #0369BC;
+
+    /* button */
+    --button-group-gap: 6px;
+    --button-height: 43.5px;
+
+    /* Result */
+    --result-font-size: 24px;
+    --result-line-height: 40px;
+ 
+}
+
+
+/* DESKTOP (override of mobile variables and addition of device-frame) */
+
+@media (min-width: 560px) and (min-height: 730px) {
+
+:root {
+    /* Background */
+    --background-color: #002B4E;
+
+    /* Position*/
+    --tribute-margin-top: 20px;
+    --title-margin-top: 8px;
+    --label-margin-top: 18px;
+    --user-input-margin-top: 18px;
+    --button-group-margin-top: 18px;
+    --result-margin-top-first: 40px;
+    --result-margin-bottom: 22px;
+
+    /* tribute */
+    --tribute-font-size: 12px;
+
+    /* title */
+    --title-font-size: 32px;
+
+    /* label, result*/
+    --label-result-font-size: 18px;
+
+    /* input, button*/
+    --user-input-placeholder-button-font-size: 14px;
+    --user-input-button-border: 1.7px solid #000;
+
+    /* input */
+    --user-input-padding-left-right: 0 10px;
+    --user-input-height: 31px;
+    --user-input-border-hover-active: 1.7px solid #0369BC;
+
+    /* button */
+    --button-group-gap: 4px;
+    --button-height: 31px;
+
+    /* Device frame */
+    --device-frame-width: 332px;
+    --device-frame-height: 680px;
+    --device-frame-background: url("https://github.com/user-attachments/assets/817a409b-2181-4eab-8c9c-8ed38ad5e080");
+
+    /* Device screen */
+    --device-screen-width: 294px;
+    --device-screen-height: 521px;
+    --device-screen-background: #fff;
+    --device-screen-top: 72px;
+    --device-screen-left: 19px;
+    --device-screen-padding: 0 20px;
+
+    /* Result */
+    --result-font-size: 18px;
+    --result-line-height: 30px;
+}
+
+.device-frame {
+    position: absolute;
+    top: 49%;
+    /* For the top position, I chose 49% instead of 50% for better visual balance */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: var(--device-frame-width);
+    height: var(--device-frame-height);
+    background-image: var(--device-frame-background);
+}
+
+.device-screen {
+    width: var(--device-screen-width);
+    height: var(--device-screen-height);
+    background-color: var(--device-screen-background); 
+    top: var(--device-screen-top);
+    left: var(--device-screen-left);
+    padding: var(--device-screen-padding);
+    position: absolute;
+    text-align: left;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-color: transparent transparent;
+}
+
+button:hover {
+    background-color: var(--button-color-fill-hover);
+    color: var(--button-font-color-hover);
+}
+
+}
+
+
+/* Total CSS reset to avoid unexpected behavior across different browsers */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--background-color);
+    font-family: var(--font-family);
+    color: var(--font-color);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    padding: 0 24px;
+    min-height: 100vh; /* Fallback for browsers not supporting dvh */
+    min-height: 100dvh; /* It is a dynamic viewport: prevents jump when mobile browser's URL bar toggles */
+}
+
+.tribute, label, #user-input, button {
+    font-weight: var(--font-weight-primary);
+}
+
+
+.tribute {
+    margin-top: var(--tribute-margin-top);
+    font-size: var(--tribute-font-size);
+}
+
+.tribute a {
+    position: relative;
+    color: var(--tribute-font-color);
+    text-decoration: none;
+}
+
+h1 {
+    margin-top: var(--title-margin-top);
+    font-weight: var(--font-weight-primary);
+    font-size: var(--title-font-size);
+}
+
+label {
+    margin-top: var(--label-margin-top);
+    display: block;
+    font-size: var(--label-result-font-size);
+}
+
+#user-input, button {
+    font-size: var(--user-input-placeholder-button-font-size);
+    border: var(--user-input-button-border);
+}
+
+#user-input {
+    margin-top: var(--user-input-margin-top);
+    width: 100%;
+    height: var(--user-input-height);
+    background-color: var(--user-input-color-fill);
+    padding: var(--user-input-padding-left-right);
+}
+
+#user-input::placeholder {
+    color: var(--user-input-placeholder-font-color);
+}
+
+
+#user-input:active, #user-input:focus {
+    border: var(--user-input-border-hover-active);
+    outline: none;
+}
+
+.button-group {
+    margin-top: var(--button-group-margin-top);
+    display: flex;
+    gap: var(--button-group-gap);
+}
+
+button {
+    flex: 1;
+    height: var(--button-height);
+    background-color: var(--button-color-fill);
+    border: var(--user-input-button-border);
+    cursor: pointer;
+    color: var(--font-color);
+}
+
+button.clicked {
+    background-color: var(--button-color-fill-hover);
+    color: var(--button-font-color-hover);
+    transform: perspective(400px) rotateX(2deg) rotateY(-2deg) scale(0.98);
+}
+
+.phone-result {
+    text-align: center;
+    font-size: var(--result-font-size);
+    line-height: var(--result-line-height);
+    margin-bottom: var(--result-margin-bottom);
+    font-weight: var(--result-font-weight); 
+    animation: var(--result-animation);
+}
+
+.phone-result::after {
+    content: "";
+    display: block;
+}
+
+.phone-result:first-child {
+    margin-top: var(--result-margin-top-first);
+}
+
+.phone-result.result-valid {
+    color: var(--result-valid-font-color);
+}
+.phone-result.result-invalid {
+    color: var(--result-invalid-font-color);
+}
+
+@keyframes slideInFade {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
