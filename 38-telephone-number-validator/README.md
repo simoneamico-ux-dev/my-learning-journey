@@ -3,7 +3,8 @@
 ![Phone Checker running inside an HTC One M8 for Windows](https://github.com/user-attachments/assets/6242fcfc-5149-463c-97cd-b134a415edbd)
 <img width="4348" height="2284" alt="Telephone Number Validator - Mobile UI" src="https://github.com/user-attachments/assets/0d4e5339-ba23-4e71-b2bc-91941dfc0419" />
 <img width="7263" height="2312" alt="Telephone Number Validator - Desktop UI" src="https://github.com/user-attachments/assets/d9891d12-ab01-4306-83bf-705c5b5fe557" />
-
+<br>
+<br>
 
 ## English Version
 
