@@ -1,0 +1,68 @@
+<!-- DESIGN 
+   ------
+   * This file contains the HTML structure of the Phone Checker application.
+   
+   * The structure follows this flow:
+   * - Head with meta tags, CSS link, and preconnection to Google Fonts.
+   * - Body with main containing the primary container.
+   * - Container with device-frame (device bezel) that appears only on the 
+   *   desktop version.
+   * - Device-screen (internal screen) that contains the entire application's UI.
+   * - Form with input, buttons, and results area
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Phone Checker</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="styles.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+
+        <!-- 
+            * freeCodeCamp instructions:
+            * - You should have an input element with an id of "user-input". ✔️
+            * - You should have a button element with an id of "check-btn". ✔️
+            * - You should have a button element with an id of "clear-btn". ✔️
+            * - You should have a div, span or p element with an id of "results-div" ✔️
+        -->
+            
+        <!-- 
+            * I discovered that the modern approach uses classes for CSS and IDs for 
+            * elements primarily used in JavaScript. Performance is the same, and 
+            * counterintuitively, classes even seem faster as this article explains:
+            * (https://csswizardry.com/2011/09/writing-efficient-css-selectors/)
+        -->
+ 
+        <main>
+
+            <div class="container">
+                <div class="device-frame">
+                    <div class="device-screen">
+                        <p class="tribute"><a href="https://www.freecodecamp.org/" target="_blank" rel="noopener noreferrer" aria-label="Visit freeCodeCamp website (opens in new tab)">For freeCodeCamp</a></p>
+                        <h1>Phone Checker</h1>
+                        <form id="phone-form">
+                            <label for="user-input">Enter a Phone Number</label>
+                            <input type="tel" id="user-input" placeholder="1 555-555-5555" />
+                            <div class="button-group">
+                                <button type="submit" id="check-btn">Check</button> <!-- I must remember to add e.preventDefault() in JS -->
+                                <button type="button" id="clear-btn">Clear</button>
+                            </div>
+                            <div id="results-div"></div>
+                        </form>
+                    </div>
+                 </div>
+            </div>
+
+        </main>
+
+        <script src="script.js"></script>
+    </body>    
+
+</html>
