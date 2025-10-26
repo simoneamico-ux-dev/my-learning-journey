@@ -1,0 +1,1922 @@
+<!-- ===== ENGLISH VERSION ===== -->
+
+<!DOCTYPE html>
+<!-- 🎯 HTML5 DECLARATION: "Welcome to the Metro UI development!" -->
+<!-- It's like announcing the OS version before launching a mobile app! 📱 -->
+
+<html lang="en">
+<!-- 🌍 MAIN CONTAINER: Our Metro-styled validation application -->
+<!-- lang="en" = English, the language of this modern mobile interface! -->
+
+    <head>
+        <!-- 🧠 THE COMMAND CENTER: Where we prepare our Metro UI application -->
+        <!-- This is where all page resources are defined, just like the "under the hood" system registry in Metro! ⚙️ -->
+        
+        <title>Phone Checker</title>
+        <!-- 📑 APP TITLE: Simple and direct like the Metro design philosophy -->
+        <!-- Follows the principle of "content before chrome" - focusing on information, not decoration -->
+        
+        <meta charset="UTF-8" />
+        <!-- 📝 CHARACTER ENCODING: UTF-8 supports global phone formats! -->
+        <!-- Ensures our app handles international dialing codes and symbols properly -->
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- 📱 RESPONSIVE DESIGN: "This app adjusts to any mobile device!" -->
+        <!-- Just like how Metro UI was designed to scale seamlessly from small phones to larger screens -->
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <!-- 🚀 PRECONNECTIONS: Speed optimization for font loading -->
+        <!-- These improve perceived performance, similar to how Metro was optimized for responsiveness even on modest hardware -->
+        
+        <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+        <!-- 🔤 FONT LOADING: Inter font with all weights and styles -->
+        <!-- Inter provides that clean, geometric typography reminiscent of Segoe UI -->
+        <!-- Variable fonts (100..900) give us the flexibility to match the typography system of modern mobile UIs -->
+        
+        <style>
+          /* 🎨 ===== CSS STYLES: Creating Our Metro-Inspired UI ===== */
+          
+          /* 📱 ===== RESPONSIVE STRATEGY ===== */
+          /* 🔄 MOBILE-FIRST APPROACH: Default is mobile, desktop needs a media query */
+          /* This reflects the mobile-centric development philosophy that emerged with modern mobile platforms */
+          /* Mobile devices load only essential CSS - optimizing for both performance and battery life */
+          
+          
+          /* 🌐 ===== UNIVERSAL VARIABLES: Shared Across All Devices ===== */
+          
+          :root {
+              /* 🔤 TYPOGRAPHY SYSTEM */
+              --font-family: "Inter", Arial, sans-serif;
+              /* 🔤 FONT STACK: Inter mimics the geometric sans-serif of modern mobile UIs */
+              /* The typography hierarchy is crucial for the distinctive "digital-first" feel of Metro design */
+              
+              --font-color: #000;
+              /* ⚫ BLACK TEXT: High contrast is a fundamental principle of the Metro design language */
+              /* This enhances readability even in bright outdoor lighting conditions */
+              
+              --font-weight-primary: 400;
+              /* 📝 REGULAR WEIGHT: Metro design uses typography weight strategically */
+              /* 400 provides optimal readability while maintaining a light, modern feel */
+              
+              --result-font-weight: 450;
+              /* 📋 SLIGHTLY BOLD: For results, between normal and medium */
+              /* This subtle emphasis helps distinguish important data without being heavy-handed */
+              
+              /* 🎨 COLOR PALETTE */
+              --tribute-font-color: #002B4E;
+              /* 🔵 DEEP BLUE: For the tribute link, matching the distinctive accent color theme */
+              /* This particular shade was common in Microsoft's mobile designs */
+              
+              --user-input-placeholder-font-color: #808080;
+              /* 🔘 MEDIUM GRAY: For placeholders, creating subtlety in the interface */
+              /* Gray was used extensively in Metro for secondary information */
+              
+              --user-input-color-fill: #FFF;
+              /* ⚪ WHITE BACKGROUND: For input fields, following the clean tile aesthetic */
+              /* Creates the impression of digital "paper" for data entry */
+              
+              --button-color-fill: #FFF;
+              /* ⚪ WHITE BUTTONS: Default state, inspired by the tile paradigm */
+              /* Buttons as "live tiles" that respond to user interaction */
+              
+              --button-color-fill-hover: #0369BC;
+              /* 🔵 BLUE ACCENT: When buttons are active, matching the accent color system */
+              /* This particular shade was featured prominently in the mobile UI */
+              
+              --button-font-color-hover: #fff;
+              /* ⚪ WHITE TEXT: On colored buttons, ensuring readability when active */
+              /* The high contrast between text and background is a Metro signature */
+              
+              --result-valid-font-color: #0369BC;
+              /* 🔵 BLUE SUCCESS: Valid results, using the system accent blue */
+              /* Color coding provides instant visual feedback about validation state */
+              
+              --result-invalid-font-color: #787878;
+              /* 🔘 GRAY ERROR: Invalid results, subtle error indication */
+              /* Gray was often used for disabled or invalid states in Metro interfaces */
+              
+              /* ✨ ANIMATIONS */
+              --result-animation: slideInFade 0.4s cubic-bezier(0.2, 1, 0.3, 1);
+              /* 🎞️ SMOOTH ENTRANCE: Modern mobile UIs pioneered fluid animations */
+              /* This specific cubic-bezier creates the distinctive "ease-out" feel that makes elements feel responsive yet smooth */
+              /* The 0.4s duration is carefully chosen to feel immediate yet noticeable */
+          }
+          
+          
+          /* 📱 ===== MOBILE VERSION: Default Settings ===== */
+          
+          :root {
+              /* 🖼️ BACKGROUND */
+              --background-color: #FFF;
+              /* ⚪ WHITE CANVAS: The clean slate that defined the Metro design language */
+              /* White backgrounds maximize readability and minimize battery consumption on OLED screens */
+              
+              /* 📐 SPACING & POSITIONING */
+              --tribute-margin-top: 36px;
+              /* ⬆️ TOP PADDING: Modern mobile UIs use generous whitespace */
+              /* 36px creates breathing room that enhances focus on content */
+              
+              --title-margin-top: 18px;
+              /* ⬆️ TITLE POSITION: Half the tribute margin */
+              /* This creates a mathematical rhythm in the spacing system */
+              
+              --label-margin-top: 32px;
+              /* ⬆️ LABEL SPACING: Creating a consistent vertical rhythm */
+              /* The 32px spacing is derived from the 8px grid system that underlies Metro design */
+              
+              --user-input-margin-top: 26px;
+              /* ⬆️ INPUT POSITION: Below the label */
+              /* 26px is approximately 3x the base grid unit of 8px */
+              
+              --button-group-margin-top: 26px;
+              /* ⬆️ BUTTONS PLACEMENT: Space after the input */
+              /* Maintaining the same spacing as the input for visual harmony */
+              
+              --result-margin-top-first: 48px;
+              /* ⬆️ FIRST RESULT SPACING: Prominent vertical separation */
+              /* 48px (6x grid unit) creates a distinct section for results */
+              
+              --result-margin-bottom: 32px;
+              /* ⬇️ BOTTOM RESULT MARGIN: Space between results */
+              /* 32px (4x grid unit) maintains the established rhythm */
+              
+              /* 🔤 TYPOGRAPHY SIZES */
+              --tribute-font-size: 16px;
+              /* 📝 TRIBUTE TEXT: Standard mobile text size */
+              /* 16px is the base font size in many mobile designs - balancing readability and space efficiency */
+              
+              --title-font-size: 42px;
+              /* 📑 APP TITLE: Bold, large headers were a distinguishing feature of Metro UI */
+              /* The 42px size creates an imposing presence without overwhelming the interface */
+              
+              --label-result-font-size: 24px;
+              /* 🏷️ LABELS & RESULTS: Prominent size for readability */
+              /* 24px was commonly used for secondary headers in the Metro design language */
+              
+              --user-input-placeholder-button-font-size: 18px;
+              /* 📝 INPUT & BUTTON TEXT: Comfortable size for interaction */
+              /* 18px balances readability with touch target sizing */
+              
+              /* 🔲 BORDERS */
+              --user-input-button-border: 2.373px solid #000;
+              /* 📐 BORDER WIDTH: Bold borders reference the tile-based design */
+              /* The specific 2.373px value creates perfect rendering on high-DPI screens */
+              
+              /* 📝 INPUT FIELD */
+              --user-input-padding-left-right: 0 12px;
+              /* 📏 HORIZONTAL PADDING: Space inside the input */
+              /* 12px prevents text from touching the edges, improving readability */
+              
+              --user-input-height: 43.5px;
+              /* 📏 INPUT HEIGHT: Tall enough for comfortable tapping */
+              /* 43.5px ensures the touch target meets accessibility guidelines */
+              
+              --user-input-border-hover-active: 2.373px solid #0369BC;
+              /* 🔵 FOCUS BORDER: Blue accent when active */
+              /* Maintains the same border width but changes color for state indication */
+              
+              /* 🔘 BUTTONS */
+              --button-group-gap: 6px;
+              /* 📏 BUTTON SPACING: Gap between Check and Clear */
+              /* 6px provides visual separation without excessive space */
+              
+              --button-height: 43.5px;
+              /* 📏 BUTTON HEIGHT: Same as input for visual consistency */
+              /* Creating a harmonious alignment between related interface elements */
+              
+              /* 📋 RESULTS */
+              --result-font-size: 24px;
+              /* 📏 RESULT TEXT SIZE: Large and readable */
+              /* 24px ensures results are prominent and immediately noticeable */
+              
+              --result-line-height: 40px;
+              /* 📏 LINE HEIGHT: Generous spacing for readability */
+              /* The 40px line height (approximately 1.67x font size) enhances text separation */
+          }
+          
+          
+          /* 🖥️ ===== DESKTOP VERSION: Phone Simulator ===== */
+          
+          @media (min-width: 560px) and (min-height: 730px) {
+          /* 📐 SIZE THRESHOLD: Only shows device frame when screen is large enough */
+          /* The specific 560px × 730px dimensions ensure the frame fits comfortably */
+          /* This is similar to how Microsoft's emulator required minimum dimensions */
+          
+          :root {
+              /* 🖼️ BACKGROUND */
+              --background-color: #002B4E;
+              /* 🔵 DEEP BLUE CANVAS: The distinctive brand color for the desktop environment */
+              /* This color was prominently featured in Microsoft's mobile development tools */
+              
+              /* 📐 SPACING & POSITIONING: More compact for the phone frame */
+              --tribute-margin-top: 20px;
+              --title-margin-top: 8px;
+              --label-margin-top: 18px;
+              --user-input-margin-top: 18px;
+              --button-group-margin-top: 18px;
+              --result-margin-top-first: 40px;
+              --result-margin-bottom: 22px;
+              /* ⬆️⬇️ ALL DIMENSIONS: Scaled down to fit inside phone frame */
+              /* Each value is approximately 70% of its mobile counterpart */
+              
+              /* 🔤 TYPOGRAPHY SIZES: Smaller for phone screen */
+              --tribute-font-size: 12px;
+              --title-font-size: 32px;
+              --label-result-font-size: 18px;
+              --user-input-placeholder-button-font-size: 14px;
+              /* 📝 SMALLER TEXT: Better proportions for the phone simulator */
+              /* The reduction factor maintains readability while fitting the frame */
+              
+              /* 🔲 BORDERS: Thinner for phone simulation */
+              --user-input-button-border: 1.7px solid #000;
+              
+              /* 📝 INPUT FIELD: Scaled for phone */
+              --user-input-padding-left-right: 0 10px;
+              --user-input-height: 31px;
+              --user-input-border-hover-active: 1.7px solid #0369BC;
+              
+              /* 🔘 BUTTONS: Scaled for phone */
+              --button-group-gap: 4px;
+              --button-height: 31px;
+              
+              /* 📱 DEVICE FRAME: The HTC One (M8) simulation */
+              --device-frame-width: 332px;
+              /* 📏 PHONE WIDTH: Accurate size of the HTC One (M8) for Windows */
+              
+              --device-frame-height: 680px;
+              /* 📏 PHONE HEIGHT: Maintains the authentic aspect ratio */
+              /* The M8 had a 16:9 display aspect ratio, typical for its era */
+              
+              --device-frame-background: url("https://github.com/user-attachments/assets/817a409b-2181-4eab-8c9c-8ed38ad5e080");
+              /* 🖼️ PHONE IMAGE: Background image of the device frame */
+              /* Shows the distinctive dual front speakers and capacitive buttons */
+              
+              /* 📱 DEVICE SCREEN: The display area inside the phone frame */
+              --device-screen-width: 294px;
+              /* 📏 SCREEN WIDTH: Accounts for the side bezels */
+              /* The M8 had relatively slim side bezels for its time */
+              
+              --device-screen-height: 521px;
+              /* 📏 SCREEN HEIGHT: Accounts for top/bottom bezels */
+              /* Top bezel houses sensors, bottom has navigation buttons */
+              
+              --device-screen-background: #fff;
+              /* ⚪ SCREEN COLOR: White background matches the Metro design language */
+              /* The high contrast improves readability and UI clarity */
+              
+              --device-screen-top: 72px;
+              /* ⬆️ SCREEN POSITION: Distance from top of phone frame */
+              /* Precisely positioned to align with the device image */
+              
+              --device-screen-left: 19px;
+              /* ⬅️ SCREEN POSITION: Distance from left of phone frame */
+              /* Creates perfect alignment with the device bezel image */
+              
+              --device-screen-padding: 0 20px;
+              /* 📏 INNER PADDING: Space inside the screen for content */
+              /* 20px horizontal padding mimics the typical app margins */
+              
+              /* 📋 RESULTS: Scaled for phone */
+              --result-font-size: 18px;
+              --result-line-height: 30px;
+          }
+          
+          .device-frame {
+              position: absolute;
+              top: 49%;
+              /* ⬆️ VERTICAL POSITION: 49% rather than 50% for visual balance */
+              /* This slight adjustment accounts for the visual weight of the phone frame */
+              
+              left: 50%;
+              /* ⬅️ HORIZONTAL POSITION: Perfectly centered */
+              
+              transform: translate(-50%, -50%);
+              /* 🔄 CENTERING TECHNIQUE: Shifts element back by half its size */
+              /* This CSS trick ensures perfect centering regardless of element dimensions */
+              /* Transform uses GPU acceleration for smoother rendering */
+              
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              /* 📦 FLEXBOX: Centers contents vertically */
+              
+              text-align: center;
+              /* ⚖️ TEXT ALIGNMENT: Centers text inside */
+              
+              width: var(--device-frame-width);
+              height: var(--device-frame-height);
+              /* 📏 FRAME SIZE: Using the variables from above */
+              
+              background-image: var(--device-frame-background);
+              /* 🖼️ PHONE IMAGE: Shows the HTC One (M8) device */
+          }
+          
+          .device-screen {
+              width: var(--device-screen-width);
+              height: var(--device-screen-height);
+              /* 📏 SCREEN DIMENSIONS: The active display area */
+              
+              background-color: var(--device-screen-background); 
+              /* ⚪ WHITE BACKGROUND: Matches the Metro design language */
+              
+              top: var(--device-screen-top);
+              left: var(--device-screen-left);
+              /* 📍 POSITIONING: Precise placement within the frame image */
+              /* These values align the screen area with the visual display in the frame image */
+              
+              padding: var(--device-screen-padding);
+              /* 📏 INNER MARGIN: Content spacing matches mobile app guidelines */
+              
+              position: absolute;
+              /* 📍 ABSOLUTE POSITIONING: Relative to the device frame */
+              
+              text-align: left;
+              /* ⬅️ TEXT ALIGNMENT: Left-aligned content follows Metro text guidelines */
+              
+              overflow-y: auto;
+              overflow-x: hidden;
+              /* 📜 SCROLLING: Vertical scrolling only */
+              /* Metro interfaces use vertical scrolling exclusively - horizontal was for panoramas only */
+              
+              scrollbar-color: transparent transparent;
+              /* 🚫 INVISIBLE SCROLLBAR: Clean aesthetic without distractions */
+          }
+          
+          button:hover {
+              background-color: var(--button-color-fill-hover);
+              color: var(--button-font-color-hover);
+              /* 🔄 HOVER STATE: Blue background with white text */
+              /* Desktop-only effect - touch interfaces don't have hover states */
+              /* This provides desktop users with visual feedback before clicking */
+          }
+          
+          }
+          
+          
+          /* 🧹 ===== CSS RESET: Clean Slate ===== */
+          
+          * {
+              margin: 0;
+              padding: 0;
+              box-sizing: border-box;
+              /* 📦 BOX-SIZING: Includes padding and borders in element dimensions */
+              /* This creates predictable layouts similar to the strict grid system of Metro */
+              /* Without this, adding borders or padding would break the carefully calculated layout */
+          }
+          
+          body {
+              background-color: var(--background-color);
+              /* 🎨 BACKGROUND: White on mobile, blue on desktop */
+              
+              font-family: var(--font-family);
+              /* 🔤 FONT: Inter, with similar geometric qualities to modern mobile typography */
+              
+              color: var(--font-color);
+              /* ⚫ TEXT COLOR: Black provides maximum readability on white */
+          }
+          
+          .container {
+              display: flex;
+              flex-direction: column;
+              /* 📦 VERTICAL LAYOUT: Content flows from top to bottom */
+              /* This mimics the vertical scrolling paradigm of modern mobile UIs */
+              
+              padding: 0 24px;
+              /* 📏 SIDE PADDING: Breathing room prevents content from touching edges */
+              /* 24px is a common spacing increment in mobile design systems */
+              
+              min-height: 100vh; /* Fallback for browsers not supporting dvh */
+              min-height: 100dvh; /* It is a dynamic viewport: prevents jump when mobile browser's URL bar toggles */
+              /* 📏 FULL HEIGHT: Ensures the app fills the entire screen */
+              /* dvh = dynamic viewport height, solves the infamous mobile browser UI problem */
+              /* When the address bar appears/disappears, dvh adjusts automatically */
+          }
+          
+          .tribute, label, #user-input, button {
+              font-weight: var(--font-weight-primary);
+              /* 🔤 FONT WEIGHT: Regular 400 for most elements */
+              /* Consistent weight creates harmony across the interface */
+          }
+          
+          
+          .tribute {
+              margin-top: var(--tribute-margin-top);
+              /* ⬆️ TOP SPACING: First element needs more space from the top */
+              
+              font-size: var(--tribute-font-size);
+              /* 🔤 SMALL TEXT: Subtle attribution doesn't compete with main content */
+          }
+          
+          .tribute a {
+              position: relative;
+              /* 📍 POSITIONING: Base position for potential hover effects */
+              
+              color: var(--tribute-font-color);
+              /* 🔵 BLUE LINK: Uses the accent color for interactive elements */
+              
+              text-decoration: none;
+              /* 🚫 NO UNDERLINE: Clean, minimal design follows Metro principles */
+          }
+          
+          h1 {
+              margin-top: var(--title-margin-top);
+              /* ⬆️ SPACE AFTER TRIBUTE: Creates visual hierarchy */
+              
+              font-weight: var(--font-weight-primary);
+              /* 🔤 REGULAR WEIGHT: Metro design often used regular weight with larger size */
+              /* This creates a distinctive modern look different from traditional bold headers */
+              
+              font-size: var(--title-font-size);
+              /* 🔤 LARGE SIZE: Size creates impact without needing bold weight */
+          }
+          
+          label {
+              margin-top: var(--label-margin-top);
+              /* ⬆️ SPACE AFTER TITLE: Establishes visual sections */
+              
+              display: block;
+              /* 📦 BLOCK DISPLAY: Takes full width, creates new line */
+              
+              font-size: var(--label-result-font-size);
+              /* 🔤 MEDIUM SIZE: Prominent but not competing with the title */
+          }
+          
+          #user-input, button {
+              font-size: var(--user-input-placeholder-button-font-size);
+              /* 🔤 INPUT/BUTTON TEXT: Consistent sizing for interactive elements */
+              
+              border: var(--user-input-button-border);
+              /* 🔲 BLACK BORDER: Bold, distinctive borders were a Metro signature */
+          }
+          
+          #user-input {
+              margin-top: var(--user-input-margin-top);
+              /* ⬆️ SPACE AFTER LABEL: Visually groups label and input */
+              
+              width: 100%;
+              /* 📏 FULL WIDTH: Takes entire container width for maximum input area */
+              
+              height: var(--user-input-height);
+              /* 📏 HEIGHT: Tall enough for easy tapping on mobile */
+              
+              background-color: var(--user-input-color-fill);
+              /* ⚪ WHITE BACKGROUND: Clean input area improves focus */
+              
+              padding: var(--user-input-padding-left-right);
+              /* 📏 SIDE PADDING: Prevents text from touching the edges */
+          }
+          
+          #user-input::placeholder {
+              color: var(--user-input-placeholder-font-color);
+              /* 🔘 GRAY PLACEHOLDER: Subtle hint text */
+              /* Placeholders use lower contrast to differentiate from actual input */
+          }
+          
+          
+          #user-input:active, #user-input:focus {
+              border: var(--user-input-border-hover-active);
+              /* 🔵 BLUE BORDER: Shows focus state using the accent color */
+              /* This visual feedback is crucial for understanding system state */
+              
+              outline: none;
+              /* 🚫 NO OUTLINE: Replaces browser default with our custom border */
+          }
+          
+          .button-group {
+              margin-top: var(--button-group-margin-top);
+              /* ⬆️ SPACE AFTER INPUT: Maintains vertical rhythm */
+              
+              display: flex;
+              /* 📦 HORIZONTAL LAYOUT: Buttons arranged side by side */
+              /* This approach to button grouping became common in mobile UIs */
+              
+              gap: var(--button-group-gap);
+              /* 📏 BUTTON SPACING: Space between adjacent buttons */
+          }
+          
+          button {
+              flex: 1;
+              /* 📦 EQUAL WIDTH: Buttons share available space equally */
+              /* This creates visual balance and maximizes touch targets */
+              
+              height: var(--button-height);
+              /* 📏 BUTTON HEIGHT: Same as input for consistency */
+              
+              background-color: var(--button-color-fill);
+              /* ⚪ WHITE BACKGROUND: Clean button appearance */
+              
+              border: var(--user-input-button-border);
+              /* 🔲 BLACK BORDER: Bold border defines the interactive area */
+              
+              cursor: pointer;
+              /* 👆 HAND CURSOR: Visual indicator of clickability */
+              
+              color: var(--font-color);
+              /* ⚫ BLACK TEXT: High contrast for readability */
+          }
+          
+          button.clicked {
+              background-color: var(--button-color-fill-hover);
+              /* 🔵 BLUE BACKGROUND: When clicked, uses accent color */
+              
+              color: var(--button-font-color-hover);
+              /* ⚪ WHITE TEXT: Ensures readability on colored background */
+              
+              transform: perspective(400px) rotateX(2deg) rotateY(-2deg) scale(0.98);
+              /* 🔄 3D PRESS EFFECT: Subtle animation mimics physical button press */
+              /* This creates the tactile feel that was revolutionary in touch interfaces */
+              /* The perspective and rotation create a slight "tilt" while scaling creates "press" */
+          }
+          
+          .phone-result {
+              text-align: center;
+              /* ⚖️ CENTERED RESULTS: Emphasizes the outcome */
+              
+              font-size: var(--result-font-size);
+              /* 🔤 RESULT SIZE: Large text makes results immediately visible */
+              
+              line-height: var(--result-line-height);
+              /* 📏 LINE SPACING: Generous for maximum readability */
+              
+              margin-bottom: var(--result-margin-bottom);
+              /* ⬇️ BOTTOM MARGIN: Space between multiple results */
+              
+              font-weight: var(--result-font-weight); 
+              /* 🔤 SEMI-BOLD: Slightly bolder than normal text for emphasis */
+              
+              animation: var(--result-animation);
+              /* ✨ ENTRANCE ANIMATION: Smooth appearance adds polish */
+              /* Animation was a fundamental part of making digital interfaces feel alive */
+          }
+          
+          .phone-result::after {
+              content: "";
+              display: block;
+              /* 📏 INVISIBLE BLOCK: Creates space after each result */
+              /* This pseudo-element creates additional spacing without extra markup */
+          }
+          
+          .phone-result:first-child {
+              margin-top: var(--result-margin-top-first);
+              /* ⬆️ TOP RESULT MARGIN: Extra space before first result */
+              /* Creates clear separation between input section and results section */
+          }
+          
+          .phone-result.result-valid {
+              color: var(--result-valid-font-color);
+              /* 🔵 BLUE SUCCESS: Uses accent color for positive outcomes */
+              /* Color-coding results provides instant visual feedback */
+          }
+          .phone-result.result-invalid {
+              color: var(--result-invalid-font-color);
+              /* 🔘 GRAY ERROR: Subtle indication of invalid number */
+              /* Gray is less alarming than red but still clearly different from success */
+          }
+          
+          @keyframes slideInFade {
+              0% {
+                  opacity: 0;
+                  transform: translateY(-10px) scale(0.95);
+                  /* 🔄 STARTING POSITION: Slightly above and smaller */
+                  /* Creates the illusion of elements "materializing" into view */
+              }
+              100% {
+                  opacity: 1;
+                  transform: translateY(0) scale(1);
+                  /* 🔄 ENDING POSITION: Normal size and position */
+              }
+              /* ✨ ANIMATION: The smooth slide-and-fade was a signature of Metro transitions */
+              /* This specific animation mimics the way content would appear when navigating in the UI */
+          }
+        </style>
+    </head>
+
+    <body>
+        <!-- 📱 ===== THE BODY: Our Mobile App Interface! ===== -->
+        
+        <main>
+            <!-- 📱 MAIN CONTAINER: The entire application -->
+            <!-- The semantic <main> element identifies the primary content area -->
+            
+            <div class="container">
+                <!-- 📦 FLEXIBLE CONTAINER: Adapts to mobile or desktop -->
+                <!-- This wrapper maintains consistent padding and vertical structure -->
+                
+                <div class="device-frame">
+                    <!-- 📱 PHONE FRAME: Only visible on desktop -->
+                    <!-- Simulates an HTC One (M8) for Windows -->
+                    <!-- This provides context for desktop users, showing how the app would look on a real device -->
+                    
+                    <div class="device-screen">
+                        <!-- 📱 PHONE SCREEN: The actual application interface -->
+                        <!-- This container represents the viewport of the mobile device -->
+                        
+                        <p class="tribute"><a href="https://www.freecodecamp.org/" target="_blank" rel="noopener noreferrer" aria-label="Visit freeCodeCamp website (opens in new tab)">For freeCodeCamp</a></p>
+                        <!-- 🙏 ATTRIBUTION: Credit to freeCodeCamp -->
+                        <!-- target="_blank" opens in new tab for better user experience -->
+                        <!-- rel="noopener noreferrer" prevents security vulnerabilities from external links -->
+                        <!-- aria-label provides context for screen readers - critical for accessibility -->
+                        
+                        <h1>Phone Checker</h1>
+                        <!-- 📑 APP TITLE: Bold, simple heading follows Metro design principles -->
+                        <!-- The oversized typography creates immediate visual hierarchy -->
+                        
+                        <form id="phone-form">
+                            <!-- 📋 FORM CONTAINER: Groups input elements logically -->
+                            <!-- Forms provide built-in keyboard accessibility and submission handling -->
+                            <!-- This form submission will be intercepted by JavaScript to prevent page refresh -->
+                            
+                            <label for="user-input">Enter a Phone Number</label>
+                            <!-- 🏷️ INPUT LABEL: Clear instruction guides the user -->
+                            <!-- for="user-input" creates programmatic connection to the input field -->
+                            <!-- This association improves both usability and accessibility -->
+                            
+                            <input type="tel" id="user-input" placeholder="1 555-555-5555" />
+                            <!-- 📝 PHONE INPUT: Specialized field for telephone numbers -->
+                            <!-- type="tel" triggers appropriate keyboard on mobile devices -->
+                            <!-- id="user-input" connects to both the label and JavaScript -->
+                            <!-- placeholder demonstrates the expected format with a realistic example -->
+                            
+                            <div class="button-group">
+                                <!-- 🔘 BUTTON CONTAINER: Organizes action controls -->
+                                <!-- Grouped buttons provide related functions in a single visual unit -->
+                                
+                                <button type="submit" id="check-btn">Check</button>
+                                <!-- ✅ CHECK BUTTON: Primary action for validation -->
+                                <!-- type="submit" triggers form submission (intercepted by JavaScript) -->
+                                <!-- Provides keyboard accessibility - can be activated with Enter key -->
+                                
+                                <button type="button" id="clear-btn">Clear</button>
+                                <!-- 🧹 CLEAR BUTTON: Secondary action for resetting -->
+                                <!-- type="button" prevents it from submitting the form -->
+                                <!-- This button resets both the input field and results history -->
+                            </div>
+                            
+                            <div id="results-div"></div>
+                            <!-- 📋 RESULTS AREA: Displays validation outcomes -->
+                            <!-- Initially empty, JavaScript will populate this with results -->
+                            <!-- Acts as a history log of all validations performed -->
+                        </form>
+                    </div>
+                 </div>
+            </div>
+        </main>
+
+        <script>
+          /* 📱 ===== JAVASCRIPT: The Mobile App Logic! ===== */
+          
+          /* 📋 ===== APP CONFIGURATION: Phone Validation Rules ===== */
+          
+          const maxInputLength = 20;
+          /* 📏 INPUT LIMIT: Prevents unreasonably long entries */
+          /* This safeguard prevents both accidental and malicious long inputs */
+          /* 20 characters is sufficient for even complex international formats */
+          
+          const maxResult = 50;
+          /* 📋 HISTORY LIMIT: Maximum number of results to show */
+          /* DOM performance degrades with too many elements - this prevents memory issues */
+          /* 50 entries provides substantial history without impacting performance */
+          
+          const phoneRegex = /^(1\s?)?(\(\d{3}\)|\d{3})[\s\-]?\d{3}[\s\-]?\d{4}$/;
+          /* 🔍 VALIDATION PATTERN: US phone number formats */
+          /* Regular Expressions (regex) define search patterns for text validation */
+          /* This specific pattern matches all standard US phone number formats */
+          
+          /* This regex validates these formats:
+           * ✅ 5555555555 (basic 10-digit)
+           * ✅ 555-555-5555 (hyphenated)
+           * ✅ (555)555-5555 (parentheses for area code)
+           * ✅ 1 555-555-5555 (with country code)
+           * ✅ 1(555)555-5555 (country code without space)
+           * ❌ 555-5555 (too short - missing area code)
+           * ❌ 2 555-555-5555 (invalid country code - US is always 1)
+           * ❌ 555-555-5555-5 (extra digits after standard format)
+           */
+          
+          /* 🔍 Regex Breakdown:
+           * ^ = start of string (ensures no characters before the pattern)
+           * (1\s?)? = optional "1" country code with optional space
+           * (\(\d{3}\)|\d{3}) = area code: either (555) or 555
+           * [\s\-]? = optional separator (space or hyphen) after area code
+           * \d{3} = exchange code (exactly 3 digits)
+           * [\s\-]? = another optional separator
+           * \d{4}$ = subscriber number (exactly 4 digits) and end of string
+           */
+          
+          /* 🔗 ===== DOM REFERENCES: UI Element Connections ===== */
+          
+          const input = document.getElementById("user-input");
+          /* 📝 INPUT REFERENCE: Where user types the phone number */
+          /* getElementById provides direct reference to DOM elements */
+          /* This reference allows reading and manipulating the input field */
+          
+          const checkBtn = document.getElementById("check-btn");
+          /* ✅ CHECK BUTTON: Triggers validation */
+          /* Storing the reference improves performance over repeated queries */
+          
+          const clearBtn = document.getElementById("clear-btn");
+          /* 🧹 CLEAR BUTTON: Resets the form */
+          /* Button references are needed for adding event listeners */
+          
+          const resultsDiv = document.getElementById("results-div");
+          /* 📋 RESULTS CONTAINER: Where validation results appear */
+          /* This container will hold dynamically created result elements */
+          
+          const buttons = document.querySelectorAll("button");
+          /* 🔘 ALL BUTTONS: For applying animation effects */
+          /* querySelectorAll returns a NodeList of all matching elements */
+          
+          /* 🛡️ ===== FORM PREVENTION: Stop Default Submission ===== */
+          
+          document.querySelector("form").addEventListener("submit", (e) => e.preventDefault());
+          /* 🛑 PREVENT FORM SUBMISSION: Stop page refresh when form submits */
+          /* Forms normally reload the page when submitted - this prevents that behavior */
+          /* e.preventDefault() cancels the default browser action without stopping propagation */
+          /* This technique maintains form accessibility while controlling behavior with JS */
+          
+          /* ✅ ===== CHECK BUTTON: Validation Process ===== */
+          
+          checkBtn.addEventListener("click", (e) => {
+              /* 🖱️ LISTEN FOR CLICK: When Check button is pressed */
+              /* The event listener connects user action to app functionality */
+              
+              e.preventDefault();
+              /* 🛑 PREVENT DEFAULT: Extra security to stop form submission */
+              /* Belt-and-suspenders approach - still prevents submission if form event fails */
+              
+              if (input.value === "") {
+                  /* ❓ EMPTY CHECK: Is the input empty? */
+                  /* Empty string comparison catches blank inputs */
+                  
+                  alert("Please provide a phone number");
+                  /* ⚠️ ALERT: Shows popup message for empty input */
+                  /* The built-in alert() is simple but effective for error messages */
+                  /* In production apps, custom modals would provide better UX */
+                  
+                  return;
+                  /* 🛑 STOP EXECUTION: Don't continue if empty */
+                  /* return statement immediately exits the function */
+              } else if (input.value.length > maxInputLength) {
+                  /* 📏 LENGTH CHECK: Is input too long? */
+                  /* Prevents excessive input length - both for UX and security */
+                  
+                  alert("Phone number too long");
+                  /* ⚠️ ALERT: Shows popup for excessive length */
+                  /* Informs user why their input was rejected */
+                  
+                  return;
+                  /* 🛑 STOP EXECUTION: Don't continue if too long */
+              } else {
+                  /* ✅ ALL CHECKS PASSED: Continue to validation */
+                  /* Input has content and is within length limits */
+                  
+                  checkNumber()
+                  /* 🔄 RUN VALIDATION: Call the main check function */
+                  /* Separating validation into its own function improves code organization */
+              }
+          });
+          
+          /* 🔍 ===== VALIDATION FUNCTION: Main Logic ===== */
+          
+          const checkNumber = () => {
+              /* 🔍 ARROW FUNCTION: Modern JS syntax for functions */
+              /* Arrow functions provide cleaner syntax for function expressions */
+              
+              const phoneNumber = input.value;
+              /* 📱 GET INPUT: Capture what user typed */
+              /* Storing the value in a variable prevents multiple DOM accesses */
+              
+              const phoneResult = document.createElement("div");
+              /* 📋 CREATE ELEMENT: New div for showing result */
+              /* document.createElement dynamically generates new HTML elements */
+              /* This approach is more secure than using innerHTML */
+              
+              phoneResult.classList.add("phone-result");
+              /* 🎨 ADD CLASS: Apply base styling to result */
+              /* classList.add is the modern way to manipulate element classes */
+          
+              if (phoneRegex.test(phoneNumber)) {
+                  /* ✅ VALIDATION TEST: Does number match the pattern? */
+                  /* The test() method returns true if the regex pattern matches */
+                  /* This is more efficient than using match() for simple validation */
+                  
+                  phoneResult.textContent = `Valid US number: ${phoneNumber}`;
+                  /* 📝 SUCCESS MESSAGE: Show valid message with number */
+                  /* textContent is both faster and safer than innerHTML */
+                  /* Template literals (``) allow embedding variables directly in strings */
+                  
+                  phoneResult.innerHTML = phoneResult.innerHTML.replace(': ', ':<br>');
+                  /* 📏 LINE BREAK: Add break after the colon */
+                  /* This approach safely modifies only known content after sanitization */
+                  /* First setting textContent prevents XSS, then HTML modification is safer */
+                  
+                  phoneResult.classList.add("result-valid");
+                  /* 🎨 SUCCESS CLASS: Apply blue color styling */
+                  /* Adding this class changes text color to indicate success */
+                  
+              } else {
+                  /* ❌ VALIDATION FAILED: Number doesn't match pattern */
+                  /* The regex test returned false */
+                  
+                  phoneResult.textContent = `Invalid US number: ${phoneNumber}`;
+                  /* 📝 ERROR MESSAGE: Show invalid message with number */
+                  /* Using the same format creates consistency in the results display */
+                  
+                  phoneResult.innerHTML = phoneResult.innerHTML.replace(': ', ':<br>');
+                  /* 📏 LINE BREAK: Same formatting as valid results */
+                  /* Consistency in formatting improves readability of results */
+                  
+                  phoneResult.classList.add("result-invalid");
+                  /* 🎨 ERROR CLASS: Apply gray color styling */
+                  /* Visual differentiation between valid and invalid results */
+              }
+          
+              resultsDiv.insertBefore(phoneResult, resultsDiv.firstChild);
+              /* ⬆️ INSERT AT TOP: New results appear at the top */
+              /* insertBefore places the new element before the specified reference node */
+              /* Using firstChild as reference puts new results at the beginning */
+              /* This creates a reverse-chronological display (newest first) */
+              
+              limitResults();
+              /* 🧹 CLEAN UP: Limit number of displayed results */
+              /* Calling this after each addition maintains the result count limit */
+              
+              input.value = "";
+              /* 🧹 CLEAR INPUT: Ready for next number */
+              /* Emptying the input field improves user experience for multiple checks */
+          }
+          
+          /* ✨ ===== BUTTON ANIMATION: Visual Feedback ===== */
+          
+          buttons.forEach(button => {
+              /* 🔄 LOOP THROUGH BUTTONS: Apply to all buttons */
+              /* forEach iterates through all elements in the NodeList */
+              /* This applies the same effect to both Check and Clear buttons */
+              
+              button.addEventListener("click", () => {
+                  /* 🖱️ CLICK LISTENER: When button is pressed */
+                  /* This adds visual feedback for button activation */
+                  
+                  button.classList.add("clicked");
+                  /* ✨ PRESSED STATE: Add class for visual effect */
+                  /* The "clicked" class applies the visual changes defined in CSS */
+                  
+                  setTimeout(() => button.classList.remove("clicked"), 200);
+                  /* ⏱️ TEMPORARY EFFECT: Remove class after 200ms */
+                  /* setTimeout creates a delayed action - removing the class */
+                  /* 200ms is fast enough to feel responsive but long enough to be visible */
+              });
+          });
+          
+          /* 🧹 ===== RESULTS LIMITER: Prevent Performance Issues ===== */
+          
+          const limitResults = () => {
+              /* 🧹 CLEANUP FUNCTION: Removes excess results */
+              /* Performance optimization to prevent memory and rendering issues */
+              
+              const results = resultsDiv.children;
+              /* 📋 GET ALL RESULTS: Collection of result elements */
+              /* The children property returns a live HTMLCollection */
+              
+              while (results.length > maxResult) {
+                  /* 🔄 LOOP: While there are too many results */
+                  /* This while loop continues until we're under the limit */
+                  
+                  resultsDiv.removeChild(results[results.length - 1]);
+                  /* 🗑️ REMOVE OLDEST: Delete the last (bottom) result */
+                  /* Since new results are added at the top, the oldest are at the bottom */
+                  /* This creates a "rolling history" effect like many mobile notifications */
+              }
+          }
+          
+          /* 🧹 ===== CLEAR BUTTON: Reset Everything ===== */
+          
+          clearBtn.addEventListener("click", (e) => {
+              /* 🖱️ CLICK LISTENER: When Clear button is pressed */
+              /* Provides a way to reset the app state completely */
+              
+              e.preventDefault();
+              /* 🛑 PREVENT DEFAULT: Extra security */
+              /* Although type="button" shouldn't submit, this is extra protection */
+              
+              input.value = "";
+              /* 🧹 EMPTY INPUT: Clear the text field */
+              /* Removes any entered phone number */
+              
+              resultsDiv.innerHTML = "";
+              /* 🧹 EMPTY RESULTS: Remove all validation history */
+              /* innerHTML = "" is the fastest way to remove all child elements */
+              /* In this context it's safe since we're not inserting untrusted content */
+          });
+        </script>
+    </body>    
+</html>
+
+<!-- 🎯 ===== METRO UI PHONE CHECKER SUMMARY ===== -->
+<!-- 
+📱 APP ARCHITECTURE:
+│
+├── 🧠 HEAD (setup)
+│   └── 🎨 CSS with Metro-inspired design:
+│       ├── 📱 Mobile-first responsive approach
+│       ├── 🔵 Clean color scheme with blue accent
+│       ├── 🔤 Geometric sans-serif typography
+│       └── 📱 HTC One (M8) device simulation on desktop
+│
+├── 📄 BODY (interface)
+│   ├── 📱 Device frame (desktop-only)
+│   └── 📱 App interface
+│       ├── 📑 Bold app title
+│       ├── 📝 Phone number input field
+│       ├── 🔘 Check and Clear buttons
+│       └── 📋 Results history area
+│
+└── 🧮 JAVASCRIPT (logic)
+    ├── 🔍 US phone regex pattern
+    ├── 🔄 Validation function with security measures
+    ├── ✨ Button animation for tactile feedback
+    └── 🧹 History management functions
+
+🎨 METRO DESIGN PRINCIPLES:
+├── ⬜ Clean rectangular elements
+├── 🔤 Typography as interface (content over chrome)
+├── 🔵 Strategic use of accent color
+├── ✨ Subtle animations for feedback
+└── 📱 Content-first responsive layout
+
+🧠 REGEX VALIDATION CAPABILITIES:
+├── ✅ Multiple US formats (5555555555, 555-555-5555, etc.)
+├── ✅ Optional country code handling
+├── ✅ Flexible separator support (spaces, hyphens)
+└── ❌ Rejection of invalid formats with clear feedback
+
+A perfect example of Metro UI design principles brought to the web! 📱✨
+-->
+
+
+
+
+
+
+
+
+
+
+
+<!-- ===== ITALIAN VERSION ===== -->
+
+<!DOCTYPE html>
+<!-- 🎯 DICHIARAZIONE HTML5: "Benvenuti nello sviluppo Metro UI!" -->
+<!-- È come annunciare la versione del sistema operativo prima di lanciare un'app mobile! 📱 -->
+
+<html lang="en">
+<!-- 🌍 CONTENITORE PRINCIPALE: La nostra applicazione di validazione in stile Metro -->
+<!-- lang="en" = Inglese, la lingua di questa moderna interfaccia mobile! -->
+
+    <head>
+        <!-- 🧠 IL CENTRO DI COMANDO: Dove prepariamo la nostra applicazione Metro UI -->
+        <!-- Qui vengono definite tutte le risorse della pagina, proprio come il "sotto il cofano" del registro di sistema in Metro! ⚙️ -->
+        
+        <title>Phone Checker</title>
+        <!-- 📑 TITOLO APP: Semplice e diretto come la filosofia di design Metro -->
+        <!-- Segue il principio "contenuto prima dell'ornamento" - concentrandosi sull'informazione, non sulla decorazione -->
+        
+        <meta charset="UTF-8" />
+        <!-- 📝 CODIFICA CARATTERI: UTF-8 supporta i formati telefonici globali! -->
+        <!-- Assicura che la nostra app gestisca correttamente i prefissi internazionali e i simboli -->
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- 📱 DESIGN RESPONSIVE: "Questa app si adatta a qualsiasi dispositivo mobile!" -->
+        <!-- Proprio come Metro UI è stato progettato per adattarsi perfettamente da piccoli telefoni a schermi più grandi -->
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <!-- 🚀 PRECONNESSIONI: Ottimizzazione della velocità per il caricamento dei font -->
+        <!-- Migliorano le prestazioni percepite, simile a come Metro era ottimizzato per la reattività anche su hardware modesto -->
+        
+        <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+        <!-- 🔤 CARICAMENTO FONT: Font Inter con tutti i pesi e stili -->
+        <!-- Inter offre quella tipografia pulita e geometrica che ricorda Segoe UI -->
+        <!-- I font variabili (100..900) ci danno la flessibilità per abbinare il sistema tipografico delle moderne UI mobili -->
+        
+        <style>
+          /* 🎨 ===== STILI CSS: Creazione della Nostra UI Ispirata a Metro ===== */
+          
+          /* 📱 ===== STRATEGIA RESPONSIVE ===== */
+          /* 🔄 APPROCCIO MOBILE-FIRST: Il default è mobile, desktop richiede una media query */
+          /* Questo riflette la filosofia di sviluppo incentrata sul mobile emersa con le moderne piattaforme mobili */
+          /* I dispositivi mobili caricano solo il CSS essenziale - ottimizzando sia le prestazioni che la durata della batteria */
+          
+          
+          /* 🌐 ===== VARIABILI UNIVERSALI: Condivise Tra Tutti i Dispositivi ===== */
+          
+          :root {
+              /* 🔤 SISTEMA TIPOGRAFICO */
+              --font-family: "Inter", Arial, sans-serif;
+              /* 🔤 STACK DEI FONT: Inter imita il sans-serif geometrico delle moderne UI mobili */
+              /* La gerarchia tipografica è cruciale per il caratteristico aspetto "digital-first" del design Metro */
+              
+              --font-color: #000;
+              /* ⚫ TESTO NERO: L'alto contrasto è un principio fondamentale del linguaggio di design Metro */
+              /* Ciò migliora la leggibilità anche in condizioni di illuminazione esterna intensa */
+              
+              --font-weight-primary: 400;
+              /* 📝 PESO REGOLARE: Il design Metro usa strategicamente il peso della tipografia */
+              /* 400 fornisce una leggibilità ottimale mantenendo un aspetto leggero e moderno */
+              
+              --result-font-weight: 450;
+              /* 📋 LEGGERMENTE GRASSETTO: Per i risultati, tra normale e medio */
+              /* Questa sottile enfasi aiuta a distinguere i dati importanti senza essere invadente */
+              
+              /* 🎨 PALETTE COLORI */
+              --tribute-font-color: #002B4E;
+              /* 🔵 BLU PROFONDO: Per il link di tributo, abbinato al distintivo colore di accento */
+              /* Questa particolare tonalità era comune nei design mobili di Microsoft */
+              
+              --user-input-placeholder-font-color: #808080;
+              /* 🔘 GRIGIO MEDIO: Per i placeholder, creando sottigliezza nell'interfaccia */
+              /* Il grigio era usato ampiamente in Metro per informazioni secondarie */
+              
+              --user-input-color-fill: #FFF;
+              /* ⚪ SFONDO BIANCO: Per i campi di input, seguendo l'estetica pulita dei tile */
+              /* Crea l'impressione di "carta" digitale per l'inserimento dei dati */
+              
+              --button-color-fill: #FFF;
+              /* ⚪ PULSANTI BIANCHI: Stato predefinito, ispirato al paradigma dei tile */
+              /* Pulsanti come "live tile" che rispondono all'interazione dell'utente */
+              
+              --button-color-fill-hover: #0369BC;
+              /* 🔵 ACCENTO BLU: Quando i pulsanti sono attivi, abbinato al sistema di colori di accento */
+              /* Questa particolare tonalità era presente in modo prominente nell'interfaccia mobile */
+              
+              --button-font-color-hover: #fff;
+              /* ⚪ TESTO BIANCO: Sui pulsanti colorati, garantisce la leggibilità quando attivi */
+              /* L'alto contrasto tra testo e sfondo è una firma di Metro */
+              
+              --result-valid-font-color: #0369BC;
+              /* 🔵 SUCCESSO BLU: Risultati validi, usando il blu di accento del sistema */
+              /* La codifica a colori fornisce un feedback visivo istantaneo sullo stato di validazione */
+              
+              --result-invalid-font-color: #787878;
+              /* 🔘 ERRORE GRIGIO: Risultati non validi, indicazione di errore sottile */
+              /* Il grigio veniva spesso utilizzato per stati disabilitati o non validi nelle interfacce Metro */
+              
+              /* ✨ ANIMAZIONI */
+              --result-animation: slideInFade 0.4s cubic-bezier(0.2, 1, 0.3, 1);
+              /* 🎞️ INGRESSO FLUIDO: Le moderne UI mobili hanno aperto la strada ad animazioni fluide */
+              /* Questo specifico cubic-bezier crea la caratteristica sensazione "ease-out" che rende gli elementi reattivi ma fluidi */
+              /* La durata di 0.4s è attentamente scelta per risultare immediata ma percettibile */
+          }
+          
+          
+          /* 📱 ===== VERSIONE MOBILE: Impostazioni Predefinite ===== */
+          
+          :root {
+              /* 🖼️ SFONDO */
+              --background-color: #FFF;
+              /* ⚪ TELA BIANCA: La base pulita che ha definito il linguaggio di design Metro */
+              /* Gli sfondi bianchi massimizzano la leggibilità e minimizzano il consumo della batteria sugli schermi OLED */
+              
+              /* 📐 SPAZIATURA E POSIZIONAMENTO */
+              --tribute-margin-top: 36px;
+              /* ⬆️ PADDING SUPERIORE: Le moderne UI mobili usano generosi spazi bianchi */
+              /* 36px crea uno spazio di respiro che migliora la concentrazione sul contenuto */
+              
+              --title-margin-top: 18px;
+              /* ⬆️ POSIZIONE TITOLO: Metà del margine del tributo */
+              /* Questo crea un ritmo matematico nel sistema di spaziatura */
+              
+              --label-margin-top: 32px;
+              /* ⬆️ SPAZIATURA ETICHETTA: Creazione di un ritmo verticale coerente */
+              /* La spaziatura di 32px deriva dal sistema a griglia di 8px che sta alla base del design Metro */
+              
+              --user-input-margin-top: 26px;
+              /* ⬆️ POSIZIONE INPUT: Sotto l'etichetta */
+              /* 26px è approssimativamente 3 volte l'unità di base della griglia di 8px */
+              
+              --button-group-margin-top: 26px;
+              /* ⬆️ POSIZIONAMENTO PULSANTI: Spazio dopo l'input */
+              /* Mantenendo la stessa spaziatura dell'input per armonia visiva */
+              
+              --result-margin-top-first: 48px;
+              /* ⬆️ SPAZIATURA PRIMO RISULTATO: Separazione verticale prominente */
+              /* 48px (6x unità griglia) crea una sezione distinta per i risultati */
+              
+              --result-margin-bottom: 32px;
+              /* ⬇️ MARGINE INFERIORE RISULTATO: Spazio tra i risultati */
+              /* 32px (4x unità griglia) mantiene il ritmo stabilito */
+              
+              /* 🔤 DIMENSIONI TIPOGRAFICHE */
+              --tribute-font-size: 16px;
+              /* 📝 TESTO TRIBUTO: Dimensione testo standard per mobile */
+              /* 16px è la dimensione di base del carattere in molti design mobili - bilanciando leggibilità ed efficienza dello spazio */
+              
+              --title-font-size: 42px;
+              /* 📑 TITOLO APP: Le intestazioni grandi e audaci erano una caratteristica distintiva di Metro UI */
+              /* La dimensione di 42px crea una presenza imponente senza sopraffare l'interfaccia */
+              
+              --label-result-font-size: 24px;
+              /* 🏷️ ETICHETTE E RISULTATI: Dimensione prominente per leggibilità */
+              /* 24px era comunemente usato per le intestazioni secondarie nel linguaggio di design Metro */
+              
+              --user-input-placeholder-button-font-size: 18px;
+              /* 📝 TESTO INPUT E PULSANTI: Dimensione comoda per l'interazione */
+              /* 18px bilancia la leggibilità con le dimensioni dell'area di tocco */
+              
+              /* 🔲 BORDI */
+              --user-input-button-border: 2.373px solid #000;
+              /* 📐 LARGHEZZA BORDO: I bordi in grassetto fanno riferimento al design basato sui tile */
+              /* Il valore specifico di 2.373px crea un rendering perfetto su schermi ad alta densità di pixel */
+              
+              /* 📝 CAMPO INPUT */
+              --user-input-padding-left-right: 0 12px;
+              /* 📏 PADDING ORIZZONTALE: Spazio all'interno dell'input */
+              /* 12px impedisce al testo di toccare i bordi, migliorando la leggibilità */
+              
+              --user-input-height: 43.5px;
+              /* 📏 ALTEZZA INPUT: Abbastanza alto per un comodo tocco */
+              /* 43.5px garantisce che l'area di tocco soddisfi le linee guida di accessibilità */
+              
+              --user-input-border-hover-active: 2.373px solid #0369BC;
+              /* 🔵 BORDO FOCUS: Accento blu quando attivo */
+              /* Mantiene la stessa larghezza del bordo ma cambia colore per indicare lo stato */
+              
+              /* 🔘 PULSANTI */
+              --button-group-gap: 6px;
+              /* 📏 SPAZIATURA PULSANTI: Distanza tra Verifica e Cancella */
+              /* 6px fornisce separazione visiva senza spazio eccessivo */
+              
+              --button-height: 43.5px;
+              /* 📏 ALTEZZA PULSANTE: Uguale all'input per coerenza visiva */
+              /* Creazione di un allineamento armonioso tra elementi di interfaccia correlati */
+              
+              /* 📋 RISULTATI */
+              --result-font-size: 24px;
+              /* 📏 DIMENSIONE TESTO RISULTATO: Grande e leggibile */
+              /* 24px garantisce che i risultati siano prominenti e immediatamente visibili */
+              
+              --result-line-height: 40px;
+              /* 📏 ALTEZZA LINEA: Spaziatura generosa per la leggibilità */
+              /* L'altezza della linea di 40px (circa 1.67x la dimensione del font) migliora la separazione del testo */
+          }
+          
+          
+          /* 🖥️ ===== VERSIONE DESKTOP: Simulatore Telefono ===== */
+          
+          @media (min-width: 560px) and (min-height: 730px) {
+          /* 📐 SOGLIA DIMENSIONI: Mostra il frame del dispositivo solo quando lo schermo è abbastanza grande */
+          /* Le specifiche dimensioni 560px × 730px garantiscono che il frame del telefono si adatti comodamente */
+          /* Questo è simile a come l'emulatore di Microsoft richiedeva dimensioni minime */
+          
+          :root {
+              /* 🖼️ SFONDO */
+              --background-color: #002B4E;
+              /* 🔵 TELA BLU PROFONDO: Il distintivo colore del marchio per l'ambiente desktop */
+              /* Questo colore era presente in modo prominente negli strumenti di sviluppo mobile di Microsoft */
+              
+              /* 📐 SPAZIATURA & POSIZIONAMENTO: Più compatto per il frame del telefono */
+              --tribute-margin-top: 20px;
+              --title-margin-top: 8px;
+              --label-margin-top: 18px;
+              --user-input-margin-top: 18px;
+              --button-group-margin-top: 18px;
+              --result-margin-top-first: 40px;
+              --result-margin-bottom: 22px;
+              /* ⬆️⬇️ TUTTE LE DIMENSIONI: Ridotte per adattarsi al frame del telefono */
+              /* Ogni valore è approssimativamente il 70% del suo corrispettivo mobile */
+              
+              /* 🔤 DIMENSIONI TIPOGRAFICHE: Più piccole per lo schermo del telefono */
+              --tribute-font-size: 12px;
+              --title-font-size: 32px;
+              --label-result-font-size: 18px;
+              --user-input-placeholder-button-font-size: 14px;
+              /* 📝 TESTO PIÙ PICCOLO: Proporzioni migliori per il simulatore del telefono */
+              /* La riduzione mantiene le proporzioni originali adattandosi allo spazio più limitato */
+              
+              /* 🔲 BORDI: Più sottili per la simulazione del telefono */
+              --user-input-button-border: 1.7px solid #000;
+              
+              /* 📝 CAMPO INPUT: Ridimensionato per il telefono */
+              --user-input-padding-left-right: 0 10px;
+              --user-input-height: 31px;
+              --user-input-border-hover-active: 1.7px solid #0369BC;
+              
+              /* 🔘 PULSANTI: Ridimensionati per il telefono */
+              --button-group-gap: 4px;
+              --button-height: 31px;
+              
+              /* 📱 FRAME DISPOSITIVO: La simulazione dell'HTC One (M8) */
+              --device-frame-width: 332px;
+              /* 📏 LARGHEZZA TELEFONO: Dimensione accurata dell'HTC One (M8) */
+              /* Questo era uno dei dispositivi Windows Phone di punta */
+              
+              --device-frame-height: 680px;
+              /* 📏 ALTEZZA TELEFONO: Mantiene il rapporto di aspetto autentico */
+              /* L'M8 aveva un rapporto di aspetto 16:9, tipico per la sua epoca */
+              
+              --device-frame-background: url("https://github.com/user-attachments/assets/817a409b-2181-4eab-8c9c-8ed38ad5e080");
+              /* 🖼️ IMMAGINE TELEFONO: Immagine di sfondo del frame del dispositivo */
+              /* Mostra i caratteristici doppi altoparlanti frontali e i pulsanti capacitivi */
+              
+              /* 📱 SCHERMO DISPOSITIVO: L'area del display all'interno del frame del telefono */
+              --device-screen-width: 294px;
+              /* 📏 LARGHEZZA SCHERMO: Tiene conto delle cornici laterali */
+              /* L'M8 aveva cornici laterali relativamente sottili per il suo tempo */
+              
+              --device-screen-height: 521px;
+              /* 📏 ALTEZZA SCHERMO: Tiene conto delle cornici superiore/inferiore */
+              /* La cornice superiore ospita i sensori, quella inferiore i pulsanti di navigazione */
+              
+              --device-screen-background: #fff;
+              /* ⚪ COLORE SCHERMO: Lo sfondo bianco si adatta al linguaggio di design Metro */
+              /* L'alto contrasto migliora la leggibilità e la chiarezza dell'interfaccia utente */
+              
+              --device-screen-top: 72px;
+              /* ⬆️ POSIZIONE SCHERMO: Distanza dalla parte superiore del frame */
+              /* Posizionato con precisione per allinearsi con l'immagine del dispositivo */
+              
+              --device-screen-left: 19px;
+              /* ⬅️ POSIZIONE SCHERMO: Distanza dal lato sinistro del frame */
+              /* Crea un allineamento perfetto con l'immagine della cornice del dispositivo */
+              
+              --device-screen-padding: 0 20px;
+              /* 📏 PADDING INTERNO: Spazio all'interno dello schermo per il contenuto */
+              /* 20px di padding orizzontale imita i tipici margini delle app */
+              
+              /* 📋 RISULTATI: Ridimensionati per il telefono */
+              --result-font-size: 18px;
+              --result-line-height: 30px;
+          }
+          
+          .device-frame {
+              position: absolute;
+              top: 49%;
+              /* ⬆️ POSIZIONE VERTICALE: 49% invece di 50% per equilibrio visivo */
+              /* Questo leggero aggiustamento compensa il peso visivo del frame del telefono */
+              
+              left: 50%;
+              /* ⬅️ POSIZIONE ORIZZONTALE: Perfettamente centrato */
+              
+              transform: translate(-50%, -50%);
+              /* 🔄 TECNICA DI CENTRATURA: Sposta l'elemento indietro della metà delle sue dimensioni */
+              /* Questo trucco CSS garantisce una centratura perfetta indipendentemente dalle dimensioni dell'elemento */
+              /* Transform usa l'accelerazione GPU per un rendering più fluido */
+              
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              /* 📦 FLEXBOX: Centra i contenuti verticalmente */
+              
+              text-align: center;
+              /* ⚖️ ALLINEAMENTO TESTO: Centra il testo all'interno */
+              
+              width: var(--device-frame-width);
+              height: var(--device-frame-height);
+              /* 📏 DIMENSIONI FRAME: Utilizzo delle variabili definite sopra */
+              
+              background-image: var(--device-frame-background);
+              /* 🖼️ IMMAGINE TELEFONO: Mostra il dispositivo HTC One (M8) for Windows */
+          }
+          
+          .device-screen {
+              width: var(--device-screen-width);
+              height: var(--device-screen-height);
+              /* 📏 DIMENSIONI SCHERMO: L'area di visualizzazione attiva */
+              
+              background-color: var(--device-screen-background); 
+              /* ⚪ SFONDO BIANCO: Si abbina al linguaggio di design Metro */
+              
+              top: var(--device-screen-top);
+              left: var(--device-screen-left);
+              /* 📍 POSIZIONAMENTO: Posizionamento preciso all'interno dell'immagine del frame */
+              /* Questi valori allineano l'area dello schermo con il display visivo nell'immagine del frame */
+              
+              padding: var(--device-screen-padding);
+              /* 📏 MARGINE INTERNO: La spaziatura del contenuto rispetta le linee guida delle app mobili */
+              
+              position: absolute;
+              /* 📍 POSIZIONAMENTO ASSOLUTO: Relativo al frame del dispositivo */
+              
+              text-align: left;
+              /* ⬅️ ALLINEAMENTO TESTO: Il contenuto allineato a sinistra segue le linee guida Metro */
+              
+              overflow-y: auto;
+              overflow-x: hidden;
+              /* 📜 SCORRIMENTO: Solo scorrimento verticale */
+              /* Le interfacce Metro utilizzano esclusivamente lo scorrimento verticale - quello orizzontale era solo per panorami */
+              
+              scrollbar-color: transparent transparent;
+              /* 🚫 SCROLLBAR INVISIBILE: Estetica pulita senza distrazioni */
+          }
+          
+          button:hover {
+              background-color: var(--button-color-fill-hover);
+              color: var(--button-font-color-hover);
+              /* 🔄 STATO HOVER: Sfondo blu con testo bianco */
+              /* Effetto solo desktop - le interfacce touch non hanno stati hover */
+              /* Questo fornisce agli utenti desktop un feedback visivo prima del clic */
+          }
+          
+          }
+          
+          
+          /* 🧹 ===== RESET CSS: Pulizia Totale ===== */
+          
+          * {
+              margin: 0;
+              padding: 0;
+              box-sizing: border-box;
+              /* 📦 BOX-SIZING: Include padding e bordi nelle dimensioni dell'elemento */
+              /* Questo crea layout prevedibili simili al rigoroso sistema a griglia di Metro */
+              /* Senza questo, l'aggiunta di bordi o padding romperebbe il layout accuratamente calcolato */
+          }
+          
+          body {
+              background-color: var(--background-color);
+              /* 🎨 SFONDO: Bianco su mobile, blu su desktop */
+              
+              font-family: var(--font-family);
+              /* 🔤 FONT: Inter, con qualità geometriche simili alla moderna tipografia mobile */
+              
+              color: var(--font-color);
+              /* ⚫ COLORE TESTO: Il nero fornisce la massima leggibilità sul bianco */
+          }
+          
+          .container {
+              display: flex;
+              flex-direction: column;
+              /* 📦 LAYOUT VERTICALE: Il contenuto scorre dall'alto verso il basso */
+              /* Questo imita il paradigma di scorrimento verticale delle moderne UI mobili */
+              
+              padding: 0 24px;
+              /* 📏 PADDING LATERALE: Lo spazio di respiro impedisce al contenuto di toccare i bordi */
+              /* 24px è un incremento comune di spaziatura nei sistemi di design mobile */
+              
+              min-height: 100vh; /* Fallback per browser che non supportano dvh */
+              min-height: 100dvh; /* È un viewport dinamico: impedisce salti quando la barra degli URL del browser mobile si attiva/disattiva */
+              /* 📏 ALTEZZA COMPLETA: Garantisce che l'app riempia l'intero schermo */
+              /* dvh = dynamic viewport height, risolve il famoso problema dell'interfaccia del browser mobile */
+              /* Quando la barra degli indirizzi appare/scompare, dvh si adatta automaticamente */
+          }
+          
+          .tribute, label, #user-input, button {
+              font-weight: var(--font-weight-primary);
+              /* 🔤 PESO FONT: Regular 400 per la maggior parte degli elementi */
+              /* Un peso uniforme crea armonia in tutta l'interfaccia */
+          }
+          
+          
+          .tribute {
+              margin-top: var(--tribute-margin-top);
+              /* ⬆️ SPAZIATURA SUPERIORE: Il primo elemento necessita di più spazio dall'alto */
+              
+              font-size: var(--tribute-font-size);
+              /* 🔤 TESTO PICCOLO: L'attribuzione sottile non compete con il contenuto principale */
+          }
+          
+          .tribute a {
+              position: relative;
+              /* 📍 POSIZIONAMENTO: Posizione base per potenziali effetti hover */
+              
+              color: var(--tribute-font-color);
+              /* 🔵 LINK BLU: Utilizza il colore di accento per elementi interattivi */
+              
+              text-decoration: none;
+              /* 🚫 NESSUNA SOTTOLINEATURA: Design pulito e minimale secondo i principi Metro */
+          }
+          
+          h1 {
+              margin-top: var(--title-margin-top);
+              /* ⬆️ SPAZIO DOPO IL TRIBUTO: Crea gerarchia visiva */
+              
+              font-weight: var(--font-weight-primary);
+              /* 🔤 PESO REGOLARE: Il design Metro spesso usava peso regolare con dimensioni maggiori */
+              /* Questo crea un aspetto moderno distintivo diverso dalle intestazioni tradizionali in grassetto */
+              
+              font-size: var(--title-font-size);
+              /* 🔤 DIMENSIONE GRANDE: La dimensione crea impatto senza bisogno di grassetto */
+          }
+          
+          label {
+              margin-top: var(--label-margin-top);
+              /* ⬆️ SPAZIO DOPO IL TITOLO: Stabilisce sezioni visive */
+              
+              display: block;
+              /* 📦 DISPLAY BLOCK: Occupa tutta la larghezza, crea una nuova riga */
+              
+              font-size: var(--label-result-font-size);
+              /* 🔤 DIMENSIONE MEDIA: Prominente ma non in competizione con il titolo */
+          }
+          
+          #user-input, button {
+              font-size: var(--user-input-placeholder-button-font-size);
+              /* 🔤 TESTO INPUT/PULSANTE: Dimensionamento coerente per elementi interattivi */
+              
+              border: var(--user-input-button-border);
+              /* 🔲 BORDO NERO: I bordi audaci e distintivi erano una firma Metro */
+          }
+          
+          #user-input {
+              margin-top: var(--user-input-margin-top);
+              /* ⬆️ SPAZIO DOPO L'ETICHETTA: Raggruppa visivamente etichetta e input */
+              
+              width: 100%;
+              /* 📏 LARGHEZZA COMPLETA: Occupa l'intera larghezza del contenitore per massimizzare l'area di input */
+              
+              height: var(--user-input-height);
+              /* 📏 ALTEZZA: Abbastanza alto per un facile tocco su mobile */
+              
+              background-color: var(--user-input-color-fill);
+              /* ⚪ SFONDO BIANCO: L'area di input pulita migliora la concentrazione */
+              
+              padding: var(--user-input-padding-left-right);
+              /* 📏 PADDING LATERALE: Impedisce al testo di toccare i bordi */
+          }
+          
+          #user-input::placeholder {
+              color: var(--user-input-placeholder-font-color);
+              /* 🔘 PLACEHOLDER GRIGIO: Testo suggerimento sottile */
+              /* I placeholder usano un contrasto inferiore per differenziarsi dall'input effettivo */
+          }
+          
+          
+          #user-input:active, #user-input:focus {
+              border: var(--user-input-border-hover-active);
+              /* 🔵 BORDO BLU: Mostra lo stato di focus usando il colore di accento */
+              /* Questo feedback visivo è cruciale per comprendere lo stato del sistema */
+              
+              outline: none;
+              /* 🚫 NESSUN OUTLINE: Sostituisce il default del browser con il nostro bordo personalizzato */
+          }
+          
+          .button-group {
+              margin-top: var(--button-group-margin-top);
+              /* ⬆️ SPAZIO DOPO L'INPUT: Mantiene il ritmo verticale */
+              
+              display: flex;
+              /* 📦 LAYOUT ORIZZONTALE: Pulsanti disposti fianco a fianco */
+              /* Questo approccio al raggruppamento dei pulsanti è diventato comune nelle UI mobili */
+              
+              gap: var(--button-group-gap);
+              /* 📏 SPAZIATURA PULSANTI: Spazio tra pulsanti adiacenti */
+          }
+          
+          button {
+              flex: 1;
+              /* 📦 LARGHEZZA UGUALE: I pulsanti condividono equamente lo spazio disponibile */
+              /* Questo crea equilibrio visivo e massimizza le aree di tocco */
+              
+              height: var(--button-height);
+              /* 📏 ALTEZZA PULSANTE: Uguale all'input per coerenza */
+              
+              background-color: var(--button-color-fill);
+              /* ⚪ SFONDO BIANCO: Aspetto pulsante pulito */
+              
+              border: var(--user-input-button-border);
+              /* 🔲 BORDO NERO: Il bordo in grassetto definisce l'area interattiva */
+              
+              cursor: pointer;
+              /* 👆 CURSORE MANO: Indicatore visivo di cliccabilità */
+              
+              color: var(--font-color);
+              /* ⚫ TESTO NERO: Alto contrasto per leggibilità */
+          }
+          
+          button.clicked {
+              background-color: var(--button-color-fill-hover);
+              /* 🔵 SFONDO BLU: Quando cliccato, usa il colore di accento */
+              
+              color: var(--button-font-color-hover);
+              /* ⚪ TESTO BIANCO: Garantisce leggibilità su sfondo colorato */
+              
+              transform: perspective(400px) rotateX(2deg) rotateY(-2deg) scale(0.98);
+              /* 🔄 EFFETTO PRESSIONE 3D: Sottile animazione che imita la pressione fisica del pulsante */
+              /* Questo crea la sensazione tattile che era rivoluzionaria nelle interfacce touch */
+              /* La prospettiva e la rotazione creano una leggera "inclinazione" mentre lo scaling crea la "pressione" */
+          }
+          
+          .phone-result {
+              text-align: center;
+              /* ⚖️ RISULTATI CENTRATI: Enfatizza il risultato */
+              
+              font-size: var(--result-font-size);
+              /* 🔤 DIMENSIONE RISULTATO: Il testo grande rende i risultati immediatamente visibili */
+              
+              line-height: var(--result-line-height);
+              /* 📏 INTERLINEA: Generosa per massima leggibilità */
+              
+              margin-bottom: var(--result-margin-bottom);
+              /* ⬇️ MARGINE INFERIORE: Spazio tra più risultati */
+              
+              font-weight: var(--result-font-weight); 
+              /* 🔤 SEMI-GRASSETTO: Leggermente più grassetto del testo normale per enfasi */
+              
+              animation: var(--result-animation);
+              /* ✨ ANIMAZIONE ENTRATA: L'apparizione fluida aggiunge raffinatezza */
+              /* L'animazione era una parte fondamentale per rendere le interfacce digitali vive */
+          }
+          
+          .phone-result::after {
+              content: "";
+              display: block;
+              /* 📏 BLOCCO INVISIBILE: Crea spazio dopo ogni risultato */
+              /* Questo pseudo-elemento crea spaziatura aggiuntiva senza markup extra */
+          }
+          
+          .phone-result:first-child {
+              margin-top: var(--result-margin-top-first);
+              /* ⬆️ MARGINE SUPERIORE RISULTATO: Spazio extra prima del primo risultato */
+              /* Crea una netta separazione tra la sezione di input e la sezione dei risultati */
+          }
+          
+          .phone-result.result-valid {
+              color: var(--result-valid-font-color);
+              /* 🔵 SUCCESSO BLU: Utilizza il colore di accento per risultati positivi */
+              /* La codifica a colori dei risultati fornisce un feedback visivo istantaneo */
+          }
+          .phone-result.result-invalid {
+              color: var(--result-invalid-font-color);
+              /* 🔘 ERRORE GRIGIO: Indicazione sottile di numero non valido */
+              /* Il grigio è meno allarmante del rosso ma comunque chiaramente diverso dal successo */
+          }
+          
+          @keyframes slideInFade {
+              0% {
+                  opacity: 0;
+                  transform: translateY(-10px) scale(0.95);
+                  /* 🔄 POSIZIONE INIZIALE: Leggermente sopra e più piccola */
+                  /* Crea l'illusione che gli elementi si "materializzino" in vista */
+              }
+              100% {
+                  opacity: 1;
+                  transform: translateY(0) scale(1);
+                  /* 🔄 POSIZIONE FINALE: Dimensione e posizione normali */
+              }
+              /* ✨ ANIMAZIONE: La transizione fluida di scivolamento e dissolvenza era una firma delle transizioni Metro */
+              /* Questa specifica animazione imita il modo in cui il contenuto apparirebbe durante la navigazione nell'UI */
+          }
+        </style>
+    </head>
+
+    <body>
+        <!-- 📱 ===== IL CORPO: La Nostra Interfaccia App Mobile! ===== -->
+        
+        <main>
+            <!-- 📱 CONTENITORE PRINCIPALE: L'intera applicazione -->
+            <!-- L'elemento semantico <main> identifica l'area di contenuto primaria -->
+            
+            <div class="container">
+                <!-- 📦 CONTENITORE FLESSIBILE: Si adatta a mobile o desktop -->
+                <!-- Questo wrapper mantiene padding e struttura verticale coerenti -->
+                
+                <div class="device-frame">
+                    <!-- 📱 FRAME TELEFONO: Visibile solo su desktop -->
+                    <!-- Simula un dispositivo HTC One (M8) for Windows -->
+                    <!-- Fornisce contesto per gli utenti desktop, mostrando come apparirebbe l'app su un dispositivo reale -->
+                    
+                    <div class="device-screen">
+                        <!-- 📱 SCHERMO TELEFONO: L'interfaccia effettiva dell'applicazione -->
+                        <!-- Questo contenitore rappresenta il viewport del dispositivo mobile -->
+                        
+                        <p class="tribute"><a href="https://www.freecodecamp.org/" target="_blank" rel="noopener noreferrer" aria-label="Visita il sito web di freeCodeCamp (si apre in una nuova scheda)">For freeCodeCamp</a></p>
+                        <!-- 🙏 ATTRIBUZIONE: Credito a freeCodeCamp -->
+                        <!-- target="_blank" si apre in una nuova scheda per una migliore esperienza utente -->
+                        <!-- rel="noopener noreferrer" previene vulnerabilità di sicurezza dai link esterni -->
+                        <!-- aria-label fornisce contesto per i lettori di schermo - fondamentale per l'accessibilità -->
+                        
+                        <h1>Phone Checker</h1>
+                        <!-- 📑 TITOLO APP: Intestazione audace e semplice segue i principi di design Metro -->
+                        <!-- La tipografia sovradimensionata crea un'immediata gerarchia visiva -->
+                        
+                        <form id="phone-form">
+                            <!-- 📋 CONTENITORE FORM: Raggruppa logicamente gli elementi di input -->
+                            <!-- I form forniscono accessibilità da tastiera integrata e gestione dell'invio -->
+                            <!-- L'invio di questo modulo sarà intercettato da JavaScript per prevenire l'aggiornamento della pagina -->
+                            
+                            <label for="user-input">Enter a Phone Number</label>
+                            <!-- 🏷️ ETICHETTA INPUT: Istruzioni chiare guidano l'utente -->
+                            <!-- for="user-input" crea una connessione programmatica con il campo di input -->
+                            <!-- Questa associazione migliora sia l'usabilità che l'accessibilità -->
+                            
+                            <input type="tel" id="user-input" placeholder="1 555-555-5555" />
+                            <!-- 📝 INPUT TELEFONO: Campo specializzato per numeri di telefono -->
+                            <!-- type="tel" attiva la tastiera appropriata sui dispositivi mobili -->
+                            <!-- id="user-input" si collega sia all'etichetta che a JavaScript -->
+                            <!-- placeholder mostra il formato previsto con un esempio realistico -->
+                            
+                            <div class="button-group">
+                                <!-- 🔘 CONTENITORE PULSANTI: Organizza i controlli di azione -->
+                                <!-- I pulsanti raggruppati forniscono funzioni correlate in un'unica unità visiva -->
+                                
+                                <button type="submit" id="check-btn">Check</button>
+                                <!-- ✅ PULSANTE VERIFICA: Azione primaria per la validazione -->
+                                <!-- type="submit" attiva l'invio del form (intercettato da JavaScript) -->
+                                <!-- Fornisce accessibilità da tastiera - può essere attivato con il tasto Invio -->
+                                
+                                <button type="button" id="clear-btn">Clear</button>
+                                <!-- 🧹 PULSANTE CANCELLA: Azione secondaria per il reset -->
+                                <!-- type="button" impedisce l'invio del form -->
+                                <!-- Questo pulsante ripristina sia il campo di input che la cronologia dei risultati -->
+                            </div>
+                            
+                            <div id="results-div"></div>
+                            <!-- 📋 AREA RISULTATI: Visualizza gli esiti della validazione -->
+                            <!-- Inizialmente vuota, JavaScript la popolerà con i risultati -->
+                            <!-- Funge da registro cronologico di tutte le validazioni eseguite -->
+                        </form>
+                    </div>
+                 </div>
+            </div>
+        </main>
+
+        <script>
+          /* 📱 ===== JAVASCRIPT: La Logica dell'App Mobile! ===== */
+          
+          /* 📋 ===== CONFIGURAZIONE APP: Regole di Validazione Telefono ===== */
+          
+          const maxInputLength = 20;
+          /* 📏 LIMITE INPUT: Previene inserimenti eccessivamente lunghi */
+          /* Questa protezione previene input lunghi sia accidentali che malevoli */
+          /* 20 caratteri sono sufficienti anche per formati internazionali complessi */
+          
+          const maxResult = 50;
+          /* 📋 LIMITE CRONOLOGIA: Numero massimo di risultati da mostrare */
+          /* Le prestazioni del DOM peggiorano con troppi elementi - questo previene problemi di memoria */
+          /* 50 voci forniscono una cronologia sostanziale senza impattare le prestazioni */
+          
+          const phoneRegex = /^(1\s?)?(\(\d{3}\)|\d{3})[\s\-]?\d{3}[\s\-]?\d{4}$/;
+          /* 🔍 PATTERN DI VALIDAZIONE: Formati di numeri di telefono USA */
+          /* Le Espressioni Regolari (regex) definiscono pattern di ricerca per la validazione del testo */
+          /* Questo specifico pattern corrisponde a tutti i formati standard dei numeri di telefono USA */
+          
+          /* Questo regex convalida questi formati:
+           * ✅ 5555555555 (10 cifre base)
+           * ✅ 555-555-5555 (con trattini)
+           * ✅ (555)555-5555 (parentesi per prefisso)
+           * ✅ 1 555-555-5555 (con prefisso internazionale)
+           * ✅ 1(555)555-5555 (prefisso internazionale senza spazio)
+           * ❌ 555-5555 (troppo corto - manca il prefisso)
+           * ❌ 2 555-555-5555 (prefisso internazionale non valido - USA è sempre 1)
+           * ❌ 555-555-5555-5 (cifre extra dopo il formato standard)
+           */
+          
+          /* 🔍 Analisi del Regex:
+           * ^ = inizio della stringa (assicura che non ci siano caratteri prima del pattern)
+           * (1\s?)? = prefisso internazionale "1" opzionale con spazio opzionale
+           * (\(\d{3}\)|\d{3}) = prefisso: o (555) o 555
+           * [\s\-]? = separatore opzionale (spazio o trattino) dopo il prefisso
+           * \d{3} = prefisso di zona (esattamente 3 cifre)
+           * [\s\-]? = un altro separatore opzionale
+           * \d{4}$ = numero abbonato (esattamente 4 cifre) e fine stringa
+           */
+          
+          /* 🔗 ===== RIFERIMENTI DOM: Collegamenti agli Elementi UI ===== */
+          
+          const input = document.getElementById("user-input");
+          /* 📝 RIFERIMENTO INPUT: Dove l'utente digita il numero di telefono */
+          /* getElementById fornisce un riferimento diretto agli elementi DOM */
+          /* Questo riferimento consente di leggere e manipolare il campo di input */
+          
+          const checkBtn = document.getElementById("check-btn");
+          /* ✅ PULSANTE VERIFICA: Attiva la validazione */
+          /* Memorizzare il riferimento migliora le prestazioni rispetto a query ripetute */
+          
+          const clearBtn = document.getElementById("clear-btn");
+          /* 🧹 PULSANTE CANCELLA: Ripristina il form */
+          /* I riferimenti ai pulsanti sono necessari per aggiungere i listener di eventi */
+          
+          const resultsDiv = document.getElementById("results-div");
+          /* 📋 CONTENITORE RISULTATI: Dove appaiono i risultati della validazione */
+          /* Questo contenitore ospiterà elementi di risultato creati dinamicamente */
+          
+          const buttons = document.querySelectorAll("button");
+          /* 🔘 TUTTI I PULSANTI: Per applicare effetti di animazione */
+          /* querySelectorAll restituisce una NodeList di tutti gli elementi corrispondenti */
+          
+          /* 🛡️ ===== PREVENZIONE FORM: Blocca l'invio predefinito ===== */
+          
+          document.querySelector("form").addEventListener("submit", (e) => e.preventDefault());
+          /* 🛑 PREVIENI INVIO FORM: Impedisce il ricaricamento pagina all'invio del form */
+          /* I form normalmente ricaricano la pagina quando inviati - questo previene quel comportamento */
+          /* e.preventDefault() annulla l'azione predefinita del browser senza fermare la propagazione */
+          /* Questa tecnica mantiene l'accessibilità del form controllando il comportamento con JS */
+          
+          /* ✅ ===== PULSANTE VERIFICA: Processo di Validazione ===== */
+          
+          checkBtn.addEventListener("click", (e) => {
+              /* 🖱️ ASCOLTA IL CLICK: Quando il pulsante Verifica viene premuto */
+              /* Il listener di eventi collega l'azione dell'utente alla funzionalità dell'app */
+              
+              e.preventDefault();
+              /* 🛑 PREVIENI DEFAULT: Sicurezza extra per bloccare l'invio del form */
+              /* Approccio "cintura e bretelle" - impedisce comunque l'invio se l'evento del form fallisce */
+              
+              if (input.value === "") {
+                  /* ❓ CONTROLLO VUOTO: L'input è vuoto? */
+                  /* Il confronto con stringa vuota intercetta input in bianco */
+                  
+                  alert("Please provide a phone number");
+                  /* ⚠️ AVVISO: Mostra un popup per input vuoto */
+                  /* L'alert() integrato è semplice ma efficace per messaggi di errore */
+                  /* Nelle app di produzione, modali personalizzate fornirebbero una UX migliore */
+                  
+                  return;
+                  /* 🛑 INTERROMPI ESECUZIONE: Non continuare se vuoto */
+                  /* L'istruzione return fa uscire immediatamente dalla funzione */
+              } else if (input.value.length > maxInputLength) {
+                  /* 📏 CONTROLLO LUNGHEZZA: L'input è troppo lungo? */
+                  /* Previene lunghezze eccessive - sia per UX che per sicurezza */
+                  
+                  alert("Phone number too long");
+                  /* ⚠️ AVVISO: Mostra popup per lunghezza eccessiva */
+                  /* Informa l'utente del motivo per cui il suo input è stato rifiutato */
+                  
+                  return;
+                  /* 🛑 INTERROMPI ESECUZIONE: Non continuare se troppo lungo */
+              } else {
+                  /* ✅ TUTTI I CONTROLLI SUPERATI: Procedi con la validazione */
+                  /* L'input ha contenuto ed è entro i limiti di lunghezza */
+                  
+                  checkNumber()
+                  /* 🔄 ESEGUI VALIDAZIONE: Chiama la funzione principale di controllo */
+                  /* Separare la validazione in una funzione dedicata migliora l'organizzazione del codice */
+              }
+          });
+          
+          /* 🔍 ===== FUNZIONE DI VALIDAZIONE: Logica Principale ===== */
+          
+          const checkNumber = () => {
+              /* 🔍 ARROW FUNCTION: Sintassi JS moderna per le funzioni */
+              /* Le arrow function forniscono una sintassi più pulita per le espressioni di funzione */
+              
+              const phoneNumber = input.value;
+              /* 📱 OTTIENI INPUT: Cattura ciò che l'utente ha digitato */
+              /* Memorizzare il valore in una variabile previene accessi multipli al DOM */
+              
+              const phoneResult = document.createElement("div");
+              /* 📋 CREA ELEMENTO: Nuovo div per mostrare il risultato */
+              /* document.createElement genera dinamicamente nuovi elementi HTML */
+              /* Questo approccio è più sicuro rispetto all'uso di innerHTML */
+              
+              phoneResult.classList.add("phone-result");
+              /* 🎨 AGGIUNGI CLASSE: Applica lo stile base al risultato */
+              /* classList.add è il modo moderno per manipolare le classi degli elementi */
+          
+              if (phoneRegex.test(phoneNumber)) {
+                  /* ✅ TEST DI VALIDAZIONE: Il numero corrisponde al pattern? */
+                  /* Il metodo test() restituisce true se il pattern regex corrisponde */
+                  /* È più efficiente rispetto all'uso di match() per validazioni semplici */
+                  
+                  phoneResult.textContent = `Valid US number: ${phoneNumber}`;
+                  /* 📝 MESSAGGIO SUCCESSO: Mostra messaggio valido con numero */
+                  /* textContent è sia più veloce che più sicuro di innerHTML */
+                  /* I template literal (``) permettono di incorporare variabili direttamente nelle stringhe */
+                  
+                  phoneResult.innerHTML = phoneResult.innerHTML.replace(': ', ':<br>');
+                  /* 📏 INTERRUZIONE RIGA: Aggiunge interruzione dopo i due punti */
+                  /* Questo approccio modifica in sicurezza solo contenuto noto dopo la sanitizzazione */
+                  /* Prima impostando textContent si previene XSS, poi la modifica HTML è più sicura */
+                  
+                  phoneResult.classList.add("result-valid");
+                  /* 🎨 CLASSE SUCCESSO: Applica stile colore blu */
+                  /* L'aggiunta di questa classe cambia il colore del testo per indicare il successo */
+                  
+              } else {
+                  /* ❌ VALIDAZIONE FALLITA: Il numero non corrisponde al pattern */
+                  /* Il test regex ha restituito false */
+                  
+                  phoneResult.textContent = `Invalid US number: ${phoneNumber}`;
+                  /* 📝 MESSAGGIO ERRORE: Mostra messaggio non valido con numero */
+                  /* L'uso dello stesso formato crea coerenza nella visualizzazione dei risultati */
+                  
+                  phoneResult.innerHTML = phoneResult.innerHTML.replace(': ', ':<br>');
+                  /* 📏 INTERRUZIONE RIGA: Stessa formattazione dei risultati validi */
+                  /* La coerenza nella formattazione migliora la leggibilità dei risultati */
+                  
+                  phoneResult.classList.add("result-invalid");
+                  /* 🎨 CLASSE ERRORE: Applica stile colore grigio */
+                  /* Differenziazione visiva tra risultati validi e non validi */
+              }
+          
+              resultsDiv.insertBefore(phoneResult, resultsDiv.firstChild);
+              /* ⬆️ INSERISCI IN CIMA: I nuovi risultati appaiono in alto */
+              /* insertBefore posiziona il nuovo elemento prima del nodo di riferimento specificato */
+              /* Usando firstChild come riferimento mette i nuovi risultati all'inizio */
+              /* Questo crea una visualizzazione in ordine cronologico inverso (più recenti in cima) */
+              
+              limitResults();
+              /* 🧹 PULIZIA: Limita il numero di risultati visualizzati */
+              /* Chiamare questo dopo ogni aggiunta mantiene il limite del conteggio dei risultati */
+              
+              input.value = "";
+              /* 🧹 CANCELLA INPUT: Pronto per il prossimo numero */
+              /* Svuotare il campo di input migliora l'esperienza utente per controlli multipli */
+          }
+          
+          /* ✨ ===== ANIMAZIONE PULSANTE: Feedback Visivo ===== */
+          
+          buttons.forEach(button => {
+              /* 🔄 CICLO SUI PULSANTI: Applica a tutti i pulsanti */
+              /* forEach itera attraverso tutti gli elementi nella NodeList */
+              /* Questo applica lo stesso effetto sia al pulsante Verifica che Cancella */
+              
+              button.addEventListener("click", () => {
+                  /* 🖱️ LISTENER CLICK: Quando il pulsante viene premuto */
+                  /* Questo aggiunge feedback visivo per l'attivazione del pulsante */
+                  
+                  button.classList.add("clicked");
+                  /* ✨ STATO PREMUTO: Aggiunge classe per effetto visivo */
+                  /* La classe "clicked" applica le modifiche visive definite nel CSS */
+                  
+                  setTimeout(() => button.classList.remove("clicked"), 200);
+                  /* ⏱️ EFFETTO TEMPORANEO: Rimuove la classe dopo 200ms */
+                  /* setTimeout crea un'azione ritardata - rimuovendo la classe */
+                  /* 200ms è abbastanza veloce per sembrare reattivo ma abbastanza lungo per essere visibile */
+              });
+          });
+          
+          /* 🧹 ===== LIMITATORE RISULTATI: Previene Problemi di Prestazioni ===== */
+          
+          const limitResults = () => {
+              /* 🧹 FUNZIONE DI PULIZIA: Rimuove risultati in eccesso */
+              /* Ottimizzazione delle prestazioni per prevenire problemi di memoria e rendering */
+              
+              const results = resultsDiv.children;
+              /* 📋 OTTIENI TUTTI I RISULTATI: Collezione di elementi risultato */
+              /* La proprietà children restituisce una HTMLCollection live */
+              
+              while (results.length > maxResult) {
+                  /* 🔄 CICLO: Finché ci sono troppi risultati */
+                  /* Questo ciclo while continua finché non siamo sotto il limite */
+                  
+                  resultsDiv.removeChild(results[results.length - 1]);
+                  /* 🗑️ RIMUOVI PIÙ VECCHIO: Elimina l'ultimo risultato (in fondo) */
+                  /* Poiché i nuovi risultati vengono aggiunti in cima, i più vecchi sono in fondo */
+                  /* Questo crea un effetto "cronologia scorrevole" come molte notifiche mobili */
+              }
+          }
+          
+          /* 🧹 ===== PULSANTE CANCELLA: Ripristina Tutto ===== */
+          
+          clearBtn.addEventListener("click", (e) => {
+              /* 🖱️ LISTENER CLICK: Quando il pulsante Cancella viene premuto */
+              /* Fornisce un modo per ripristinare completamente lo stato dell'app */
+              
+              e.preventDefault();
+              /* 🛑 PREVIENI DEFAULT: Sicurezza extra */
+              /* Sebbene type="button" non dovrebbe inviare, questa è una protezione extra */
+              
+              input.value = "";
+              /* 🧹 SVUOTA INPUT: Cancella il campo di testo */
+              /* Rimuove qualsiasi numero di telefono inserito */
+              
+              resultsDiv.innerHTML = "";
+              /* 🧹 SVUOTA RISULTATI: Rimuove tutta la cronologia di validazione */
+              /* innerHTML = "" è il modo più veloce per rimuovere tutti gli elementi figlio */
+              /* In questo contesto è sicuro poiché non stiamo inserendo contenuto non fidato */
+          });
+        </script>
+    </body>    
+</html>
+
+<!-- 🎯 ===== RIASSUNTO DEL VERIFICATORE TELEFONO IN STILE METRO ===== -->
+<!-- 
+📱 ARCHITETTURA DELL'APP:
+│
+├── 🧠 HEAD (setup)
+│   └── 🎨 CSS con design ispirato a Metro:
+│       ├── 📱 Approccio responsive mobile-first
+│       ├── 🔵 Schema colori pulito con accento blu
+│       ├── 🔤 Tipografia sans-serif geometrica
+│       └── 📱 Simulazione del dispositivo HTC One (M8) su desktop
+│
+├── 📄 BODY (interfaccia)
+│   ├── 📱 Frame dispositivo (solo desktop)
+│   └── 📱 Interfaccia app
+│       ├── 📑 Titolo app in grassetto
+│       ├── 📝 Campo di input numero telefonico
+│       ├── 🔘 Pulsanti Verifica e Cancella
+│       └── 📋 Area cronologia risultati
+│
+└── 🧮 JAVASCRIPT (logica)
+    ├── 🔍 Pattern regex per telefoni USA
+    ├── 🔄 Funzione di validazione con misure di sicurezza
+    ├── ✨ Animazione pulsanti per feedback tattile
+    └── 🧹 Funzioni di gestione cronologia
+
+🎨 PRINCIPI DI DESIGN METRO:
+├── ⬜ Elementi rettangolari puliti
+├── 🔤 Tipografia come interfaccia (contenuto prima dell'ornamento)
+├── 🔵 Uso strategico del colore di accento
+├── ✨ Animazioni sottili per feedback
+└── 📱 Layout responsive incentrato sul contenuto
+
+🧠 CAPACITÀ DI VALIDAZIONE REGEX:
+├── ✅ Multipli formati USA (5555555555, 555-555-5555, ecc.)
+├── ✅ Gestione prefisso internazionale opzionale
+├── ✅ Supporto separatori flessibile (spazi, trattini)
+└── ❌ Rifiuto di formati non validi con feedback chiaro
+
+Un perfetto esempio dei principi di design Metro UI portati sul web! 📱✨
+-->
