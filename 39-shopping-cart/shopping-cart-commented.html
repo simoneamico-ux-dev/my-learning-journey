@@ -1,0 +1,1343 @@
+<!-- ===== ENGLISH VERSION ===== -->
+
+<!DOCTYPE html>
+<!-- 🎯 HTML5 DECLARATION: "Welcome to the dessert shop experience!" -->
+<!-- It's like the grand entrance sign to a digital bakery! 🍰 -->
+
+<html lang="en">
+<!-- 🌍 MAIN CONTAINER: Our virtual dessert shopping experience -->
+<!-- lang="en" = English, the universal language of e-commerce! -->
+
+  <head>
+    <!-- 🧠 THE COMMAND CENTER: Where we set up our dessert shopping platform -->
+    <!-- Just like a baker preparing all ingredients before starting to bake! -->
+    
+    <meta charset="UTF-8" />
+    <!-- 📝 CHARACTER ENCODING: UTF-8 supports all the special characters -->
+    <!-- Like making sure we can properly display "crème brûlée" without errors! -->
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- 🔄 BROWSER COMPATIBILITY: Tells IE to use its most modern rendering mode -->
+    <!-- It's like telling an old oven to try its best to perform like a new one! -->
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 📱 RESPONSIVE DESIGN: "This shop looks good on any device!" -->
+    <!-- width=device-width = adapts to screen width -->
+    <!-- initial-scale=1.0 = starts at 100% zoom, no shrinking -->
+    
+    <title>freeCodeCamp Shopping Cart</title>
+    <!-- 🏷️ PAGE TITLE: What appears in the browser tab -->
+    <!-- Like the name on the store front that customers see first! -->
+    
+    <style>
+      /* 🎨 ===== CSS STYLES: The Visual Recipe of Our Shop ===== */
+      
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        /* 🧹 CSS RESET: Cleans up browser inconsistencies */
+        /* Like clearing the countertop before starting to bake! */
+        /* box-sizing: border-box makes width include padding and border */
+      }
+      
+      :root {
+        --dark-grey: #1b1b32;
+        --light-grey: #f5f6f7;
+        --black: #000;
+        --white: #fff;
+        --grey: #3b3b4f;
+        --golden-yellow: #fecc4c;
+        --yellow: #ffcc4c;
+        --gold: #feac32;
+        --orange: #ffac33;
+        --dark-orange: #f89808;
+        /* 🎨 CSS VARIABLES: Our color palette for the entire shop */
+        /* Like having all your food coloring bottles organized! */
+      }
+      
+      body {
+        background-color: var(--dark-grey);
+        /* 🖼️ PAGE BACKGROUND: Dark gray backdrop */
+        /* Creates a sophisticated ambiance for our premium dessert shop */
+      }
+      
+      .title {
+        color: var(--light-grey);
+        text-align: center;
+        margin: 25px 0;
+        /* 📝 MAIN TITLE: Light text against dark background */
+        /* Like an elegant sign above the display cases */
+      }
+      
+      #dessert-card-container {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        align-items: center;
+        /* 📦 PRODUCT DISPLAY: Arranges dessert cards in a column */
+        /* On mobile, stacks cards vertically like a tower of cake boxes */
+        /* Will change to horizontal row on larger screens (see media query) */
+      }
+      
+      .dessert-card {
+        background-color: var(--light-grey);
+        padding: 15px;
+        text-align: center;
+        border-radius: 15px;
+        margin: 20px 10px;
+        /* 🃏 PRODUCT CARDS: Individual display cards for each dessert */
+        /* Like little menu cards for each dessert at a bakery */
+        /* Border-radius creates soft rounded corners like a pastry box */
+      }
+      
+      .dessert-price {
+        font-size: 1.2rem;
+        /* 💲 PRICE TEXT: Slightly larger than normal text */
+        /* Makes the price stand out like a price tag in a bakery display */
+      }
+      
+      .btn {
+        display: block;
+        cursor: pointer;
+        width: 100px;
+        color: var(--dark-grey);
+        background-color: var(--gold);
+        background-image: linear-gradient(var(--golden-yellow), var(--orange));
+        border-color: var(--gold);
+        border-width: 3px;
+        /* 🔘 BUTTONS: Styled with golden gradient background */
+        /* Like golden-brown perfectly baked cookies! */
+        /* cursor: pointer changes mouse to hand when hovering */
+      }
+      
+      .btn:hover {
+        background-image: linear-gradient(var(--yellow), var(--dark-orange));
+        /* ✨ HOVER EFFECT: Buttons change color when mouse hovers over */
+        /* Like how a pastry glistens when you shine light on it! */
+      }
+      
+      #cart-btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+        /* 🛒 CART BUTTON: Positioned in top-right corner */
+        /* Like having the cash register at the corner of the bakery */
+      }
+      
+      .add-to-cart-btn {
+        margin: 30px auto 10px;
+        /* 🛍️ ADD TO CART BUTTONS: Spacing below product descriptions */
+        /* Gives breathing room like space between items on a dessert tray */
+      }
+      
+      #cart-container {
+        display: none;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background-color: var(--light-grey);
+        width: 200px;
+        height: 400px;
+        border: 8px double var(--black);
+        border-radius: 15px;
+        text-align: center;
+        font-size: 1.2rem;
+        overflow-y: scroll;
+        /* 🛒 SHOPPING CART: Hidden drawer that slides out */
+        /* Like a pastry display case that opens to show your selections */
+        /* display: none means initially hidden */
+        /* double border gives an elegant picture-frame effect */
+        /* overflow-y: scroll allows scrolling when cart gets full */
+      }
+      
+      .product {
+        margin: 25px 0;
+        /* 🧁 PRODUCT IN CART: Space between items in the cart */
+        /* Like spacing between desserts on a multi-tier cake stand */
+      }
+      
+      .product-count {
+        display: inline-block;
+        margin-right: 10px;
+        /* 🔢 QUANTITY COUNTER: Shows how many of each item */
+        /* Like the number tags on bakery trays showing quantity */
+      }
+      
+      .product-category {
+        margin: 10px 0;
+        /* 🏷️ CATEGORY LABEL: Space above and below the category */
+        /* Like section dividers in a dessert menu */
+      }
+      
+      @media (min-width: 768px) {
+        /* 📱 RESPONSIVE BREAKPOINT: Changes layout for tablets and above */
+        /* When screen gets wider than 768px (typical tablet width) */
+        
+        #dessert-card-container {
+          flex-direction: row;
+          /* 📊 HORIZONTAL LAYOUT: Cards arrange side-by-side */
+          /* Like displaying desserts side-by-side in a wider display case */
+        }
+      
+        .dessert-card {
+          flex: 1 0 21%;
+          /* 🃏 CARD SIZING: Makes cards take approximately 1/4 of container width */
+          /* flex: 1 (grow) 0 (shrink) 21% (basis) */
+          /* Creates a grid-like display with approximately 4 cards per row */
+        }
+      
+        #cart-container {
+          width: 300px;
+          /* 🛒 WIDER CART: More space on larger screens */
+          /* Like having a larger display case when you have more counter space */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 🧁 ===== THE DESSERT SHOP INTERFACE ===== -->
+    
+    <header>
+      <!-- 🍰 PAGE HEADER: Introduction to our dessert shop -->
+      <h1 class="title">Desserts Page</h1>
+      <!-- 📝 MAIN HEADING: The store name/title -->
+    </header>
+    
+    <main>
+      <!-- 🛍️ MAIN CONTENT: The shopping experience -->
+      
+      <button id="cart-btn" type="button" class="btn">
+        <!-- 🛒 CART TOGGLE BUTTON: Shows/hides the shopping cart -->
+        <span id="show-hide-cart">Show</span> Cart
+        <!-- 👁️ DYNAMIC TEXT: Will change between "Show" and "Hide" -->
+      </button>
+      
+      <div id="cart-container">
+        <!-- 🛒 SHOPPING CART: Contains selected items and totals -->
+        <!-- Initially hidden (display: none in CSS) -->
+        
+        <button class="btn" id="clear-cart-btn">Clear Cart</button>
+        <!-- 🗑️ CLEAR BUTTON: Removes all items from cart -->
+        
+        <div id="products-container"></div>
+        <!-- 📦 PRODUCTS LIST: Will be filled dynamically with selected items -->
+        
+        <p>Total number of items: <span id="total-items">0</span></p>
+        <!-- 🔢 ITEM COUNTER: Shows how many items are in the cart -->
+        
+        <p>Subtotal: <span id="subtotal">$0</span></p>
+        <!-- 💲 SUBTOTAL: Sum of all items before tax -->
+        
+        <p>Taxes: <span id="taxes">$0</span></p>
+        <!-- 💰 TAXES: Calculated amount of tax -->
+        
+        <p>Total: <span id="total">$0</span></p>
+        <!-- 💵 TOTAL: Final amount including taxes -->
+      </div>
+      
+      <div id="dessert-card-container"></div>
+      <!-- 🧁 PRODUCT DISPLAY: Will be filled with dessert cards -->
+      <!-- JavaScript will populate this container with product cards -->
+    </main>
+    
+    <script>
+      /* 🧁 ===== JAVASCRIPT: The Bakery's Business Logic! ===== */
+      
+      /* 🔍 ===== DOM ELEMENT SELECTION ===== */
+      const cartContainer = document.getElementById("cart-container");
+      const productsContainer = document.getElementById("products-container");
+      const dessertCards = document.getElementById("dessert-card-container");
+      const cartBtn = document.getElementById("cart-btn");
+      const clearCartBtn = document.getElementById("clear-cart-btn");
+      const totalNumberOfItems = document.getElementById("total-items");
+      const cartSubTotal = document.getElementById("subtotal");
+      const cartTaxes = document.getElementById("taxes");
+      const cartTotal = document.getElementById("total");
+      const showHideCartSpan = document.getElementById("show-hide-cart");
+      /* 🎯 DOM REFERENCES: Getting handles to HTML elements we need to manipulate */
+      /* Like having name tags for each display case in the bakery */
+      /* getElementById searches the page for elements with matching IDs */
+      
+      /* 🔄 Global variable to track cart visibility state */
+      let isCartShowing = false;
+      /* 🚦 VISIBILITY FLAG: Tracks whether cart is shown or hidden */
+      /* Like a simple "Open/Closed" sign for the cart display */
+      
+      
+      /* 📋 ===== PRODUCT DATA ===== */
+      const products = [
+        {
+          id: 1,
+          name: "Vanilla Cupcakes (6 Pack)",
+          price: 12.99,
+          category: "Cupcake",
+        },
+        {
+          id: 2,
+          name: "French Macaron",
+          price: 3.99,
+          category: "Macaron",
+        },
+        {
+          id: 3,
+          name: "Pumpkin Cupcake",
+          price: 3.99,
+          category: "Cupcake",
+        },
+        {
+          id: 4,
+          name: "Chocolate Cupcake",
+          price: 5.99,
+          category: "Cupcake",
+        },
+        {
+          id: 5,
+          name: "Chocolate Pretzels (4 Pack)",
+          price: 10.99,
+          category: "Pretzel",
+        },
+        {
+          id: 6,
+          name: "Strawberry Ice Cream",
+          price: 2.99,
+          category: "Ice Cream",
+        },
+        {
+          id: 7,
+          name: "Chocolate Macarons (4 Pack)",
+          price: 9.99,
+          category: "Macaron",
+        },
+        {
+          id: 8,
+          name: "Strawberry Pretzel",
+          price: 4.99,
+          category: "Pretzel",
+        },
+        {
+          id: 9,
+          name: "Butter Pecan Ice Cream",
+          price: 2.99,
+          category: "Ice Cream",
+        },
+        {
+          id: 10,
+          name: "Rocky Road Ice Cream",
+          price: 2.99,
+          category: "Ice Cream",
+        },
+        {
+          id: 11,
+          name: "Vanilla Macarons (5 Pack)",
+          price: 11.99,
+          category: "Macaron",
+        },
+        {
+          id: 12,
+          name: "Lemon Cupcakes (4 Pack)",
+          price: 12.99,
+          category: "Cupcake",
+        },
+      ];
+      /* 📊 PRODUCT DATABASE: Array of dessert objects */
+      /* Like the complete recipe book with all available desserts */
+      /* Each product has unique id, name, price, and category */
+      
+      
+      /* 🎨 ===== PRODUCT RENDERING ===== */
+      products.forEach(
+        ({ name, id, price, category }) => {
+          /* 🔄 LOOP THROUGH PRODUCTS: Process each dessert */
+          /* forEach executes a function for each array element */
+          
+          /* 🧩 DESTRUCTURING: Extracts variables from each product object */
+          /* Like unpacking a dessert box to get individual components */
+          /* { name, id, price, category } pulls out just these properties */
+          
+          dessertCards.innerHTML += `
+            <div class="dessert-card">
+              <h2>${name}</h2>
+              <p class="dessert-price">$${price}</p>
+              <p class="product-category">Category: ${category}</p>
+              <button 
+                id="${id}" 
+                class="btn add-to-cart-btn">Add to cart
+              </button>
+            </div>
+          `;
+          /* 📝 TEMPLATE LITERAL: Creates HTML for each dessert card */
+          /* Multi-line string with embedded expressions ${} */
+          /* Like having a template for dessert labels that gets filled in */
+          
+          /* += appends to existing content rather than replacing it */
+          /* This builds up the full display of all dessert cards */
+        }
+      );
+      
+      
+      /* 🛒 ===== SHOPPING CART CLASS ===== */
+      class ShoppingCart {
+        /* 📝 CLASS DEFINITION: Blueprint for the shopping cart object */
+        /* Like a recipe for how the shopping cart should work */
+        /* Classes organize related data and functions together */
+        
+        constructor() {
+          /* 🏗️ CONSTRUCTOR: Sets up a new shopping cart instance */
+          /* Runs automatically when you create a new cart with 'new ShoppingCart()' */
+          
+          this.items = [];       // Array to store selected products
+          this.total = 0;        // Total cost (including taxes)
+          this.taxRate = 8.25;   // Tax percentage (8.25%)
+          /* 📦 INSTANCE PROPERTIES: Values stored in each cart */
+          /* 'this' refers to the specific cart instance being created */
+          /* Like initializing an empty basket when a customer enters the shop */
+        }
+      
+        addItem(id, products) {
+          /* 🛍️ ADD TO CART: Method to add a product to the cart */
+          /* Takes product id and products array as parameters */
+          
+          const product = products.find((item) => item.id === id);
+          /* 🔍 FIND PRODUCT: Locates product object matching the given id */
+          /* .find() searches array and returns first matching item */
+          /* Arrow function checks if each item's id equals the requested id */
+          /* Like a clerk finding the exact dessert from the display case */
+          
+          const { name, price } = product;
+          /* 🧩 DESTRUCTURING: Extracts name and price from the product */
+          /* Simplifies access to these properties later */
+          
+          this.items.push(product);
+          /* 📦 ADD TO ARRAY: Puts product in the cart's items array */
+          /* Like placing the dessert in the customer's basket */
+      
+          const totalCountPerProduct = {};
+          /* 📊 COUNTER OBJECT: Will track quantity of each product */
+          /* Empty object that will store product ids as keys and counts as values */
+          /* Like a tally sheet for how many of each dessert type */
+          
+          this.items.forEach((dessert) => {
+            /* 🔢 COUNT PRODUCTS: Loop through all items to count duplicates */
+            /* Like going through the basket and counting each type of dessert */
+            
+            totalCountPerProduct[dessert.id] = (totalCountPerProduct[dessert.id] || 0) + 1;
+            /* 🧮 COUNTING LOGIC: Increment count for this product id */
+            /* If product already in counter, add 1 to its count */
+            /* If product not yet in counter (undefined), use 0 + 1 */
+            /* || is the logical OR operator providing default value */
+          })
+      
+          const currentProductCount = totalCountPerProduct[product.id];
+          /* 🔢 CURRENT COUNT: How many of this specific product are in cart */
+          
+          const currentProductCountSpan = document.getElementById(`product-count-for-id${id}`);
+          /* 🏷️ COUNT DISPLAY: DOM element showing the quantity */
+          /* Like the number tag on a bakery tray */
+      
+          currentProductCount > 1 
+            ? currentProductCountSpan.textContent = `${currentProductCount}x`
+            : productsContainer.innerHTML += `
+            <div id="dessert${id}" class="product">
+              <p>
+                <span class="product-count" id="product-count-for-id${id}"></span>${name}
+              </p>
+              <p>${price}</p>
+            </div>
+            `;
+          /* 🔀 CONDITIONAL RENDERING: Different behavior for new vs. existing items */
+          /* ? : is the ternary operator (compact if/else) */
+          
+          /* If item already exists in cart (count > 1): */
+          /*   Update the quantity display (2x, 3x, etc.) */
+          /* Otherwise (first time adding this item): */
+          /*   Create a new entry in the cart with product name and price */
+        }
+      
+        getCounts() {
+          /* 🔢 GET TOTAL COUNT: Returns number of items in cart */
+          /* Like asking "how many items are in this basket?" */
+          
+          return this.items.length;
+          /* Returns the length of the items array */
+          /* Each element in array is one item in cart */
+        }
+      
+        clearCart() {
+          /* 🧹 CLEAR CART: Empties the shopping cart */
+          /* Like emptying a basket back onto the shelves */
+          
+          if (!this.items.length) {
+            /* ❓ EMPTY CHECK: Is cart already empty? */
+            /* !this.items.length is true when length is 0 */
+            /* ! operator negates/inverts a boolean value */
+            
+            alert("Your shopping cart is already empty");
+            /* 📢 ALERT: Shows popup message if cart is already empty */
+            /* alert() displays a message box to the user */
+            
+            return; // Exit the function
+            /* 🛑 EARLY RETURN: Stop execution if cart is already empty */
+          }
+      
+          const isCartCleared = confirm(
+            "Are you sure you want to clear all items from your shopping cart?"
+          );
+          /* ❓ CONFIRMATION: Ask user to confirm clearing the cart */
+          /* confirm() shows dialog with OK/Cancel buttons */
+          /* Returns true if user clicks OK, false for Cancel */
+          /* Like asking "Are you sure?" before removing items */
+      
+          if (isCartCleared) {
+            /* ✅ USER CONFIRMED: Proceed with clearing the cart */
+            
+            this.items = [];  // Empty the items array
+            this.total = 0;   // Reset the total cost
+            /* 🧹 RESET STATE: Clear internal cart data */
+            
+            /* 🖥️ UPDATE UI: Clear all display elements */
+            productsContainer.innerHTML = "";
+            totalNumberOfItems.textContent = 0;
+            cartSubTotal.textContent = 0;
+            cartTaxes.textContent = 0;
+            cartTotal.textContent = 0;
+          }
+        }
+      
+        calculateTaxes(amount) {
+          /* 💰 CALCULATE TAX: Computes tax amount based on subtotal */
+          /* Like the cash register calculating sales tax */
+          
+          return parseFloat(((this.taxRate / 100) * amount).toFixed(2));
+          /* 🧮 TAX CALCULATION: Convert rate to decimal, multiply by amount */
+          /* this.taxRate / 100: Converts percentage to decimal (8.25% → 0.0825) */
+          /* .toFixed(2): Rounds to 2 decimal places and returns a string */
+          /* parseFloat(): Converts string back to a number */
+          
+          /* 🔍 PRECISION HANDLING: Fixes JavaScript floating point issues */
+          /* Direct calculation like 0.1 + 0.2 gives 0.30000000000000004 */
+          /* This ensures exactly 2 decimal places, like $1.50 not $1.499999... */
+        }
+      
+        calculateTotal() {
+          /* 💲 CALCULATE TOTAL: Updates all price displays in the cart */
+          /* Like tallying up the final bill */
+          
+          const subTotal = this.items.reduce((total, item) => total + item.price, 0);
+          /* 🧮 SUBTOTAL: Sum of all item prices */
+          /* .reduce() transforms array into a single value */
+          /* (total, item) => total + item.price: Add each price to accumulator */
+          /* 0: Initial value for the accumulator */
+          /* Like adding up all price tags one by one */
+          
+          const tax = this.calculateTaxes(subTotal);
+          /* 💰 TAX AMOUNT: Calculate taxes based on subtotal */
+          
+          this.total = subTotal + tax;
+          /* 💵 TOTAL: Subtotal plus tax amount */
+          
+          /* 🖥️ UPDATE DISPLAYS: Show formatted currency values */
+          cartSubTotal.textContent = `$${subTotal.toFixed(2)}`;
+          cartTaxes.textContent = `$${tax.toFixed(2)}`;
+          cartTotal.textContent = `$${this.total.toFixed(2)}`;
+          /* .toFixed(2): Always show exactly 2 decimal places */
+          /* Template literals: `$${value}` combines $ symbol with the value */
+          
+          return this.total;
+          /* 📤 RETURN VALUE: Final total amount */
+        }
+      }
+      
+      
+      /* 🚀 ===== INITIALIZATION ===== */
+      const cart = new ShoppingCart();
+      /* 🛒 CREATE CART: Instantiate a new shopping cart object */
+      /* new keyword creates a new instance from the ShoppingCart class */
+      /* Like preparing a fresh shopping basket for a customer */
+      
+      const addToCartBtns = document.getElementsByClassName("add-to-cart-btn");
+      /* 🔍 GET BUTTONS: Find all "Add to cart" buttons */
+      /* getElementsByClassName returns a live HTMLCollection (not a true array) */
+      /* Like identifying all the "Add" buttons throughout the bakery */
+      
+      [...addToCartBtns].forEach(
+        (btn) => {
+          /* 🔄 SPREAD & LOOP: Convert HTMLCollection to array and process each button */
+          /* [...collection] uses spread operator to create a real array */
+          /* forEach loops through each button to add click behavior */
+          /* Like going to each "Add" button and training the staff what to do when pressed */
+          
+          btn.addEventListener("click", (event) => {
+            /* 👂 CLICK LISTENER: Respond when button is clicked */
+            /* "click" is the event type we're listening for */
+            /* event parameter contains information about the click */
+            
+            cart.addItem(Number(event.target.id), products);
+            /* 🛍️ ADD PRODUCT: Call cart's addItem method */
+            /* event.target is the button that was clicked */
+            /* event.target.id gives the button's id attribute (product id) */
+            /* Number() converts the id from string to number */
+            /* Like telling the clerk "add this specific dessert to the basket" */
+            
+            totalNumberOfItems.textContent = cart.getCounts();
+            /* 🔢 UPDATE COUNT: Show new total number of items */
+            
+            cart.calculateTotal();
+            /* 💲 UPDATE PRICES: Recalculate and display all totals */
+          })
+        }
+      );
+      
+      
+      /* 👁️ ===== CART VISIBILITY TOGGLE ===== */
+      cartBtn.addEventListener("click", () => {
+        /* 👂 CLICK LISTENER: Respond when cart button is clicked */
+        
+        isCartShowing = !isCartShowing;
+        /* 🔄 TOGGLE STATE: Flip between true and false */
+        /* ! operator inverts the boolean value */
+        /* Like flipping an "Open/Closed" sign */
+        
+        showHideCartSpan.textContent = isCartShowing ? "Hide" : "Show";
+        /* 🔄 UPDATE BUTTON TEXT: "Show Cart" or "Hide Cart" */
+        /* ? : is ternary operator: condition ? trueValue : falseValue */
+        /* Like changing the text on the sign from "Open" to "Closed" */
+        
+        cartContainer.style.display = isCartShowing ? "block" : "none";
+        /* 👁️ TOGGLE VISIBILITY: Show or hide the cart element */
+        /* "block" makes it visible, "none" hides it */
+        /* Like actually opening or closing the pastry display case */
+      });
+      
+      
+      /* 🧹 ===== CLEAR CART BUTTON ===== */
+      clearCartBtn.addEventListener("click", cart.clearCart.bind(cart));
+      /* 👂 CLICK LISTENER: Connect clear button to cart's clearCart method */
+      
+      /* 🔗 METHOD BINDING: Ensures correct 'this' context */
+      /* .bind(cart) creates a new function with 'this' permanently set to cart */
+      /* Without bind(), 'this' inside clearCart() would refer to the button */
+      /* Like making sure the clerk knows WHICH basket to empty */
+    </script>
+  </body>
+</html>
+
+<!-- 🎯 ===== SHOPPING CART SUMMARY ===== -->
+<!-- 
+🛒 APP ARCHITECTURE:
+│
+├── 🧠 HTML Structure
+│   ├── 📑 Header with shop title
+│   └── 📋 Main content area
+│       ├── 🛒 Cart toggle button
+│       ├── 📦 Shopping cart container (initially hidden)
+│       └── 🧁 Product display area
+│
+├── 🎨 CSS Styling
+│   ├── 🎭 Variables for consistent colors
+│   ├── 🃏 Product card styling
+│   ├── 🛒 Shopping cart appearance
+│   └── 📱 Responsive design for different devices
+│
+└── 🧮 JavaScript Logic
+    ├── 📋 Product data array
+    ├── 🎨 Dynamic product rendering
+    ├── 📦 ShoppingCart class
+    │   ├── 🛍️ Adding items
+    │   ├── 💲 Price calculations
+    │   └── 🧹 Cart clearing
+    └── 🔄 Event handling
+        ├── 👆 Add to cart clicks
+        ├── 👁️ Show/hide cart toggle
+        └── 🧹 Clear cart functionality
+
+💡 MODERN JAVASCRIPT FEATURES:
+├── 📦 Classes and object-oriented programming
+├── 🧩 Destructuring for clean variable assignment
+├── 📝 Template literals for dynamic HTML
+├── 🔍 Array methods (forEach, find, reduce)
+├── ➡️ Arrow functions for concise callbacks
+├── 📎 Spread operator for collection conversion
+└── 🔀 Ternary operator for compact conditionals
+
+It's like an entire bakery management system in your browser! 🧁✨
+-->
+
+
+
+
+
+
+
+
+
+
+
+<!-- ===== ITALIAN VERSION ===== -->
+
+<!DOCTYPE html>
+<!-- 🎯 DICHIARAZIONE HTML5: "Benvenuti nell'esperienza della pasticceria digitale!" -->
+<!-- È come l'insegna all'ingresso di una pasticceria virtuale! 🍰 -->
+
+<html lang="en">
+<!-- 🌍 CONTENITORE PRINCIPALE: La nostra esperienza di acquisto di dolci virtuale -->
+<!-- lang="en" = Inglese, la lingua universale dell'e-commerce! -->
+
+  <head>
+    <!-- 🧠 CENTRO DI CONTROLLO: Dove prepariamo la nostra piattaforma di acquisto dolci -->
+    <!-- Proprio come un pasticcere che prepara tutti gli ingredienti prima di iniziare a cucinare! -->
+    
+    <meta charset="UTF-8" />
+    <!-- 📝 CODIFICA CARATTERI: UTF-8 supporta tutti i caratteri speciali -->
+    <!-- Come assicurarsi di poter visualizzare correttamente "crème brûlée" senza errori! -->
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- 🔄 COMPATIBILITÀ BROWSER: Dice a IE di usare la sua modalità di rendering più moderna -->
+    <!-- È come dire a un vecchio forno di fare del suo meglio per funzionare come uno nuovo! -->
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 📱 DESIGN RESPONSIVE: "Questo negozio appare bene su qualsiasi dispositivo!" -->
+    <!-- width=device-width = si adatta alla larghezza dello schermo -->
+    <!-- initial-scale=1.0 = inizia con zoom al 100%, senza rimpicciolimento -->
+    
+    <title>freeCodeCamp Shopping Cart</title>
+    <!-- 🏷️ TITOLO PAGINA: Quello che appare nella scheda del browser -->
+    <!-- Come il nome sul frontale del negozio che i clienti vedono per primo! -->
+    
+    <style>
+      /* 🎨 ===== STILI CSS: La Ricetta Visiva del Nostro Negozio ===== */
+      
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        /* 🧹 RESET CSS: Pulisce le inconsistenze tra browser */
+        /* Come pulire il piano di lavoro prima di iniziare a cucinare! */
+        /* box-sizing: border-box fa sì che la larghezza includa padding e bordo */
+      }
+      
+      :root {
+        --dark-grey: #1b1b32;
+        --light-grey: #f5f6f7;
+        --black: #000;
+        --white: #fff;
+        --grey: #3b3b4f;
+        --golden-yellow: #fecc4c;
+        --yellow: #ffcc4c;
+        --gold: #feac32;
+        --orange: #ffac33;
+        --dark-orange: #f89808;
+        /* 🎨 VARIABILI CSS: La nostra palette di colori per l'intero negozio */
+        /* Come avere tutti i flaconi di colorante alimentare ben organizzati! */
+      }
+      
+      body {
+        background-color: var(--dark-grey);
+        /* 🖼️ SFONDO PAGINA: Sfondo grigio scuro */
+        /* Crea un'atmosfera sofisticata per il nostro negozio di dolci premium */
+      }
+      
+      .title {
+        color: var(--light-grey);
+        text-align: center;
+        margin: 25px 0;
+        /* 📝 TITOLO PRINCIPALE: Testo chiaro su sfondo scuro */
+        /* Come un'elegante insegna sopra le vetrine espositive */
+      }
+      
+      #dessert-card-container {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        align-items: center;
+        /* 📦 DISPLAY PRODOTTI: Dispone le schede dei dolci in colonna */
+        /* Su mobile, impila le schede verticalmente come una torre di scatole per dolci */
+        /* Cambierà in riga orizzontale su schermi più grandi (vedi media query) */
+      }
+      
+      .dessert-card {
+        background-color: var(--light-grey);
+        padding: 15px;
+        text-align: center;
+        border-radius: 15px;
+        margin: 20px 10px;
+        /* 🃏 SCHEDE PRODOTTO: Singole schede espositive per ogni dolce */
+        /* Come piccoli menu per ogni dolce in una pasticceria */
+        /* Border-radius crea angoli arrotondati morbidi come una scatola per pasticcini */
+      }
+      
+      .dessert-price {
+        font-size: 1.2rem;
+        /* 💲 TESTO PREZZO: Leggermente più grande del testo normale */
+        /* Fa risaltare il prezzo come un cartellino in una vetrina di pasticceria */
+      }
+      
+      .btn {
+        display: block;
+        cursor: pointer;
+        width: 100px;
+        color: var(--dark-grey);
+        background-color: var(--gold);
+        background-image: linear-gradient(var(--golden-yellow), var(--orange));
+        border-color: var(--gold);
+        border-width: 3px;
+        /* 🔘 PULSANTI: Stilizzati con sfondo gradiente dorato */
+        /* Come biscotti dorati perfettamente cotti! */
+        /* cursor: pointer cambia il mouse in una mano quando ci passi sopra */
+      }
+      
+      .btn:hover {
+        background-image: linear-gradient(var(--yellow), var(--dark-orange));
+        /* ✨ EFFETTO HOVER: I pulsanti cambiano colore quando il mouse ci passa sopra */
+        /* Come un dolce che brilla quando lo illumini! */
+      }
+      
+      #cart-btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+        /* 🛒 PULSANTE CARRELLO: Posizionato nell'angolo in alto a destra */
+        /* Come avere la cassa all'angolo della pasticceria */
+      }
+      
+      .add-to-cart-btn {
+        margin: 30px auto 10px;
+        /* 🛍️ PULSANTI AGGIUNGI AL CARRELLO: Spazio sotto le descrizioni del prodotto */
+        /* Crea spazio di respiro come lo spazio tra gli elementi su un vassoio di dolci */
+      }
+      
+      #cart-container {
+        display: none;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background-color: var(--light-grey);
+        width: 200px;
+        height: 400px;
+        border: 8px double var(--black);
+        border-radius: 15px;
+        text-align: center;
+        font-size: 1.2rem;
+        overflow-y: scroll;
+        /* 🛒 CARRELLO DELLA SPESA: Cassetto nascosto che si apre */
+        /* Come una vetrina di pasticceria che si apre per mostrare le tue selezioni */
+        /* display: none significa inizialmente nascosto */
+        /* bordo doppio crea un elegante effetto cornice */
+        /* overflow-y: scroll consente lo scorrimento quando il carrello si riempie */
+      }
+      
+      .product {
+        margin: 25px 0;
+        /* 🧁 PRODOTTO NEL CARRELLO: Spazio tra gli articoli nel carrello */
+        /* Come lo spazio tra dolci su un'alzata a più livelli */
+      }
+      
+      .product-count {
+        display: inline-block;
+        margin-right: 10px;
+        /* 🔢 CONTATORE QUANTITÀ: Mostra quanti di ogni articolo */
+        /* Come i cartellini numerati sui vassoi di pasticceria che indicano la quantità */
+      }
+      
+      .product-category {
+        margin: 10px 0;
+        /* 🏷️ ETICHETTA CATEGORIA: Spazio sopra e sotto la categoria */
+        /* Come i divisori di sezione in un menu di dolci */
+      }
+      
+      @media (min-width: 768px) {
+        /* 📱 BREAKPOINT RESPONSIVE: Cambia layout per tablet e superiori */
+        /* Quando lo schermo diventa più largo di 768px (larghezza tipica di un tablet) */
+        
+        #dessert-card-container {
+          flex-direction: row;
+          /* 📊 LAYOUT ORIZZONTALE: Le schede si dispongono affiancate */
+          /* Come esporre i dolci fianco a fianco in una vetrina più ampia */
+        }
+      
+        .dessert-card {
+          flex: 1 0 21%;
+          /* 🃏 DIMENSIONAMENTO SCHEDA: Fa sì che le schede occupino circa 1/4 della larghezza */
+          /* flex: 1 (crescita) 0 (restringimento) 21% (base) */
+          /* Crea un display simile a una griglia con circa 4 schede per riga */
+        }
+      
+        #cart-container {
+          width: 300px;
+          /* 🛒 CARRELLO PIÙ LARGO: Più spazio su schermi più grandi */
+          /* Come avere una vetrina più grande quando hai più spazio sul bancone */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 🧁 ===== L'INTERFACCIA DEL NEGOZIO DI DOLCI ===== -->
+    
+    <header>
+      <!-- 🍰 INTESTAZIONE PAGINA: Introduzione al nostro negozio di dolci -->
+      <h1 class="title">Desserts Page</h1>
+      <!-- 📝 TITOLO PRINCIPALE: Il nome/titolo del negozio -->
+    </header>
+    
+    <main>
+      <!-- 🛍️ CONTENUTO PRINCIPALE: L'esperienza di acquisto -->
+      
+      <button id="cart-btn" type="button" class="btn">
+        <!-- 🛒 PULSANTE TOGGLE CARRELLO: Mostra/nasconde il carrello -->
+        <span id="show-hide-cart">Show</span> Cart
+        <!-- 👁️ TESTO DINAMICO: Cambierà tra "Show" e "Hide" -->
+      </button>
+      
+      <div id="cart-container">
+        <!-- 🛒 CARRELLO ACQUISTI: Contiene gli articoli selezionati e i totali -->
+        <!-- Inizialmente nascosto (display: none in CSS) -->
+        
+        <button class="btn" id="clear-cart-btn">Clear Cart</button>
+        <!-- 🗑️ PULSANTE SVUOTA: Rimuove tutti gli articoli dal carrello -->
+        
+        <div id="products-container"></div>
+        <!-- 📦 ELENCO PRODOTTI: Sarà riempito dinamicamente con gli articoli selezionati -->
+        
+        <p>Total number of items: <span id="total-items">0</span></p>
+        <!-- 🔢 CONTATORE ARTICOLI: Mostra quanti articoli sono nel carrello -->
+        
+        <p>Subtotal: <span id="subtotal">$0</span></p>
+        <!-- 💲 SUBTOTALE: Somma di tutti gli articoli prima delle tasse -->
+        
+        <p>Taxes: <span id="taxes">$0</span></p>
+        <!-- 💰 TASSE: Importo calcolato delle tasse -->
+        
+        <p>Total: <span id="total">$0</span></p>
+        <!-- 💵 TOTALE: Importo finale comprensivo di tasse -->
+      </div>
+      
+      <div id="dessert-card-container"></div>
+      <!-- 🧁 DISPLAY PRODOTTI: Sarà riempito con le schede dei dolci -->
+      <!-- JavaScript popolerà questo contenitore con le schede dei prodotti -->
+    </main>
+    
+    <script>
+      /* 🧁 ===== JAVASCRIPT: La Logica Commerciale della Pasticceria! ===== */
+      
+      /* 🔍 ===== SELEZIONE ELEMENTI DOM ===== */
+      const cartContainer = document.getElementById("cart-container");
+      const productsContainer = document.getElementById("products-container");
+      const dessertCards = document.getElementById("dessert-card-container");
+      const cartBtn = document.getElementById("cart-btn");
+      const clearCartBtn = document.getElementById("clear-cart-btn");
+      const totalNumberOfItems = document.getElementById("total-items");
+      const cartSubTotal = document.getElementById("subtotal");
+      const cartTaxes = document.getElementById("taxes");
+      const cartTotal = document.getElementById("total");
+      const showHideCartSpan = document.getElementById("show-hide-cart");
+      /* 🎯 RIFERIMENTI DOM: Ottenere handle agli elementi HTML che dobbiamo manipolare */
+      /* Come avere cartellini con i nomi per ogni vetrina nella pasticceria */
+      /* getElementById cerca nella pagina gli elementi con ID corrispondenti */
+      
+      /* 🔄 Variabile globale per tracciare lo stato di visibilità del carrello */
+      let isCartShowing = false;
+      /* 🚦 FLAG DI VISIBILITÀ: Tiene traccia se il carrello è mostrato o nascosto */
+      /* Come un semplice cartello "Aperto/Chiuso" per la visualizzazione del carrello */
+      
+      
+      /* 📋 ===== DATI DEI PRODOTTI ===== */
+      const products = [
+        {
+          id: 1,
+          name: "Vanilla Cupcakes (6 Pack)",
+          price: 12.99,
+          category: "Cupcake",
+        },
+        {
+          id: 2,
+          name: "French Macaron",
+          price: 3.99,
+          category: "Macaron",
+        },
+        {
+          id: 3,
+          name: "Pumpkin Cupcake",
+          price: 3.99,
+          category: "Cupcake",
+        },
+        {
+          id: 4,
+          name: "Chocolate Cupcake",
+          price: 5.99,
+          category: "Cupcake",
+        },
+        {
+          id: 5,
+          name: "Chocolate Pretzels (4 Pack)",
+          price: 10.99,
+          category: "Pretzel",
+        },
+        {
+          id: 6,
+          name: "Strawberry Ice Cream",
+          price: 2.99,
+          category: "Ice Cream",
+        },
+        {
+          id: 7,
+          name: "Chocolate Macarons (4 Pack)",
+          price: 9.99,
+          category: "Macaron",
+        },
+        {
+          id: 8,
+          name: "Strawberry Pretzel",
+          price: 4.99,
+          category: "Pretzel",
+        },
+        {
+          id: 9,
+          name: "Butter Pecan Ice Cream",
+          price: 2.99,
+          category: "Ice Cream",
+        },
+        {
+          id: 10,
+          name: "Rocky Road Ice Cream",
+          price: 2.99,
+          category: "Ice Cream",
+        },
+        {
+          id: 11,
+          name: "Vanilla Macarons (5 Pack)",
+          price: 11.99,
+          category: "Macaron",
+        },
+        {
+          id: 12,
+          name: "Lemon Cupcakes (4 Pack)",
+          price: 12.99,
+          category: "Cupcake",
+        },
+      ];
+      /* 📊 DATABASE PRODOTTI: Array di oggetti dolci */
+      /* Come il ricettario completo con tutti i dolci disponibili */
+      /* Ogni prodotto ha un id univoco, nome, prezzo e categoria */
+      
+      
+      /* 🎨 ===== RENDERING DEI PRODOTTI ===== */
+      products.forEach(
+        ({ name, id, price, category }) => {
+          /* 🔄 CICLO SUI PRODOTTI: Elabora ogni dolce */
+          /* forEach esegue una funzione per ogni elemento dell'array */
+          
+          /* 🧩 DESTRUTTURAZIONE: Estrae variabili da ogni oggetto prodotto */
+          /* Come spacchettare una scatola di dolci per ottenere i componenti individuali */
+          /* { name, id, price, category } estrae solo queste proprietà */
+          
+          dessertCards.innerHTML += `
+            <div class="dessert-card">
+              <h2>${name}</h2>
+              <p class="dessert-price">$${price}</p>
+              <p class="product-category">Category: ${category}</p>
+              <button 
+                id="${id}" 
+                class="btn add-to-cart-btn">Add to cart
+              </button>
+            </div>
+          `;
+          /* 📝 TEMPLATE LITERAL: Crea HTML per ogni scheda dolce */
+          /* Stringa multi-riga con espressioni incorporate ${} */
+          /* Come avere un modello per etichette di dolci che viene compilato */
+          
+          /* += aggiunge al contenuto esistente invece di sostituirlo */
+          /* Questo costruisce la visualizzazione completa di tutte le schede dolci */
+        }
+      );
+      
+      
+      /* 🛒 ===== CLASSE CARRELLO ACQUISTI ===== */
+      class ShoppingCart {
+        /* 📝 DEFINIZIONE CLASSE: Blueprint per l'oggetto carrello della spesa */
+        /* Come una ricetta per come dovrebbe funzionare il carrello */
+        /* Le classi organizzano insieme dati e funzioni correlati */
+        
+        constructor() {
+          /* 🏗️ COSTRUTTORE: Configura una nuova istanza del carrello */
+          /* Viene eseguito automaticamente quando crei un nuovo carrello con 'new ShoppingCart()' */
+          
+          this.items = [];       // Array per memorizzare i prodotti selezionati
+          this.total = 0;        // Costo totale (tasse incluse)
+          this.taxRate = 8.25;   // Percentuale di tassa (8,25%)
+          /* 📦 PROPRIETÀ DELL'ISTANZA: Valori memorizzati in ogni carrello */
+          /* 'this' si riferisce alla specifica istanza del carrello che viene creata */
+          /* Come inizializzare un cestino vuoto quando un cliente entra nel negozio */
+        }
+      
+        addItem(id, products) {
+          /* 🛍️ AGGIUNGI AL CARRELLO: Metodo per aggiungere un prodotto al carrello */
+          /* Prende l'id del prodotto e l'array dei prodotti come parametri */
+          
+          const product = products.find((item) => item.id === id);
+          /* 🔍 TROVA PRODOTTO: Individua l'oggetto prodotto corrispondente all'id fornito */
+          /* .find() cerca nell'array e restituisce il primo elemento corrispondente */
+          /* La funzione freccia verifica se l'id di ogni elemento corrisponde all'id richiesto */
+          /* Come un commesso che trova il dolce esatto dalla vetrina */
+          
+          const { name, price } = product;
+          /* 🧩 DESTRUTTURAZIONE: Estrae nome e prezzo dal prodotto */
+          /* Semplifica l'accesso a queste proprietà in seguito */
+          
+          this.items.push(product);
+          /* 📦 AGGIUNGI ALL'ARRAY: Mette il prodotto nell'array items del carrello */
+          /* Come mettere il dolce nel cestino del cliente */
+      
+          const totalCountPerProduct = {};
+          /* 📊 OGGETTO CONTATORE: Terrà traccia della quantità di ciascun prodotto */
+          /* Oggetto vuoto che memorizzerà gli id dei prodotti come chiavi e i conteggi come valori */
+          /* Come un foglio per contare quanti di ogni tipo di dolce */
+          
+          this.items.forEach((dessert) => {
+            /* 🔢 CONTA PRODOTTI: Cicla attraverso tutti gli articoli per contare i duplicati */
+            /* Come passare attraverso il cestino e contare ogni tipo di dolce */
+            
+            totalCountPerProduct[dessert.id] = (totalCountPerProduct[dessert.id] || 0) + 1;
+            /* 🧮 LOGICA DI CONTEGGIO: Incrementa il conteggio per questo id prodotto */
+            /* Se il prodotto è già nel contatore, aggiunge 1 al suo conteggio */
+            /* Se il prodotto non è ancora nel contatore (undefined), usa 0 + 1 */
+            /* || è l'operatore OR logico che fornisce il valore predefinito */
+          })
+      
+          const currentProductCount = totalCountPerProduct[product.id];
+          /* 🔢 CONTEGGIO ATTUALE: Quanti di questo specifico prodotto sono nel carrello */
+          
+          const currentProductCountSpan = document.getElementById(`product-count-for-id${id}`);
+          /* 🏷️ VISUALIZZAZIONE CONTEGGIO: Elemento DOM che mostra la quantità */
+          /* Come l'etichetta numerica su un vassoio di pasticceria */
+      
+          currentProductCount > 1 
+            ? currentProductCountSpan.textContent = `${currentProductCount}x`
+            : productsContainer.innerHTML += `
+            <div id="dessert${id}" class="product">
+              <p>
+                <span class="product-count" id="product-count-for-id${id}"></span>${name}
+              </p>
+              <p>${price}</p>
+            </div>
+            `;
+          /* 🔀 RENDERING CONDIZIONALE: Comportamento diverso per articoli nuovi vs. esistenti */
+          /* ? : è l'operatore ternario (if/else compatto) */
+          
+          /* Se l'articolo è già nel carrello (conteggio > 1): */
+          /*   Aggiorna solo la visualizzazione della quantità (2x, 3x, ecc.) */
+          /* Altrimenti (prima volta che aggiungi questo articolo): */
+          /*   Crea una nuova voce nel carrello con nome e prezzo del prodotto */
+        }
+      
+        getCounts() {
+          /* 🔢 OTTIENI CONTEGGIO TOTALE: Restituisce il numero di articoli nel carrello */
+          /* Come chiedere "quanti articoli ci sono in questo cestino?" */
+          
+          return this.items.length;
+          /* Restituisce la lunghezza dell'array items */
+          /* Ogni elemento nell'array è un articolo nel carrello */
+        }
+      
+        clearCart() {
+          /* 🧹 SVUOTA CARRELLO: Svuota il carrello della spesa */
+          /* Come svuotare un cestino rimettendo tutto sugli scaffali */
+          
+          if (!this.items.length) {
+            /* ❓ CONTROLLO VUOTO: Il carrello è già vuoto? */
+            /* !this.items.length è true quando la lunghezza è 0 */
+            /* L'operatore ! nega/inverte un valore booleano */
+            
+            alert("Your shopping cart is already empty");
+            /* 📢 AVVISO: Mostra un messaggio pop-up se il carrello è già vuoto */
+            /* alert() visualizza una finestra di messaggio all'utente */
+            
+            return; // Esce dalla funzione
+            /* 🛑 RITORNO ANTICIPATO: Interrompe l'esecuzione se il carrello è già vuoto */
+          }
+      
+          const isCartCleared = confirm(
+            "Are you sure you want to clear all items from your shopping cart?"
+          );
+          /* ❓ CONFERMA: Chiede all'utente di confermare lo svuotamento del carrello */
+          /* confirm() mostra una finestra di dialogo con pulsanti OK/Annulla */
+          /* Restituisce true se l'utente fa clic su OK, false per Annulla */
+          /* Come chiedere "Sei sicuro?" prima di rimuovere gli articoli */
+      
+          if (isCartCleared) {
+            /* ✅ UTENTE CONFERMATO: Procedi con lo svuotamento del carrello */
+            
+            this.items = [];  // Svuota l'array degli articoli
+            this.total = 0;   // Reimposta il costo totale
+            /* 🧹 REIMPOSTA STATO: Cancella i dati interni del carrello */
+            
+            /* 🖥️ AGGIORNA UI: Cancella tutti gli elementi di visualizzazione */
+            productsContainer.innerHTML = "";
+            totalNumberOfItems.textContent = 0;
+            cartSubTotal.textContent = 0;
+            cartTaxes.textContent = 0;
+            cartTotal.textContent = 0;
+          }
+        }
+      
+        calculateTaxes(amount) {
+          /* 💰 CALCOLA TASSE: Calcola l'importo delle tasse in base al subtotale */
+          /* Come la cassa che calcola l'IVA */
+          
+          return parseFloat(((this.taxRate / 100) * amount).toFixed(2));
+          /* 🧮 CALCOLO TASSE: Converti l'aliquota in decimale, moltiplica per l'importo */
+          /* this.taxRate / 100: Converte la percentuale in decimale (8,25% → 0,0825) */
+          /* .toFixed(2): Arrotonda a 2 decimali e restituisce una stringa */
+          /* parseFloat(): Riconverte la stringa in un numero */
+          
+          /* 🔍 GESTIONE PRECISIONE: Risolve problemi di virgola mobile in JavaScript */
+          /* Il calcolo diretto come 0.1 + 0.2 dà 0.30000000000000004 */
+          /* Questo garantisce esattamente 2 decimali, come $1.50 non $1.499999... */
+        }
+      
+        calculateTotal() {
+          /* 💲 CALCOLA TOTALE: Aggiorna tutte le visualizzazioni dei prezzi nel carrello */
+          /* Come fare il conto finale */
+          
+          const subTotal = this.items.reduce((total, item) => total + item.price, 0);
+          /* 🧮 SUBTOTALE: Somma di tutti i prezzi degli articoli */
+          /* .reduce() trasforma un array in un singolo valore */
+          /* (total, item) => total + item.price: Aggiunge ogni prezzo all'accumulatore */
+          /* 0: Valore iniziale per l'accumulatore */
+          /* Come sommare tutti i prezzi uno per uno */
+          
+          const tax = this.calculateTaxes(subTotal);
+          /* 💰 IMPORTO TASSE: Calcola le tasse in base al subtotale */
+          
+          this.total = subTotal + tax;
+          /* 💵 TOTALE: Subtotale più importo tasse */
+          
+          /* 🖥️ AGGIORNA VISUALIZZAZIONI: Mostra valori di valuta formattati */
+          cartSubTotal.textContent = `$${subTotal.toFixed(2)}`;
+          cartTaxes.textContent = `$${tax.toFixed(2)}`;
+          cartTotal.textContent = `$${this.total.toFixed(2)}`;
+          /* .toFixed(2): Mostra sempre esattamente 2 decimali */
+          /* Template literals: `$${value}` combina il simbolo $ con il valore */
+          
+          return this.total;
+          /* 📤 VALORE RESTITUITO: Importo totale finale */
+        }
+      }
+      
+      
+      /* 🚀 ===== INIZIALIZZAZIONE ===== */
+      const cart = new ShoppingCart();
+      /* 🛒 CREA CARRELLO: Istanzia un nuovo oggetto carrello della spesa */
+      /* La parola chiave new crea una nuova istanza dalla classe ShoppingCart */
+      /* Come preparare un nuovo cestino della spesa per un cliente */
+      
+      const addToCartBtns = document.getElementsByClassName("add-to-cart-btn");
+      /* 🔍 OTTIENI PULSANTI: Trova tutti i pulsanti "Aggiungi al carrello" */
+      /* getElementsByClassName restituisce una HTMLCollection (non un vero array) */
+      /* Come identificare tutti i pulsanti "Aggiungi" in tutta la pasticceria */
+      
+      [...addToCartBtns].forEach(
+        (btn) => {
+          /* 🔄 SPREAD & CICLO: Converti HTMLCollection in array e elabora ogni pulsante */
+          /* [...collection] usa l'operatore spread per creare un vero array */
+          /* forEach cicla attraverso ogni pulsante per aggiungere il comportamento di clic */
+          /* Come andare da ogni pulsante "Aggiungi" e addestrare il personale su cosa fare quando viene premuto */
+          
+          btn.addEventListener("click", (event) => {
+            /* 👂 LISTENER CLIC: Rispondi quando il pulsante viene cliccato */
+            /* "click" è il tipo di evento che stiamo ascoltando */
+            /* Il parametro event contiene informazioni sul clic */
+            
+            cart.addItem(Number(event.target.id), products);
+            /* 🛍️ AGGIUNGI PRODOTTO: Chiama il metodo addItem del carrello */
+            /* event.target è il pulsante che è stato cliccato */
+            /* event.target.id fornisce l'attributo id del pulsante (id prodotto) */
+            /* Number() converte l'id da stringa a numero */
+            /* Come dire al commesso "aggiungi questo specifico dolce al cestino" */
+            
+            totalNumberOfItems.textContent = cart.getCounts();
+            /* 🔢 AGGIORNA CONTEGGIO: Mostra il nuovo numero totale di articoli */
+            
+            cart.calculateTotal();
+            /* 💲 AGGIORNA PREZZI: Ricalcola e visualizza tutti i totali */
+          })
+        }
+      );
+      
+      
+      /* 👁️ ===== TOGGLE VISIBILITÀ CARRELLO ===== */
+      cartBtn.addEventListener("click", () => {
+        /* 👂 LISTENER CLIC: Rispondi quando viene cliccato il pulsante del carrello */
+        
+        isCartShowing = !isCartShowing;
+        /* 🔄 CAMBIA STATO: Alterna tra true e false */
+        /* L'operatore ! inverte il valore booleano */
+        /* Come girare un cartello "Aperto/Chiuso" */
+        
+        showHideCartSpan.textContent = isCartShowing ? "Hide" : "Show";
+        /* 🔄 AGGIORNA TESTO PULSANTE: "Show Cart" o "Hide Cart" */
+        /* ? : è l'operatore ternario: condizione ? valoreSeFalso : valoreSeFalso */
+        /* Come cambiare il testo sul cartello da "Aperto" a "Chiuso" */
+        
+        cartContainer.style.display = isCartShowing ? "block" : "none";
+        /* 👁️ TOGGLE VISIBILITÀ: Mostra o nasconde l'elemento del carrello */
+        /* "block" lo rende visibile, "none" lo nasconde */
+        /* Come aprire o chiudere effettivamente la vetrina dei pasticcini */
+      });
+      
+      
+      /* 🧹 ===== PULSANTE SVUOTA CARRELLO ===== */
+      clearCartBtn.addEventListener("click", cart.clearCart.bind(cart));
+      /* 👂 LISTENER CLIC: Collega il pulsante di svuotamento al metodo clearCart del carrello */
+      
+      /* 🔗 BINDING DEL METODO: Garantisce il contesto corretto di 'this' */
+      /* .bind(cart) crea una nuova funzione con 'this' impostato permanentemente su cart */
+      /* Senza bind(), 'this' all'interno di clearCart() si riferirebbe al pulsante */
+      /* Come assicurarsi che il commesso sappia QUALE cestino svuotare */
+    </script>
+  </body>
+</html>
+
+<!-- 🎯 ===== RIEPILOGO DEL CARRELLO ACQUISTI ===== -->
+<!-- 
+🛒 ARCHITETTURA DELL'APP:
+│
+├── 🧠 Struttura HTML
+│   ├── 📑 Header con titolo del negozio
+│   └── 📋 Area contenuto principale
+│       ├── 🛒 Pulsante toggle del carrello
+│       ├── 📦 Contenitore del carrello (inizialmente nascosto)
+│       └── 🧁 Area di visualizzazione prodotti
+│
+├── 🎨 Stile CSS
+│   ├── 🎭 Variabili per colori coerenti
+│   ├── 🃏 Stile delle schede prodotto
+│   ├── 🛒 Aspetto del carrello acquisti
+│   └── 📱 Design responsive per diversi dispositivi
+│
+└── 🧮 Logica JavaScript
+    ├── 📋 Array di dati prodotto
+    ├── 🎨 Rendering dinamico dei prodotti
+    ├── 📦 Classe ShoppingCart
+    │   ├── 🛍️ Aggiunta articoli
+    │   ├── 💲 Calcoli dei prezzi
+    │   └── 🧹 Svuotamento carrello
+    └── 🔄 Gestione eventi
+        ├── 👆 Clic per aggiungere al carrello
+        ├── 👁️ Toggle mostra/nascondi carrello
+        └── 🧹 Funzionalità svuota carrello
+
+💡 FUNZIONALITÀ JAVASCRIPT MODERNE:
+├── 📦 Classi e programmazione orientata agli oggetti
+├── 🧩 Destrutturazione per assegnazione variabili pulita
+├── 📝 Template literals per HTML dinamico
+├── 🔍 Metodi array (forEach, find, reduce)
+├── ➡️ Funzioni freccia per callback concisi
+├── 📎 Operatore spread per conversione collezioni
+└── 🔀 Operatore ternario per condizionali compatti
+
+È come avere un intero sistema di gestione pasticceria nel tuo browser! 🧁✨
+-->
