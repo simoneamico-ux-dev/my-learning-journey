@@ -1,0 +1,1968 @@
+<!-- ===== ENGLISH VERSION ===== -->
+
+<!DOCTYPE html>
+<!-- 🎮 HTML5 DECLARATION: "Welcome to our 2D Platformer Game!" -->
+<!-- It's like placing the foundation for our digital playground! 🏗️ -->
+
+<html lang="en">
+<!-- 🌍 MAIN CONTAINER: The entire game universe -->
+<!-- lang="en" = English language, universal for coding experiences -->
+
+  <head>
+    <!-- 🧠 THE COMMAND CENTER: Where we set up the game environment -->
+    <!-- Like the control room of an arcade machine! 🕹️ -->
+    
+    <meta charset="UTF-8" />
+    <!-- 📝 CHARACTER ENCODING: Supports all text symbols needed for our game -->
+    <!-- UTF-8 ensures everything from game text to code comments displays correctly -->
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- 🔄 BROWSER COMPATIBILITY: Ensures modern IE rendering -->
+    <!-- Tells Internet Explorer to use its most modern rendering engine -->
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 📱 RESPONSIVE SETUP: "This game adapts to any screen!" -->
+    <!-- Makes our game properly sized on all devices from phones to desktops -->
+    
+    <title>Learn Intermediate OOP by Building a Platformer Game</title>
+    <!-- 📑 TAB TITLE: Educational purpose clearly defined -->
+    <!-- OOP = Object-Oriented Programming, the foundation of modern game development -->
+    
+    <style>
+      /* 🎨 ===== CSS STYLES: The Visual Game World ===== */
+      
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        /* 🧹 CLEAN SLATE: Reset all browser default spacing */
+        /* Ensures our game looks consistent across all browsers */
+        /* Like leveling the ground before building our game world */
+      }
+      
+      :root {
+        --main-bg-color: #0a0a23;
+        --section-bg-color: #ffffff;
+        --golden-yellow: #feac32;
+        /* 🎨 COLOR VARIABLES: Central palette definition */
+        /* Using CSS variables makes theme changes easy and consistent */
+        /* Like defining the main colors for our game world */
+      }
+      
+      body {
+        background-color: var(--main-bg-color);
+        /* 🌌 DEEP BLUE BACKGROUND: Creates an immersive atmosphere */
+        /* Dark backgrounds reduce eye strain during gameplay */
+      }
+      
+      .start-screen {
+        background-color: var(--section-bg-color);
+        width: 100%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+        /* ⚖️ PERFECT CENTERING: The transform trick centers the element precisely */
+        /* Horizontally AND vertically centered regardless of content size */
+        
+        border-radius: 30px;
+        /* 🔄 ROUNDED CORNERS: Soften the visual appearance */
+        /* Creates a more modern, friendly UI for players */
+        
+        padding: 20px;
+        padding-bottom: 5px;
+        /* 📏 INTERNAL SPACING: Breathing room for content */
+        /* Different top/bottom padding creates visual balance */
+      }
+      
+      .main-title {
+        text-align: center;
+        /* ⚖️ CENTERED TITLE: Focal point of the start screen */
+        /* First thing players see - creates hierarchy and focus */
+      }
+      
+      .instructions {
+        text-align: center;
+        font-size: 1.2rem;
+        margin: 15px;
+        line-height: 2rem;
+        /* 📝 CLEAR INSTRUCTIONS: Readability optimized text */
+        /* font-size: 1.2rem = 20% larger than default text */
+        /* line-height: 2rem = double-spaced for easier reading */
+        /* Ensures players understand how to play before starting */
+      }
+      
+      .btn {
+        cursor: pointer;
+        /* 👆 HAND CURSOR: Visual cue that element is clickable */
+        
+        width: 100px;
+        margin: 10px;
+        /* 📏 BUTTON DIMENSIONS: Comfortable click target size */
+        /* 100px wide with 10px margin creates good spacing */
+        
+        color: #0a0a23;
+        font-size: 18px;
+        /* 🔤 TEXT STYLE: Dark text on light button for readability */
+        /* 18px font ensures text is easily readable on all devices */
+        
+        background-color: var(--golden-yellow);
+        background-image: linear-gradient(#fecc4c, #ffac33);
+        /* 🌅 GRADIENT BACKGROUND: Creates 3D button effect */
+        /* Top lighter, bottom darker creates illusion of light from above */
+        
+        border-color: var(--golden-yellow);
+        border-width: 3px;
+        /* 🔲 BORDER STYLE: Thick border matches background */
+        /* 3px width makes the border clearly visible */
+      }
+      
+      .btn:hover {
+        background-image: linear-gradient(#ffcc4c, #f89808);
+        /* ✨ HOVER EFFECT: Button brightens when mouse hovers */
+        /* Visual feedback before clicking improves user experience */
+        /* Slightly different gradient creates "activated" appearance */
+      }
+      
+      .btn-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* 📦 FLEXBOX CENTERING: Perfect horizontal alignment */
+        /* Modern approach to centering with CSS */
+        /* Ensures button is perfectly centered regardless of screen size */
+      }
+      
+      .checkpoint-screen {
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        /* ⚖️ HORIZONTAL CENTERING: Old-school technique */
+        /* Setting both left/right to 0 with auto margins centers the element */
+        
+        width: 100%;
+        text-align: center;
+        background-color: var(--section-bg-color);
+        border-radius: 20px;
+        padding: 10px;
+        /* 📋 POPUP STYLING: Clean, readable notification */
+        /* White background with rounded corners for a modern look */
+        
+        display: none;
+        /* 🙈 INITIALLY HIDDEN: Only appears at checkpoints */
+        /* JavaScript will change this to "block" when needed */
+      }
+      
+      #canvas {
+        display: none;
+        /* 🙈 HIDDEN CANVAS: Revealed when game starts */
+        /* Initially hidden to show start screen instead */
+      }
+      
+      @media (min-width: 768px) {
+        /* 📱 RESPONSIVE BREAKPOINT: Tablet and larger screens */
+        /* 768px is standard tablet portrait width */
+        
+        .start-screen {
+          width: 60%;
+          max-width: 700px;
+          /* 📏 DESKTOP SIZING: Narrower, centered panel */
+          /* Prevents the start screen from stretching too wide on large screens */
+          /* 60% width with 700px maximum creates ideal reading width */
+        }
+      
+        .checkpoint-screen {
+          max-width: 300px;
+          /* 📏 NOTIFICATION SIZING: Compact on larger screens */
+          /* 300px is wide enough for content but not intrusive */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 🎮 ===== THE GAME INTERFACE: Player's View into the Game World ===== -->
+    
+    <div class="start-screen">
+      <!-- 🎬 START SCREEN: The initial game menu -->
+      <!-- Like the title screen of classic arcade games! -->
+      
+      <h1 class="main-title">freeCodeCamp Code Warrior</h1>
+      <!-- 📑 GAME TITLE: Establishes theme and branding -->
+      <!-- "Code Warrior" suggests a coding-themed adventure -->
+      
+      <p class="instructions">
+        Help the main player navigate to the yellow checkpoints.
+      </p>
+      <!-- 📝 GAME OBJECTIVE: Clear description of goals -->
+      <!-- Tells player exactly what they need to accomplish -->
+      
+      <p class="instructions">
+        Use the keyboard arrows to move the player around.
+      </p>
+      <!-- 🎮 CONTROL SCHEME 1: Movement controls explained -->
+      <!-- Arrow keys are intuitive for 2D movement -->
+      
+      <p class="instructions">You can also use the spacebar to jump.</p>
+      <!-- 🎮 CONTROL SCHEME 2: Jump mechanic explained -->
+      <!-- Spacebar is the standard jump button in most platformers -->
+
+      <div class="btn-container">
+        <!-- 📦 BUTTON WRAPPER: Centers the start button -->
+        
+        <button class="btn" id="start-btn">Start Game</button>
+        <!-- 🎯 START BUTTON: Initiates the game -->
+        <!-- Critical interactive element with unique ID for JavaScript -->
+      </div>
+    </div>
+
+    <div class="checkpoint-screen">
+      <!-- 🏆 CHECKPOINT NOTIFICATION: Appears when reaching goals -->
+      <!-- Provides positive feedback for player achievements -->
+      
+      <h2>Congrats!</h2>
+      <!-- 🎉 CELEBRATION HEADER: Positive reinforcement -->
+      <!-- Congratulatory message creates satisfaction -->
+      
+      <p>You reached the last checkpoint.</p>
+      <!-- 📝 ACHIEVEMENT MESSAGE: Clarifies what happened -->
+      <!-- Will be updated via JavaScript for different checkpoints -->
+    </div>
+
+    <canvas id="canvas"></canvas>
+    <!-- 🖼️ CANVAS ELEMENT: The actual game rendering surface -->
+    <!-- HTML5 Canvas is like a blank drawing board for our JavaScript -->
+    <!-- All game visuals will be drawn here programmatically -->
+
+    <script>
+      /* 🎮 ===== JAVASCRIPT: The Game Engine! ===== */
+      
+      /* 🔍 ===== DOM ELEMENT SELECTION: Connecting JS to HTML ===== */
+      
+      const startBtn = document.getElementById("start-btn");
+      /* 🔘 START BUTTON REFERENCE: Direct access by ID */
+      /* getElementById is the fastest selector method - perfect for critical elements */
+      /* Like grabbing the ignition switch for our game engine */
+      
+      const canvas = document.getElementById("canvas");
+      /* 🖼️ CANVAS REFERENCE: Our drawing surface */
+      /* This element will become our entire game world */
+      /* Like getting a blank canvas before painting a masterpiece */
+      
+      const startScreen = document.querySelector(".start-screen");
+      /* 🎬 START SCREEN REFERENCE: Using class selector */
+      /* querySelector finds the first matching element with this class */
+      /* We'll hide this when the game starts */
+      
+      const checkpointScreen = document.querySelector(".checkpoint-screen");
+      /* 🏆 CHECKPOINT SCREEN REFERENCE: For victory messages */
+      /* This popup will appear when players reach checkpoints */
+      
+      const checkpointMessage = document.querySelector(".checkpoint-screen > p");
+      /* 📝 MESSAGE REFERENCE: Direct child selector */
+      /* The ">" symbol selects ONLY direct children (not grandchildren) */
+      /* We'll update this text when different checkpoints are reached */
+      
+      /* 🎨 ===== CANVAS SETUP: Preparing Our Drawing Surface ===== */
+      
+      const ctx = canvas.getContext("2d");
+      /* 🖌️ DRAWING CONTEXT: The actual drawing API */
+      /* getContext("2d") gives us access to the Canvas drawing tools */
+      /* Like getting a paintbrush to use on our canvas */
+      /* This is what we'll use to draw shapes, colors, and the game world */
+      
+      canvas.width = innerWidth;
+      canvas.height = innerHeight;
+      /* 📏 CANVAS DIMENSIONS: Full screen size */
+      /* Setting width/height in JS overrides any CSS sizing */
+      /* This creates a 1:1 pixel ratio for crisp rendering */
+      /* Without this, canvas would default to 300x150px and look blurry when stretched */
+      
+      /* 🌍 ===== GAME PHYSICS CONSTANTS: The Rules of Our World ===== */
+      
+      const gravity = 0.5;
+      /* ⬇️ GRAVITY CONSTANT: Force pulling player down */
+      /* This isn't realistic Earth gravity (9.8 m/s²) but a value that feels good */
+      /* Each frame adds 0.5 to vertical velocity → accelerating fall */
+      /* Higher values = faster falling, lower values = floatier jumps */
+      
+      let isCheckpointCollisionDetectionActive = true;
+      /* 🚦 COLLISION FLAG: Controls checkpoint detection */
+      /* This boolean acts like an on/off switch for checkpoint interactions */
+      /* When false, prevents the same checkpoint from triggering multiple times */
+      /* Critical for avoiding the checkpoint triggering 60 times per second! */
+      
+      /* 📏 ===== SCALING FUNCTION: Responsive Game Elements ===== */
+      
+      const proportionalSize = (size) => {
+        return innerHeight < 500 ? Math.ceil((size / 500) * innerHeight) : size;
+        /* 📱 ADAPTIVE SCALING: Elements resize for small screens */
+        /* If screen height < 500px: scales everything proportionally */
+        /* Formula: (size ÷ reference height) × actual height */
+        /* Math.ceil() rounds up to prevent zero-size elements */
+        /* On taller screens: uses original size values */
+        /* Like having a responsive blueprint for our game world */
+      }
+      
+      /* 🧍 ===== PLAYER CLASS: The Main Character ===== */
+      
+      class Player {
+        /* 📘 CLASS DEFINITION: Blueprint for creating players */
+        /* Classes are templates that define properties and behaviors */
+        /* Like defining what makes a "player" in our game universe */
+        
+        constructor() {
+          /* 🏗️ CONSTRUCTOR METHOD: Runs when creating new Player */
+          /* This method initializes all player properties */
+          /* Like building the player character from scratch */
+          
+          this.position = {
+            x: proportionalSize(10),
+            y: proportionalSize(400),
+          };
+          /* 📍 STARTING POSITION: Where player begins */
+          /* Coordinates from top-left corner of screen */
+          /* Using proportionalSize ensures this works on all screen sizes */
+          
+          this.velocity = {
+            x: 0, /* Horizontal speed (pixels per frame) */
+            y: 0, /* Vertical speed (pixels per frame) */
+          };
+          /* 🏎️ VELOCITY VECTOR: Speed and direction */
+          /* Separate x/y components allow independent horizontal/vertical movement */
+          /* 0 means standing still in each direction */
+          
+          this.width = proportionalSize(40);
+          this.height = proportionalSize(40);
+          /* 📏 PLAYER DIMENSIONS: Size of character */
+          /* 40x40px creates a square player (responsive on small screens) */
+          /* Size affects both visuals and collision detection */
+        }
+        
+        draw() {
+          /* 🎨 DRAWING METHOD: Renders player on screen */
+          /* Called every frame to show the player */
+          
+          ctx.fillStyle = "#99c9ff";
+          /* 🎨 PLAYER COLOR: Light blue */
+          /* Sets the "paint color" before drawing */
+          
+          ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+          /* 📦 DRAW RECTANGLE: Creates the player shape */
+          /* fillRect(x, y, width, height) draws a filled rectangle */
+          /* This simple square represents our character */
+          /* In professional games, this would be replaced with sprite images */
+        }
+        
+        update() {
+          /* 🔄 UPDATE METHOD: Game physics and logic */
+          /* Called every frame (60 times per second) */
+          /* Heart of the player's behavior in the game */
+          
+          this.draw();
+          /* 🎨 RENDER FIRST: Ensures player is visible */
+          /* Always draw before moving to prevent visual glitches */
+          
+          this.position.x += this.velocity.x;
+          this.position.y += this.velocity.y;
+          /* 🚶 MOVEMENT PHYSICS: Position changes based on velocity */
+          /* This is the core movement equation: position += velocity */
+          /* The direction and speed of movement depend on velocity values */
+          
+          if (this.position.y + this.height + this.velocity.y <= canvas.height) {
+            /* 🌡️ GRAVITY CHECK: Is player still in the air? */
+            /* Condition checks if player hasn't reached bottom of screen */
+            /* Bottom edge position = y position + height */
+            
+            if (this.position.y < 0) {
+              /* 🛑 TOP BOUNDARY CHECK: Is player trying to leave screen? */
+              /* y < 0 means player is trying to jump above the canvas */
+              
+              this.position.y = 0;
+              this.velocity.y = gravity;
+              /* 🔄 CEILING COLLISION: Bounce player down */
+              /* Prevents going above screen and starts falling */
+            }
+            
+            this.velocity.y += gravity;
+            /* ⬇️ APPLY GRAVITY: Increases falling speed */
+            /* This creates acceleration - falling gets faster over time */
+            /* The foundation of realistic jumping physics! */
+          } else {
+            /* 🛑 FLOOR COLLISION: Player reached bottom */
+            
+            this.velocity.y = 0;
+            /* 🛑 STOP FALLING: Sets vertical velocity to zero */
+            /* Prevents player from falling through the floor */
+          }
+      
+          if (this.position.x < this.width) {
+            /* 🛑 LEFT BOUNDARY CHECK: Prevent leaving screen left */
+            
+            this.position.x = this.width;
+            /* 🔙 PUSH BACK: Sets position to edge of screen */
+            /* Creates an invisible wall at the left screen edge */
+          }
+      
+          if (this.position.x >= canvas.width - this.width * 2) {
+            /* 🛑 RIGHT BOUNDARY CHECK: Prevent leaving screen right */
+            
+            this.position.x = canvas.width - this.width * 2;
+            /* 🔙 PUSH BACK: Sets position to edge of screen */
+            /* The multiplication creates a better visual boundary */
+          }
+        }
+      }
+      
+      /* 🧱 ===== PLATFORM CLASS: The Solid Ground ===== */
+      
+      class Platform {
+        /* 📘 CLASS DEFINITION: Blueprint for platforms */
+        /* Each platform is a surface the player can stand on */
+        
+        constructor(x, y) {
+          /* 🏗️ CONSTRUCTOR WITH PARAMETERS: Customizable platforms */
+          /* Takes x,y coordinates to place platforms anywhere */
+          /* Like placing building blocks in our world */
+          
+          this.position = {
+            x, /* Shorthand for x: x */
+            y, /* Shorthand for y: y */
+          };
+          /* 📍 PLATFORM POSITION: Custom placement */
+          /* Modern JS allows shorthand when property name = variable name */
+          /* This creates the platform at the exact coordinates we specify */
+          
+          this.width = 200;
+          this.height = proportionalSize(40);
+          /* 📏 PLATFORM SIZE: Width and height */
+          /* 200px wide creates platforms player can run across */
+          /* Height scales with screen size for consistency */
+        }
+        
+        draw() {
+          /* 🎨 DRAWING METHOD: Renders platform on screen */
+          
+          ctx.fillStyle = "#acd157";
+          /* 🎨 PLATFORM COLOR: Light green */
+          /* A grass-like color distinguishes platforms from player */
+          
+          ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+          /* 📦 DRAW RECTANGLE: Creates the platform shape */
+          /* Simple rectangle represents each platform */
+        }
+      }
+      
+      /* 🚩 ===== CHECKPOINT CLASS: The Goal Markers ===== */
+      
+      class CheckPoint {
+        /* 📘 CLASS DEFINITION: Blueprint for goal markers */
+        /* These are the objectives player must reach */
+        
+        constructor(x, y, z) {
+          /* 🏗️ CONSTRUCTOR WITH PARAMETERS: Customizable checkpoints */
+          /* x,y = position, z = checkpoint number/sequence */
+          
+          this.position = {
+            x,
+            y,
+          };
+          /* 📍 CHECKPOINT POSITION: Custom placement */
+          /* Uses same shorthand syntax as Platform */
+          
+          this.width = proportionalSize(40);
+          this.height = proportionalSize(70);
+          /* 📏 CHECKPOINT SIZE: Tall and narrow */
+          /* Taller than player to be easily visible */
+          
+          this.claimed = false;
+          /* 🚩 CLAIMED FLAG: Tracks checkpoint status */
+          /* false = not reached yet, true = already collected */
+          /* Like a virtual "I was here" flag the player plants */
+        };
+      
+        draw() {
+          /* 🎨 DRAWING METHOD: Renders checkpoint on screen */
+          
+          ctx.fillStyle = "#f1be32";
+          /* 🎨 CHECKPOINT COLOR: Golden yellow */
+          /* Bright color makes checkpoints stand out as objectives */
+          
+          ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+          /* 📦 DRAW RECTANGLE: Creates the checkpoint shape */
+          /* Vertical rectangle resembles a finish flag */
+        }
+        
+        claim() {
+          /* 🏁 CLAIM METHOD: "Collects" the checkpoint */
+          /* Called when player reaches this checkpoint */
+          
+          this.width = 0;
+          this.height = 0;
+          /* 🙈 MAKE INVISIBLE: Zero dimensions hide it */
+          /* Rather than removing from array, we make it invisible */
+          
+          this.position.y = Infinity;
+          /* 🌠 SEND AWAY: Moves far off-screen */
+          /* Infinity ensures it can never be collided with again */
+          /* This is safer than modifying the array during iteration */
+          
+          this.claimed = true;
+          /* 🚩 MARK AS CLAIMED: Updates status flag */
+          /* This helps track progress and checkpoint sequence */
+          /* Used for conditional logic in collision detection */
+        }
+      };
+      
+      /* 🏭 ===== GAME OBJECT CREATION: Building the World ===== */
+      
+      const player = new Player();
+      /* 🧍 CREATE PLAYER: Instance of Player class */
+      /* new Player() calls the constructor and creates a functional object */
+      /* Like hitting the "print" button on our player blueprint */
+      
+      const platformPositions = [
+        { x: 500, y: proportionalSize(450) },
+        { x: 700, y: proportionalSize(400) },
+        { x: 850, y: proportionalSize(350) },
+        { x: 900, y: proportionalSize(350) },
+        { x: 1050, y: proportionalSize(150) },
+        { x: 2500, y: proportionalSize(450) },  /* Big gap → challenge! */
+        { x: 2900, y: proportionalSize(400) },
+        { x: 3150, y: proportionalSize(350) },
+        { x: 3900, y: proportionalSize(450) },  /* Other gap */
+        { x: 4200, y: proportionalSize(400) },
+        { x: 4400, y: proportionalSize(200) },
+        { x: 4700, y: proportionalSize(150) },
+      ];
+      /* 🗺️ LEVEL DESIGN: Platform coordinates array */
+      /* Each object holds x,y position for one platform */
+      /* This is our "level blueprint" - separating data from logic */
+      /* The comments note where challenging gaps occur in the level */
+      
+      const platforms = platformPositions.map(
+        (platform) => new Platform(platform.x, platform.y)
+      );
+      /* 🏭 PLATFORM CREATION: Transforms data into objects */
+      /* map() converts each position into a functional Platform */
+      /* This is like a factory assembly line: data in → objects out */
+      /* Arrow function with implicit return creates each Platform */
+      
+      const checkpointPositions = [
+        { x: 1170, y: proportionalSize(80), z: 1 },
+        { x: 2900, y: proportionalSize(330), z: 2 },
+        { x: 4800, y: proportionalSize(80), z: 3 },
+      ];
+      /* 🚩 CHECKPOINT LOCATIONS: Objective coordinates */
+      /* Three checkpoints are placed at strategic points in the level */
+      /* z value tracks the checkpoint sequence number */
+      
+      const checkpoints = checkpointPositions.map(
+        (checkpoint) => new CheckPoint(checkpoint.x, checkpoint.y, checkpoint.z)
+      );
+      /* 🏭 CHECKPOINT CREATION: Transforms data into objects */
+      /* Same mapping pattern as platforms, creating CheckPoint objects */
+      
+      /* 🔄 ===== GAME LOOP: The Animation Engine ===== */
+      
+      const animate = () => {
+        /* 🎬 MAIN GAME LOOP: Function runs every frame */
+        /* This is the heartbeat of our game - everything happens here */
+        
+        requestAnimationFrame(animate);
+        /* 🔄 LOOP CREATION: Browser animation API */
+        /* Asks browser to call animate() before next repaint */
+        /* Creates a smooth 60fps loop optimized for performance */
+        /* Self-referential - animate calls itself creating infinite loop */
+        
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        /* 🧹 CLEAR CANVAS: Wipes previous frame */
+        /* Like erasing a whiteboard before drawing the next state */
+        /* Without this, movements would leave trails behind them */
+      
+        platforms.forEach((platform) => {
+          platform.draw();
+        });
+        /* 🎨 DRAW PLATFORMS: Render all platforms */
+        /* forEach executes the function on each array element */
+        /* Each platform's draw() method is called to render it */
+      
+        checkpoints.forEach(checkpoint => {
+          checkpoint.draw();
+        });
+        /* 🎨 DRAW CHECKPOINTS: Render all checkpoints */
+        /* Same pattern as platforms - draw each checkpoint */
+      
+        player.update();
+        /* 🔄 UPDATE PLAYER: Physics and rendering */
+        /* This calls the player's update method which:
+           1. Draws the player
+           2. Updates position based on velocity
+           3. Applies gravity and boundary checks */
+      
+        /* 📷 ===== CAMERA MOVEMENT: Scrolling The World ===== */
+        
+        if (keys.rightKey.pressed && player.position.x < proportionalSize(400)) {
+          /* 🏃‍♂️ PLAYER MOVEMENT RIGHT: Move player when away from center */
+          /* When right key pressed AND player left of center point */
+          
+          player.velocity.x = 5;
+          /* ➡️ SET VELOCITY: Move player right */
+          /* 5 pixels per frame creates smooth movement */
+        } else if (keys.leftKey.pressed && player.position.x > proportionalSize(100)) {
+          /* 🏃‍♂️ PLAYER MOVEMENT LEFT: Move player when away from left edge */
+          /* When left key pressed AND player right of left boundary */
+          
+          player.velocity.x = -5;
+          /* ⬅️ SET VELOCITY: Move player left */
+          /* Negative velocity means leftward movement */
+        } else {
+          /* 🛑 CENTRAL POSITION: Player near center or edges */
+          
+          player.velocity.x = 0;
+          /* 🛑 STOP HORIZONTAL MOVEMENT: Player stationary */
+          /* Reset velocity to zero - player stops moving horizontally */
+      
+          /* 🌎 WORLD SCROLLING: Move environment instead of player */
+          /* This creates the illusion of a moving camera following the player */
+          
+          if (keys.rightKey.pressed && isCheckpointCollisionDetectionActive) {
+            /* ➡️ SCROLL RIGHT: Move world when player centered */
+            /* Active only when checkpoint collision is enabled */
+            
+            platforms.forEach((platform) => {
+              platform.position.x -= 5;
+              /* ⬅️ MOVE PLATFORMS LEFT: World scrolls opposite to player direction */
+              /* Creates illusion of player moving right */
+            });
+      
+            checkpoints.forEach((checkpoint) => {
+              checkpoint.position.x -= 5;
+              /* ⬅️ MOVE CHECKPOINTS LEFT: Keep synchronized with platforms */
+              /* Everything in world moves together for consistent scrolling */
+            });
+          
+          } else if (keys.leftKey.pressed && isCheckpointCollisionDetectionActive) {
+            /* ⬅️ SCROLL LEFT: Move world when player centered */
+            
+            platforms.forEach((platform) => {
+              platform.position.x += 5;
+              /* ➡️ MOVE PLATFORMS RIGHT: World scrolls opposite to player direction */
+              /* Creates illusion of player moving left */
+            });
+      
+            checkpoints.forEach((checkpoint) => {
+              checkpoint.position.x += 5;
+              /* ➡️ MOVE CHECKPOINTS RIGHT: Keep synchronized with platforms */
+            });
+          }
+        }
+      
+        /* 💥 ===== PLATFORM COLLISION DETECTION ===== */
+        
+        platforms.forEach((platform) => {
+          /* 🔍 CHECK EACH PLATFORM: Iterate through all platforms */
+          
+          const collisionDetectionRules = [
+            player.position.y + player.height <= platform.position.y,
+            /* ⬇️ RULE 1: Player's bottom above platform's top */
+            /* Ensures player is descending onto platform from above */
+            
+            player.position.y + player.height + player.velocity.y >= platform.position.y,
+            /* ⬇️ RULE 2: Player's next position will intersect platform */
+            /* Predicts collision based on current velocity */
+            
+            player.position.x >= platform.position.x - player.width / 2,
+            /* ⬅️ RULE 3: Player not too far left of platform */
+            /* Horizontal position check - left edge */
+            
+            player.position.x <=
+              platform.position.x + platform.width - player.width / 3,
+            /* ➡️ RULE 4: Player not too far right of platform */
+            /* Horizontal position check - right edge */
+          ];
+      
+          if (collisionDetectionRules.every((rule) => rule)) {
+            /* ✅ ALL RULES TRUE: Standing on platform */
+            /* every() checks if ALL conditions return true */
+            /* This is like a logical AND between all conditions */
+            
+            player.velocity.y = 0;
+            /* 🛑 STOP FALLING: Land on platform */
+            /* Zero vertical velocity prevents falling through platform */
+            
+            return;
+            /* 🚪 EXIT LOOP: Skip remaining platforms */
+            /* Once we've found a collision, no need to check others */
+          }
+      
+          /* 💥 COLLISION FROM BELOW: Hitting platform from underneath */
+          
+          const platformDetectionRules = [
+            player.position.x >= platform.position.x - player.width / 2,
+            /* ⬅️ RULE 1: Horizontal overlap check (left) */
+            
+            player.position.x <=
+              platform.position.x + platform.width - player.width / 3,
+            /* ➡️ RULE 2: Horizontal overlap check (right) */
+            
+            player.position.y + player.height >= platform.position.y,
+            /* ⬆️ RULE 3: Player's bottom below platform's top */
+            
+            player.position.y <= platform.position.y + platform.height,
+            /* ⬇️ RULE 4: Player's top above platform's bottom */
+          ];
+      
+          if (platformDetectionRules.every(rule => rule)) {
+            /* ✅ ALL RULES TRUE: Hitting platform from below */
+            
+            player.position.y = platform.position.y + player.height;
+            /* ⬇️ PUSH DOWN: Move player below platform */
+            /* Prevents getting stuck inside platform */
+            
+            player.velocity.y = gravity;
+            /* ⬇️ START FALLING: Apply gravity */
+            /* Bounces player down after hitting head */
+          };
+        });
+      
+        /* 🚩 ===== CHECKPOINT COLLISION DETECTION ===== */
+        
+        checkpoints.forEach((checkpoint, index, checkpoints) => {
+          /* 🔍 CHECK EACH CHECKPOINT: Iterate through all checkpoints */
+          /* index = position in array, checkpoints = the full array */
+          
+          const checkpointDetectionRules = [
+            player.position.x >= checkpoint.position.x,
+            /* ➡️ RULE 1: Player right edge beyond checkpoint left */
+            
+            player.position.y >= checkpoint.position.y,
+            /* ⬇️ RULE 2: Player below top of checkpoint */
+            
+            player.position.y + player.height <=
+              checkpoint.position.y + checkpoint.height,
+            /* ⬆️ RULE 3: Player within vertical bounds of checkpoint */
+            
+            isCheckpointCollisionDetectionActive,
+            /* 🚦 RULE 4: Collision detection system is active */
+            /* Prevents multiple activations when global switch is off */
+            
+            player.position.x - player.width <=
+              checkpoint.position.x - checkpoint.width + player.width * 0.9,
+            /* ⬅️ RULE 5: Complex horizontal alignment check */
+            /* Ensures player is properly positioned relative to checkpoint */
+            
+            index === 0 || checkpoints[index - 1].claimed === true,
+            /* 🔢 RULE 6: Checkpoint order check */
+            /* Either this is the first checkpoint OR previous one was claimed */
+            /* Forces sequential checkpoint collection */
+          ];
+      
+          if (checkpointDetectionRules.every((rule) => rule)) {
+            /* ✅ ALL RULES TRUE: Checkpoint reached */
+            
+            checkpoint.claim();
+            /* 🏁 CLAIM CHECKPOINT: Mark as reached */
+            /* This hides the checkpoint and marks it claimed */
+      
+            if (index === checkpoints.length - 1) {
+              /* 🏆 FINAL CHECKPOINT: Last in array */
+              /* Length - 1 is the index of the last item */
+              
+              isCheckpointCollisionDetectionActive = false;
+              /* 🚫 DISABLE COLLISIONS: Game effectively ends */
+              /* Prevents further checkpoint activations */
+              
+              showCheckpointScreen("You reached the final checkpoint!");
+              /* 🎉 VICTORY MESSAGE: Final achievement */
+              /* Shows celebration message with custom text */
+              
+              movePlayer("ArrowRight", 0, false);
+              /* 🛑 STOP PLAYER: Prevent movement after winning */
+              /* Reset movement state to make player stand still */
+            } else if (player.position.x >= checkpoint.position.x && player.position.x <= checkpoint.position.x + 40) {
+              /* ✅ REGULAR CHECKPOINT: Not the final one */
+              /* Additional position check ensures proper trigger timing */
+              
+              showCheckpointScreen("You reached a checkpoint!");
+              /* 🎉 PROGRESS MESSAGE: Intermediate achievement */
+            }
+          };
+        });
+      }
+      
+      /* 🎮 ===== KEYBOARD STATE TRACKING ===== */
+      
+      const keys = {
+        rightKey: {
+          pressed: false
+        },
+        leftKey: {
+          pressed: false
+        }
+      };
+      /* 🎮 KEYBOARD STATE OBJECT: Tracks pressed keys */
+      /* Nested objects: keys → rightKey → pressed */
+      /* Using boolean flags instead of checking key state every frame */
+      /* This allows for smooth, consistent movement */
+      
+      const movePlayer = (key, xVelocity, isPressed) => {
+        /* 🏃‍♂️ PLAYER MOVEMENT FUNCTION: Processes key actions */
+        /* key = which key was pressed */
+        /* xVelocity = how fast to move */
+        /* isPressed = key down or key up? */
+        
+        if (!isCheckpointCollisionDetectionActive) {
+          /* 🚫 GAME OVER CHECK: Block movement if game ended */
+          
+          player.velocity.x = 0;
+          player.velocity.y = 0;
+          /* 🛑 FREEZE PLAYER: Stop all movement */
+          
+          return;
+          /* 🚪 EXIT FUNCTION: Skip remaining code */
+        }
+      
+        switch (key) {
+          /* 🔀 KEY SWITCH: Different action for each key */
+          /* Efficient way to handle multiple key options */
+          
+          case "ArrowLeft":
+            /* ⬅️ LEFT ARROW: Move player left */
+            
+            keys.leftKey.pressed = isPressed;
+            /* 🔄 UPDATE KEY STATE: Track if key is down */
+            
+            if (xVelocity === 0) {
+              player.velocity.x = xVelocity;
+              /* 🛑 ZERO VELOCITY: For key up event */
+              /* When releasing key, stop moving immediately */
+            }
+            player.velocity.x -= xVelocity;
+            /* ⬅️ APPLY VELOCITY: Move left */
+            /* Subtract from x velocity to move left */
+            break;
+            
+          case "ArrowUp":
+          case " ":
+          case "Spacebar":
+            /* ⬆️ UP/SPACE: Jump action */
+            /* Multiple cases handle different jump keys */
+            /* Both arrow up and spacebar trigger jump */
+            
+            player.velocity.y -= 8;
+            /* ⬆️ JUMP VELOCITY: Move upward */
+            /* Negative y velocity means moving up */
+            /* Value of 8 creates a satisfying jump height */
+            break;
+            
+          case "ArrowRight":
+            /* ➡️ RIGHT ARROW: Move player right */
+            
+            keys.rightKey.pressed = isPressed;
+            /* 🔄 UPDATE KEY STATE: Track if key is down */
+            
+            if (xVelocity === 0) {
+              player.velocity.x = xVelocity;
+              /* 🛑 ZERO VELOCITY: For key up event */
+            }
+            player.velocity.x += xVelocity;
+            /* ➡️ APPLY VELOCITY: Move right */
+            /* Add to x velocity to move right */
+        }
+      }
+      
+      /* 🎮 ===== GAME MANAGEMENT FUNCTIONS ===== */
+      
+      const startGame = () => {
+        /* 🏁 GAME STARTER: Initializes gameplay */
+        
+        canvas.style.display = "block";
+        /* 🖼️ SHOW CANVAS: Make game visible */
+        /* Changes display from "none" to "block" */
+        
+        startScreen.style.display = "none";
+        /* 🙈 HIDE START SCREEN: Remove menu */
+        /* Once game starts, we don't need the menu */
+        
+        animate();
+        /* 🎬 START ANIMATION: Begin game loop */
+        /* This launches the core game engine */
+      }
+      
+      const showCheckpointScreen = (msg) => {
+        /* 🏆 CHECKPOINT NOTIFIER: Displays achievement message */
+        /* msg = custom text for different checkpoints */
+        
+        checkpointScreen.style.display = "block";
+        /* 📝 SHOW MESSAGE: Make notification visible */
+        
+        checkpointMessage.textContent = msg;
+        /* 📝 SET TEXT: Update message content */
+        /* Uses the parameter to customize the message */
+        
+        if (isCheckpointCollisionDetectionActive) {
+          /* ⏱️ TEMPORARY DISPLAY: Only if game still active */
+          
+          setTimeout(() => (checkpointScreen.style.display = "none"), 2000);
+          /* ⏱️ TIMED REMOVAL: Hide after 2 seconds */
+          /* setTimeout runs the function after delay in milliseconds */
+          /* Arrow function with parentheses around single statement */
+        }
+      };
+      
+      /* 🖱️ ===== EVENT LISTENERS: User Input Handling ===== */
+      
+      startBtn.addEventListener("click", startGame);
+      /* 🎬 START BUTTON LISTENER: Begin game on click */
+      /* Connects HTML button to JavaScript function */
+      
+      window.addEventListener("keydown", ({ key }) => {
+        /* 🎮 KEY PRESS LISTENER: Detect when keys are pressed */
+        /* { key } uses destructuring to extract key property from event */
+        /* Much cleaner than writing (event) and then event.key */
+        
+        movePlayer(key, 8, true);
+        /* 🏃‍♂️ HANDLE KEY PRESS: Move at speed 8, key is pressed */
+        /* true = key is pressed (keydown event) */
+      });
+      
+      window.addEventListener("keyup", ({ key }) => {
+        /* 🎮 KEY RELEASE LISTENER: Detect when keys are released */
+        /* Counterpart to keydown - needed for smooth controls */
+        
+        movePlayer(key, 0, false);
+        /* 🛑 HANDLE KEY RELEASE: Stop movement, key is released */
+        /* 0 = zero velocity (stop moving) */
+        /* false = key is released (keyup event) */
+      });
+    </script>
+  </body>
+</html>
+
+<!-- 🎯 ===== PLATFORMER GAME SUMMARY ===== -->
+<!-- 
+🎮 GAME ARCHITECTURE:
+│
+├── 🖥️ HTML STRUCTURE
+│   ├── 📋 Start screen with instructions
+│   ├── 🏆 Checkpoint notification popup
+│   └── 🖼️ Canvas game surface
+│
+├── 🎨 CSS STYLING
+│   ├── 🎮 Game interface components
+│   ├── 🔘 Interactive button styling
+│   └── 📱 Responsive design for all screens
+│
+└── 🧠 JAVASCRIPT GAME ENGINE
+    ├── 📦 Object-Oriented Programming (Classes)
+    │   ├── 🧍 Player with physics and collision
+    │   ├── 🧱 Platforms for navigation
+    │   └── 🚩 Checkpoints for objectives
+    │
+    ├── 🎮 Game Mechanics
+    │   ├── ⬇️ Gravity and jumping physics
+    │   ├── 📷 Camera scrolling system
+    │   ├── 💥 Collision detection
+    │   └── 🏆 Progressive checkpoint system
+    │
+    └── 🔄 Technical Implementation
+        ├── 🎬 RequestAnimationFrame loop
+        ├── 📏 Proportional sizing for responsiveness
+        ├── 🎮 Event-driven keyboard controls
+        └── 🎯 State management for game progress
+
+This project demonstrates core principles of game development through OOP!
+From physics simulation to collision detection, it's a complete mini-game engine!
+-->
+
+
+
+
+
+
+
+
+
+
+<!-- ===== ITALIAN VERSION ===== -->
+
+<!DOCTYPE html>
+<!-- 🎮 DICHIARAZIONE HTML5: "Benvenuti nel nostro Gioco Platformer 2D!" -->
+<!-- È come porre le fondamenta per il nostro parco giochi digitale! 🏗️ -->
+
+<html lang="en">
+<!-- 🌍 CONTENITORE PRINCIPALE: L'intero universo di gioco -->
+<!-- lang="en" = Lingua inglese, universale per le esperienze di codifica -->
+
+  <head>
+    <!-- 🧠 CENTRO DI COMANDO: Dove impostiamo l'ambiente di gioco -->
+    <!-- Come la sala di controllo di un cabinato arcade! 🕹️ -->
+    
+    <meta charset="UTF-8" />
+    <!-- 📝 CODIFICA CARATTERI: Supporta tutti i simboli di testo necessari per il nostro gioco -->
+    <!-- UTF-8 assicura che tutto, dal testo del gioco ai commenti di codice, venga visualizzato correttamente -->
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- 🔄 COMPATIBILITÀ BROWSER: Garantisce il rendering moderno di IE -->
+    <!-- Dice a Internet Explorer di utilizzare il suo motore di rendering più moderno -->
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 📱 CONFIGURAZIONE RESPONSIVE: "Questo gioco si adatta a qualsiasi schermo!" -->
+    <!-- Rende il nostro gioco correttamente dimensionato su tutti i dispositivi, dai telefoni ai desktop -->
+    
+    <title>Learn Intermediate OOP by Building a Platformer Game</title>
+    <!-- 📑 TITOLO SCHEDA: Scopo educativo chiaramente definito -->
+    <!-- OOP = Programmazione Orientata agli Oggetti, la base dello sviluppo di giochi moderni -->
+    
+    <style>
+      /* 🎨 ===== STILI CSS: Il Mondo Visivo del Gioco ===== */
+      
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        /* 🧹 PULIZIA TOTALE: Resetta tutti gli spazi predefiniti del browser */
+        /* Assicura che il nostro gioco abbia un aspetto coerente su tutti i browser */
+        /* È come livellare il terreno prima di costruire il nostro mondo di gioco */
+      }
+      
+      :root {
+        --main-bg-color: #0a0a23;
+        --section-bg-color: #ffffff;
+        --golden-yellow: #feac32;
+        /* 🎨 VARIABILI COLORE: Definizione centrale della palette */
+        /* L'uso di variabili CSS rende i cambiamenti di tema facili e coerenti */
+        /* È come definire i colori principali per il nostro mondo di gioco */
+      }
+      
+      body {
+        background-color: var(--main-bg-color);
+        /* 🌌 SFONDO BLU SCURO: Crea un'atmosfera immersiva */
+        /* Gli sfondi scuri riducono l'affaticamento degli occhi durante il gioco */
+      }
+      
+      .start-screen {
+        background-color: var(--section-bg-color);
+        width: 100%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+        /* ⚖️ CENTRATURA PERFETTA: Il trucco transform centra l'elemento con precisione */
+        /* Centrato orizzontalmente E verticalmente indipendentemente dalla dimensione del contenuto */
+        
+        border-radius: 30px;
+        /* 🔄 ANGOLI ARROTONDATI: Ammorbidiscono l'aspetto visivo */
+        /* Crea un'interfaccia utente più moderna e amichevole per i giocatori */
+        
+        padding: 20px;
+        padding-bottom: 5px;
+        /* 📏 SPAZIATURA INTERNA: Spazio di respiro per il contenuto */
+        /* Un padding diverso sopra/sotto crea equilibrio visivo */
+      }
+      
+      .main-title {
+        text-align: center;
+        /* ⚖️ TITOLO CENTRATO: Punto focale della schermata iniziale */
+        /* La prima cosa che i giocatori vedono - crea gerarchia e focus */
+      }
+      
+      .instructions {
+        text-align: center;
+        font-size: 1.2rem;
+        margin: 15px;
+        line-height: 2rem;
+        /* 📝 ISTRUZIONI CHIARE: Testo ottimizzato per la leggibilità */
+        /* font-size: 1.2rem = 20% più grande del testo predefinito */
+        /* line-height: 2rem = interlinea doppia per una lettura più facile */
+        /* Assicura che i giocatori comprendano come giocare prima di iniziare */
+      }
+      
+      .btn {
+        cursor: pointer;
+        /* 👆 CURSORE A MANO: Indicazione visiva che l'elemento è cliccabile */
+        
+        width: 100px;
+        margin: 10px;
+        /* 📏 DIMENSIONI PULSANTE: Dimensione confortevole per l'area di click */
+        /* 100px di larghezza con 10px di margine crea una buona spaziatura */
+        
+        color: #0a0a23;
+        font-size: 18px;
+        /* 🔤 STILE TESTO: Testo scuro su pulsante chiaro per leggibilità */
+        /* 18px di dimensione assicura che il testo sia facilmente leggibile su tutti i dispositivi */
+        
+        background-color: var(--golden-yellow);
+        background-image: linear-gradient(#fecc4c, #ffac33);
+        /* 🌅 SFONDO GRADIENTE: Crea effetto pulsante 3D */
+        /* Parte superiore più chiara, inferiore più scura crea l'illusione di luce dall'alto */
+        
+        border-color: var(--golden-yellow);
+        border-width: 3px;
+        /* 🔲 STILE BORDO: Bordo spesso che si abbina allo sfondo */
+        /* 3px di larghezza rende il bordo chiaramente visibile */
+      }
+      
+      .btn:hover {
+        background-image: linear-gradient(#ffcc4c, #f89808);
+        /* ✨ EFFETTO HOVER: Il pulsante si illumina quando il mouse ci passa sopra */
+        /* Feedback visivo prima di cliccare migliora l'esperienza utente */
+        /* Un gradiente leggermente diverso crea un aspetto "attivato" */
+      }
+      
+      .btn-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* 📦 CENTRATURA FLEXBOX: Allineamento orizzontale perfetto */
+        /* Approccio moderno alla centratura con CSS */
+        /* Assicura che il pulsante sia perfettamente centrato indipendentemente dalla dimensione dello schermo */
+      }
+      
+      .checkpoint-screen {
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        /* ⚖️ CENTRATURA ORIZZONTALE: Tecnica tradizionale */
+        /* Impostare left/right a 0 con margini automatici centra l'elemento */
+        
+        width: 100%;
+        text-align: center;
+        background-color: var(--section-bg-color);
+        border-radius: 20px;
+        padding: 10px;
+        /* 📋 STILE POPUP: Notifica pulita e leggibile */
+        /* Sfondo bianco con angoli arrotondati per un look moderno */
+        
+        display: none;
+        /* 🙈 INIZIALMENTE NASCOSTO: Appare solo ai checkpoint */
+        /* JavaScript cambierà questo in "block" quando necessario */
+      }
+      
+      #canvas {
+        display: none;
+        /* 🙈 CANVAS NASCOSTO: Rivelato quando il gioco inizia */
+        /* Inizialmente nascosto per mostrare invece la schermata iniziale */
+      }
+      
+      @media (min-width: 768px) {
+        /* 📱 BREAKPOINT RESPONSIVE: Tablet e schermi più grandi */
+        /* 768px è la larghezza standard di un tablet in portrait */
+        
+        .start-screen {
+          width: 60%;
+          max-width: 700px;
+          /* 📏 DIMENSIONAMENTO DESKTOP: Pannello più stretto e centrato */
+          /* Impedisce che la schermata iniziale si estenda troppo sui grandi schermi */
+          /* 60% di larghezza con 700px di massimo crea una larghezza di lettura ideale */
+        }
+      
+        .checkpoint-screen {
+          max-width: 300px;
+          /* 📏 DIMENSIONAMENTO NOTIFICHE: Compatto su schermi più grandi */
+          /* 300px è abbastanza largo per il contenuto ma non invadente */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 🎮 ===== INTERFACCIA DEL GIOCO: La Finestra del Giocatore sul Mondo ===== -->
+    
+    <div class="start-screen">
+      <!-- 🎬 SCHERMATA INIZIALE: Il menu iniziale del gioco -->
+      <!-- Come la schermata del titolo dei giochi arcade classici! -->
+      
+      <h1 class="main-title">freeCodeCamp Code Warrior</h1>
+      <!-- 📑 TITOLO DEL GIOCO: Stabilisce il tema e il brand -->
+      <!-- "Code Warrior" suggerisce un'avventura a tema coding -->
+      
+      <p class="instructions">
+        Help the main player navigate to the yellow checkpoints.
+      </p>
+      <!-- 📝 OBIETTIVO DEL GIOCO: Descrizione chiara degli obiettivi -->
+      <!-- Dice esattamente al giocatore cosa deve fare -->
+      
+      <p class="instructions">
+        Use the keyboard arrows to move the player around.
+      </p>
+      <!-- 🎮 SCHEMA DI CONTROLLO 1: Spiegazione dei controlli di movimento -->
+      <!-- I tasti freccia sono intuitivi per il movimento 2D -->
+      
+      <p class="instructions">You can also use the spacebar to jump.</p>
+      <!-- 🎮 SCHEMA DI CONTROLLO 2: Meccanica di salto spiegata -->
+      <!-- La barra spaziatrice è il pulsante di salto standard nella maggior parte dei platformer -->
+
+      <div class="btn-container">
+        <!-- 📦 WRAPPER PULSANTE: Centra il pulsante di avvio -->
+        
+        <button class="btn" id="start-btn">Start Game</button>
+        <!-- 🎯 PULSANTE AVVIO: Inizia il gioco -->
+        <!-- Elemento interattivo cruciale con ID unico per JavaScript -->
+      </div>
+    </div>
+
+    <div class="checkpoint-screen">
+      <!-- 🏆 NOTIFICA CHECKPOINT: Appare quando si raggiungono gli obiettivi -->
+      <!-- Fornisce feedback positivo per i traguardi del giocatore -->
+      
+      <h2>Congrats!</h2>
+      <!-- 🎉 INTESTAZIONE CELEBRATIVA: Rinforzo positivo -->
+      <!-- Un messaggio di congratulazioni crea soddisfazione -->
+      
+      <p>You reached the last checkpoint.</p>
+      <!-- 📝 MESSAGGIO DI TRAGUARDO: Chiarisce cosa è successo -->
+      <!-- Sarà aggiornato via JavaScript per i diversi checkpoint -->
+    </div>
+
+    <canvas id="canvas"></canvas>
+    <!-- 🖼️ ELEMENTO CANVAS: La superficie di rendering effettiva del gioco -->
+    <!-- Il Canvas HTML5 è come una tavola da disegno vuota per il nostro JavaScript -->
+    <!-- Tutte le visuali del gioco saranno disegnate qui programmaticamente -->
+
+    <script>
+      /* 🎮 ===== JAVASCRIPT: Il Motore del Gioco! ===== */
+      
+      /* 🔍 ===== SELEZIONE ELEMENTI DOM: Collegamento di JS a HTML ===== */
+      
+      const startBtn = document.getElementById("start-btn");
+      /* 🔘 RIFERIMENTO PULSANTE AVVIO: Accesso diretto tramite ID */
+      /* getElementById è il metodo di selezione più veloce - perfetto per elementi critici */
+      /* Come afferrare l'interruttore di accensione per il motore del nostro gioco */
+      
+      const canvas = document.getElementById("canvas");
+      /* 🖼️ RIFERIMENTO CANVAS: La nostra superficie di disegno */
+      /* Questo elemento diventerà il nostro intero mondo di gioco */
+      /* Come ottenere una tela vuota prima di dipingere un capolavoro */
+      
+      const startScreen = document.querySelector(".start-screen");
+      /* 🎬 RIFERIMENTO SCHERMATA INIZIALE: Uso del selettore di classe */
+      /* querySelector trova il primo elemento corrispondente con questa classe */
+      /* Lo nasconderemo quando il gioco inizia */
+      
+      const checkpointScreen = document.querySelector(".checkpoint-screen");
+      /* 🏆 RIFERIMENTO SCHERMATA CHECKPOINT: Per i messaggi di vittoria */
+      /* Questo popup apparirà quando i giocatori raggiungono i checkpoint */
+      
+      const checkpointMessage = document.querySelector(".checkpoint-screen > p");
+      /* 📝 RIFERIMENTO MESSAGGIO: Selettore figlio diretto */
+      /* Il simbolo ">" seleziona SOLO i figli diretti (non i nipoti) */
+      /* Aggiorneremo questo testo quando verranno raggiunti diversi checkpoint */
+      
+      /* 🎨 ===== CONFIGURAZIONE CANVAS: Preparazione della Superficie di Disegno ===== */
+      
+      const ctx = canvas.getContext("2d");
+      /* 🖌️ CONTESTO DI DISEGNO: L'API di disegno effettiva */
+      /* getContext("2d") ci dà accesso agli strumenti di disegno Canvas */
+      /* Come ottenere un pennello da usare sulla nostra tela */
+      /* È ciò che useremo per disegnare forme, colori e il mondo di gioco */
+      
+      canvas.width = innerWidth;
+      canvas.height = innerHeight;
+      /* 📏 DIMENSIONI CANVAS: Dimensione a schermo intero */
+      /* L'impostazione di larghezza/altezza in JS sovrascrive qualsiasi dimensionamento CSS */
+      /* Questo crea un rapporto pixel 1:1 per un rendering nitido */
+      /* Senza questo, il canvas avrebbe un default di 300x150px e risulterebbe sfocato se allungato */
+      
+      /* 🌍 ===== COSTANTI DELLA FISICA DI GIOCO: Le Regole del Nostro Mondo ===== */
+      
+      const gravity = 0.5;
+      /* ⬇️ COSTANTE DI GRAVITÀ: Forza che tira il giocatore verso il basso */
+      /* Questa non è la gravità realistica della Terra (9,8 m/s²) ma un valore che "si sente bene" */
+      /* Ogni frame aggiunge 0,5 alla velocità verticale → caduta accelerata */
+      /* Valori più alti = caduta più rapida, valori più bassi = salti più fluttuanti */
+      
+      let isCheckpointCollisionDetectionActive = true;
+      /* 🚦 FLAG DI COLLISIONE: Controlla il rilevamento dei checkpoint */
+      /* Questo booleano funziona come un interruttore on/off per le interazioni con i checkpoint */
+      /* Quando è false, impedisce che lo stesso checkpoint attivi più volte */
+      /* Fondamentale per evitare che il checkpoint si attivi 60 volte al secondo! */
+      
+      /* 📏 ===== FUNZIONE DI SCALATURA: Elementi di Gioco Responsive ===== */
+      
+      const proportionalSize = (size) => {
+        return innerHeight < 500 ? Math.ceil((size / 500) * innerHeight) : size;
+        /* 📱 SCALATURA ADATTIVA: Gli elementi si ridimensionano per schermi piccoli */
+        /* Se l'altezza dello schermo < 500px: scala tutto proporzionalmente */
+        /* Formula: (dimensione ÷ altezza di riferimento) × altezza effettiva */
+        /* Math.ceil() arrotonda per eccesso per evitare elementi di dimensione zero */
+        /* Su schermi più alti: usa i valori di dimensione originali */
+        /* Come avere un progetto responsive per il nostro mondo di gioco */
+      }
+      
+      /* 🧍 ===== CLASSE PLAYER: Il Personaggio Principale ===== */
+      
+      class Player {
+        /* 📘 DEFINIZIONE CLASSE: Blueprint per creare i giocatori */
+        /* Le classi sono modelli che definiscono proprietà e comportamenti */
+        /* Come definire cosa fa un "giocatore" nel nostro universo di gioco */
+        
+        constructor() {
+          /* 🏗️ METODO COSTRUTTORE: Eseguito quando si crea un nuovo Player */
+          /* Questo metodo inizializza tutte le proprietà del giocatore */
+          /* Come costruire il personaggio giocatore da zero */
+          
+          this.position = {
+            x: proportionalSize(10),
+            y: proportionalSize(400),
+          };
+          /* 📍 POSIZIONE INIZIALE: Dove inizia il giocatore */
+          /* Coordinate dall'angolo in alto a sinistra dello schermo */
+          /* L'uso di proportionalSize garantisce che funzioni su tutti i formati di schermo */
+          
+          this.velocity = {
+            x: 0, /* Velocità orizzontale (pixel per frame) */
+            y: 0, /* Velocità verticale (pixel per frame) */
+          };
+          /* 🏎️ VETTORE VELOCITÀ: Velocità e direzione */
+          /* Componenti x/y separate consentono movimento orizzontale/verticale indipendente */
+          /* 0 significa fermo in ogni direzione */
+          
+          this.width = proportionalSize(40);
+          this.height = proportionalSize(40);
+          /* 📏 DIMENSIONI GIOCATORE: Dimensione del personaggio */
+          /* 40x40px crea un giocatore quadrato (responsive su piccoli schermi) */
+          /* La dimensione influisce sia sugli aspetti visivi che sul rilevamento delle collisioni */
+        }
+        
+        draw() {
+          /* 🎨 METODO DI DISEGNO: Renderizza il giocatore sullo schermo */
+          /* Chiamato ogni frame per mostrare il giocatore */
+          
+          ctx.fillStyle = "#99c9ff";
+          /* 🎨 COLORE GIOCATORE: Azzurro chiaro */
+          /* Imposta il "colore della pittura" prima di disegnare */
+          
+          ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+          /* 📦 DISEGNA RETTANGOLO: Crea la forma del giocatore */
+          /* fillRect(x, y, width, height) disegna un rettangolo pieno */
+          /* Questo semplice quadrato rappresenta il nostro personaggio */
+          /* Nei giochi professionali, questo sarebbe sostituito con immagini sprite */
+        }
+        
+        update() {
+          /* 🔄 METODO DI AGGIORNAMENTO: Fisica e logica di gioco */
+          /* Chiamato ogni frame (60 volte al secondo) */
+          /* Il cuore del comportamento del giocatore nel gioco */
+          
+          this.draw();
+          /* 🎨 RENDERIZZA PRIMA: Assicura che il giocatore sia visibile */
+          /* Disegna sempre prima di muoversi per prevenire glitch visivi */
+          
+          this.position.x += this.velocity.x;
+          this.position.y += this.velocity.y;
+          /* 🚶 FISICA DEL MOVIMENTO: La posizione cambia in base alla velocità */
+          /* Questa è l'equazione fondamentale del movimento: posizione += velocità */
+          /* La direzione e la velocità del movimento dipendono dai valori di velocità */
+          
+          if (this.position.y + this.height + this.velocity.y <= canvas.height) {
+            /* 🌡️ CONTROLLO GRAVITÀ: Il giocatore è ancora in aria? */
+            /* La condizione verifica se il giocatore non ha raggiunto il fondo dello schermo */
+            /* Posizione bordo inferiore = posizione y + altezza */
+            
+            if (this.position.y < 0) {
+              /* 🛑 CONTROLLO LIMITE SUPERIORE: Il giocatore sta cercando di uscire dallo schermo? */
+              /* y < 0 significa che il giocatore sta cercando di saltare sopra il canvas */
+              
+              this.position.y = 0;
+              this.velocity.y = gravity;
+              /* 🔄 COLLISIONE CON SOFFITTO: Rimbalza il giocatore verso il basso */
+              /* Impedisce di andare sopra lo schermo e inizia a cadere */
+            }
+            
+            this.velocity.y += gravity;
+            /* ⬇️ APPLICA GRAVITÀ: Aumenta la velocità di caduta */
+            /* Questo crea accelerazione - la caduta diventa più veloce nel tempo */
+            /* La base della fisica di salto realistica! */
+          } else {
+            /* 🛑 COLLISIONE COL PAVIMENTO: Il giocatore ha raggiunto il fondo */
+            
+            this.velocity.y = 0;
+            /* 🛑 FERMA LA CADUTA: Imposta la velocità verticale a zero */
+            /* Impedisce al giocatore di cadere attraverso il pavimento */
+          }
+      
+          if (this.position.x < this.width) {
+            /* 🛑 CONTROLLO LIMITE SINISTRO: Impedisce di uscire dallo schermo a sinistra */
+            
+            this.position.x = this.width;
+            /* 🔙 RESPINGE: Imposta la posizione al bordo dello schermo */
+            /* Crea un muro invisibile al bordo sinistro dello schermo */
+          }
+      
+          if (this.position.x >= canvas.width - this.width * 2) {
+            /* 🛑 CONTROLLO LIMITE DESTRO: Impedisce di uscire dallo schermo a destra */
+            
+            this.position.x = canvas.width - this.width * 2;
+            /* 🔙 RESPINGE: Imposta la posizione al bordo dello schermo */
+            /* La moltiplicazione crea un limite visivo migliore */
+          }
+        }
+      }
+      
+      /* 🧱 ===== CLASSE PLATFORM: Il Terreno Solido ===== */
+      
+      class Platform {
+        /* 📘 DEFINIZIONE CLASSE: Blueprint per le piattaforme */
+        /* Ogni piattaforma è una superficie su cui il giocatore può stare */
+        
+        constructor(x, y) {
+          /* 🏗️ COSTRUTTORE CON PARAMETRI: Piattaforme personalizzabili */
+          /* Prende le coordinate x,y per posizionare piattaforme ovunque */
+          /* Come posizionare blocchi di costruzione nel nostro mondo */
+          
+          this.position = {
+            x, /* Abbreviazione per x: x */
+            y, /* Abbreviazione per y: y */
+          };
+          /* 📍 POSIZIONE PIATTAFORMA: Posizionamento personalizzato */
+          /* JS moderno permette l'abbreviazione quando nome proprietà = nome variabile */
+          /* Questo crea la piattaforma alle coordinate esatte specificate */
+          
+          this.width = 200;
+          this.height = proportionalSize(40);
+          /* 📏 DIMENSIONE PIATTAFORMA: Larghezza e altezza */
+          /* 200px di larghezza crea piattaforme su cui il giocatore può correre */
+          /* L'altezza si adatta alla dimensione dello schermo per coerenza */
+        }
+        
+        draw() {
+          /* 🎨 METODO DI DISEGNO: Renderizza la piattaforma sullo schermo */
+          
+          ctx.fillStyle = "#acd157";
+          /* 🎨 COLORE PIATTAFORMA: Verde chiaro */
+          /* Un colore simile all'erba distingue le piattaforme dal giocatore */
+          
+          ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+          /* 📦 DISEGNA RETTANGOLO: Crea la forma della piattaforma */
+          /* Un semplice rettangolo rappresenta ogni piattaforma */
+        }
+      }
+      
+      /* 🚩 ===== CLASSE CHECKPOINT: I Marcatori degli Obiettivi ===== */
+      
+      class CheckPoint {
+        /* 📘 DEFINIZIONE CLASSE: Blueprint per i marcatori degli obiettivi */
+        /* Questi sono gli obiettivi che il giocatore deve raggiungere */
+        
+        constructor(x, y, z) {
+          /* 🏗️ COSTRUTTORE CON PARAMETRI: Checkpoint personalizzabili */
+          /* x,y = posizione, z = numero/sequenza del checkpoint */
+          
+          this.position = {
+            x,
+            y,
+          };
+          /* 📍 POSIZIONE CHECKPOINT: Posizionamento personalizzato */
+          /* Usa la stessa sintassi abbreviata di Platform */
+          
+          this.width = proportionalSize(40);
+          this.height = proportionalSize(70);
+          /* 📏 DIMENSIONE CHECKPOINT: Alto e stretto */
+          /* Più alto del giocatore per essere facilmente visibile */
+          
+          this.claimed = false;
+          /* 🚩 FLAG CLAIMED: Tiene traccia dello stato del checkpoint */
+          /* false = non ancora raggiunto, true = già raccolto */
+          /* Come una bandierina virtuale "Sono stato qui" che il giocatore pianta */
+        };
+      
+        draw() {
+          /* 🎨 METODO DI DISEGNO: Renderizza il checkpoint sullo schermo */
+          
+          ctx.fillStyle = "#f1be32";
+          /* 🎨 COLORE CHECKPOINT: Giallo dorato */
+          /* Il colore brillante fa risaltare i checkpoint come obiettivi */
+          
+          ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+          /* 📦 DISEGNA RETTANGOLO: Crea la forma del checkpoint */
+          /* Il rettangolo verticale assomiglia a una bandiera del traguardo */
+        }
+        
+        claim() {
+          /* 🏁 METODO CLAIM: "Raccoglie" il checkpoint */
+          /* Chiamato quando il giocatore raggiunge questo checkpoint */
+          
+          this.width = 0;
+          this.height = 0;
+          /* 🙈 RENDI INVISIBILE: Dimensioni zero lo nascondono */
+          /* Piuttosto che rimuoverlo dall'array, lo rendiamo invisibile */
+          
+          this.position.y = Infinity;
+          /* 🌠 MANDA VIA: Sposta fuori dallo schermo */
+          /* Infinity garantisce che non possa mai più essere colpito */
+          /* Questo è più sicuro che modificare l'array durante l'iterazione */
+          
+          this.claimed = true;
+          /* 🚩 SEGNA COME CLAIMED: Aggiorna il flag di stato */
+          /* Questo aiuta a tenere traccia del progresso e della sequenza dei checkpoint */
+          /* Usato per la logica condizionale nel rilevamento delle collisioni */
+        }
+      };
+      
+      /* 🏭 ===== CREAZIONE OGGETTI DI GIOCO: Costruzione del Mondo ===== */
+      
+      const player = new Player();
+      /* 🧍 CREA GIOCATORE: Istanza della classe Player */
+      /* new Player() chiama il costruttore e crea un oggetto funzionante */
+      /* Come premere il pulsante "stampa" sul nostro blueprint del giocatore */
+      
+      const platformPositions = [
+        { x: 500, y: proportionalSize(450) },
+        { x: 700, y: proportionalSize(400) },
+        { x: 850, y: proportionalSize(350) },
+        { x: 900, y: proportionalSize(350) },
+        { x: 1050, y: proportionalSize(150) },
+        { x: 2500, y: proportionalSize(450) },  /* Gap grande → sfida! */
+        { x: 2900, y: proportionalSize(400) },
+        { x: 3150, y: proportionalSize(350) },
+        { x: 3900, y: proportionalSize(450) },  /* Altro gap */
+        { x: 4200, y: proportionalSize(400) },
+        { x: 4400, y: proportionalSize(200) },
+        { x: 4700, y: proportionalSize(150) },
+      ];
+      /* 🗺️ DESIGN DEL LIVELLO: Array delle coordinate delle piattaforme */
+      /* Ogni oggetto contiene la posizione x,y per una piattaforma */
+      /* Questo è il nostro "progetto del livello" - separa i dati dalla logica */
+      /* I commenti indicano dove si verificano gap impegnativi nel livello */
+      
+      const platforms = platformPositions.map(
+        (platform) => new Platform(platform.x, platform.y)
+      );
+      /* 🏭 CREAZIONE PIATTAFORME: Trasforma i dati in oggetti */
+      /* map() converte ogni posizione in una Platform funzionante */
+      /* È come una catena di montaggio: dati in ingresso → oggetti in uscita */
+      /* Arrow function con return implicito crea ogni Platform */
+      
+      const checkpointPositions = [
+        { x: 1170, y: proportionalSize(80), z: 1 },
+        { x: 2900, y: proportionalSize(330), z: 2 },
+        { x: 4800, y: proportionalSize(80), z: 3 },
+      ];
+      /* 🚩 POSIZIONI CHECKPOINT: Coordinate degli obiettivi */
+      /* Tre checkpoint sono posizionati in punti strategici del livello */
+      /* Il valore z tiene traccia del numero di sequenza del checkpoint */
+      
+      const checkpoints = checkpointPositions.map(
+        (checkpoint) => new CheckPoint(checkpoint.x, checkpoint.y, checkpoint.z)
+      );
+      /* 🏭 CREAZIONE CHECKPOINT: Trasforma i dati in oggetti */
+      /* Stesso schema di mapping delle piattaforme, crea oggetti CheckPoint */
+      
+      /* 🔄 ===== GAME LOOP: Il Motore di Animazione ===== */
+      
+      const animate = () => {
+        /* 🎬 GAME LOOP PRINCIPALE: Funzione eseguita ogni frame */
+        /* Questo è il battito cardiaco del nostro gioco - tutto accade qui */
+        
+        requestAnimationFrame(animate);
+        /* 🔄 CREAZIONE LOOP: API di animazione del browser */
+        /* Chiede al browser di chiamare animate() prima del prossimo repaint */
+        /* Crea un ciclo fluido a 60fps ottimizzato per le prestazioni */
+        /* Auto-referenziale - animate chiama se stesso creando un loop infinito */
+        
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        /* 🧹 PULISCI CANVAS: Cancella il frame precedente */
+        /* Come cancellare una lavagna prima di disegnare il prossimo stato */
+        /* Senza questo, i movimenti lascerebbero tracce dietro di loro */
+      
+        platforms.forEach((platform) => {
+          platform.draw();
+        });
+        /* 🎨 DISEGNA PIATTAFORME: Renderizza tutte le piattaforme */
+        /* forEach esegue la funzione su ogni elemento dell'array */
+        /* Viene chiamato il metodo draw() di ogni piattaforma per renderizzarla */
+      
+        checkpoints.forEach(checkpoint => {
+          checkpoint.draw();
+        });
+        /* 🎨 DISEGNA CHECKPOINT: Renderizza tutti i checkpoint */
+        /* Stesso schema delle piattaforme - disegna ogni checkpoint */
+      
+        player.update();
+        /* 🔄 AGGIORNA GIOCATORE: Fisica e rendering */
+        /* Questo chiama il metodo update del giocatore che:
+           1. Disegna il giocatore
+           2. Aggiorna la posizione in base alla velocità
+           3. Applica gravità e controlli dei limiti */
+      
+        /* 📷 ===== MOVIMENTO DELLA CAMERA: Scorrimento del Mondo ===== */
+        
+        if (keys.rightKey.pressed && player.position.x < proportionalSize(400)) {
+          /* 🏃‍♂️ MOVIMENTO GIOCATORE DESTRA: Sposta il giocatore quando è lontano dal centro */
+          /* Quando il tasto destro è premuto E il giocatore è a sinistra del punto centrale */
+          
+          player.velocity.x = 5;
+          /* ➡️ IMPOSTA VELOCITÀ: Muove il giocatore a destra */
+          /* 5 pixel per frame creano un movimento fluido */
+        } else if (keys.leftKey.pressed && player.position.x > proportionalSize(100)) {
+          /* 🏃‍♂️ MOVIMENTO GIOCATORE SINISTRA: Sposta il giocatore quando è lontano dal bordo sinistro */
+          /* Quando il tasto sinistro è premuto E il giocatore è a destra del limite sinistro */
+          
+          player.velocity.x = -5;
+          /* ⬅️ IMPOSTA VELOCITÀ: Muove il giocatore a sinistra */
+          /* Velocità negativa significa movimento verso sinistra */
+        } else {
+          /* 🛑 POSIZIONE CENTRALE: Giocatore vicino al centro o ai bordi */
+          
+          player.velocity.x = 0;
+          /* 🛑 FERMA MOVIMENTO ORIZZONTALE: Giocatore fermo */
+          /* Reimposta la velocità a zero - il giocatore smette di muoversi orizzontalmente */
+      
+          /* 🌎 SCORRIMENTO MONDO: Sposta l'ambiente invece del giocatore */
+          /* Questo crea l'illusione di una camera che segue il giocatore */
+          
+          if (keys.rightKey.pressed && isCheckpointCollisionDetectionActive) {
+            /* ➡️ SCORRI DESTRA: Sposta il mondo quando il giocatore è centrato */
+            /* Attivo solo quando la rilevazione delle collisioni con checkpoint è abilitata */
+            
+            platforms.forEach((platform) => {
+              platform.position.x -= 5;
+              /* ⬅️ SPOSTA PIATTAFORME A SINISTRA: Il mondo scorre in direzione opposta al giocatore */
+              /* Crea l'illusione che il giocatore si muova verso destra */
+            });
+      
+            checkpoints.forEach((checkpoint) => {
+              checkpoint.position.x -= 5;
+              /* ⬅️ SPOSTA CHECKPOINT A SINISTRA: Mantiene sincronizzati con le piattaforme */
+              /* Tutto nel mondo si muove insieme per uno scorrimento coerente */
+            });
+          
+          } else if (keys.leftKey.pressed && isCheckpointCollisionDetectionActive) {
+            /* ⬅️ SCORRI SINISTRA: Sposta il mondo quando il giocatore è centrato */
+            
+            platforms.forEach((platform) => {
+              platform.position.x += 5;
+              /* ➡️ SPOSTA PIATTAFORME A DESTRA: Il mondo scorre in direzione opposta al giocatore */
+              /* Crea l'illusione che il giocatore si muova verso sinistra */
+            });
+      
+            checkpoints.forEach((checkpoint) => {
+              checkpoint.position.x += 5;
+              /* ➡️ SPOSTA CHECKPOINT A DESTRA: Mantiene sincronizzati con le piattaforme */
+            });
+          }
+        }
+      
+        /* 💥 ===== RILEVAMENTO COLLISIONI CON PIATTAFORME ===== */
+        
+        platforms.forEach((platform) => {
+          /* 🔍 CONTROLLA OGNI PIATTAFORMA: Itera attraverso tutte le piattaforme */
+          
+          const collisionDetectionRules = [
+            player.position.y + player.height <= platform.position.y,
+            /* ⬇️ REGOLA 1: Fondo del giocatore sopra la parte superiore della piattaforma */
+            /* Assicura che il giocatore stia scendendo sulla piattaforma dall'alto */
+            
+            player.position.y + player.height + player.velocity.y >= platform.position.y,
+            /* ⬇️ REGOLA 2: La prossima posizione del giocatore intersecherà la piattaforma */
+            /* Prevede la collisione basata sulla velocità attuale */
+            
+            player.position.x >= platform.position.x - player.width / 2,
+            /* ⬅️ REGOLA 3: Giocatore non troppo a sinistra della piattaforma */
+            /* Controllo posizione orizzontale - bordo sinistro */
+            
+            player.position.x <=
+              platform.position.x + platform.width - player.width / 3,
+            /* ➡️ REGOLA 4: Giocatore non troppo a destra della piattaforma */
+            /* Controllo posizione orizzontale - bordo destro */
+          ];
+      
+          if (collisionDetectionRules.every((rule) => rule)) {
+            /* ✅ TUTTE LE REGOLE VERE: In piedi sulla piattaforma */
+            /* every() verifica se TUTTE le condizioni restituiscono true */
+            /* Questo è come un AND logico tra tutte le condizioni */
+            
+            player.velocity.y = 0;
+            /* 🛑 FERMA CADUTA: Atterra sulla piattaforma */
+            /* Velocità verticale zero impedisce di cadere attraverso la piattaforma */
+            
+            return;
+            /* 🚪 ESCI DAL LOOP: Salta le piattaforme rimanenti */
+            /* Una volta trovata una collisione, non c'è bisogno di controllare le altre */
+          }
+      
+          /* 💥 COLLISIONE DAL BASSO: Colpisce la piattaforma da sotto */
+          
+          const platformDetectionRules = [
+            player.position.x >= platform.position.x - player.width / 2,
+            /* ⬅️ REGOLA 1: Controllo sovrapposizione orizzontale (sinistra) */
+            
+            player.position.x <=
+              platform.position.x + platform.width - player.width / 3,
+            /* ➡️ REGOLA 2: Controllo sovrapposizione orizzontale (destra) */
+            
+            player.position.y + player.height >= platform.position.y,
+            /* ⬆️ REGOLA 3: Fondo del giocatore sotto la parte superiore della piattaforma */
+            
+            player.position.y <= platform.position.y + platform.height,
+            /* ⬇️ REGOLA 4: Parte superiore del giocatore sopra la parte inferiore della piattaforma */
+          ];
+      
+          if (platformDetectionRules.every(rule => rule)) {
+            /* ✅ TUTTE LE REGOLE VERE: Colpisce la piattaforma dal basso */
+            
+            player.position.y = platform.position.y + player.height;
+            /* ⬇️ SPINGE GIÙ: Sposta il giocatore sotto la piattaforma */
+            /* Impedisce di rimanere bloccati all'interno della piattaforma */
+            
+            player.velocity.y = gravity;
+            /* ⬇️ INIZIA A CADERE: Applica la gravità */
+            /* Rimbalza il giocatore verso il basso dopo aver colpito con la testa */
+          };
+        });
+      
+        /* 🚩 ===== RILEVAMENTO COLLISIONI CON CHECKPOINT ===== */
+        
+        checkpoints.forEach((checkpoint, index, checkpoints) => {
+          /* 🔍 CONTROLLA OGNI CHECKPOINT: Itera attraverso tutti i checkpoint */
+          /* index = posizione nell'array, checkpoints = l'array completo */
+          
+          const checkpointDetectionRules = [
+            player.position.x >= checkpoint.position.x,
+            /* ➡️ REGOLA 1: Bordo destro del giocatore oltre il bordo sinistro del checkpoint */
+            
+            player.position.y >= checkpoint.position.y,
+            /* ⬇️ REGOLA 2: Giocatore sotto la parte superiore del checkpoint */
+            
+            player.position.y + player.height <=
+              checkpoint.position.y + checkpoint.height,
+            /* ⬆️ REGOLA 3: Giocatore entro i limiti verticali del checkpoint */
+            
+            isCheckpointCollisionDetectionActive,
+            /* 🚦 REGOLA 4: Il sistema di rilevamento collisioni è attivo */
+            /* Impedisce attivazioni multiple quando l'interruttore globale è spento */
+            
+            player.position.x - player.width <=
+              checkpoint.position.x - checkpoint.width + player.width * 0.9,
+            /* ⬅️ REGOLA 5: Controllo di allineamento orizzontale complesso */
+            /* Assicura che il giocatore sia posizionato correttamente rispetto al checkpoint */
+            
+            index === 0 || checkpoints[index - 1].claimed === true,
+            /* 🔢 REGOLA 6: Controllo ordine checkpoint */
+            /* O questo è il primo checkpoint O quello precedente è stato reclamato */
+            /* Forza la raccolta sequenziale dei checkpoint */
+          ];
+      
+          if (checkpointDetectionRules.every((rule) => rule)) {
+            /* ✅ TUTTE LE REGOLE VERE: Checkpoint raggiunto */
+            
+            checkpoint.claim();
+            /* 🏁 RECLAMA CHECKPOINT: Segna come raggiunto */
+            /* Questo nasconde il checkpoint e lo marca come claimed */
+      
+            if (index === checkpoints.length - 1) {
+              /* 🏆 CHECKPOINT FINALE: Ultimo nell'array */
+              /* Lunghezza - 1 è l'indice dell'ultimo elemento */
+              
+              isCheckpointCollisionDetectionActive = false;
+              /* 🚫 DISABILITA COLLISIONI: Il gioco effettivamente finisce */
+              /* Impedisce ulteriori attivazioni di checkpoint */
+              
+              showCheckpointScreen("You reached the final checkpoint!");
+              /* 🎉 MESSAGGIO DI VITTORIA: Traguardo finale */
+              /* Mostra un messaggio di congratulazioni con testo personalizzato */
+              
+              movePlayer("ArrowRight", 0, false);
+              /* 🛑 FERMA GIOCATORE: Previene il movimento dopo la vittoria */
+              /* Reimposta lo stato del movimento per far fermare il giocatore */
+            } else if (player.position.x >= checkpoint.position.x && player.position.x <= checkpoint.position.x + 40) {
+              /* ✅ CHECKPOINT REGOLARE: Non l'ultimo */
+              /* Controllo posizione aggiuntivo assicura il corretto timing di attivazione */
+              
+              showCheckpointScreen("You reached a checkpoint!");
+              /* 🎉 MESSAGGIO DI PROGRESSO: Traguardo intermedio */
+            }
+          };
+        });
+      }
+      
+      /* 🎮 ===== TRACCIAMENTO STATO TASTIERA ===== */
+      
+      const keys = {
+        rightKey: {
+          pressed: false
+        },
+        leftKey: {
+          pressed: false
+        }
+      };
+      /* 🎮 OGGETTO STATO TASTIERA: Tiene traccia dei tasti premuti */
+      /* Oggetti nidificati: keys → rightKey → pressed */
+      /* Uso di flag booleani invece di controllare lo stato dei tasti ad ogni frame */
+      /* Questo permette un movimento fluido e coerente */
+      
+      const movePlayer = (key, xVelocity, isPressed) => {
+        /* 🏃‍♂️ FUNZIONE MOVIMENTO GIOCATORE: Elabora le azioni dei tasti */
+        /* key = quale tasto è stato premuto */
+        /* xVelocity = quanto velocemente muoversi */
+        /* isPressed = tasto premuto o rilasciato? */
+        
+        if (!isCheckpointCollisionDetectionActive) {
+          /* 🚫 CONTROLLO FINE GIOCO: Blocca il movimento se il gioco è finito */
+          
+          player.velocity.x = 0;
+          player.velocity.y = 0;
+          /* 🛑 CONGELA GIOCATORE: Ferma ogni movimento */
+          
+          return;
+          /* 🚪 ESCI DALLA FUNZIONE: Salta il codice rimanente */
+        }
+      
+        switch (key) {
+          /* 🔀 SWITCH TASTI: Azione diversa per ogni tasto */
+          /* Modo efficiente per gestire più opzioni di tasto */
+          
+          case "ArrowLeft":
+            /* ⬅️ FRECCIA SINISTRA: Muove il giocatore a sinistra */
+            
+            keys.leftKey.pressed = isPressed;
+            /* 🔄 AGGIORNA STATO TASTO: Tiene traccia se il tasto è premuto */
+            
+            if (xVelocity === 0) {
+              player.velocity.x = xVelocity;
+              /* 🛑 VELOCITÀ ZERO: Per evento keyup */
+              /* Quando si rilascia il tasto, ferma immediatamente il movimento */
+            }
+            player.velocity.x -= xVelocity;
+            /* ⬅️ APPLICA VELOCITÀ: Muove a sinistra */
+            /* Sottrae dalla velocità x per muoversi a sinistra */
+            break;
+            
+          case "ArrowUp":
+          case " ":
+          case "Spacebar":
+            /* ⬆️ SU/SPAZIO: Azione di salto */
+            /* Più casi gestiscono diversi tasti di salto */
+            /* Sia la freccia su che la barra spaziatrice attivano il salto */
+            
+            player.velocity.y -= 8;
+            /* ⬆️ VELOCITÀ DI SALTO: Si muove verso l'alto */
+            /* Velocità y negativa significa movimento verso l'alto */
+            /* Valore 8 crea un'altezza di salto soddisfacente */
+            break;
+            
+          case "ArrowRight":
+            /* ➡️ FRECCIA DESTRA: Muove il giocatore a destra */
+            
+            keys.rightKey.pressed = isPressed;
+            /* 🔄 AGGIORNA STATO TASTO: Tiene traccia se il tasto è premuto */
+            
+            if (xVelocity === 0) {
+              player.velocity.x = xVelocity;
+              /* 🛑 VELOCITÀ ZERO: Per evento keyup */
+            }
+            player.velocity.x += xVelocity;
+            /* ➡️ APPLICA VELOCITÀ: Muove a destra */
+            /* Aggiunge alla velocità x per muoversi a destra */
+        }
+      }
+      
+      /* 🎮 ===== FUNZIONI GESTIONE GIOCO ===== */
+      
+      const startGame = () => {
+        /* 🏁 AVVIO GIOCO: Inizializza il gameplay */
+        
+        canvas.style.display = "block";
+        /* 🖼️ MOSTRA CANVAS: Rende il gioco visibile */
+        /* Cambia il display da "none" a "block" */
+        
+        startScreen.style.display = "none";
+        /* 🙈 NASCONDI SCHERMATA INIZIALE: Rimuove il menu */
+        /* Una volta che il gioco inizia, non abbiamo più bisogno del menu */
+        
+        animate();
+        /* 🎬 AVVIA ANIMAZIONE: Inizia il game loop */
+        /* Questo lancia il motore di gioco principale */
+      }
+      
+      const showCheckpointScreen = (msg) => {
+        /* 🏆 NOTIFICA CHECKPOINT: Mostra messaggio di traguardo */
+        /* msg = testo personalizzato per diversi checkpoint */
+        
+        checkpointScreen.style.display = "block";
+        /* 📝 MOSTRA MESSAGGIO: Rende la notifica visibile */
+        
+        checkpointMessage.textContent = msg;
+        /* 📝 IMPOSTA TESTO: Aggiorna il contenuto del messaggio */
+        /* Usa il parametro per personalizzare il messaggio */
+        
+        if (isCheckpointCollisionDetectionActive) {
+          /* ⏱️ VISUALIZZAZIONE TEMPORANEA: Solo se il gioco è ancora attivo */
+          
+          setTimeout(() => (checkpointScreen.style.display = "none"), 2000);
+          /* ⏱️ RIMOZIONE TEMPORIZZATA: Nascondi dopo 2 secondi */
+          /* setTimeout esegue la funzione dopo un ritardo in millisecondi */
+          /* Arrow function con parentesi attorno ad una singola istruzione */
+        }
+      };
+      
+      /* 🖱️ ===== EVENT LISTENER: Gestione Input Utente ===== */
+      
+      startBtn.addEventListener("click", startGame);
+      /* 🎬 LISTENER PULSANTE AVVIO: Inizia il gioco al click */
+      /* Collega il pulsante HTML alla funzione JavaScript */
+      
+      window.addEventListener("keydown", ({ key }) => {
+        /* 🎮 LISTENER PRESSIONE TASTI: Rileva quando i tasti vengono premuti */
+        /* { key } usa la destrutturazione per estrarre la proprietà key dall'evento */
+        /* Molto più pulito che scrivere (event) e poi event.key */
+        
+        movePlayer(key, 8, true);
+        /* 🏃‍♂️ GESTISCI PRESSIONE TASTO: Muovi a velocità 8, tasto è premuto */
+        /* true = tasto è premuto (evento keydown) */
+      });
+      
+      window.addEventListener("keyup", ({ key }) => {
+        /* 🎮 LISTENER RILASCIO TASTI: Rileva quando i tasti vengono rilasciati */
+        /* Controparte a keydown - necessario per controlli fluidi */
+        
+        movePlayer(key, 0, false);
+        /* 🛑 GESTISCI RILASCIO TASTO: Ferma movimento, tasto è rilasciato */
+        /* 0 = velocità zero (ferma movimento) */
+        /* false = tasto è rilasciato (evento keyup) */
+      });
+    </script>
+  </body>
+</html>
+
+<!-- 🎯 ===== RIASSUNTO DEL GIOCO PLATFORMER ===== -->
+<!-- 
+🎮 ARCHITETTURA DEL GIOCO:
+│
+├── 🖥️ STRUTTURA HTML
+│   ├── 📋 Schermata iniziale con istruzioni
+│   ├── 🏆 Popup di notifica checkpoint
+│   └── 🖼️ Superficie di gioco Canvas
+│
+├── 🎨 STILE CSS
+│   ├── 🎮 Componenti dell'interfaccia di gioco
+│   ├── 🔘 Stile pulsanti interattivi
+│   └── 📱 Design responsive per tutti gli schermi
+│
+└── 🧠 MOTORE DI GIOCO JAVASCRIPT
+    ├── 📦 Programmazione Orientata agli Oggetti (Classi)
+    │   ├── 🧍 Player con fisica e collisioni
+    │   ├── 🧱 Piattaforme per la navigazione
+    │   └── 🚩 Checkpoint per gli obiettivi
+    │
+    ├── 🎮 Meccaniche di Gioco
+    │   ├── ⬇️ Fisica di gravità e salto
+    │   ├── 📷 Sistema di scorrimento camera
+    │   ├── 💥 Rilevamento collisioni
+    │   └── 🏆 Sistema di checkpoint progressivo
+    │
+    └── 🔄 Implementazione Tecnica
+        ├── 🎬 Loop RequestAnimationFrame
+        ├── 📏 Dimensionamento proporzionale per responsività
+        ├── 🎮 Controlli da tastiera basati su eventi
+        └── 🎯 Gestione dello stato per il progresso del gioco
+
+Questo progetto dimostra i principi fondamentali dello sviluppo di giochi attraverso OOP!
+Dalla simulazione fisica al rilevamento delle collisioni, è un motore di mini-gioco completo!
+-->
