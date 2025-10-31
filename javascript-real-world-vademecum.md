@@ -1,4 +1,4 @@
-# JavaScript Vademecum
+# JavaScript Real World Vademecum
 
 ## Parte I - Fondamenti e Tipi di Dati
 
