@@ -77,6 +77,9 @@ You can find the Figma prototype below, so you can explore the entire experience
 </tr>
 </table>
 <br>
+I really want to emphasize that this is not a tool designed to replace the therapist's active listening process. The goal, on the contrary, is to integrate into the current workflow. The ideal process involves the therapist taking their usual notes, on paper or device, and then "dumping" to Mosaic as spontaneously as possible what happened during the session: the AI will take care of structuring and writing it clearly. This would ensure considerable organization and save time at home recomposing the various pieces, because Mosaic does it for you. Additionally, it helps optimize the time between sessions: instead of finding yourself with a few scattered words in a notebook and having to reconstruct the thread of events later, or even worse at home, you can immediately capture what happened and then, while preparing for the next patient, take a quick look at their overview to rapidly refresh your memory. This can become a true new way of working, more fluid and sustainable.
+
+Mosaic does not provide any advice, not even in the Full Analysis. The choice of therapeutic direction will always and only remain in the therapist's hands. I absolutely do not support replacement tools, like tools that listen to meetings or similar and act as a "second brain". We must continue to trust our abilities, otherwise we risk them atrophying in exchange for an initial immediate gain.
 
 **Lightweight Liquid Glass and Accessibility:**<br>
 I used a very light Liquid Glass effect. As much as I'm among the people who like it aesthetically, I believe it makes important compromises with visual accessibility.<br>
