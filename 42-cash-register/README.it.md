@@ -79,6 +79,10 @@ Trovi il prototipo Figma qui sotto, così puoi esplorare l'intera esperienza:
 </table>
 <br>
 
+Ci tengo davvero molto a sottolineare che questo non è uno strumento pensato per sostituire il processo di ascolto attivo del terapeuta. L’obiettivo, al contrario, è integrarsi nel workflow attuale. Il processo ideale prevede che il terapeuta prenda i consueti appunti, su carta o su dispositivo, e poi "vomiti" a Mosaic nel modo più spontaneo possibile quanto avvenuto in seduta: sarà l’AI a occuparsi della strutturazione e della stesura in modo chiaro. Questo garantirebbe una notevole organizzazione e permetterebbe di risparmiare tempo a casa nel ricomporre i vari pezzi, perché a farlo è Mosaic. Inoltre, aiuta a ottimizzare il tempo tra una seduta e l’altra: invece di ritrovarsi con poche parole sparse sul taccuino e dover ricostruire più tardi, o peggio ancora a casa, il filo degli eventi, è possibile fissare subito ciò che è avvenuto e poi, mentre ci si prepara per il paziente successivo, dare un’occhiata alla sua overview per rinfrescare rapidamente la memoria. Questo può diventare un vero e proprio nuovo modo di lavorare, più fluido e sostenibile.
+
+Mosaic non fornisce alcun consiglio, nemmeno nella Full Analysis. La scelta della direzione terapeutica rimarrà sempre e soltanto nelle mani del terapeuta. Non appoggio affatto gli strumenti sostitutivi, come tool che ascoltano le riunioni o simili e fungono da “secondo cervello”. Dobbiamo continuare a fidarci delle nostre capacità, altrimenti rischiamo che si atrofizzino in cambio di un iniziale guadagno immediato.
+
 **Il Liquid Glass Leggero e l'Accessibilità:**<br>
 Ho utilizzato un effetto Liquid Glass molto leggero. Per quanto io sia tra le persone a cui piace esteticamente, ritengo che faccia importanti compromessi con l'accessibilità visiva.<br>
 
