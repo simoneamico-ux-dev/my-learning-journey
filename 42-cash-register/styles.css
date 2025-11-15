@@ -1,0 +1,326 @@
+/* DESIGN
+   ------
+   * I chose to make the mobile version the default (Mobile-First approach),
+   * with the desktop version being an override in a single media query
+   * for the same reasons as the other project, namely:
+   * - Mobile traffic is dominant, so it should be the primary experience
+   * - Mobile devices load only the base CSS and variables, ensuring a
+   *   faster load time, which is critical for mobile connections.
+
+   * The architecture is a "Utility-First Variables" system:
+   * - All values (fonts, margins, sizes) are centralized in :root variables,
+   *   organized by UNIVERSAL and MOBILE (default)
+   * - The DESKTOP media query only overrides these variables, which keeps
+   *   the CSS ruleset minimal and highly maintainable.
+
+   * The layout is a hybrid:
+   * - A single ".receipt-container" is centered using position: absolute
+   *   to hold the SVG receipt background
+   * - Inside, ".receipt-content" uses display: flex with
+   *   flex-direction: column to manage the internal UI flow
+   * - Techniques (like radial-gradient for input dots)
+   *   are used to achieve the skeuomorphic "receipt" design.
+*/
+
+
+/* UNIVERSAL (common variables to mobile and desktop) */
+
+:root {
+    /* Background */ 
+    --background: url("https://github.com/user-attachments/assets/6b1734ff-6f1c-4c9f-8b5d-463daea23f85"); /* incredibly lightweight background, weighs only 70 KB */
+    --font-color: #000;
+    
+    /* Font */
+    --font-family: "Roboto Mono", monospace, sans-serif;
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+
+    /* Color */
+    --input-dots-hover-button-color: #6b6b6a;
+    
+    /* Animation */
+    --result-animation: slideInFade 0.4s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+
+/* MOBILE (default version) */
+
+:root {
+    /* Receipt frame */
+    --receipt-image: url("https://github.com/user-attachments/assets/c16ae536-5d58-41d2-8712-d52244549792"); /* the receipt is also incredibly lightweight, only 2 KB, I created it in Figma */
+    --receipt-width: 377.702px;
+    --receipt-height: 662.999px;
+    --receipt-position-top: 50%;
+    --receipt-position-left: 50%;
+    --aspect-ratio: 377.702 / 662.999;
+
+    /* Layout & Position */
+    --receipt-padding: 0 54px 24px 44px;
+    --title-margin-top: 110px;
+    --subtitle-margin-top: 5px;
+    --total-1-margin-top: 85px;
+    --hyphens-1-margin-top: 0px;
+    --label-margin-top: 28px;
+    --input-margin-top: 4px;
+    --button-margin-top: 12px;
+    --hyphens-2-margin-top: 24px;
+    --result-margin-top: 3px;
+    --hyphens-3-margin-top: 5px;
+    --footer-block-margin-top: 16px; 
+    --tribute-margin-top: 2px;
+    --footer-margin-top: 12px;
+
+    /* Font Size */
+    --font-size-base: 18px;
+    --font-size-title: 24px;
+    --font-size-small: 16px;
+    --font-size-result: 14px;
+    --font-size-hyphens: 15px;
+    --font-size-x-small: 12px;
+
+    /* Input */
+    --input-padding: 5px 0;
+    --input-dots-width: 28%;
+    --input-dots-height: 2px;
+    --input-dots-size: 1.2px;
+    --input-dots-spacing: 8px;
+
+    /* Button */
+    --button-padding: 2px 0;
+    --button-underline-thickness: 1.5px;
+    --button-underline-offset: 8px;
+
+    /* Result */
+    --result-min-height: 2em;
+}
+
+
+/* Total CSS reset to avoid unexpected behavior across different browsers */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: var(--background);
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 100vh; /* Fallback per browser che non supportano dvh */
+    min-height: 100dvh; /* L'unità del viewport dinamico per iOS */
+    background-attachment: fixed;
+    background-position: 65% 0%;
+    font-family: var(--font-family);
+    color: var(--font-color);
+    font-weight: var(--font-weight-light);
+    font-size: var(--font-size-base);
+    overflow: hidden;
+}
+
+.receipt-container {
+    background-image: var(--receipt-image);
+    position: absolute;
+    top: var(--receipt-position-top);
+    left: var(--receipt-position-left);
+    transform: translate(-50%, -50%);
+    width: var(--receipt-width);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    max-height: var(--receipt-height);
+    aspect-ratio: var(--aspect-ratio);
+}
+
+.receipt-content {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: var(--receipt-padding);
+}
+
+.receipt-header {
+    margin-top: var(--title-margin-top);
+    transform: rotate(0.674deg);
+}
+
+.receipt-footer {
+    width: 100%;
+    margin-top: var(--footer-block-margin-top);
+}
+
+h1 {
+    font-size: var(--font-size-title);
+    font-weight: var(--font-weight-normal);
+}
+
+button {
+    font-weight: var(--font-weight-medium);
+}
+
+.receipt-header > p, .receipt-footer > p:nth-child(2) {
+    font-size: var(--font-size-small);
+}
+
+.receipt-header > p {
+    margin-top: var(--subtitle-margin-top);
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: var(--total-1-margin-top);
+}
+
+.total > p {
+    margin-top: 0; 
+    font-weight: var(--font-weight-medium);
+}
+.total > p:nth-child(2) {
+    margin-top: 0;
+}
+
+.receipt-body > p {
+    font-size: var(--font-size-hyphens);
+}
+
+.receipt-body > p:nth-child(2) {
+    margin-top: var(--hyphens-1-margin-top);
+    transform: rotate(0.561deg);
+}
+.receipt-body > p:nth-child(4) {
+    margin-top: var(--hyphens-2-margin-top);
+    transform: rotate(0.371deg);
+}
+.receipt-body > p:nth-child(6) {
+    margin-top: var(--hyphens-3-margin-top);
+}
+
+
+#cash-register-form {
+    margin-top: var(--label-margin-top);
+    text-align: left;
+    font-weight: var(--font-weight-normal);
+}
+
+.user-input {
+    position: relative;
+}
+
+.user-input::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: var(--input-dots-width);
+    height: var(--input-dots-height);
+    background-image: radial-gradient(
+        circle,
+        var(--input-dots-hover-button-color) var(--input-dots-size),
+        transparent 1px
+    );
+    background-size: var(--input-dots-spacing) 100%;
+    background-repeat: repeat-x;
+    background-position: bottom left;
+}
+
+input {
+    margin-top: var(--input-margin-top);
+    border: none;
+    background: transparent;
+    width: 100%;
+    padding: var(--input-padding);
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+}
+
+input:focus {
+    outline: none;
+}
+
+/* these next two rules hide the typical input field arrows (0.00 ▲ ▼)
+ * on all WebKit-based browsers (like Safari, Chrome, Edge) */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] { /* does the same thing as the block above, but for Firefox */
+  -moz-appearance: textfield;
+}
+
+button {
+    margin-top: var(--button-margin-top);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    text-decoration: underline;
+    text-decoration-thickness: var(--button-underline-thickness);
+    text-underline-offset: var(--button-underline-offset);
+    padding: var(--button-padding);
+    color: black;
+}
+
+#change-due {
+    margin-top: var(--result-margin-top);
+    min-height: var(--result-min-height);
+    font-size: var(--font-size-result);
+    font-weight: var(--font-weight-medium);
+}
+
+.tribute {
+    margin-top: var(--tribute-margin-top);
+    font-size: var(--font-size-x-small);
+}
+.tribute a {
+    color: var(--font-color);
+    text-decoration: none;
+}
+
+.receipt-footer > p:nth-child(2) {
+    margin-top: var(--footer-margin-top);
+}
+
+
+button:hover {
+    color: var(--input-dots-hover-button-color);
+}
+
+
+/* DESKTOP (override of mobile variables and addition of receipt-frame) */
+
+@media (min-width: 600px) and (min-height: 850px) {
+
+:root {
+    /* Receipt frame */
+    --receipt-image: url("https://github.com/user-attachments/assets/272d1484-ae7b-4027-ae06-ce93290a36b5");
+    --receipt-width: 447.315px;
+    --receipt-height: 785.195px;
+    --receipt-position-top: 55%;
+    --receipt-position-left: 70%;
+    --aspect-ratio: 377.702 / 662.999;
+
+    /* Layout & Position */
+    --receipt-padding: 0 64px 24px 54px;
+    --title-margin-top: 130px;
+    --subtitle-margin-top: 10px;
+    --total-1-margin-top: 112px;
+    --label-margin-top: 32px;
+    --button-margin-top: 20px;
+    --hyphens-2-margin-top: 38px;
+    --result-margin-top: 12px;
+    --hyphens-3-margin-top: 12px;
+    --tribute-margin-top: 8px;
+    --footer-margin-top: 16px;
+
+    /* Font Size */
+    --font-size-hyphens: 17.7px;
+
+    /* Result */
+    --result-min-height: 2em;
+}
+}
