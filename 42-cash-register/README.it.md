@@ -91,16 +91,17 @@ E come ho deciso di utilizzarlo in modo molto leggero in Mosaic:<br>
 <br>
 <img width="393" height="135" alt="Screenshot 2025-11-15 alle 15 43 39" src="https://github.com/user-attachments/assets/ac8818cf-720e-4dc1-be93-e06369170800" />
 
-Apple permette comunque da iOS 26.1 di disattivarlo nelle impostazioni e quindi ritornare al solo effetto blur. Purtroppo, come imparato nel corso Google, questa non è la strada migliore: se ci adeguiamo agli standard di accessibilità per tutti, in realtà ne gioveranno tutti. Trovo corretto il fatto di renderla opzionale, già solo quest'ultimo aspetto fa intuire che c'è qualcosa che non va.
+Apple permette comunque da iOS 26.1 di disattivarlo nelle impostazioni e quindi ritornare al solo effetto blur. Purtroppo, come appreso nel corso Google, questa non è la strada migliore: adeguarsi agli standard di accessibilità non aiuta solo alcuni, ma porta benefici a tutti. Trovo corretto renderlo opzionale, ma già questo dettaglio lascia intuire che qualcosa non funziona.
 <br>
 
 **La Filosofia: Rovesciare le Aspettative:**<br>
 Per quanto riguarda il lato open source, ho voluto giocare con aspettative e grafica attesa. Se si chiede a qualcuno di immaginarsi un'app open source del genere, si immaginerà una grafica poco "Apple", complessità e conseguente difficoltà d'uso.<br>
 Se invece chiedessimo di immaginare un'app che ha come modello di business l'abbonamento da oltre 30 euro al mese, AI integrata e tutte queste feature premium, ci si aspetterebbe esattamente la grafica di Mosaic.<br>
 Quindi ho optato per uno stile iOS, seppur reinterpretato in alcuni aspetti, con semplicità assoluta come priorità principale. Il tutto, però, completamente Open Source.
-È incredibile come un progetto come questo è realmente fattibile già al giorno d'oggi, usando modelli che girano in locale come Microsoft Phi-4 mini, mi spiego meglio:
+È incredibile come un progetto come questo è realmente fattibile già al giorno d'oggi, usando modelli che girano in locale come Microsoft Phi-4 mini. <br>
+Mi spiego meglio:
 Premetto che non essendo un backend developer potrei sbagliarmi ma a seguito di svariate ricerche ho scoperto che Phi-4 mini sarebbe il candidato ideale per questo tipo di compito.
-Offre output eccellenti e velocemente, l'unico neo rimane il peso: oltre 7GB di peso, ma per un terapeuta attento alla privacy credo che non sia un grande compromesso.
+Offre output eccellenti e velocemente, l'unico neo rimane il peso: oltre 7GB, ma per un terapeuta attento alla privacy questo non è un problema.
 Per telefoni con hardware inferiore ad iPhone 15 Pro si potrebbe optare per modelli più leggeri come Phi-3 mini o Llama 3.2 3B che tra l'altro pesano circa 2 GB.
 Per il modello di trascrizione per fortuna c'è OpenAI Whisper Base, pesa circa 140 MB, open source e garantisce trascrizioni eccellenti!
 
