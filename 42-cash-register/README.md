@@ -172,4 +172,5 @@ For the transcription model fortunately there's OpenAI Whisper Base, weighs abou
 
 ---
 
-**Next Project**: Learn Fetch and Promises by Building an fCC Authors Page
+
+🇮🇹 **[Versione Italiana](./README.it.md)**
