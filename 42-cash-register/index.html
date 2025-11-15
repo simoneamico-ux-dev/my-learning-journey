@@ -1,0 +1,75 @@
+<!-- DESIGN
+   ------
+   * This file contains the HTML structure of the Cash Register application.
+   * The architecture follows this flow:
+   * - Head with meta tags and the Google Font 'Roboto Mono', was chosen as the font to realistically simulate the
+   *   monospaced, dot-matrix style of a thermal receipt printer
+   * - Body containing a <main> element
+   * - Inside <main>, a primary <div> ".receipt-container" is used to display the SVG background (the paper receipt)
+   * - A child <div> ".receipt-content" is nested inside the container to hold all the actual UI content (text, form, etc.).
+
+   * The UI content itself is semantically structured into three main blocks:
+   * - .receipt-header: Contains the main title and terminal ID
+   * - .receipt-body: Contains the core interactive elements (form, input, button) and the output area (#change-due)
+   * - .receipt-footer: Contains the closing messages and transaction ID.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Cash Register</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="styles.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+
+        <!-- 
+            * freeCodeCamp instructions:
+            * - You should have an input element with an id of "cash"
+            * - You should have a div, span, or p element with an id of "change-due"
+            * - You should have a button element with an id of "purchase-btn"
+        -->
+ 
+        <main>
+
+            <div class="receipt-container">
+                <div class="receipt-content">
+                    <div class="receipt-header">
+                        <h1>CASH REGISTER</h1>
+                        <p>TERMINAL #09-FCC</p>
+                    </div>
+                    <div class="receipt-body">
+                        <div class="total">
+                            <p>TOTAL</p>
+                            <p>$19.50</p>
+                        </div>
+                        <p>-------------------------------</p>
+                        <form id="cash-register-form">
+                            <label for="cash">CASH PAID</label>
+                            <div class="user-input">
+                                <input type="number" id="cash" name="cash" placeholder="0.00" step="0.01" min="0" required>
+                            </div>
+                            <button type="button" id="purchase-btn" class="cta-button">PROCESS PAYMENT</button>
+                        </form>
+                        <p>-------------------------------</p>
+                        <div id="change-due"></div>
+                        <p>-------------------------------</p>
+                    </div>
+                    <div class="receipt-footer">
+                        <p class="tribute"><a href="https://www.freecodecamp.org/" target="_blank" rel="noopener noreferrer" aria-label="Visit freeCodeCamp website (opens in new tab)">Trans. ID: FCC-CERT-PROJECT-09</a></p>
+                        <p>THANKS FOR VISITING!</p>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <script src="script.js"></script>
+    </body>    
+
+</html>
