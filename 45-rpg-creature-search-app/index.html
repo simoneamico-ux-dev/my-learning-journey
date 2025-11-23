@@ -1,0 +1,171 @@
+<!-- DESIGN 
+   ------
+   * This file contains the HTML structure of the "RPG Creature Search App" application.
+   * The design emulates the "Aqua" user interface from Mac OS X 10 (2000s) but reinterpreted
+   * in certain aspects
+
+   * Font Choice:
+   * I didn't import external fonts, instead I chose native system font stacks
+   * (like Lucida Grande, Verdana) to ensure historical fidelity to the original OS and instant
+   * loading performance with no external dependencies
+
+   * Flow:
+   * - Head with meta tags and link to the local style sheet
+   * - Body containing a <main id="window-container"> element that acts as the frame for the
+   *   main window
+   * - Inside the <main>, the structure is divided into two inner containers to allow
+   *   independent management, specifically:
+   * - A <div> ".header-overlap-wrapper" for the title bar and controls (always visible)
+   * - A <div> "#main-content-container" that wraps all the functional content
+
+   * The main container (#main-content-container) is structured in two main blocks:
+   * - #search-container: Contains the input interface. Uses a "stack" technique
+   *   that overlays elements (background image, icon, and transparent text box) one
+   *   on top of another, instead of placing them side by side, to perfectly recreate the complex
+   *   graphic appearance of the original bar.
+   * - #creature-output-box: Contains the results area. Currently has "mock-up" data (Creature #1,
+   *   Pyrolynx) that serves as visual placeholder meant to facilitate my subsequent CSS design
+   *   and provides the structure that will be dynamically updated via JavaScript.
+-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>RPG Creature Search App</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <!-- 
+            * freeCodeCamp instructions:
+            * You should have an input element with an id of "search-input", and is required. ✔️
+            * You should have a button element with an id of "search-button". ✔️
+            * You should have an element with an id of "creature-name". ✔️
+            * You should have an element with an id of "creature-id". ✔️
+            * You should have an element with an id of "weight". ✔️
+            * You should have an element with an id of "height". ✔️
+            * You should have an element with an id of "types". ✔️
+            * You should have an element with an id of "hp". ✔️
+            * You should have an element with an id of "attack". ✔️
+            * You should have an element with an id of "defense". ✔️
+            * You should have an element with an id of "special-attack". ✔️
+            * You should have an element with an id of "special-defense". ✔️
+            * You should have an element with an id of "speed". ✔️
+        -->
+
+        <!-- 
+            * Later I use a div instead of a button because if I do that I would have
+            * to write a lot of "reset" CSS to cancel all the native browser styles,
+            * still risking unexpected behavior on different browsers.
+            * I'll handle this accessibility "debt" with semantics and JavaScript
+        -->
+        
+        <div id="desktop-app-icon" class="hidden" role="button" aria-label="Reopen RPG Search App" tabindex="0"></div>
+        <main id="window-container">
+            <section id="main-content-container">
+                <div class="header-overlap-wrapper">
+                    <div class="window-top-separator"></div>
+                    <div class="traffic-lights-container">
+                        <button id="btn-close" class="traffic-light red" aria-label="Close window" title="Close"></button>
+                        <button id="btn-minimize" class="traffic-light yellow disabled" aria-label="Minimize window" title="Minimize"></button>
+                        <button id="btn-maximize" class="traffic-light green" aria-label="Maximize window" title="Maximize"></button>
+                    </div>
+                    <h2 class="window-title">RPG Creature Search App</h2>
+                </div>
+                <div id="search-container">
+                    <h1 id="main-heading">Search for Creature Name or ID:</h1>
+                    <div class="input-stack">
+                    <div class="search-bg-layer"></div>
+                        <div class="search-content-layer">
+                            <!-- 
+                                * The magnifying glass icon is a separate element, not drawn directly on the background
+                                * This allows positioning it with millimetric precision via CSS over the bar, 
+                                * maintaining independent control of the three layers (background, icon, text)
+                            -->
+                            <svg class="search-icon-physical" width="24" height="24" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M17.564 18.1162L24.8043 25.1027" stroke="#686868" stroke-width="3.28349" stroke-linecap="round"/>
+                                <circle cx="10.8521" cy="10.8521" r="9.21039" stroke="#686868" stroke-width="3.28349"/>
+                            </svg>
+                            <input type="text" id="search-input" required aria-label="Search for creature name or ID" autocomplete="off"/>
+                            <div id="aqua-tooltip" class="aqua-tooltip-box hidden-tooltip">Enter an ID (1-20) or name (e.g. Pyrolynx).</div>
+                        </div>
+                    </div>
+                    <div class="search-btn-container">
+                        <button id="search-button">Search</button>
+                    </div>
+                </div>
+                <section id="creature-output-box" class="output-container">
+                    <div class="output-left-col">
+                        <div class="creature-title-container">
+                            <h2>
+                                <span id="creature-name">PYROLYNX</span>
+                                <span id="creature-id">#1</span>
+                            </h2>
+                        </div>
+                        <div class="attributes-container">
+                            <p class="description">
+                                <span id="special-name" class="special-name">Blazing Reflex</span><br>
+                                <span id="special-description" class="special-description">Increases speed when hit by a Fire-type move.</span>
+                            </p>
+
+                            <!-- 
+                                * I decided to put the fixed text ("Weight: " and "Height: ") and then the number in
+                                * two separate "span" elements, because this way it will be easier in the JavaScript
+                                * phase: when it needs to update the data, it only needs to update the field with
+                                * the number.
+                            -->
+                            <p class="attribute-item">
+                                <span>Weight: </span><span id="weight">42</span>
+                            </p>
+                            <p class="attribute-item">
+                                <span>Height: </span><span id="height">32</span>
+                            </p>
+                        </div>
+                        <div id="types" class="types-container">
+                            <span class="type-badge type-fire">Fire</span>
+                        </div>
+                    </div>
+                    <div class="output-right-col">
+                        <table class="stats-table">
+                            <thead>
+                                <tr>
+                                    <th>Base</th>
+                                    <th class="text-right">Stats</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>HP</td>
+                                    <td id="hp" class="stat-value">85</td>
+                                </tr>
+                                <tr>
+                                    <td>Attack</td>
+                                    <td id="attack" class="stat-value">50</td>
+                                </tr>
+                                <tr>
+                                    <td>Defense</td>
+                                    <td id="defense" class="stat-value">120</td>
+                                </tr>
+                                <tr>
+                                    <td>Sp. Attack</td>
+                                    <td id="special-attack" class="stat-value">100</td>
+                                </tr>
+                                <tr>
+                                    <td>Sp. Defense</td>
+                                    <td id="special-defense" class="stat-value">115</td>
+                                </tr>
+                                <tr>
+                                    <td>Speed</td>
+                                    <td id="speed" class="stat-value">55</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </section>
+        </main>
+        <script src="script.js"></script>
+    </body>
+</html>
