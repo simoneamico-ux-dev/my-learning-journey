@@ -119,3 +119,7 @@ It’s time to put all my energy back into university, but it won’t be difficu
 
 **Next**:  
 University and… evolving this repository into a navigable knowledge base, so it doesn’t remain just a personal archive but becomes a support tool for anyone walking the same path.
+
+---
+
+🇮🇹 **[Versione Italiana](./README.it.md)**
